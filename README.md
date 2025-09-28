@@ -22,4 +22,4 @@ Comprehensive design tokens and utilities:
 - TailwindCSS integration
 - Custom component variants
 - Responsive design patterns
-- Dark/light mode support  
+- Dark/light mode support
