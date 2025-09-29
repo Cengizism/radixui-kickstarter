@@ -1,6 +1,6 @@
-import { AppHeader } from '../../components/AppSidebar';
+import { AppHeader } from '@/components/AppSidebar';
 import { createFileRoute } from '@tanstack/react-router';
-import { Progress } from '../../components/ui/elements/progress';
+import { Progress } from '@/components/ui/elements/progress';
 
 export const Route = createFileRoute("/docs/progress")({
   component: ProgressRoute,

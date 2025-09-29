@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { Button } from '../elements/button';
-import { cn } from '../../../lib/utils';
+import { Button } from '@/components/ui/elements/button';
+import { cn } from '@/lib/utils';
 import { cva, VariantProps } from 'class-variance-authority';
-import { Input } from '../elements/input';
+import { Input } from '@/components/ui/elements/input';
 import { PanelLeft } from 'lucide-react';
-import { Separator } from '../elements/separator';
-import { Skeleton } from '../elements/skeleton';
+import { Separator } from '@/components/ui/elements/separator';
+import { Skeleton } from '@/components/ui/elements/skeleton';
 import { Slot } from 'radix-ui';
-import { useIsMobile } from '../elements/use-mobile';
+import { useIsMobile } from '@/components/ui/elements/use-mobile';
 ("use client");
 
 import {

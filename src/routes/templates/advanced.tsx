@@ -1,5 +1,5 @@
-import AdvancedConfig from '../../components/AdvancedConfig';
-import { AppHeader } from '../../components/AppSidebar';
+import AdvancedConfig from '@/components/AdvancedConfig';
+import { AppHeader } from '@/components/AppSidebar';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute("/templates/advanced")({

@@ -1,5 +1,5 @@
-import { AppHeader } from '../../components/AppSidebar';
-import { Checkbox } from '../../components/ui/elements/checkbox';
+import { AppHeader } from '@/components/AppSidebar';
+import { Checkbox } from '@/components/ui/elements/checkbox';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute("/docs/checkbox")({

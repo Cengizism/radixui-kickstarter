@@ -1,11 +1,11 @@
 import { AlertCircle, CheckCircle } from 'lucide-react';
-import { AppHeader } from '../../components/AppSidebar';
+import { AppHeader } from '@/components/AppSidebar';
 import { createFileRoute } from '@tanstack/react-router';
 import {
   Alert,
   AlertDescription,
   AlertTitle,
-} from "../../components/ui/modules/alert";
+} from "@/components/ui/modules/alert";
 
 export const Route = createFileRoute("/docs/alert")({
   component: AlertRoute,

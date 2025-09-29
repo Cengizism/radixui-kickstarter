@@ -1,21 +1,21 @@
-import { AppHeader } from '../../components/AppSidebar';
-import { Badge } from '../../components/ui/elements/badge';
-import { Button } from '../../components/ui/elements/button';
+import { AppHeader } from '@/components/AppSidebar';
+import { Badge } from '@/components/ui/elements/badge';
+import { Button } from '@/components/ui/elements/button';
 import { createFileRoute } from '@tanstack/react-router';
-import { Progress } from '../../components/ui/elements/progress';
+import { Progress } from '@/components/ui/elements/progress';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../../components/ui/modules/card";
+} from "@/components/ui/modules/card";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "../../components/ui/modules/tabs";
+} from "@/components/ui/modules/tabs";
 import {
   Users,
   FileText,

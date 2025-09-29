@@ -1,4 +1,4 @@
-import { AppHeader } from '../../components/AppSidebar';
+import { AppHeader } from '@/components/AppSidebar';
 import { createFileRoute } from '@tanstack/react-router';
 import {
   Table,
@@ -7,7 +7,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../../components/ui/modules/table";
+} from "@/components/ui/modules/table";
 
 export const Route = createFileRoute("/docs/table")({
   component: TableRoute,

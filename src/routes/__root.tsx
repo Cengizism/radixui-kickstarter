@@ -1,6 +1,6 @@
-import { AppSidebar } from '../components/AppSidebar';
+import { AppSidebar } from '@/components/AppSidebar';
 import { createRootRoute, Outlet } from '@tanstack/react-router';
-import { SidebarProvider } from '../components/ui/modules/sidebar';
+import { SidebarProvider } from '@/components/ui/modules/sidebar';
 
 export const Route = createRootRoute({
   component: () => (

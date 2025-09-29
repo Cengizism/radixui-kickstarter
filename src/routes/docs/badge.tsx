@@ -1,5 +1,5 @@
-import { AppHeader } from '../../components/AppSidebar';
-import { Badge } from '../../components/ui/elements/badge';
+import { AppHeader } from '@/components/AppSidebar';
+import { Badge } from '@/components/ui/elements/badge';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute("/docs/badge")({

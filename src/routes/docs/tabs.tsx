@@ -1,11 +1,11 @@
-import { AppHeader } from '../../components/AppSidebar';
+import { AppHeader } from '@/components/AppSidebar';
 import { createFileRoute } from '@tanstack/react-router';
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "../../components/ui/modules/tabs";
+} from "@/components/ui/modules/tabs";
 
 export const Route = createFileRoute("/docs/tabs")({
   component: TabsRoute,
