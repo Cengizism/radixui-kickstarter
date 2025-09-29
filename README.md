@@ -1,4 +1,3 @@
-
 # Frontend Design System & Component Library
 
 A comprehensive React component library and design system built with **Radix UI** and **TailwindCSS**, serving as a foundation for modern web applications.
