@@ -1,5 +1,5 @@
 import { AlertCircle, CheckCircle } from 'lucide-react';
-import { AppHeader } from '@/components/AppSidebar';
+import { AppHeader } from '@/components/AppHeader';
 import { createFileRoute } from '@tanstack/react-router';
 import {
   Alert,

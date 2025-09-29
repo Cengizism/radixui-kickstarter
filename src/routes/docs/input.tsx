@@ -1,4 +1,4 @@
-import { AppHeader } from '@/components/AppSidebar';
+import { AppHeader } from '@/components/AppHeader';
 import { createFileRoute } from '@tanstack/react-router';
 import { Input } from '@/components/ui/elements/input';
 

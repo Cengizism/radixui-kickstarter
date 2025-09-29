@@ -1,4 +1,4 @@
-import { Home, Sliders } from 'lucide-react';
+import { Home, LayoutDashboard, Sliders } from 'lucide-react';
 import { Link } from '@tanstack/react-router';
 import {
   Sidebar,
@@ -9,13 +9,28 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-  SidebarTrigger,
-} from "./ui/modules/sidebar";
+} from "@/components/ui/modules/sidebar";
 
 export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>General</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link to="/">
+                    <Home className="h-4 w-4" />
+                    <span>Home</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
         <SidebarGroup>
           <SidebarGroupLabel>Elements</SidebarGroupLabel>
           <SidebarGroupContent>
@@ -102,7 +117,7 @@ export function AppSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <Link to="/templates/dashboard">
-                    <Home className="h-4 w-4" />
+                    <LayoutDashboard className="h-4 w-4" />
                     <span>Dashboard</span>
                   </Link>
                 </SidebarMenuButton>
@@ -120,16 +135,5 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
-  );
-}
-
-export function AppHeader() {
-  return (
-    <header className="flex h-14 items-center gap-4 border-b bg-background px-6">
-      <SidebarTrigger />
-      <div className="flex flex-1 items-center gap-4">
-        <h1 className="text-lg font-semibold">Radix UI Components</h1>
-      </div>
-    </header>
   );
 }
