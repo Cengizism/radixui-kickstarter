@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { Button } from './button';
-import { cn } from '../../lib/utils';
+import { Button } from '../elements/button';
+import { cn } from '../../../lib/utils';
 import { cva, VariantProps } from 'class-variance-authority';
-import { Input } from './input';
+import { Input } from '../elements/input';
 import { PanelLeft } from 'lucide-react';
-import { Separator } from './separator';
-import { Skeleton } from './skeleton';
+import { Separator } from '../elements/separator';
+import { Skeleton } from '../elements/skeleton';
 import { Slot } from 'radix-ui';
-import { useIsMobile } from './use-mobile';
+import { useIsMobile } from '../elements/use-mobile';
 ("use client");
 
 import {
@@ -22,7 +22,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "./tooltip";
+} from "../elements/tooltip";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;

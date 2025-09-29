@@ -1,25 +1,25 @@
-import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
-import { Badge } from "./ui/badge";
-import { Button } from "./ui/button";
-import { Checkbox } from "./ui/checkbox";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
-import { Textarea } from "./ui/textarea";
-import { useState } from "react";
+import { Alert, AlertDescription, AlertTitle } from './ui/modules/alert';
+import { Badge } from './ui/elements/badge';
+import { Button } from './ui/elements/button';
+import { Checkbox } from './ui/elements/checkbox';
+import { Input } from './ui/elements/input';
+import { Label } from './ui/elements/label';
+import { Textarea } from './ui/elements/textarea';
+import { useState } from 'react';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "./ui/card";
+} from "./ui/modules/card";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
+} from "./ui/modules/select";
 import {
   Table,
   TableBody,
@@ -27,7 +27,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "./ui/table";
+} from "./ui/modules/table";
 import {
   AlertCircle,
   CheckCircle,

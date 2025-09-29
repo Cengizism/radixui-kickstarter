@@ -1,9 +1,23 @@
-import AdvancedConfig from "./components/AdvancedConfig";
-import { Badge } from "./components/ui/badge";
-import { Button } from "./components/ui/button";
-import { Progress } from "./components/ui/progress";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs";
-import { useState } from "react";
+import AdvancedConfig from './components/AdvancedConfig';
+import AlertPage from './docs/modules/AlertPage';
+import BadgePage from './docs/elements/BadgePage';
+import ButtonPage from './docs/elements/ButtonPage';
+import CardPage from './docs/modules/CardPage';
+import CheckboxPage from './docs/elements/CheckboxPage';
+import InputPage from './docs/elements/InputPage';
+import ProgressPage from './docs/elements/ProgressPage';
+import TablePage from './docs/modules/TablePage';
+import TabsPage from './docs/modules/TabsPage';
+import { Badge } from './components/ui/elements/badge';
+import { Button } from './components/ui/elements/button';
+import { Progress } from './components/ui/elements/progress';
+import { useState } from 'react';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "./components/ui/modules/tabs";
 import {
   SidebarProvider,
   Sidebar,
@@ -15,34 +29,46 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarTrigger,
-} from "./components/ui/sidebar";
+} from "./components/ui/modules/sidebar";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "./components/ui/card";
+} from "./components/ui/modules/card";
+
+// Documentation pages
 import {
   Home,
-  Settings,
-  Users,
-  BarChart3,
-  FileText,
-  Bell,
-  Search,
-  Plus,
-  Download,
-  Upload,
-  Zap,
-  Activity,
   Sliders,
+  Users,
+  FileText,
+  Activity,
+  Zap,
+  Upload,
+  Download,
+  Settings,
+  Search,
+  Bell,
+  Plus,
 } from "lucide-react";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState("dashboard");
 
   const renderMainContent = () => {
+    // Documentation pages
+    if (currentPage === "button") return <ButtonPage />;
+    if (currentPage === "badge") return <BadgePage />;
+    if (currentPage === "input") return <InputPage />;
+    if (currentPage === "checkbox") return <CheckboxPage />;
+    if (currentPage === "progress") return <ProgressPage />;
+    if (currentPage === "alert") return <AlertPage />;
+    if (currentPage === "card") return <CardPage />;
+    if (currentPage === "table") return <TablePage />;
+    if (currentPage === "tabs") return <TabsPage />;
+
     if (currentPage === "advanced") {
       return <AdvancedConfig />;
     }
@@ -359,7 +385,95 @@ export default function App() {
         <Sidebar>
           <SidebarContent>
             <SidebarGroup>
-              <SidebarGroupLabel>Application</SidebarGroupLabel>
+              <SidebarGroupLabel>Elements</SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton
+                      isActive={currentPage === "button"}
+                      onClick={() => setCurrentPage("button")}
+                    >
+                      <span>Button</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton
+                      isActive={currentPage === "badge"}
+                      onClick={() => setCurrentPage("badge")}
+                    >
+                      <span>Badge</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton
+                      isActive={currentPage === "input"}
+                      onClick={() => setCurrentPage("input")}
+                    >
+                      <span>Input</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton
+                      isActive={currentPage === "checkbox"}
+                      onClick={() => setCurrentPage("checkbox")}
+                    >
+                      <span>Checkbox</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton
+                      isActive={currentPage === "progress"}
+                      onClick={() => setCurrentPage("progress")}
+                    >
+                      <span>Progress</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+
+            <SidebarGroup>
+              <SidebarGroupLabel>Modules</SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton
+                      isActive={currentPage === "alert"}
+                      onClick={() => setCurrentPage("alert")}
+                    >
+                      <span>Alert</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton
+                      isActive={currentPage === "card"}
+                      onClick={() => setCurrentPage("card")}
+                    >
+                      <span>Card</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton
+                      isActive={currentPage === "table"}
+                      onClick={() => setCurrentPage("table")}
+                    >
+                      <span>Table</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton
+                      isActive={currentPage === "tabs"}
+                      onClick={() => setCurrentPage("tabs")}
+                    >
+                      <span>Tabs</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+
+            <SidebarGroup>
+              <SidebarGroupLabel>Examples</SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
                   <SidebarMenuItem>
@@ -373,64 +487,11 @@ export default function App() {
                   </SidebarMenuItem>
                   <SidebarMenuItem>
                     <SidebarMenuButton
-                      isActive={currentPage === "analytics"}
-                      onClick={() => setCurrentPage("analytics")}
-                    >
-                      <BarChart3 className="h-4 w-4" />
-                      <span>Analytics</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton
-                      isActive={currentPage === "users"}
-                      onClick={() => setCurrentPage("users")}
-                    >
-                      <Users className="h-4 w-4" />
-                      <span>Users</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton
-                      isActive={currentPage === "documents"}
-                      onClick={() => setCurrentPage("documents")}
-                    >
-                      <FileText className="h-4 w-4" />
-                      <span>Documents</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
-
-            <SidebarGroup>
-              <SidebarGroupLabel>Settings</SidebarGroupLabel>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton
-                      isActive={currentPage === "preferences"}
-                      onClick={() => setCurrentPage("preferences")}
-                    >
-                      <Settings className="h-4 w-4" />
-                      <span>Preferences</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton
                       isActive={currentPage === "advanced"}
                       onClick={() => setCurrentPage("advanced")}
                     >
                       <Sliders className="h-4 w-4" />
                       <span>Advanced Config</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton
-                      isActive={currentPage === "notifications"}
-                      onClick={() => setCurrentPage("notifications")}
-                    >
-                      <Bell className="h-4 w-4" />
-                      <span>Notifications</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 </SidebarMenu>
@@ -447,19 +508,27 @@ export default function App() {
               <h1 className="text-lg font-semibold">
                 {currentPage === "dashboard"
                   ? "Dashboard"
-                  : currentPage === "analytics"
-                    ? "Analytics"
-                    : currentPage === "users"
-                      ? "Users"
-                      : currentPage === "documents"
-                        ? "Documents"
-                        : currentPage === "preferences"
-                          ? "Preferences"
-                          : currentPage === "advanced"
-                            ? "Advanced Configuration"
-                            : currentPage === "notifications"
-                              ? "Notifications"
-                              : "Dashboard"}
+                  : currentPage === "advanced"
+                    ? "Advanced Configuration"
+                    : currentPage === "button"
+                      ? "Button"
+                      : currentPage === "badge"
+                        ? "Badge"
+                        : currentPage === "input"
+                          ? "Input"
+                          : currentPage === "checkbox"
+                            ? "Checkbox"
+                            : currentPage === "progress"
+                              ? "Progress"
+                              : currentPage === "alert"
+                                ? "Alert"
+                                : currentPage === "card"
+                                  ? "Card"
+                                  : currentPage === "table"
+                                    ? "Table"
+                                    : currentPage === "tabs"
+                                      ? "Tabs"
+                                      : "Dashboard"}
               </h1>
             </div>
             <div className="flex items-center gap-2">
