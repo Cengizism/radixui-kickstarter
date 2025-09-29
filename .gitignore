@@ -78,3 +78,6 @@ Thumbs.db
 
 # Temporary folder (to be processed)
 temp/
+
+# TanStack Router generated files
+src/routeTree.gen.ts

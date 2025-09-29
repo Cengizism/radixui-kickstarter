@@ -7,7 +7,7 @@ import tsParser from "@typescript-eslint/parser";
 
 export default [
   {
-    ignores: ["dist", "node_modules", "temp/**", "postcss.config.js"]
+    ignores: ["dist", "node_modules", "temp/**", "postcss.config.js", "src/routeTree.gen.ts"]
   },
   {
     files: ["**/*.{js,jsx,ts,tsx}"],
