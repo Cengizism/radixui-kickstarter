@@ -65,6 +65,9 @@ jspm_packages/
 .cache
 .parcel-cache
 
+# TanStack cache
+.tanstack/
+
 # IDE
 .vscode/
 .idea/
@@ -81,3 +84,5 @@ temp/
 
 # TanStack Router generated files
 src/routeTree.gen.ts
+*storybook.log
+storybook-static
