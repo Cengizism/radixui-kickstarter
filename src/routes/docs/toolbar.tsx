@@ -1,6 +1,6 @@
-import { Badge } from '@/components/ui/badge';
+import { Badge } from '@/components/ui/badge/badge';
 import { createFileRoute } from '@tanstack/react-router';
-import { Separator } from '@/components/ui/separator';
+import { Separator } from '@/components/ui/separator/separator';
 import { useState } from 'react';
 import {
   Toolbar,
@@ -9,7 +9,7 @@ import {
   ToolbarToggleGroup,
   ToolbarToggleItem,
   ToolbarSeparator,
-} from "@/components/ui/toolbar";
+} from "@/components/ui/toolbar/toolbar";
 import {
   Bold,
   Italic,

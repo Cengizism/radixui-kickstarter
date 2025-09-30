@@ -1,6 +1,6 @@
 import { AppHeader } from '@/components/AppHeader';
 import { createFileRoute } from '@tanstack/react-router';
-import { Input } from '@/components/ui/input';
+import { Input } from '@/components/ui/input/input';
 
 export const Route = createFileRoute("/docs/input")({
   component: InputRoute,

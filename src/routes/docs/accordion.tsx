@@ -5,7 +5,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from "@/components/ui/accordion/accordion";
 
 export const Route = createFileRoute("/docs/accordion")({
   component: AccordionRoute,

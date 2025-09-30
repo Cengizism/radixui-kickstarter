@@ -1,5 +1,7 @@
-import { useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { Badge } from '@/components/ui/badge/badge';
+import { Button } from '@/components/ui/button';
+import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -14,11 +16,27 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { MoreHorizontal, User, Settings, LogOut, Mail, MessageSquare, PlusCircle, UserPlus, CreditCard, Keyboard, Users } from "lucide-react";
+} from "@/components/ui/dropdown-menu/dropdown-menu";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card/card";
+import {
+  MoreHorizontal,
+  User,
+  Settings,
+  LogOut,
+  Mail,
+  MessageSquare,
+  PlusCircle,
+  UserPlus,
+  CreditCard,
+  Keyboard,
+  Users,
+} from "lucide-react";
 
 export const Route = createFileRoute("/docs/dropdown-menu")({
   component: DropdownMenuPage,
@@ -39,7 +57,8 @@ function DropdownMenuPage() {
       <div className="space-y-2">
         <h1 className="text-4xl font-bold tracking-tight">Dropdown Menu</h1>
         <p className="text-xl text-muted-foreground">
-          Displays a menu to the user—such as a set of actions or functions—triggered by a button.
+          Displays a menu to the user—such as a set of actions or
+          functions—triggered by a button.
         </p>
       </div>
 
@@ -52,7 +71,8 @@ function DropdownMenuPage() {
               <Badge variant="outline">Default</Badge>
             </CardTitle>
             <CardDescription>
-              Simple dropdown menu with items, separators, and keyboard shortcuts.
+              Simple dropdown menu with items, separators, and keyboard
+              shortcuts.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -256,25 +276,49 @@ function DropdownMenuPage() {
                 <DropdownMenuLabel>Theme</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuRadioGroup value={theme} onValueChange={setTheme}>
-                  <DropdownMenuRadioItem value="light">Light</DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="dark">Dark</DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="system">System</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="light">
+                    Light
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="dark">
+                    Dark
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="system">
+                    System
+                  </DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuLabel>Language</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuRadioGroup value={language} onValueChange={setLanguage}>
-                  <DropdownMenuRadioItem value="en">English</DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="fr">French</DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="de">German</DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="es">Spanish</DropdownMenuRadioItem>
+                <DropdownMenuRadioGroup
+                  value={language}
+                  onValueChange={setLanguage}
+                >
+                  <DropdownMenuRadioItem value="en">
+                    English
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="fr">
+                    French
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="de">
+                    German
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="es">
+                    Spanish
+                  </DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuLabel>People</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuRadioGroup value={person} onValueChange={setPerson}>
-                  <DropdownMenuRadioItem value="pedro">Pedro Duarte</DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="colm">Colm Tuite</DropdownMenuRadioItem>
+                <DropdownMenuRadioGroup
+                  value={person}
+                  onValueChange={setPerson}
+                >
+                  <DropdownMenuRadioItem value="pedro">
+                    Pedro Duarte
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="colm">
+                    Colm Tuite
+                  </DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -296,7 +340,9 @@ function DropdownMenuPage() {
             <div className="flex flex-wrap gap-2">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm">Small Menu</Button>
+                  <Button variant="outline" size="sm">
+                    Small Menu
+                  </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent size="sm">
                   <DropdownMenuItem>Profile</DropdownMenuItem>
@@ -464,8 +510,12 @@ function DropdownMenuPage() {
                 </DropdownMenuCheckboxItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuRadioGroup value={theme} onValueChange={setTheme}>
-                  <DropdownMenuRadioItem value="light">Light Mode</DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="dark">Dark Mode</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="light">
+                    Light Mode
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="dark">
+                    Dark Mode
+                  </DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem disabled>
@@ -497,11 +547,13 @@ function DropdownMenuPage() {
               <div>
                 <p className="text-sm font-medium mb-2">Current State:</p>
                 <ul className="text-sm space-y-1 text-muted-foreground">
-                  <li>Bookmarks: {bookmarksChecked ? 'Shown' : 'Hidden'}</li>
-                  <li>URLs: {urlsChecked ? 'Full' : 'Short'}</li>
+                  <li>Bookmarks: {bookmarksChecked ? "Shown" : "Hidden"}</li>
+                  <li>URLs: {urlsChecked ? "Full" : "Short"}</li>
                   <li>Theme: {theme}</li>
                   <li>Language: {language}</li>
-                  <li>Person: {person === 'pedro' ? 'Pedro Duarte' : 'Colm Tuite'}</li>
+                  <li>
+                    Person: {person === "pedro" ? "Pedro Duarte" : "Colm Tuite"}
+                  </li>
                 </ul>
               </div>
               <div>
@@ -511,9 +563,9 @@ function DropdownMenuPage() {
                   onClick={() => {
                     setBookmarksChecked(true);
                     setUrlsChecked(false);
-                    setTheme('system');
-                    setLanguage('en');
-                    setPerson('pedro');
+                    setTheme("system");
+                    setLanguage("en");
+                    setPerson("pedro");
                     setStatusChecked(false);
                     setActivityBarChecked(true);
                     setPanelChecked(false);
@@ -532,14 +584,15 @@ function DropdownMenuPage() {
         <CardHeader>
           <CardTitle>Usage Guide</CardTitle>
           <CardDescription>
-            Learn how to implement and customize Dropdown Menu components based on official RadixUI patterns.
+            Learn how to implement and customize Dropdown Menu components based
+            on official RadixUI patterns.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
             <h4 className="text-sm font-semibold mb-2">Basic Implementation</h4>
             <pre className="text-xs bg-muted p-4 rounded-md overflow-x-auto">
-{`<DropdownMenu>
+              {`<DropdownMenu>
   <DropdownMenuTrigger asChild>
     <Button>Open menu</Button>
   </DropdownMenuTrigger>
@@ -554,7 +607,7 @@ function DropdownMenuPage() {
           <div>
             <h4 className="text-sm font-semibold mb-2">With Submenus</h4>
             <pre className="text-xs bg-muted p-4 rounded-md overflow-x-auto">
-{`<DropdownMenuSub>
+              {`<DropdownMenuSub>
   <DropdownMenuSubTrigger>More options</DropdownMenuSubTrigger>
   <DropdownMenuSubContent>
     <DropdownMenuItem>Sub item 1</DropdownMenuItem>
@@ -567,7 +620,7 @@ function DropdownMenuPage() {
           <div>
             <h4 className="text-sm font-semibold mb-2">With Checkbox Items</h4>
             <pre className="text-xs bg-muted p-4 rounded-md overflow-x-auto">
-{`<DropdownMenuCheckboxItem 
+              {`<DropdownMenuCheckboxItem 
   checked={isChecked} 
   onCheckedChange={setIsChecked}
 >
@@ -579,7 +632,7 @@ function DropdownMenuPage() {
           <div>
             <h4 className="text-sm font-semibold mb-2">With Radio Groups</h4>
             <pre className="text-xs bg-muted p-4 rounded-md overflow-x-auto">
-{`<DropdownMenuRadioGroup value={theme} onValueChange={setTheme}>
+              {`<DropdownMenuRadioGroup value={theme} onValueChange={setTheme}>
   <DropdownMenuRadioItem value="light">Light</DropdownMenuRadioItem>
   <DropdownMenuRadioItem value="dark">Dark</DropdownMenuRadioItem>
 </DropdownMenuRadioGroup>`}
@@ -592,9 +645,15 @@ function DropdownMenuPage() {
               <div>
                 <p className="font-medium">Content Sizes:</p>
                 <ul className="space-y-1 text-muted-foreground">
-                  <li>• <code>sm</code> - Small menu</li>
-                  <li>• <code>default</code> - Standard menu</li>
-                  <li>• <code>lg</code> - Large menu</li>
+                  <li>
+                    • <code>sm</code> - Small menu
+                  </li>
+                  <li>
+                    • <code>default</code> - Standard menu
+                  </li>
+                  <li>
+                    • <code>lg</code> - Large menu
+                  </li>
                 </ul>
               </div>
               <div>

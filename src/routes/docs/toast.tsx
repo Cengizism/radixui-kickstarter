@@ -1,10 +1,10 @@
-import { Badge } from '@/components/ui/badge';
+import { Badge } from '@/components/ui/badge/badge';
 import { Button } from '@/components/ui/button';
 import { createFileRoute } from '@tanstack/react-router';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
-import { Switch } from '@/components/ui/switch';
+import { Input } from '@/components/ui/input/input';
+import { Label } from '@/components/ui/label/label';
+import { Separator } from '@/components/ui/separator/separator';
+import { Switch } from '@/components/ui/switch/switch';
 import { useEffect, useState } from 'react';
 import {
   Toast,
@@ -14,7 +14,7 @@ import {
   ToastProvider,
   ToastTitle,
   ToastViewport,
-} from "@/components/ui/toast";
+} from "@/components/ui/toast/toast";
 
 export const Route = createFileRoute("/docs/toast")({
   component: ToastDemo,

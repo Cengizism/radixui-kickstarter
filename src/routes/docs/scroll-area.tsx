@@ -1,7 +1,7 @@
-import { Badge } from '@/components/ui/badge';
+import { Badge } from '@/components/ui/badge/badge';
 import { Button } from '@/components/ui/button';
 import { createFileRoute } from '@tanstack/react-router';
-import { Separator } from '@/components/ui/separator';
+import { Separator } from '@/components/ui/separator/separator';
 import { useState } from 'react';
 import {
   ScrollArea,
@@ -10,7 +10,7 @@ import {
   ScrollAreaScrollbar,
   ScrollAreaThumb,
   ScrollAreaCorner,
-} from "@/components/ui/scroll-area";
+} from "@/components/ui/scroll-area/scroll-area";
 
 export const Route = createFileRoute("/docs/scroll-area")({
   component: ScrollAreaDemo,

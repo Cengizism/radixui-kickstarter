@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Badge } from '@/components/ui/badge';
+import { Badge } from '@/components/ui/badge/badge';
 import { createFileRoute } from '@tanstack/react-router';
 import {
   ExternalLink,
@@ -13,7 +13,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/card/card";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -23,7 +23,7 @@ import {
   NavigationMenuTrigger,
   NavigationMenuIndicator,
   navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
+} from "@/components/ui/navigation-menu/navigation-menu";
 
 function NavigationMenuDemo() {
   return (

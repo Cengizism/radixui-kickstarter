@@ -1,5 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { Badge } from '@/components/ui/badge/badge';
+import { Button } from '@/components/ui/button';
+import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
 import {
   ContextMenu,
   ContextMenuCheckboxItem,
@@ -15,9 +17,13 @@ import {
   ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card/card";
 
 export const Route = createFileRoute("/docs/context-menu")({
   component: ContextMenuPage,
@@ -35,7 +41,8 @@ function ContextMenuPage() {
       <div className="space-y-2">
         <h1 className="text-4xl font-bold tracking-tight">Context Menu</h1>
         <p className="text-xl text-muted-foreground">
-          Displays a menu located at the pointer, triggered by a right-click or a long-press.
+          Displays a menu located at the pointer, triggered by a right-click or
+          a long-press.
         </p>
       </div>
 
@@ -87,8 +94,12 @@ function ContextMenuPage() {
                 <ContextMenuRadioGroup value={person} onValueChange={setPerson}>
                   <ContextMenuLabel inset>People</ContextMenuLabel>
                   <ContextMenuSeparator />
-                  <ContextMenuRadioItem value="pedro">Pedro Duarte</ContextMenuRadioItem>
-                  <ContextMenuRadioItem value="colm">Colm Tuite</ContextMenuRadioItem>
+                  <ContextMenuRadioItem value="pedro">
+                    Pedro Duarte
+                  </ContextMenuRadioItem>
+                  <ContextMenuRadioItem value="colm">
+                    Colm Tuite
+                  </ContextMenuRadioItem>
                 </ContextMenuRadioGroup>
               </ContextMenuContent>
             </ContextMenu>
@@ -125,7 +136,9 @@ function ContextMenuPage() {
                   <ContextMenuShortcut>⇧⌘N</ContextMenuShortcut>
                 </ContextMenuItem>
                 <ContextMenuSub>
-                  <ContextMenuSubTrigger inset>More Tools</ContextMenuSubTrigger>
+                  <ContextMenuSubTrigger inset>
+                    More Tools
+                  </ContextMenuSubTrigger>
                   <ContextMenuSubContent className="w-48">
                     <ContextMenuItem>
                       Save Page As...
@@ -142,13 +155,19 @@ function ContextMenuPage() {
                   Show Bookmarks Bar
                   <ContextMenuShortcut>⌘⇧B</ContextMenuShortcut>
                 </ContextMenuCheckboxItem>
-                <ContextMenuCheckboxItem>Show Full URLs</ContextMenuCheckboxItem>
+                <ContextMenuCheckboxItem>
+                  Show Full URLs
+                </ContextMenuCheckboxItem>
                 <ContextMenuSeparator />
                 <ContextMenuRadioGroup value="pedro">
                   <ContextMenuLabel>People</ContextMenuLabel>
                   <ContextMenuSeparator />
-                  <ContextMenuRadioItem value="pedro">Pedro Duarte</ContextMenuRadioItem>
-                  <ContextMenuRadioItem value="colm">Colm Tuite</ContextMenuRadioItem>
+                  <ContextMenuRadioItem value="pedro">
+                    Pedro Duarte
+                  </ContextMenuRadioItem>
+                  <ContextMenuRadioItem value="colm">
+                    Colm Tuite
+                  </ContextMenuRadioItem>
                 </ContextMenuRadioGroup>
               </ContextMenuContent>
             </ContextMenu>
@@ -171,7 +190,9 @@ function ContextMenuPage() {
               <ContextMenuTrigger className="flex h-[150px] w-full items-center justify-center rounded-md border border-dashed bg-muted/50 text-sm">
                 📁 Documents Folder
                 <br />
-                <span className="text-xs text-muted-foreground">Right-click for file operations</span>
+                <span className="text-xs text-muted-foreground">
+                  Right-click for file operations
+                </span>
               </ContextMenuTrigger>
               <ContextMenuContent className="w-56">
                 <ContextMenuItem>Open</ContextMenuItem>
@@ -215,8 +236,12 @@ function ContextMenuPage() {
             <ContextMenu>
               <ContextMenuTrigger className="flex h-[150px] w-full items-center justify-center rounded-md border bg-background p-4 text-sm">
                 <div className="text-left">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  <p className="text-muted-foreground">Select text and right-click for options</p>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  </p>
+                  <p className="text-muted-foreground">
+                    Select text and right-click for options
+                  </p>
                 </div>
               </ContextMenuTrigger>
               <ContextMenuContent className="w-64">
@@ -250,9 +275,15 @@ function ContextMenuPage() {
                     <ContextMenuCheckboxItem>Underline</ContextMenuCheckboxItem>
                     <ContextMenuSeparator />
                     <ContextMenuRadioGroup value="left">
-                      <ContextMenuRadioItem value="left">Align Left</ContextMenuRadioItem>
-                      <ContextMenuRadioItem value="center">Align Center</ContextMenuRadioItem>
-                      <ContextMenuRadioItem value="right">Align Right</ContextMenuRadioItem>
+                      <ContextMenuRadioItem value="left">
+                        Align Left
+                      </ContextMenuRadioItem>
+                      <ContextMenuRadioItem value="center">
+                        Align Center
+                      </ContextMenuRadioItem>
+                      <ContextMenuRadioItem value="right">
+                        Align Right
+                      </ContextMenuRadioItem>
                     </ContextMenuRadioGroup>
                   </ContextMenuSubContent>
                 </ContextMenuSub>
@@ -286,7 +317,9 @@ function ContextMenuPage() {
                   <ContextMenuItem>Profile</ContextMenuItem>
                   <ContextMenuItem>Settings</ContextMenuItem>
                   <ContextMenuSeparator />
-                  <ContextMenuItem variant="destructive">Sign out</ContextMenuItem>
+                  <ContextMenuItem variant="destructive">
+                    Sign out
+                  </ContextMenuItem>
                 </ContextMenuContent>
               </ContextMenu>
 
@@ -329,7 +362,9 @@ function ContextMenuPage() {
               <ContextMenuTrigger className="flex h-[150px] w-full items-center justify-center rounded-md border border-dashed bg-accent/50 text-sm">
                 ⚙️ Application Window
                 <br />
-                <span className="text-xs text-muted-foreground">Right-click for settings</span>
+                <span className="text-xs text-muted-foreground">
+                  Right-click for settings
+                </span>
               </ContextMenuTrigger>
               <ContextMenuContent className="w-64">
                 <ContextMenuLabel>View Options</ContextMenuLabel>
@@ -353,9 +388,15 @@ function ContextMenuPage() {
                   <ContextMenuSubTrigger inset>Theme</ContextMenuSubTrigger>
                   <ContextMenuSubContent className="w-48">
                     <ContextMenuRadioGroup value="system">
-                      <ContextMenuRadioItem value="light">Light</ContextMenuRadioItem>
-                      <ContextMenuRadioItem value="dark">Dark</ContextMenuRadioItem>
-                      <ContextMenuRadioItem value="system">System</ContextMenuRadioItem>
+                      <ContextMenuRadioItem value="light">
+                        Light
+                      </ContextMenuRadioItem>
+                      <ContextMenuRadioItem value="dark">
+                        Dark
+                      </ContextMenuRadioItem>
+                      <ContextMenuRadioItem value="system">
+                        System
+                      </ContextMenuRadioItem>
                     </ContextMenuRadioGroup>
                   </ContextMenuSubContent>
                 </ContextMenuSub>
@@ -437,7 +478,9 @@ function ContextMenuPage() {
                   </ContextMenuSubContent>
                 </ContextMenuSub>
                 <ContextMenuSeparator />
-                <ContextMenuCheckboxItem>Pause on Exceptions</ContextMenuCheckboxItem>
+                <ContextMenuCheckboxItem>
+                  Pause on Exceptions
+                </ContextMenuCheckboxItem>
                 <ContextMenuSeparator />
                 <ContextMenuItem>
                   Reload
@@ -460,7 +503,8 @@ function ContextMenuPage() {
               <Badge variant="outline">Interactive</Badge>
             </CardTitle>
             <CardDescription>
-              Try different interactions with context menus and see state changes.
+              Try different interactions with context menus and see state
+              changes.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -468,11 +512,13 @@ function ContextMenuPage() {
               <div>
                 <p className="text-sm font-medium mb-2">Current State:</p>
                 <ul className="text-sm space-y-1 text-muted-foreground">
-                  <li>Bookmarks: {bookmarksChecked ? 'Shown' : 'Hidden'}</li>
-                  <li>URLs: {urlsChecked ? 'Full' : 'Short'}</li>
-                  <li>Person: {person === 'pedro' ? 'Pedro Duarte' : 'Colm Tuite'}</li>
-                  <li>Side Panel: {showPanel ? 'Shown' : 'Hidden'}</li>
-                  <li>Minimap: {showMinimap ? 'Shown' : 'Hidden'}</li>
+                  <li>Bookmarks: {bookmarksChecked ? "Shown" : "Hidden"}</li>
+                  <li>URLs: {urlsChecked ? "Full" : "Short"}</li>
+                  <li>
+                    Person: {person === "pedro" ? "Pedro Duarte" : "Colm Tuite"}
+                  </li>
+                  <li>Side Panel: {showPanel ? "Shown" : "Hidden"}</li>
+                  <li>Minimap: {showMinimap ? "Shown" : "Hidden"}</li>
                 </ul>
               </div>
               <div>
@@ -482,7 +528,7 @@ function ContextMenuPage() {
                   onClick={() => {
                     setBookmarksChecked(false);
                     setUrlsChecked(false);
-                    setPerson('pedro');
+                    setPerson("pedro");
                     setShowPanel(false);
                     setShowMinimap(true);
                   }}
@@ -507,7 +553,7 @@ function ContextMenuPage() {
           <div>
             <h4 className="text-sm font-semibold mb-2">Basic Implementation</h4>
             <pre className="text-xs bg-muted p-4 rounded-md overflow-x-auto">
-{`<ContextMenu>
+              {`<ContextMenu>
   <ContextMenuTrigger>Right click me</ContextMenuTrigger>
   <ContextMenuContent>
     <ContextMenuItem>Item 1</ContextMenuItem>
@@ -520,7 +566,7 @@ function ContextMenuPage() {
           <div>
             <h4 className="text-sm font-semibold mb-2">With Submenus</h4>
             <pre className="text-xs bg-muted p-4 rounded-md overflow-x-auto">
-{`<ContextMenuSub>
+              {`<ContextMenuSub>
   <ContextMenuSubTrigger>More Options</ContextMenuSubTrigger>
   <ContextMenuSubContent>
     <ContextMenuItem>Nested Item 1</ContextMenuItem>
@@ -533,7 +579,7 @@ function ContextMenuPage() {
           <div>
             <h4 className="text-sm font-semibold mb-2">With Checkbox Items</h4>
             <pre className="text-xs bg-muted p-4 rounded-md overflow-x-auto">
-{`<ContextMenuCheckboxItem 
+              {`<ContextMenuCheckboxItem 
   checked={isChecked} 
   onCheckedChange={setIsChecked}
 >
@@ -545,7 +591,7 @@ function ContextMenuPage() {
           <div>
             <h4 className="text-sm font-semibold mb-2">With Radio Groups</h4>
             <pre className="text-xs bg-muted p-4 rounded-md overflow-x-auto">
-{`<ContextMenuRadioGroup value={selected} onValueChange={setSelected}>
+              {`<ContextMenuRadioGroup value={selected} onValueChange={setSelected}>
   <ContextMenuRadioItem value="option1">Option 1</ContextMenuRadioItem>
   <ContextMenuRadioItem value="option2">Option 2</ContextMenuRadioItem>
 </ContextMenuRadioGroup>`}
@@ -558,17 +604,29 @@ function ContextMenuPage() {
               <div>
                 <p className="font-medium">Content Sizes:</p>
                 <ul className="space-y-1 text-muted-foreground">
-                  <li>• <code>sm</code> - Small menu</li>
-                  <li>• <code>default</code> - Standard menu</li>
-                  <li>• <code>lg</code> - Large menu</li>
+                  <li>
+                    • <code>sm</code> - Small menu
+                  </li>
+                  <li>
+                    • <code>default</code> - Standard menu
+                  </li>
+                  <li>
+                    • <code>lg</code> - Large menu
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="font-medium">Item Variants:</p>
                 <ul className="space-y-1 text-muted-foreground">
-                  <li>• <code>default</code> - Standard item</li>
-                  <li>• <code>destructive</code> - Destructive action</li>
-                  <li>• <code>inset</code> - Indented item</li>
+                  <li>
+                    • <code>default</code> - Standard item
+                  </li>
+                  <li>
+                    • <code>destructive</code> - Destructive action
+                  </li>
+                  <li>
+                    • <code>inset</code> - Indented item
+                  </li>
                 </ul>
               </div>
             </div>

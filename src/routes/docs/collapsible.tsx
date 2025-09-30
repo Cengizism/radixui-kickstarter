@@ -1,21 +1,21 @@
 import * as React from 'react';
 import { AppHeader } from '@/components/AppHeader';
-import { Badge } from '@/components/ui/badge';
+import { Badge } from '@/components/ui/badge/badge';
 import {
-    Bell,
-    File,
-    Folder,
-    Settings,
-    Star,
-    User
-    } from 'lucide-react';
+  Bell,
+  File,
+  Folder,
+  Settings,
+  Star,
+  User
+  } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { createFileRoute } from '@tanstack/react-router';
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+} from "@/components/ui/collapsible/collapsible";
 
 export const Route = createFileRoute("/docs/collapsible")({
   component: CollapsibleRoute,

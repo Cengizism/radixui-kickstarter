@@ -1,4 +1,4 @@
-import { Badge } from '@/components/ui/badge';
+import { Badge } from '@/components/ui/badge/badge';
 import { Button } from '@/components/ui/button';
 import {
   Cog,
@@ -8,9 +8,9 @@ import {
   X
   } from 'lucide-react';
 import { createFileRoute } from '@tanstack/react-router';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
+import { Input } from '@/components/ui/input/input';
+import { Label } from '@/components/ui/label/label';
+import { Separator } from '@/components/ui/separator/separator';
 import { useState } from 'react';
 import {
   Popover,
@@ -19,7 +19,7 @@ import {
   PopoverAnchor,
   PopoverClose,
   PopoverArrow,
-} from "@/components/ui/popover";
+} from "@/components/ui/popover/popover";
 
 export const Route = createFileRoute("/docs/popover")({
   component: PopoverDemo,

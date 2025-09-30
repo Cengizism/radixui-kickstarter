@@ -4,7 +4,7 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@/components/ui/avatar";
+} from "@/components/ui/avatar/avatar";
 
 export const Route = createFileRoute("/docs/avatar")({
   component: AvatarRoute,

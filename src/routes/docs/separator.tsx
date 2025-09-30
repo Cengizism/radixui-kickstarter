@@ -1,7 +1,7 @@
-import { Badge } from '@/components/ui/badge';
+import { Badge } from '@/components/ui/badge/badge';
 import { Button } from '@/components/ui/button';
 import { createFileRoute } from '@tanstack/react-router';
-import { Separator } from '@/components/ui/separator';
+import { Separator } from '@/components/ui/separator/separator';
 
 export const Route = createFileRoute("/docs/separator")({
   component: SeparatorDemo,

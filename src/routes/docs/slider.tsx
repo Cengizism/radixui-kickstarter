@@ -1,7 +1,7 @@
 import { AppHeader } from '@/components/AppHeader';
 import { createFileRoute } from '@tanstack/react-router';
-import { Label } from '@/components/ui/label';
-import { Slider } from '@/components/ui/slider';
+import { Label } from '@/components/ui/label/label';
+import { Slider } from '@/components/ui/slider/slider';
 import { useState } from 'react';
 
 export const Route = createFileRoute("/docs/slider")({

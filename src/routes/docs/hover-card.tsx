@@ -1,4 +1,4 @@
-import { Badge } from '@/components/ui/badge';
+import { Badge } from '@/components/ui/badge/badge';
 import { Button } from '@/components/ui/button';
 import { createFileRoute } from '@tanstack/react-router';
 import {
@@ -7,12 +7,12 @@ import {
   HoverCardContent,
   HoverCardArrowStyled,
   HoverCardProfile,
-} from "@/components/ui/hover-card";
+} from "@/components/ui/hover-card/hover-card";
 import {
   Avatar,
   AvatarImage,
   AvatarFallback,
-} from "@/components/ui/avatar";
+} from "@/components/ui/avatar/avatar";
 
 function HoverCardExample() {
   return (

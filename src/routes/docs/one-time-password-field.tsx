@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Badge } from '@/components/ui/badge';
+import { Badge } from '@/components/ui/badge/badge';
 import { Button } from '@/components/ui/button';
 import { createFileRoute } from '@tanstack/react-router';
-import { Label } from '@/components/ui/label';
+import { Label } from '@/components/ui/label/label';
 import { useState } from 'react';
 import {
   Card,
@@ -10,13 +10,13 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/card/card";
 import {
   OneTimePasswordField,
   OneTimePasswordFieldSlot,
   OneTimePasswordFieldGroup,
   OneTimePasswordFieldSeparator,
-} from "@/components/ui/one-time-password-field";
+} from "@/components/ui/one-time-password-field/one-time-password-field";
 
 function OneTimePasswordFieldDemo() {
   const [value1, setValue1] = useState("");

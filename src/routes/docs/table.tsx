@@ -7,7 +7,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/components/ui/table/table";
 
 export const Route = createFileRoute("/docs/table")({
   component: TableRoute,

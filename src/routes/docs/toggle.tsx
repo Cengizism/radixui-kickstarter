@@ -1,8 +1,8 @@
-import { Badge } from '@/components/ui/badge';
+import { Badge } from '@/components/ui/badge/badge';
 import { Button } from '@/components/ui/button';
 import { createFileRoute } from '@tanstack/react-router';
-import { Separator } from '@/components/ui/separator';
-import { Toggle } from '@/components/ui/toggle';
+import { Separator } from '@/components/ui/separator/separator';
+import { Toggle } from '@/components/ui/toggle/toggle';
 import { useState } from 'react';
 import {
   Bold,

@@ -8,7 +8,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../components/ui/card";
+} from "../components/ui/card/card";
 
 export const Route = createFileRoute("/$")({
   component: NotFoundPage,

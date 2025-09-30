@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AppHeader } from '@/components/AppHeader';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
+import { Checkbox } from '@/components/ui/checkbox/checkbox';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute("/docs/checkbox")({

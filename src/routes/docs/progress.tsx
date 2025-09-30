@@ -1,9 +1,9 @@
-import { Badge } from '@/components/ui/badge';
+import { Badge } from '@/components/ui/badge/badge';
 import { Button } from '@/components/ui/button';
 import { createFileRoute } from '@tanstack/react-router';
 import { Pause, Play, RotateCcw } from 'lucide-react';
-import { Progress } from '@/components/ui/progress';
-import { Separator } from '@/components/ui/separator';
+import { Progress } from '@/components/ui/progress/progress';
+import { Separator } from '@/components/ui/separator/separator';
 import { useEffect, useState } from 'react';
 
 export const Route = createFileRoute("/docs/progress")({
