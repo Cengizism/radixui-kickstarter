@@ -1,7 +1,7 @@
 import { Badge } from '../badge/badge';
-import { Button } from './button';
+import { Button } from '@/components/ui/button';
 import { Pause, Play, RotateCcw } from 'lucide-react';
-import { Progress } from './progress';
+import { Progress } from '@/components/ui/progress';
 import { useEffect, useState } from 'react';
 import type { Meta, StoryObj } from "@storybook/react-vite";
 

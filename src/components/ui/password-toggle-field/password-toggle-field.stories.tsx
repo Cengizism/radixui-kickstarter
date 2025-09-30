@@ -1,6 +1,6 @@
-import { Alert, AlertDescription } from './alert';
-import { Badge } from '../badge/badge';
-import { Button } from './button';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   CheckCircle2,
   Eye,
@@ -9,7 +9,7 @@ import {
   User,
   XCircle
   } from 'lucide-react';
-import { Label } from '../label/label';
+import { Label } from '@/components/ui/label';
 import { useState } from 'react';
 import {
   PasswordToggleFieldRoot,
@@ -24,7 +24,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../card/card";
+} from "@/components/ui/card";
 
 export default {
   title: "UI/PasswordToggleField",

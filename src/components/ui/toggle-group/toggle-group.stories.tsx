@@ -1,7 +1,7 @@
 import { Badge } from '../badge/badge';
-import { Button } from './button';
+import { Button } from '@/components/ui/button';
 import { Separator } from '../separator/separator';
-import { ToggleGroup, ToggleGroupItem } from './toggle-group';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { useState } from 'react';
 import {
   Card,

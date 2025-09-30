@@ -1,4 +1,4 @@
-import { Button } from './button';
+import { Button } from '@/components/ui/button';
 import { Input } from '../input/input';
 import { Label } from '../label/label';
 import { Textarea } from '../textarea/textarea';

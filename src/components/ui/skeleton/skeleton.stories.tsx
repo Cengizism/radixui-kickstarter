@@ -1,7 +1,7 @@
 import { Avatar } from '../avatar/avatar';
-import { Button } from './button';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '../card/card';
-import { Skeleton } from './skeleton';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default {
   title: "UI/Skeleton",

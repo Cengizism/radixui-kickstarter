@@ -1,6 +1,6 @@
-import { AspectRatio } from './aspect-ratio';
-import { Badge } from './badge';
-import { Card, CardContent } from './card';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
 
 export default {
   title: "UI/AspectRatio",

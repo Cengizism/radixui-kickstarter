@@ -1,4 +1,4 @@
-import { Alert, AlertDescription, AlertTitle } from './alert';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import {
   AlertCircle,

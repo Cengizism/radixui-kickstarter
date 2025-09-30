@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Label } from '../label/label';
-import { Switch, SwitchRoot, SwitchThumb } from './switch';
+import { Switch, SwitchRoot, SwitchThumb } from '@/components/ui/switch';
 
 export default {
   title: "UI/Switch",

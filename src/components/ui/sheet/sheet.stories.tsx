@@ -1,8 +1,8 @@
-import { Button } from './button';
-import { Input } from '../input/input';
-import { Label } from '../label/label';
-import { Separator } from '../separator/separator';
-import { Textarea } from '../textarea/textarea';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
+import { Textarea } from '@/components/ui/textarea';
 import { useState } from 'react';
 import {
   Sheet,

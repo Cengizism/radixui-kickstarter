@@ -1,4 +1,4 @@
-import { Badge } from './badge';
+import { Badge } from '@/components/ui/badge';
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta = {

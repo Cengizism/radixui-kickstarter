@@ -1,11 +1,11 @@
 import { AlertCircle, CreditCard, User } from 'lucide-react';
-import { Checkbox } from './checkbox/checkbox';
-import { Input } from './input';
-import { Label } from './label';
-import { RadioGroup, RadioGroupItem } from './radio-group';
-import { Separator } from './separator';
-import { Switch } from './switch';
-import { Textarea } from './textarea';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Separator } from '@/components/ui/separator';
+import { Switch } from '@/components/ui/switch';
+import { Textarea } from '@/components/ui/textarea';
 import { useState } from 'react';
 import {
   Form,
@@ -22,14 +22,14 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./select";
+} from "@/components/ui/select";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "./card/card";
+} from "@/components/ui/card";
 
 export default {
   title: "UI/Form",

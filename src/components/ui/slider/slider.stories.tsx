@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Button } from './button';
+import { Button } from '@/components/ui/button';
 import { Input } from '../input/input';
 import { Label } from '../label/label';
-import { Slider } from './slider';
+import { Slider } from '@/components/ui/slider';
 
 export default {
   title: "UI/Slider",

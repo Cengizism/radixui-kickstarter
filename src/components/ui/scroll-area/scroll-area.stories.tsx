@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback } from '../avatar/avatar';
 import { Badge } from '../badge/badge';
-import { Button } from './button';
-import { ScrollArea } from './scroll-area';
+import { Button } from '@/components/ui/button';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '../separator/separator';
 import {
   Card,

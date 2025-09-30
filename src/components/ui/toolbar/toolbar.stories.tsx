@@ -1,5 +1,5 @@
-import { Badge } from '../badge/badge';
-import { Button } from './button';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import {
   Toolbar,
@@ -8,7 +8,7 @@ import {
   ToolbarToggleGroup,
   ToolbarToggleItem,
   ToolbarSeparator,
-} from "./toolbar";
+} from "@/components/ui/toolbar";
 import {
   Card,
   CardContent,

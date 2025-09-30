@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Button } from './button';
+import { Button } from '@/components/ui/button';
 import { Label } from '../label/label';
-import { RadioGroup, RadioGroupItem } from './radio-group';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 export default {
   title: "UI/RadioGroup",

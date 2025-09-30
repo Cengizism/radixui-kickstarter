@@ -5,7 +5,7 @@ import {
   MoreHorizontal
   } from 'lucide-react';
 import { Badge } from '../badge/badge';
-import { Button } from './button';
+import { Button } from '@/components/ui/button';
 import { Checkbox } from '../checkbox/checkbox';
 import { useState } from 'react';
 import type { Meta, StoryObj } from "@storybook/react-vite";

@@ -1,8 +1,8 @@
 import { Badge } from '../badge/badge';
-import { Button } from './button';
+import { Button } from '@/components/ui/button';
 import { Checkbox } from '../checkbox/checkbox';
 import { Input } from '../input/input';
-import { Label } from './label';
+import { Label } from '@/components/ui/label';
 
 export default {
   title: "UI/Label",

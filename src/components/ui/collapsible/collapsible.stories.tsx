@@ -1,5 +1,5 @@
 import { Badge } from '../badge/badge';
-import { Button } from './button';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '../card/card';
 import { Separator } from '../separator/separator';
 import { useState } from 'react';

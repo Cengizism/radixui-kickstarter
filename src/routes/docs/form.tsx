@@ -323,7 +323,7 @@ function MultiStepForm() {
                 required
                 placeholder="Enter your first name"
                 value={formData.firstName}
-                onChange={(e) =>
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setFormData((prev) => ({
                     ...prev,
                     firstName: e.target.value,
@@ -341,7 +341,7 @@ function MultiStepForm() {
                 required
                 placeholder="Enter your last name"
                 value={formData.lastName}
-                onChange={(e) =>
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setFormData((prev) => ({ ...prev, lastName: e.target.value }))
                 }
               />
@@ -514,7 +514,9 @@ function ContactForm() {
               required
               placeholder="John"
               value={formData.firstName}
-              onChange={(e) => handleChange("firstName", e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleChange("firstName", e.target.value)
+              }
             />
             <FormMessage match="valueMissing">
               First name is required.
@@ -527,7 +529,9 @@ function ContactForm() {
               required
               placeholder="Doe"
               value={formData.lastName}
-              onChange={(e) => handleChange("lastName", e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleChange("lastName", e.target.value)
+              }
             />
             <FormMessage match="valueMissing">
               Last name is required.

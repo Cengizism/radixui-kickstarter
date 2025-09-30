@@ -1,5 +1,5 @@
 import { Badge } from '../badge/badge';
-import { Button } from './button';
+import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import {

@@ -1,12 +1,12 @@
-import { Badge } from '../badge/badge';
-import { Button } from './button';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
   SimpleTooltip,
-} from "./tooltip";
+} from "@/components/ui/tooltip";
 import {
   Plus,
   Minus,

@@ -1,5 +1,5 @@
-import { Badge } from './badge/badge';
-import { Card, CardContent } from './card/card';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
 import { useState } from 'react';
 import {
   ContextMenu,

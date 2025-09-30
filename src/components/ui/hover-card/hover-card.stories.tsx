@@ -1,8 +1,8 @@
-import { Avatar, AvatarFallback, AvatarImage } from '../avatar/avatar';
-import { Badge } from '../badge/badge';
-import { Button } from './button';
-import { Card, CardContent } from '../card/card';
-import { Separator } from '../separator/separator';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
 import {
   HoverCard,
   HoverCardContent,

@@ -1,4 +1,4 @@
-import { Button } from './button';
+import { Button } from '@/components/ui/button';
 import { Input } from '../input/input';
 import { Label } from '../label/label';
 import { Switch } from '../switch/switch';
@@ -7,7 +7,7 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger
-  } from './tabs';
+  } from '@/components/ui/tabs';
 import { useState } from 'react';
 import type { Meta, StoryObj } from "@storybook/react-vite";
 

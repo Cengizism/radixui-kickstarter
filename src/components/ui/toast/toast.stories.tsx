@@ -1,7 +1,7 @@
-import { Badge } from '../badge/badge';
-import { Button } from './button';
-import { Input } from '../input/input';
-import { Label } from '../label/label';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { useState } from 'react';
 import {
   Toast,
@@ -11,14 +11,14 @@ import {
   ToastDescription,
   ToastClose,
   ToastAction,
-} from "./toast";
+} from "@/components/ui/toast";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../card/card";
+} from "@/components/ui/card";
 import {
   CheckCircle,
   AlertCircle,

@@ -1,4 +1,4 @@
-import { Badge } from '../badge/badge';
+import { Badge } from '@/components/ui/badge';
 import {
   Accordion,
   AccordionContent,

@@ -1,6 +1,6 @@
 import { Badge } from '../badge/badge';
-import { Button } from './button';
-import { Separator } from './separator';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 
 export default {
   title: "UI/Separator",
