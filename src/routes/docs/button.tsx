@@ -1,5 +1,5 @@
 import { AppHeader } from '@/components/AppHeader';
-import { Button } from '@/components/ui/elements/button';
+import { Button } from '@/components/ui/button';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute("/docs/button")({

@@ -1,6 +1,6 @@
 import { AppHeader } from '@/components/AppHeader';
 import { createFileRoute } from '@tanstack/react-router';
-import { AspectRatio } from "@/components/ui/elements/aspect-ratio";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 export const Route = createFileRoute("/docs/aspect-ratio")({
   component: AspectRatioRoute,

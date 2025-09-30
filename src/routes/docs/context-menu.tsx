@@ -14,10 +14,10 @@ import {
   ContextMenuSubContent,
   ContextMenuSubTrigger,
   ContextMenuTrigger,
-} from "@/components/ui/modules/context-menu";
-import { Badge } from "@/components/ui/elements/badge";
-import { Button } from "@/components/ui/elements/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/modules/card";
+} from "@/components/ui/context-menu";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 export const Route = createFileRoute("/docs/context-menu")({
   component: ContextMenuPage,

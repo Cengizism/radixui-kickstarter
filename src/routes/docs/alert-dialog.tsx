@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { AppHeader } from '@/components/AppHeader';
-import { Button } from '@/components/ui/elements/button';
+import { Button } from '@/components/ui/button';
 import { createFileRoute } from '@tanstack/react-router';
 import {
   AlertDialog,
@@ -12,7 +12,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/modules/alert-dialog";
+} from "@/components/ui/alert-dialog";
 
 export const Route = createFileRoute("/docs/alert-dialog")({
   component: AlertDialogRoute,

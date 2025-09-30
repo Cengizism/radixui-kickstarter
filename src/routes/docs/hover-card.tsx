@@ -1,5 +1,5 @@
-import { Badge } from '@/components/ui/elements/badge';
-import { Button } from '@/components/ui/elements/button';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { createFileRoute } from '@tanstack/react-router';
 import {
   HoverCard,
@@ -7,12 +7,12 @@ import {
   HoverCardContent,
   HoverCardArrowStyled,
   HoverCardProfile,
-} from "@/components/ui/modules/hover-card";
+} from "@/components/ui/hover-card";
 import {
   Avatar,
   AvatarImage,
   AvatarFallback,
-} from "@/components/ui/elements/avatar";
+} from "@/components/ui/avatar";
 
 function HoverCardExample() {
   return (

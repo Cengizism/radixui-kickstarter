@@ -6,7 +6,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/modules/card";
+} from "@/components/ui/card";
 
 export const Route = createFileRoute("/docs/card")({
   component: CardRoute,

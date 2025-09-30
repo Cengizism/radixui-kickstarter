@@ -1,7 +1,7 @@
-import { Badge } from '@/components/ui/elements/badge';
-import { Button } from '@/components/ui/elements/button';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { createFileRoute } from '@tanstack/react-router';
-import { Label } from '@/components/ui/elements/label';
+import { Label } from '@/components/ui/label';
 import { Lock, Unlock } from 'lucide-react';
 import { useState } from 'react';
 import {
@@ -10,14 +10,14 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/modules/card";
+} from "@/components/ui/card";
 import {
   PasswordToggleFieldRoot,
   PasswordToggleFieldInput,
   PasswordToggleFieldToggle,
   PasswordToggleFieldIcon,
   PasswordToggleFieldSlot,
-} from "@/components/ui/elements/password-toggle-field";
+} from "@/components/ui/password-toggle-field";
 
 function PasswordToggleFieldDemo() {
   const [password, setPassword] = useState("");

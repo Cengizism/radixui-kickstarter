@@ -1,5 +1,5 @@
-import { Badge } from '@/components/ui/elements/badge';
-import { Button } from '@/components/ui/elements/button';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   Cog,
   Info,
@@ -8,9 +8,9 @@ import {
   X
   } from 'lucide-react';
 import { createFileRoute } from '@tanstack/react-router';
-import { Input } from '@/components/ui/elements/input';
-import { Label } from '@/components/ui/elements/label';
-import { Separator } from '@/components/ui/elements/separator';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
 import { useState } from 'react';
 import {
   Popover,
@@ -19,7 +19,7 @@ import {
   PopoverAnchor,
   PopoverClose,
   PopoverArrow,
-} from "@/components/ui/modules/popover";
+} from "@/components/ui/popover";
 
 export const Route = createFileRoute("/docs/popover")({
   component: PopoverDemo,

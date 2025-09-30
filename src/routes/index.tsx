@@ -1,5 +1,5 @@
 import { AppHeader } from '@/components/AppHeader';
-import { Badge } from '@/components/ui/elements/badge';
+import { Badge } from '@/components/ui/badge';
 import { createFileRoute } from '@tanstack/react-router';
 import { ExternalLink } from 'lucide-react';
 import {
@@ -8,7 +8,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../components/ui/modules/card";
+} from "../components/ui/card";
 
 export const Route = createFileRoute("/")({
   component: HomePage,

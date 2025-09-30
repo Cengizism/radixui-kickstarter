@@ -1,7 +1,7 @@
-import { Badge } from '@/components/ui/elements/badge';
-import { Button } from '@/components/ui/elements/button';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { createFileRoute } from '@tanstack/react-router';
-import { Separator } from '@/components/ui/elements/separator';
+import { Separator } from '@/components/ui/separator';
 import { useState } from 'react';
 import {
   Select,
@@ -12,7 +12,7 @@ import {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/modules/select";
+} from "@/components/ui/select";
 
 export const Route = createFileRoute("/docs/select")({
   component: SelectDemo,

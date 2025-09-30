@@ -1,17 +1,12 @@
-import { Badge } from '@/components/ui/elements/badge';
-import { Button } from '@/components/ui/elements/button';
-import { createFileRoute } from '@tanstack/react-router';
-import { Input } from '@/components/ui/elements/input';
-import { Label } from '@/components/ui/elements/label';
-import { Separator } from '@/components/ui/elements/separator';
-import { Switch } from '@/components/ui/elements/switch';
-import { useState } from 'react';
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/modules/tabs";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { createFileRoute } from "@tanstack/react-router";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+import { Switch } from "@/components/ui/switch";
+import { useState } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const Route = createFileRoute("/docs/tabs")({
   component: TabsDemo,

@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { Button } from '@/components/ui/elements/button';
+import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { cva, VariantProps } from 'class-variance-authority';
-import { Input } from '@/components/ui/elements/input';
+import { Input } from '@/components/ui/input';
 import { PanelLeft } from 'lucide-react';
-import { Separator } from '@/components/ui/elements/separator';
-import { Skeleton } from '@/components/ui/elements/skeleton';
+import { Separator } from '@/components/ui/separator';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Slot } from 'radix-ui';
-import { useIsMobile } from '@/components/ui/elements/use-mobile';
+import { useIsMobile } from '@/components/ui/use-mobile';
 ("use client");
 
 import {
@@ -16,13 +16,13 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "./sheet";
+} from "@/components/ui/sheet";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../elements/tooltip";
+} from "@/components/ui/tooltip";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;

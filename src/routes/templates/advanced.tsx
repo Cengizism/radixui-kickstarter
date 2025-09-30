@@ -1,31 +1,31 @@
 import { AppHeader } from '@/components/AppHeader';
-import { Badge } from '@/components/ui/elements/badge';
-import { Button } from '@/components/ui/elements/button';
-import { Checkbox } from '@/components/ui/elements/checkbox';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { createFileRoute } from '@tanstack/react-router';
-import { Input } from '@/components/ui/elements/input';
-import { Label } from '@/components/ui/elements/label';
-import { Textarea } from '@/components/ui/elements/textarea';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { useState } from 'react';
 import {
   Alert,
   AlertDescription,
   AlertTitle,
-} from "@/components/ui/modules/alert";
+} from "@/components/ui/alert";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/modules/card";
+} from "@/components/ui/card";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/modules/select";
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -33,7 +33,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/modules/table";
+} from "@/components/ui/table";
 import {
   AlertCircle,
   CheckCircle,

@@ -1,7 +1,7 @@
-import { Badge } from '@/components/ui/elements/badge';
-import { Button } from '@/components/ui/elements/button';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { createFileRoute } from '@tanstack/react-router';
-import { Separator } from '@/components/ui/elements/separator';
+import { Separator } from '@/components/ui/separator';
 import { useState } from 'react';
 import {
   Tooltip,
@@ -9,7 +9,7 @@ import {
   TooltipContent,
   TooltipProvider,
   SimpleTooltip,
-} from "@/components/ui/elements/tooltip";
+} from "@/components/ui/tooltip";
 import {
   Plus,
   Minus,

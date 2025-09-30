@@ -1,9 +1,9 @@
-import { Badge } from '@/components/ui/elements/badge';
-import { Button } from '@/components/ui/elements/button';
-import { Checkbox } from '@/components/ui/elements/checkbox';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { createFileRoute } from '@tanstack/react-router';
-import { Input } from '@/components/ui/elements/input';
-import { Label } from '@/components/ui/elements/label';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 function LabelExample() {
   return (

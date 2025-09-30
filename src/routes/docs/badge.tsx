@@ -1,5 +1,5 @@
 import { AppHeader } from '@/components/AppHeader';
-import { Badge } from '@/components/ui/elements/badge';
+import { Badge } from '@/components/ui/badge';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute("/docs/badge")({

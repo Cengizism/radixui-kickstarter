@@ -14,10 +14,10 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/components/ui/modules/dropdown-menu";
-import { Badge } from "@/components/ui/elements/badge";
-import { Button } from "@/components/ui/elements/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/modules/card";
+} from "@/components/ui/dropdown-menu";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { MoreHorizontal, User, Settings, LogOut, Mail, MessageSquare, PlusCircle, UserPlus, CreditCard, Keyboard, Users } from "lucide-react";
 
 export const Route = createFileRoute("/docs/dropdown-menu")({

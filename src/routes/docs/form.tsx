@@ -7,7 +7,7 @@ import {
   FormLabel,
   FormMessage,
   FormSubmit,
-} from "@/components/ui/modules/form";
+} from "@/components/ui/form";
 
 function FormExample() {
   return (

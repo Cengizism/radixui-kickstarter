@@ -1,14 +1,14 @@
-import { Badge } from '@/components/ui/elements/badge';
-import { Button } from '@/components/ui/elements/button';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { createFileRoute } from '@tanstack/react-router';
-import { Label } from '@/components/ui/elements/label';
-import { Separator } from '@/components/ui/elements/separator';
+import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
 import { useState } from 'react';
 import {
   Switch,
   SwitchRoot,
   SwitchThumb,
-} from "@/components/ui/elements/switch";
+} from "@/components/ui/switch";
 
 export const Route = createFileRoute("/docs/switch")({
   component: SwitchDemo,

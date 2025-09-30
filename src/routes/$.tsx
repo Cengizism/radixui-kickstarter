@@ -1,5 +1,5 @@
 import { AppHeader } from '@/components/AppHeader';
-import { Button } from '@/components/ui/elements/button';
+import { Button } from '@/components/ui/button';
 import { createFileRoute } from '@tanstack/react-router';
 import { Link } from '@tanstack/react-router';
 import {
@@ -8,7 +8,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../components/ui/modules/card";
+} from "../components/ui/card";
 
 export const Route = createFileRoute("/$")({
   component: NotFoundPage,

@@ -5,7 +5,7 @@ import {
   Alert,
   AlertDescription,
   AlertTitle,
-} from "@/components/ui/modules/alert";
+} from "@/components/ui/alert";
 
 export const Route = createFileRoute("/docs/alert")({
   component: AlertRoute,

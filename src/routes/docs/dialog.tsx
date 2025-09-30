@@ -1,9 +1,9 @@
-import { Badge } from '@/components/ui/elements/badge';
-import { Button } from '@/components/ui/elements/button';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { createFileRoute } from '@tanstack/react-router';
-import { Input } from '@/components/ui/elements/input';
-import { Label } from '@/components/ui/elements/label';
-import { Textarea } from '@/components/ui/elements/textarea';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { useState } from 'react';
 import {
   Card,
@@ -11,7 +11,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/modules/card";
+} from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -21,7 +21,7 @@ import {
   DialogTrigger,
   DialogFooter,
   DialogClose,
-} from "@/components/ui/modules/dialog";
+} from "@/components/ui/dialog";
 
 export const Route = createFileRoute("/docs/dialog")({
   component: DialogPage,

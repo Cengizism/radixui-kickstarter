@@ -1,13 +1,13 @@
-import { Badge } from '@/components/ui/elements/badge';
-import { Button } from '@/components/ui/elements/button';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { createFileRoute } from '@tanstack/react-router';
-import { Label } from '@/components/ui/elements/label';
-import { Separator } from '@/components/ui/elements/separator';
+import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
 import { useState } from 'react';
 import {
   RadioGroup,
   RadioGroupItem,
-} from "@/components/ui/elements/radio-group";
+} from "@/components/ui/radio-group";
 
 export const Route = createFileRoute("/docs/radio-group")({
   component: RadioGroupDemo,

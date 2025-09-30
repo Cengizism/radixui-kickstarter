@@ -1,4 +1,4 @@
-import { Badge } from '@/components/ui/elements/badge';
+import { Badge } from '@/components/ui/badge';
 import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
 import {
@@ -17,7 +17,7 @@ import {
   MenubarSubContent,
   MenubarSubTrigger,
   MenubarPortal,
-} from "@/components/ui/modules/menubar";
+} from "@/components/ui/menubar";
 
 function MenubarExample() {
   const [checkedItems, setCheckedItems] = useState([
