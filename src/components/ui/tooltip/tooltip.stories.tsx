@@ -1,3 +1,4 @@
+import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -50,6 +51,138 @@ export default {
     layout: "centered",
   },
   argTypes: {
+    // Provider Props
+    delayDuration: {
+      control: { type: "number", min: 0, max: 2000 },
+      description:
+        "The duration from when the mouse enters a tooltip trigger until the tooltip opens.",
+      table: { category: "Provider Props" },
+    },
+    skipDelayDuration: {
+      control: { type: "number", min: 0, max: 1000 },
+      description:
+        "When moving from one tooltip trigger to another, the delay before showing.",
+      table: { category: "Provider Props" },
+    },
+    disableHoverableContent: {
+      control: "boolean",
+      description: "When true, tooltips will not be hoverable.",
+      table: { category: "Provider Props" },
+    },
+
+    // Root Props
+    defaultOpen: {
+      control: "boolean",
+      description:
+        "The open state of the tooltip when it is initially rendered.",
+      table: { category: "Root Props" },
+    },
+    open: {
+      control: "boolean",
+      description: "The controlled open state of the tooltip.",
+      table: { category: "Root Props" },
+    },
+    onOpenChange: {
+      action: "onOpenChange",
+      description:
+        "Event handler called when the open state of the tooltip changes.",
+      table: { category: "Root Props" },
+    },
+
+    // Trigger Props
+    triggerAsChild: {
+      control: "boolean",
+      description: "Change the default rendered element for the trigger.",
+      table: { category: "Trigger Props" },
+    },
+
+    // Content Props
+    contentAsChild: {
+      control: "boolean",
+      description: "Change the default rendered element for the content.",
+      table: { category: "Content Props" },
+    },
+    aria: {
+      control: "text",
+      description:
+        "By default, screen readers will announce the content inside the component.",
+      table: { category: "Content Props" },
+    },
+    onEscapeKeyDown: {
+      action: "onEscapeKeyDown",
+      description: "Event handler called when the escape key is down.",
+      table: { category: "Content Props" },
+    },
+    onPointerDownOutside: {
+      action: "onPointerDownOutside",
+      description:
+        "Event handler called when a pointer event occurs outside the bounds.",
+      table: { category: "Content Props" },
+    },
+    forceMount: {
+      control: "boolean",
+      description: "Used to force mounting when more control is needed.",
+      table: { category: "Content Props" },
+    },
+    side: {
+      control: "select",
+      options: ["top", "right", "bottom", "left"],
+      description: "The preferred side of the trigger to render against.",
+      table: { category: "Content Props" },
+    },
+    sideOffset: {
+      control: { type: "number", min: -50, max: 50 },
+      description: "The distance in pixels from the trigger.",
+      table: { category: "Content Props" },
+    },
+    align: {
+      control: "select",
+      options: ["start", "center", "end"],
+      description: "The preferred alignment against the trigger.",
+      table: { category: "Content Props" },
+    },
+    alignOffset: {
+      control: { type: "number", min: -50, max: 50 },
+      description:
+        'An offset in pixels from the "start" or "end" alignment options.',
+      table: { category: "Content Props" },
+    },
+    avoidCollisions: {
+      control: "boolean",
+      description:
+        "When true, overrides the side and align to prevent collisions with boundary edges.",
+      table: { category: "Content Props" },
+    },
+    collisionBoundary: {
+      control: "object",
+      description: "The element used as the collision boundary.",
+      table: { category: "Content Props" },
+    },
+    collisionPadding: {
+      control: { type: "number", min: 0, max: 50 },
+      description:
+        "The distance in pixels from the boundary edges where collision detection should occur.",
+      table: { category: "Content Props" },
+    },
+    arrowPadding: {
+      control: { type: "number", min: 0, max: 20 },
+      description:
+        "The padding between the arrow and the edges of the content.",
+      table: { category: "Content Props" },
+    },
+    sticky: {
+      control: "select",
+      options: ["partial", "always"],
+      description: "The sticky behavior on the align axis.",
+      table: { category: "Content Props" },
+    },
+    hideWhenDetached: {
+      control: "boolean",
+      description: "Whether to hide when the trigger becomes fully occluded.",
+      table: { category: "Content Props" },
+    },
+
+    // Custom Style Props
     variant: {
       control: "select",
       options: [
@@ -63,21 +196,16 @@ export default {
         "dark",
         "light",
       ],
+      table: { category: "Style Props" },
     },
     size: {
       control: "select",
       options: ["sm", "default", "lg"],
-    },
-    side: {
-      control: "select",
-      options: ["top", "right", "bottom", "left"],
-    },
-    align: {
-      control: "select",
-      options: ["start", "center", "end"],
+      table: { category: "Style Props" },
     },
     showArrow: {
       control: "boolean",
+      table: { category: "Style Props" },
     },
   },
 };
@@ -662,4 +790,553 @@ Playground.args = {
   align: "center",
   showArrow: true,
   sideOffset: 4,
+};
+
+// Advanced Examples
+export const AdvancedTooltipSystem = {
+  render: () => {
+    const [tooltipSettings, setTooltipSettings] = React.useState({
+      delayDuration: 700,
+      skipDelayDuration: 300,
+      disableHoverableContent: false,
+      globalDisabled: false,
+    });
+
+    const [interactionStats, setInteractionStats] = React.useState({
+      totalHovers: 0,
+      currentlyOpen: 0,
+      mostUsedTooltip: "",
+      tooltipCounts: {} as Record<string, number>,
+    });
+
+    const trackTooltipInteraction = (tooltipId: string, isOpening: boolean) => {
+      setInteractionStats((prev) => {
+        const newStats = { ...prev };
+
+        if (isOpening) {
+          newStats.totalHovers += 1;
+          newStats.currentlyOpen += 1;
+          newStats.tooltipCounts[tooltipId] =
+            (newStats.tooltipCounts[tooltipId] || 0) + 1;
+
+          // Update most used tooltip
+          const maxCount = Math.max(...Object.values(newStats.tooltipCounts));
+          newStats.mostUsedTooltip =
+            Object.entries(newStats.tooltipCounts).find(
+              ([_, count]) => count === maxCount
+            )?.[0] || "";
+        } else {
+          newStats.currentlyOpen = Math.max(0, newStats.currentlyOpen - 1);
+        }
+
+        return newStats;
+      });
+    };
+
+    const resetStats = () => {
+      setInteractionStats({
+        totalHovers: 0,
+        currentlyOpen: 0,
+        mostUsedTooltip: "",
+        tooltipCounts: {},
+      });
+    };
+
+    const TooltipWrapper: React.FC<{
+      children: React.ReactNode;
+      content: React.ReactNode;
+      tooltipId: string;
+      variant?: string;
+      side?: "top" | "bottom" | "left" | "right";
+      [key: string]: any;
+    }> = ({ children, content, tooltipId, ...props }) => {
+      if (tooltipSettings.globalDisabled) {
+        return <>{children}</>;
+      }
+
+      return (
+        <Tooltip
+          onOpenChange={(open) => trackTooltipInteraction(tooltipId, open)}
+          {...props}
+        >
+          <TooltipTrigger asChild>{children}</TooltipTrigger>
+          <TooltipContent {...props}>{content}</TooltipContent>
+        </Tooltip>
+      );
+    };
+
+    return (
+      <TooltipProvider
+        delayDuration={tooltipSettings.delayDuration}
+        skipDelayDuration={tooltipSettings.skipDelayDuration}
+        disableHoverableContent={tooltipSettings.disableHoverableContent}
+      >
+        <div className="max-w-6xl space-y-8">
+          <div>
+            <h3 className="text-lg font-semibold mb-4">
+              Advanced Tooltip System
+            </h3>
+
+            {/* Configuration Panel */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 p-4 bg-muted rounded-lg">
+              <div className="space-y-2">
+                <label className="text-sm font-medium">
+                  Delay Duration ({tooltipSettings.delayDuration}ms)
+                </label>
+                <input
+                  type="range"
+                  min="0"
+                  max="2000"
+                  step="100"
+                  value={tooltipSettings.delayDuration}
+                  onChange={(e) =>
+                    setTooltipSettings((prev) => ({
+                      ...prev,
+                      delayDuration: parseInt(e.target.value),
+                    }))
+                  }
+                  className="w-full"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium">
+                  Skip Delay ({tooltipSettings.skipDelayDuration}ms)
+                </label>
+                <input
+                  type="range"
+                  min="0"
+                  max="1000"
+                  step="50"
+                  value={tooltipSettings.skipDelayDuration}
+                  onChange={(e) =>
+                    setTooltipSettings((prev) => ({
+                      ...prev,
+                      skipDelayDuration: parseInt(e.target.value),
+                    }))
+                  }
+                  className="w-full"
+                />
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  id="disableHoverable"
+                  checked={tooltipSettings.disableHoverableContent}
+                  onChange={(e) =>
+                    setTooltipSettings((prev) => ({
+                      ...prev,
+                      disableHoverableContent: e.target.checked,
+                    }))
+                  }
+                />
+                <label htmlFor="disableHoverable" className="text-sm">
+                  Disable Hoverable Content
+                </label>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  id="globalDisabled"
+                  checked={tooltipSettings.globalDisabled}
+                  onChange={(e) =>
+                    setTooltipSettings((prev) => ({
+                      ...prev,
+                      globalDisabled: e.target.checked,
+                    }))
+                  }
+                />
+                <label htmlFor="globalDisabled" className="text-sm">
+                  Disable All Tooltips
+                </label>
+              </div>
+            </div>
+          </div>
+
+          {/* Interactive Dashboard */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <h4 className="font-medium">Interactive Dashboard</h4>
+              <div className="p-6 border rounded-lg bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950 dark:to-indigo-950">
+                <div className="grid grid-cols-3 gap-4 mb-6">
+                  <TooltipWrapper
+                    tooltipId="cpu-usage"
+                    content={
+                      <div className="space-y-2 max-w-xs">
+                        <div className="font-medium">CPU Usage</div>
+                        <div className="text-sm">Current: 68%</div>
+                        <div className="w-full bg-muted rounded-full h-2">
+                          <div
+                            className="bg-yellow-500 h-2 rounded-full"
+                            style={{ width: "68%" }}
+                          />
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          Last updated: 2s ago
+                        </div>
+                      </div>
+                    }
+                    variant="warning"
+                    side="top"
+                  >
+                    <div className="p-3 bg-white dark:bg-gray-800 rounded-lg border shadow-sm cursor-help">
+                      <div className="text-2xl font-bold text-yellow-600">
+                        68%
+                      </div>
+                      <div className="text-sm text-muted-foreground">CPU</div>
+                    </div>
+                  </TooltipWrapper>
+
+                  <TooltipWrapper
+                    tooltipId="memory-usage"
+                    content={
+                      <div className="space-y-2 max-w-xs">
+                        <div className="font-medium">Memory Usage</div>
+                        <div className="text-sm">8.2GB / 16GB (51%)</div>
+                        <div className="w-full bg-muted rounded-full h-2">
+                          <div
+                            className="bg-blue-500 h-2 rounded-full"
+                            style={{ width: "51%" }}
+                          />
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          Available: 7.8GB
+                        </div>
+                      </div>
+                    }
+                    variant="info"
+                    side="top"
+                  >
+                    <div className="p-3 bg-white dark:bg-gray-800 rounded-lg border shadow-sm cursor-help">
+                      <div className="text-2xl font-bold text-blue-600">
+                        8.2GB
+                      </div>
+                      <div className="text-sm text-muted-foreground">RAM</div>
+                    </div>
+                  </TooltipWrapper>
+
+                  <TooltipWrapper
+                    tooltipId="disk-usage"
+                    content={
+                      <div className="space-y-2 max-w-xs">
+                        <div className="font-medium">Disk Usage</div>
+                        <div className="text-sm">245GB / 512GB (48%)</div>
+                        <div className="w-full bg-muted rounded-full h-2">
+                          <div
+                            className="bg-green-500 h-2 rounded-full"
+                            style={{ width: "48%" }}
+                          />
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          Free space: 267GB
+                        </div>
+                      </div>
+                    }
+                    variant="success"
+                    side="top"
+                  >
+                    <div className="p-3 bg-white dark:bg-gray-800 rounded-lg border shadow-sm cursor-help">
+                      <div className="text-2xl font-bold text-green-600">
+                        245GB
+                      </div>
+                      <div className="text-sm text-muted-foreground">
+                        Storage
+                      </div>
+                    </div>
+                  </TooltipWrapper>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <TooltipWrapper
+                    tooltipId="network-status"
+                    content={
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                          <Wifi className="h-4 w-4 text-green-500" />
+                          <span className="font-medium">Network Connected</span>
+                        </div>
+                        <div className="text-sm space-y-1">
+                          <div>Download: 150 Mbps</div>
+                          <div>Upload: 50 Mbps</div>
+                          <div>Ping: 12ms</div>
+                        </div>
+                      </div>
+                    }
+                    variant="success"
+                    side="right"
+                  >
+                    <div className="flex items-center gap-3 p-3 bg-white dark:bg-gray-800 rounded-lg border shadow-sm cursor-help">
+                      <Wifi className="h-5 w-5 text-green-500" />
+                      <div>
+                        <div className="font-medium">Connected</div>
+                        <div className="text-sm text-muted-foreground">
+                          150 Mbps
+                        </div>
+                      </div>
+                    </div>
+                  </TooltipWrapper>
+
+                  <TooltipWrapper
+                    tooltipId="security-status"
+                    content={
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                          <Shield className="h-4 w-4 text-green-500" />
+                          <span className="font-medium">Security Active</span>
+                        </div>
+                        <div className="text-sm space-y-1">
+                          <div>Firewall: Enabled</div>
+                          <div>Antivirus: Up to date</div>
+                          <div>Last scan: 1 hour ago</div>
+                        </div>
+                      </div>
+                    }
+                    variant="success"
+                    side="left"
+                  >
+                    <div className="flex items-center gap-3 p-3 bg-white dark:bg-gray-800 rounded-lg border shadow-sm cursor-help">
+                      <Shield className="h-5 w-5 text-green-500" />
+                      <div>
+                        <div className="font-medium">Protected</div>
+                        <div className="text-sm text-muted-foreground">
+                          All systems
+                        </div>
+                      </div>
+                    </div>
+                  </TooltipWrapper>
+                </div>
+              </div>
+            </div>
+
+            {/* Media Player Interface */}
+            <div className="space-y-4">
+              <h4 className="font-medium">Media Player Controls</h4>
+              <div className="p-6 border rounded-lg bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950 dark:to-pink-950">
+                <div className="flex flex-col items-center space-y-4">
+                  <div className="w-48 h-32 bg-white dark:bg-gray-800 rounded-lg border shadow-sm flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="text-lg font-semibold">Now Playing</div>
+                      <div className="text-sm text-muted-foreground">
+                        Ambient Sounds
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <TooltipWrapper
+                      tooltipId="shuffle"
+                      content="Shuffle playlist"
+                      variant="default"
+                      side="top"
+                    >
+                      <Button variant="ghost" size="sm">
+                        <Shuffle className="h-4 w-4" />
+                      </Button>
+                    </TooltipWrapper>
+
+                    <TooltipWrapper
+                      tooltipId="previous"
+                      content="Previous track (Shift + ←)"
+                      variant="default"
+                      side="top"
+                    >
+                      <Button variant="ghost" size="sm">
+                        <SkipBack className="h-4 w-4" />
+                      </Button>
+                    </TooltipWrapper>
+
+                    <TooltipWrapper
+                      tooltipId="play-pause"
+                      content={
+                        <div className="space-y-1">
+                          <div className="font-medium">Play/Pause</div>
+                          <div className="text-xs">Spacebar or Click</div>
+                        </div>
+                      }
+                      variant="accent"
+                      side="top"
+                    >
+                      <Button size="lg" className="rounded-full">
+                        <Play className="h-6 w-6" />
+                      </Button>
+                    </TooltipWrapper>
+
+                    <TooltipWrapper
+                      tooltipId="next"
+                      content="Next track (Shift + →)"
+                      variant="default"
+                      side="top"
+                    >
+                      <Button variant="ghost" size="sm">
+                        <SkipForward className="h-4 w-4" />
+                      </Button>
+                    </TooltipWrapper>
+
+                    <TooltipWrapper
+                      tooltipId="repeat"
+                      content="Repeat mode: Off"
+                      variant="default"
+                      side="top"
+                    >
+                      <Button variant="ghost" size="sm">
+                        <Repeat className="h-4 w-4" />
+                      </Button>
+                    </TooltipWrapper>
+                  </div>
+
+                  <div className="w-full max-w-sm">
+                    <TooltipWrapper
+                      tooltipId="progress"
+                      content={
+                        <div className="space-y-1">
+                          <div>2:34 / 4:21</div>
+                          <div className="text-xs">Click to seek</div>
+                        </div>
+                      }
+                      variant="dark"
+                      side="top"
+                    >
+                      <div className="w-full bg-muted rounded-full h-1 cursor-pointer">
+                        <div
+                          className="bg-primary h-1 rounded-full"
+                          style={{ width: "60%" }}
+                        />
+                      </div>
+                    </TooltipWrapper>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Tooltip Analytics */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-muted/20 rounded-lg">
+            <div>
+              <div className="text-2xl font-bold">
+                {interactionStats.totalHovers}
+              </div>
+              <div className="text-sm text-muted-foreground">
+                Total Tooltip Hovers
+              </div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold">
+                {interactionStats.currentlyOpen}
+              </div>
+              <div className="text-sm text-muted-foreground">
+                Currently Open
+              </div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold">
+                {Object.keys(interactionStats.tooltipCounts).length}
+              </div>
+              <div className="text-sm text-muted-foreground">
+                Unique Tooltips Used
+              </div>
+            </div>
+            <div>
+              <div className="text-sm font-medium truncate">
+                {interactionStats.mostUsedTooltip || "None yet"}
+              </div>
+              <div className="text-sm text-muted-foreground">Most Used</div>
+            </div>
+          </div>
+
+          {/* Usage Statistics Table */}
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h4 className="font-medium">Tooltip Usage Statistics</h4>
+              <Button onClick={resetStats} variant="outline" size="sm">
+                Reset Stats
+              </Button>
+            </div>
+
+            <div className="border rounded-lg overflow-hidden">
+              <table className="w-full">
+                <thead className="bg-muted">
+                  <tr>
+                    <th className="text-left p-3 text-sm font-medium">
+                      Tooltip ID
+                    </th>
+                    <th className="text-left p-3 text-sm font-medium">
+                      Hover Count
+                    </th>
+                    <th className="text-left p-3 text-sm font-medium">
+                      Usage %
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {Object.entries(interactionStats.tooltipCounts)
+                    .sort(([, a], [, b]) => b - a)
+                    .map(([id, count]) => (
+                      <tr key={id} className="border-t">
+                        <td className="p-3 text-sm font-mono">{id}</td>
+                        <td className="p-3 text-sm">{count}</td>
+                        <td className="p-3 text-sm">
+                          {interactionStats.totalHovers > 0
+                            ? Math.round(
+                                (count / interactionStats.totalHovers) * 100
+                              )
+                            : 0}
+                          %
+                        </td>
+                      </tr>
+                    ))}
+                  {Object.keys(interactionStats.tooltipCounts).length === 0 && (
+                    <tr>
+                      <td
+                        colSpan={3}
+                        className="p-6 text-center text-muted-foreground"
+                      >
+                        No tooltip interactions yet. Hover over the elements
+                        above to see statistics.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="text-sm text-muted-foreground">
+            <strong>Features demonstrated:</strong>
+            <ul className="mt-1 space-y-1">
+              <li>
+                • <strong>Dynamic configuration:</strong> Real-time adjustment
+                of delay durations and provider settings
+              </li>
+              <li>
+                • <strong>Complex tooltip content:</strong> Rich content with
+                charts, progress bars, and interactive elements
+              </li>
+              <li>
+                • <strong>Usage analytics:</strong> Track tooltip interactions
+                and generate usage statistics
+              </li>
+              <li>
+                • <strong>Contextual positioning:</strong> Smart positioning
+                that adapts to different UI contexts
+              </li>
+              <li>
+                • <strong>Accessibility features:</strong> Proper ARIA
+                attributes and keyboard navigation support
+              </li>
+              <li>
+                • <strong>Performance monitoring:</strong> Real-time tracking of
+                active tooltips and interaction patterns
+              </li>
+              <li>
+                • <strong>Global control:</strong> System-wide tooltip
+                enabling/disabling with graceful fallbacks
+              </li>
+            </ul>
+          </div>
+        </div>
+      </TooltipProvider>
+    );
+  },
 };

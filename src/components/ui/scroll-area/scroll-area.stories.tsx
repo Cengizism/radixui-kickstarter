@@ -1,3 +1,4 @@
+import React from 'react';
 import { Avatar, AvatarFallback } from '../avatar/avatar';
 import { Badge } from '../badge/badge';
 import { Button } from '@/components/ui/button';
@@ -38,21 +39,157 @@ export default {
     layout: "centered",
   },
   argTypes: {
+    // Root Props
+    type: {
+      control: "select",
+      options: ["auto", "always", "scroll", "hover"],
+      description:
+        "Describes the nature of scrollbar visibility, similar to how the scrollbar preferences in MacOS control visibility of native scrollbars.",
+      table: {
+        category: "Root Props",
+        type: { summary: '"auto" | "always" | "scroll" | "hover"' },
+        defaultValue: { summary: '"hover"' },
+      },
+    },
+    scrollHideDelay: {
+      control: "number",
+      description:
+        "If type is set to either 'scroll' or 'hover', this prop determines the length of time, in milliseconds, before the scrollbars are hidden after the user stops interacting with scrollbars.",
+      table: {
+        category: "Root Props",
+        type: { summary: "number" },
+        defaultValue: { summary: "600" },
+      },
+    },
+    dir: {
+      control: "select",
+      options: ["ltr", "rtl"],
+      description:
+        "The reading direction of the scroll area. If omitted, inherits globally from DirectionProvider or assumes LTR (left-to-right) reading mode.",
+      table: {
+        category: "Root Props",
+        type: { summary: '"ltr" | "rtl"' },
+        defaultValue: { summary: '"ltr"' },
+      },
+    },
+    asChild: {
+      control: "boolean",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
+      table: {
+        category: "Root Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+
+    // Viewport Props
+    viewportAsChild: {
+      control: "boolean",
+      description:
+        "Change the default rendered element for the viewport to the one passed as a child, merging their props and behavior.",
+      table: {
+        category: "Viewport Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    nonce: {
+      control: "text",
+      description:
+        "A nonce attribute to whitelist the scrollbar style injection in a CSP (Content Security Policy) environment.",
+      table: {
+        category: "Viewport Props",
+        type: { summary: "string" },
+      },
+    },
+
+    // Scrollbar Props
+    scrollbarForceMount: {
+      control: "boolean",
+      description:
+        "Used to force mounting when more control is needed. Useful when controlling animation with React animation libraries.",
+      table: {
+        category: "Scrollbar Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    scrollbarOrientation: {
+      control: "select",
+      options: ["vertical", "horizontal"],
+      description: "The orientation of the scrollbar",
+      table: {
+        category: "Scrollbar Props",
+        type: { summary: '"vertical" | "horizontal"' },
+        defaultValue: { summary: '"vertical"' },
+      },
+    },
+    scrollbarAsChild: {
+      control: "boolean",
+      description:
+        "Change the default rendered element for the scrollbar to the one passed as a child, merging their props and behavior.",
+      table: {
+        category: "Scrollbar Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+
+    // Thumb Props
+    thumbAsChild: {
+      control: "boolean",
+      description:
+        "Change the default rendered element for the thumb to the one passed as a child, merging their props and behavior.",
+      table: {
+        category: "Thumb Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+
+    // Corner Props
+    cornerAsChild: {
+      control: "boolean",
+      description:
+        "Change the default rendered element for the corner to the one passed as a child, merging their props and behavior.",
+      table: {
+        category: "Corner Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+
+    // Custom Style Props
     size: {
       control: "select",
       options: ["sm", "default", "lg", "xl", "full"],
+      description: "The size variant of the scroll area",
+      table: {
+        category: "Custom Style Props",
+        type: { summary: '"sm" | "default" | "lg" | "xl" | "full"' },
+        defaultValue: { summary: '"default"' },
+      },
     },
     scrollbarVariant: {
       control: "select",
       options: ["default", "thin", "thick"],
+      description: "The visual style variant of the scrollbar",
+      table: {
+        category: "Custom Style Props",
+        type: { summary: '"default" | "thin" | "thick"' },
+        defaultValue: { summary: '"default"' },
+      },
     },
     thumbVariant: {
       control: "select",
       options: ["default", "primary", "secondary", "muted"],
-    },
-    type: {
-      control: "select",
-      options: ["auto", "always", "scroll", "hover"],
+      description: "The visual style variant of the scroll thumb",
+      table: {
+        category: "Custom Style Props",
+        type: { summary: '"default" | "primary" | "secondary" | "muted"' },
+        defaultValue: { summary: '"default"' },
+      },
     },
   },
 };
@@ -794,4 +931,632 @@ Playground.args = {
   scrollbarVariant: "default",
   thumbVariant: "default",
   type: "hover",
+};
+
+// Advanced Examples
+export const AdvancedScrollBehavior = {
+  render: () => {
+    const [scrollType, setScrollType] = React.useState<
+      "auto" | "always" | "scroll" | "hover"
+    >("hover");
+    const [hideDelay, setHideDelay] = React.useState(600);
+    const [isRTL, setIsRTL] = React.useState(false);
+    const [scrollPosition, setScrollPosition] = React.useState({ x: 0, y: 0 });
+
+    const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
+      const target = event.target as HTMLDivElement;
+      setScrollPosition({
+        x: target.scrollLeft,
+        y: target.scrollTop,
+      });
+    };
+
+    const longContent = Array.from(
+      { length: 50 },
+      (_, i) =>
+        `This is item ${i + 1} with some longer content to demonstrate scrolling behavior. Lorem ipsum dolor sit amet, consectetur adipiscing elit.`
+    );
+
+    return (
+      <div className="space-y-6">
+        <div>
+          <h3 className="text-lg font-semibold mb-4">
+            Advanced Scroll Configuration
+          </h3>
+
+          <div className="flex flex-wrap gap-4 mb-4 p-4 bg-muted rounded-lg">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Scroll Type:</label>
+              <div className="flex gap-2">
+                {(["auto", "always", "scroll", "hover"] as const).map(
+                  (type) => (
+                    <button
+                      key={type}
+                      onClick={() => setScrollType(type)}
+                      className={`px-3 py-1 rounded text-xs font-medium ${
+                        scrollType === type
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-background border hover:bg-accent"
+                      }`}
+                    >
+                      {type}
+                    </button>
+                  )
+                )}
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Hide Delay (ms):</label>
+              <input
+                type="range"
+                min="0"
+                max="2000"
+                step="100"
+                value={hideDelay}
+                onChange={(e) => setHideDelay(Number(e.target.value))}
+                className="w-32"
+              />
+              <div className="text-xs text-muted-foreground">{hideDelay}ms</div>
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id="rtl-toggle"
+                checked={isRTL}
+                onChange={(e) => setIsRTL(e.target.checked)}
+              />
+              <label htmlFor="rtl-toggle" className="text-sm font-medium">
+                RTL Direction
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h4 className="font-medium mb-2">Vertical Scroll Area</h4>
+            <div className="relative">
+              <ScrollArea
+                className="h-64 w-full rounded border"
+                type={scrollType}
+                scrollHideDelay={hideDelay}
+                dir={isRTL ? "rtl" : "ltr"}
+                onScroll={handleScroll}
+              >
+                <div className="p-4 space-y-2" dir={isRTL ? "rtl" : "ltr"}>
+                  {longContent.map((content, index) => (
+                    <div
+                      key={index}
+                      className="text-sm p-3 bg-muted/30 rounded"
+                    >
+                      <div className="font-medium mb-1">Item #{index + 1}</div>
+                      <div className="text-muted-foreground">{content}</div>
+                    </div>
+                  ))}
+                </div>
+              </ScrollArea>
+
+              <div className="mt-2 text-xs text-muted-foreground">
+                Scroll Y: {scrollPosition.y}px
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="font-medium mb-2">Horizontal + Vertical Scroll</h4>
+            <div className="relative">
+              <ScrollArea
+                className="h-64 w-full rounded border"
+                type={scrollType}
+                scrollHideDelay={hideDelay}
+                dir={isRTL ? "rtl" : "ltr"}
+              >
+                <div className="p-4 w-[800px]" dir={isRTL ? "rtl" : "ltr"}>
+                  <div className="grid grid-cols-4 gap-4">
+                    {Array.from({ length: 40 }, (_, i) => (
+                      <div
+                        key={i}
+                        className="min-w-[150px] p-3 bg-muted/30 rounded"
+                      >
+                        <div className="font-medium">Card {i + 1}</div>
+                        <div className="text-sm text-muted-foreground mt-1">
+                          Wide content that extends beyond the viewport width
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </ScrollArea>
+
+              <div className="mt-2 text-xs text-muted-foreground">
+                Scroll: X={scrollPosition.x}px, Y={scrollPosition.y}px
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="p-3 bg-blue-50 rounded-lg text-sm">
+          <strong>Configuration Notes:</strong>
+          <ul className="mt-1 space-y-1 text-blue-700">
+            <li>
+              • <strong>auto:</strong> Scrollbars appear automatically when
+              content overflows
+            </li>
+            <li>
+              • <strong>always:</strong> Scrollbars are always visible
+            </li>
+            <li>
+              • <strong>scroll:</strong> Scrollbars appear when scrolling
+            </li>
+            <li>
+              • <strong>hover:</strong> Scrollbars appear on hover (default)
+            </li>
+            <li>• Hide delay only applies to 'scroll' and 'hover' types</li>
+          </ul>
+        </div>
+      </div>
+    );
+  },
+};
+
+export const DynamicContentScrolling = {
+  render: () => {
+    const [items, setItems] = React.useState(
+      Array.from({ length: 10 }, (_, i) => `Initial item ${i + 1}`)
+    );
+    const [isLoading, setIsLoading] = React.useState(false);
+    const [autoScroll, setAutoScroll] = React.useState(false);
+    const scrollRef = React.useRef<HTMLDivElement>(null);
+
+    const addItems = async () => {
+      setIsLoading(true);
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      const newItems = Array.from(
+        { length: 5 },
+        (_, i) =>
+          `New item ${items.length + i + 1} - Added ${new Date().toLocaleTimeString()}`
+      );
+      setItems((prev) => [...prev, ...newItems]);
+      setIsLoading(false);
+
+      if (autoScroll && scrollRef.current) {
+        setTimeout(() => {
+          scrollRef.current?.scrollTo({
+            top: scrollRef.current.scrollHeight,
+            behavior: "smooth",
+          });
+        }, 100);
+      }
+    };
+
+    const removeItems = () => {
+      setItems((prev) => prev.slice(0, Math.max(0, prev.length - 3)));
+    };
+
+    const scrollToTop = () => {
+      scrollRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    const scrollToBottom = () => {
+      scrollRef.current?.scrollTo({
+        top: scrollRef.current?.scrollHeight,
+        behavior: "smooth",
+      });
+    };
+
+    return (
+      <div className="space-y-4">
+        <div>
+          <h3 className="text-lg font-semibold mb-4">
+            Dynamic Content Management
+          </h3>
+
+          <div className="flex flex-wrap gap-2 mb-4">
+            <Button onClick={addItems} disabled={isLoading} size="sm">
+              {isLoading ? "Adding..." : "Add Items"}
+            </Button>
+            <Button
+              onClick={removeItems}
+              variant="outline"
+              size="sm"
+              disabled={items.length === 0}
+            >
+              Remove Items
+            </Button>
+            <Button onClick={scrollToTop} variant="outline" size="sm">
+              Scroll to Top
+            </Button>
+            <Button onClick={scrollToBottom} variant="outline" size="sm">
+              Scroll to Bottom
+            </Button>
+
+            <div className="flex items-center ml-4">
+              <input
+                type="checkbox"
+                id="auto-scroll"
+                checked={autoScroll}
+                onChange={(e) => setAutoScroll(e.target.checked)}
+                className="mr-2"
+              />
+              <label htmlFor="auto-scroll" className="text-sm">
+                Auto-scroll to new items
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex gap-6">
+          <div className="flex-1">
+            <div className="flex items-center justify-between mb-2">
+              <h4 className="font-medium">
+                Dynamic List ({items.length} items)
+              </h4>
+              <Badge variant="secondary">{items.length} items</Badge>
+            </div>
+
+            <ScrollArea
+              className="h-80 w-full rounded border"
+              type="always"
+              thumbVariant="primary"
+            >
+              <div className="p-4 space-y-2" ref={scrollRef}>
+                {items.map((item, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-3 bg-muted/30 rounded hover:bg-muted/50 transition-colors"
+                  >
+                    <div>
+                      <div className="text-sm font-medium">{item}</div>
+                      <div className="text-xs text-muted-foreground">
+                        Index: {index} • Added to list
+                      </div>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() =>
+                        setItems((prev) => prev.filter((_, i) => i !== index))
+                      }
+                    >
+                      ✕
+                    </Button>
+                  </div>
+                ))}
+
+                {isLoading && (
+                  <div className="flex items-center justify-center p-4">
+                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
+                    <span className="ml-2 text-sm text-muted-foreground">
+                      Loading new items...
+                    </span>
+                  </div>
+                )}
+
+                {items.length === 0 && (
+                  <div className="flex items-center justify-center h-32 text-muted-foreground">
+                    No items to display. Click "Add Items" to get started.
+                  </div>
+                )}
+              </div>
+            </ScrollArea>
+          </div>
+
+          <div className="w-80">
+            <h4 className="font-medium mb-2">Scroll Position Info</h4>
+            <div className="p-4 bg-muted rounded-lg text-sm space-y-2">
+              <div>Total Items: {items.length}</div>
+              <div>Auto-scroll: {autoScroll ? "Enabled" : "Disabled"}</div>
+              <div>Loading: {isLoading ? "Yes" : "No"}</div>
+
+              <Separator className="my-2" />
+
+              <div className="text-xs text-muted-foreground">
+                <div>• Items are added dynamically with timestamps</div>
+                <div>• Each item can be individually removed</div>
+                <div>• Auto-scroll follows new content</div>
+                <div>• Smooth scrolling for better UX</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  },
+};
+
+export const MultiPanelScrollInterface = {
+  render: () => {
+    const [activePanel, setActivePanel] = React.useState("files");
+    const [selectedFile, setSelectedFile] = React.useState<string | null>(null);
+
+    const fileStructure = {
+      src: [
+        "components/Button.tsx",
+        "components/Input.tsx",
+        "components/Modal.tsx",
+        "components/ScrollArea.tsx",
+        "hooks/useLocalStorage.ts",
+        "hooks/useDebounce.ts",
+        "utils/formatDate.ts",
+        "utils/api.ts",
+        "utils/constants.ts",
+      ],
+      public: [
+        "index.html",
+        "favicon.ico",
+        "logo192.png",
+        "logo512.png",
+        "manifest.json",
+        "robots.txt",
+      ],
+      docs: [
+        "README.md",
+        "CONTRIBUTING.md",
+        "CHANGELOG.md",
+        "API.md",
+        "DEPLOYMENT.md",
+      ],
+    };
+
+    const codePreview = selectedFile
+      ? `// ${selectedFile}
+
+
+interface ComponentProps {
+  children: React.ReactNode;
+  className?: string;
+  variant?: 'default' | 'secondary' | 'outline';
+  size?: 'sm' | 'md' | 'lg';
+  disabled?: boolean;
+  onClick?: () => void;
+}
+
+export const Component: React.FC<ComponentProps> = ({
+  children,
+  className,
+  variant = 'default',
+  size = 'md',
+  disabled = false,
+  onClick,
+}) => {
+  const baseClasses = 'inline-flex items-center justify-center rounded-md font-medium transition-colors';
+  
+  const variants = {
+    default: 'bg-primary text-primary-foreground hover:bg-primary/90',
+    secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+    outline: 'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
+  };
+
+  const sizes = {
+    sm: 'h-8 px-3 text-sm',
+    md: 'h-10 px-4',
+    lg: 'h-12 px-6 text-lg',
+  };
+
+  return (
+    <button
+      className={cn(
+        baseClasses,
+        variants[variant],
+        sizes[size],
+        disabled && 'pointer-events-none opacity-50',
+        className
+      )}
+      onClick={onClick}
+      disabled={disabled}
+    >
+      {children}
+    </button>
+  );
+};
+
+export default Component;
+
+// Additional utility functions
+export const createComponent = (props: Partial<ComponentProps>) => {
+  return <Component {...props} />;
+};
+
+export const componentVariants = Object.keys(variants) as Array<keyof typeof variants>;
+export const componentSizes = Object.keys(sizes) as Array<keyof typeof sizes>;
+
+// Hook for component state management
+export const useComponentState = (initialValue: boolean = false) => {
+  const [isActive, setIsActive] = React.useState(initialValue);
+  const [isHovered, setIsHovered] = React.useState(false);
+
+  const toggle = React.useCallback(() => {
+    setIsActive(prev => !prev);
+  }, []);
+
+  const reset = React.useCallback(() => {
+    setIsActive(initialValue);
+    setIsHovered(false);
+  }, [initialValue]);
+
+  return {
+    isActive,
+    isHovered,
+    setIsActive,
+    setIsHovered,
+    toggle,
+    reset,
+  };
+};
+`
+      : "Select a file to preview its content...";
+
+    const breadcrumbs = [
+      { label: "Project", active: false },
+      { label: "src", active: false },
+      { label: "components", active: selectedFile?.includes("components") },
+      ...(selectedFile
+        ? [{ label: selectedFile.split("/").pop() || "", active: true }]
+        : []),
+    ];
+
+    return (
+      <div className="space-y-4">
+        <h3 className="text-lg font-semibold">Multi-Panel Scroll Interface</h3>
+
+        <div className="flex h-96 border rounded-lg overflow-hidden">
+          {/* Sidebar Navigation */}
+          <div className="w-64 border-r bg-muted/30">
+            <div className="p-3 border-b bg-muted/50">
+              <h4 className="font-medium text-sm">Project Explorer</h4>
+            </div>
+
+            <div className="flex border-b">
+              {(["files", "outline", "search"] as const).map((panel) => (
+                <button
+                  key={panel}
+                  onClick={() => setActivePanel(panel)}
+                  className={`flex-1 px-3 py-2 text-xs font-medium capitalize ${
+                    activePanel === panel
+                      ? "bg-background border-b-2 border-primary"
+                      : "hover:bg-muted/50"
+                  }`}
+                >
+                  {panel}
+                </button>
+              ))}
+            </div>
+
+            <ScrollArea className="flex-1" type="hover" scrollbarVariant="thin">
+              <div className="p-2">
+                {activePanel === "files" && (
+                  <div className="space-y-1">
+                    {Object.entries(fileStructure).map(([folder, files]) => (
+                      <div key={folder}>
+                        <div className="font-medium text-sm px-2 py-1 text-muted-foreground">
+                          📁 {folder}/
+                        </div>
+                        <div className="ml-4 space-y-1">
+                          {files.map((file) => (
+                            <button
+                              key={file}
+                              onClick={() =>
+                                setSelectedFile(`${folder}/${file}`)
+                              }
+                              className={`w-full text-left px-2 py-1 text-sm rounded hover:bg-muted transition-colors ${
+                                selectedFile === `${folder}/${file}`
+                                  ? "bg-primary/10 text-primary"
+                                  : ""
+                              }`}
+                            >
+                              📄 {file}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {activePanel === "outline" && (
+                  <div className="space-y-1 text-sm">
+                    <div className="font-medium px-2 py-1">Outline</div>
+                    <div className="ml-2 space-y-1">
+                      <div className="px-2 py-1 hover:bg-muted rounded cursor-pointer">
+                        📋 Imports
+                      </div>
+                      <div className="px-2 py-1 hover:bg-muted rounded cursor-pointer">
+                        🏗️ Interface
+                      </div>
+                      <div className="px-2 py-1 hover:bg-muted rounded cursor-pointer">
+                        ⚛️ Component
+                      </div>
+                      <div className="px-2 py-1 hover:bg-muted rounded cursor-pointer">
+                        🔧 Utils
+                      </div>
+                      <div className="px-2 py-1 hover:bg-muted rounded cursor-pointer">
+                        🪝 Hooks
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {activePanel === "search" && (
+                  <div className="space-y-2">
+                    <input
+                      placeholder="Search files..."
+                      className="w-full px-2 py-1 text-sm border rounded"
+                    />
+                    <div className="text-sm text-muted-foreground px-2">
+                      Search results will appear here...
+                    </div>
+                  </div>
+                )}
+              </div>
+            </ScrollArea>
+          </div>
+
+          {/* Main Content Area */}
+          <div className="flex-1 flex flex-col">
+            {/* Breadcrumb */}
+            <div className="flex items-center px-4 py-2 border-b bg-muted/20 text-sm">
+              {breadcrumbs.map((crumb, index) => (
+                <React.Fragment key={index}>
+                  <span
+                    className={
+                      crumb.active ? "font-medium" : "text-muted-foreground"
+                    }
+                  >
+                    {crumb.label}
+                  </span>
+                  {index < breadcrumbs.length - 1 && (
+                    <span className="mx-2 text-muted-foreground">/</span>
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
+
+            {/* Code Editor */}
+            <ScrollArea
+              className="flex-1"
+              type="always"
+              thumbVariant="secondary"
+            >
+              <div className="p-4 font-mono text-sm">
+                <pre className="whitespace-pre-wrap text-muted-foreground">
+                  {codePreview}
+                </pre>
+              </div>
+            </ScrollArea>
+
+            {/* Status Bar */}
+            <div className="flex items-center justify-between px-4 py-2 border-t bg-muted/20 text-xs">
+              <div className="flex items-center space-x-4">
+                <span>Line 1, Col 1</span>
+                <span>TypeScript React</span>
+                {selectedFile && <span>UTF-8</span>}
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="text-green-600">● No errors</span>
+                <span>{selectedFile ? "Modified" : "No file selected"}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="text-sm text-muted-foreground">
+          <strong>Features demonstrated:</strong>
+          <ul className="mt-1 space-y-1">
+            <li>• Independent scroll areas in sidebar and main content</li>
+            <li>
+              • Different scrollbar variants (thin in sidebar, secondary in
+              editor)
+            </li>
+            <li>• Always-visible scrollbars for better navigation feedback</li>
+            <li>• Panel switching with maintained scroll positions</li>
+            <li>• Responsive layout with proper overflow handling</li>
+          </ul>
+        </div>
+      </div>
+    );
+  },
 };

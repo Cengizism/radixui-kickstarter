@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
@@ -9,8 +10,7 @@ export default {
     layout: "centered",
     docs: {
       description: {
-        component:
-          "A container that maintains a specific aspect ratio for its content.",
+        component: "Displays content within a desired ratio.",
       },
     },
   },
@@ -18,19 +18,40 @@ export default {
   argTypes: {
     ratio: {
       control: "select",
-      options: ["1:1", "4:3", "16:9", "3:2", "21:9", "9:16", "custom"],
+      options: ["1:1", "4:3", "16:9", "3:2", "21:9", "9:16", 1.5, 2, 0.75],
       description:
-        "The aspect ratio of the container. Can be a preset string or a custom number",
+        "The desired ratio. Can be a preset string (e.g., '16:9') or a custom number (width/height).",
+      table: {
+        type: { summary: "number | string" },
+        defaultValue: { summary: "16:9" },
+      },
     },
     rounded: {
       control: "select",
       options: ["none", "sm", "default", "lg", "xl", "full"],
-      description: "The border radius variant of the container",
+      description: "The border radius variant applied to the container.",
+      table: {
+        type: { summary: "enum" },
+        defaultValue: { summary: "default" },
+      },
     },
     asChild: {
       control: "boolean",
       description:
-        "Change the default rendered element for the one passed as a child",
+        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    className: {
+      control: "text",
+      description:
+        "Additional CSS classes to apply to the aspect ratio container.",
+      table: {
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
     },
   },
 };
@@ -435,4 +456,384 @@ export const Playground = (args: {
 Playground.args = {
   ratio: "16:9",
   rounded: "default",
+};
+
+// Controlled ratio example
+export const ControlledRatio = () => {
+  const [currentRatio, setCurrentRatio] = React.useState<number>(16 / 9);
+
+  const ratioOptions = [
+    { label: "Square (1:1)", value: 1 },
+    { label: "Standard (4:3)", value: 4 / 3 },
+    { label: "Widescreen (16:9)", value: 16 / 9 },
+    { label: "Photo (3:2)", value: 3 / 2 },
+    { label: "Ultrawide (21:9)", value: 21 / 9 },
+    { label: "Portrait (9:16)", value: 9 / 16 },
+    { label: "Custom (2.5:1)", value: 2.5 },
+  ];
+
+  return (
+    <div className="space-y-4 w-full max-w-lg">
+      <div className="space-y-2">
+        <label className="text-sm font-medium">Select Aspect Ratio:</label>
+        <div className="flex flex-wrap gap-2">
+          {ratioOptions.map((option) => (
+            <button
+              key={option.value}
+              onClick={() => setCurrentRatio(option.value)}
+              className={`px-3 py-1 text-xs rounded-md border transition-colors ${
+                currentRatio === option.value
+                  ? "bg-primary text-primary-foreground border-primary"
+                  : "bg-background border-border hover:bg-muted"
+              }`}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <AspectRatio ratio={currentRatio} rounded="lg">
+        <div className="flex h-full items-center justify-center bg-gradient-to-br from-violet-400 to-purple-600 text-white">
+          <div className="text-center">
+            <div className="font-bold">Dynamic Ratio</div>
+            <div className="text-sm opacity-90 mt-1">
+              Current: {currentRatio.toFixed(2)}
+            </div>
+          </div>
+        </div>
+      </AspectRatio>
+    </div>
+  );
+};
+
+// As child example
+export const AsChildExample = () => (
+  <div className="space-y-4 w-full max-w-md">
+    <div>
+      <h3 className="mb-2 text-sm font-medium">Default Container</h3>
+      <AspectRatio ratio="16:9" rounded="lg">
+        <img
+          src="https://images.unsplash.com/photo-1535025183041-0991a977e25b?w=400&dpr=2&q=80"
+          alt="Landscape"
+          className="w-full h-full object-cover"
+        />
+      </AspectRatio>
+    </div>
+
+    <div>
+      <h3 className="mb-2 text-sm font-medium">As Child (Custom Element)</h3>
+      <AspectRatio ratio="16:9" asChild>
+        <figure className="rounded-lg overflow-hidden border-2 border-primary">
+          <img
+            src="https://images.unsplash.com/photo-1535025183041-0991a977e25b?w=400&dpr=2&q=80"
+            alt="Landscape with custom figure element"
+            className="w-full h-full object-cover"
+          />
+        </figure>
+      </AspectRatio>
+    </div>
+  </div>
+);
+
+// API Reference
+export const APIReference = () => (
+  <div className="space-y-6 max-w-4xl">
+    <div>
+      <h3 className="text-lg font-semibold mb-3">Aspect Ratio API Reference</h3>
+      <p className="text-sm text-muted-foreground mb-4">
+        Complete API reference for the Aspect Ratio component with props, types,
+        and default values.
+      </p>
+    </div>
+
+    <div className="space-y-4">
+      <div>
+        <h4 className="font-medium mb-2">AspectRatio.Root</h4>
+        <div className="text-sm text-muted-foreground mb-2">
+          Contains the content you want to constrain to a given ratio.
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse border border-border">
+            <thead>
+              <tr className="border-b border-border bg-muted/50">
+                <th className="border border-border px-3 py-2 text-left">
+                  Prop
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Type
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Default
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Description
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  ratio
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  number | string
+                </td>
+                <td className="border border-border px-3 py-2">
+                  1 (or "16:9" for variant)
+                </td>
+                <td className="border border-border px-3 py-2">
+                  The desired aspect ratio. Number represents width/height
+                  ratio.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  asChild
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  boolean
+                </td>
+                <td className="border border-border px-3 py-2">false</td>
+                <td className="border border-border px-3 py-2">
+                  Change the default rendered element for the one passed as a
+                  child.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  className
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  string
+                </td>
+                <td className="border border-border px-3 py-2">-</td>
+                <td className="border border-border px-3 py-2">
+                  Additional CSS classes to apply to the container.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  rounded
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  enum
+                </td>
+                <td className="border border-border px-3 py-2">"default"</td>
+                <td className="border border-border px-3 py-2">
+                  Border radius variant: "none" | "sm" | "default" | "lg" | "xl"
+                  | "full"
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <h4 className="font-medium mb-2">Common Ratio Values</h4>
+        <div className="text-sm text-muted-foreground mb-2">
+          Preset ratio values and their numeric equivalents.
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse border border-border">
+            <thead>
+              <tr className="border-b border-border bg-muted/50">
+                <th className="border border-border px-3 py-2 text-left">
+                  Preset
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Numeric Value
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Use Case
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  "1:1"
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">1</td>
+                <td className="border border-border px-3 py-2">
+                  Square images, avatars, social media posts
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  "4:3"
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  1.333
+                </td>
+                <td className="border border-border px-3 py-2">
+                  Traditional TV, computer monitors
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  "16:9"
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  1.778
+                </td>
+                <td className="border border-border px-3 py-2">
+                  Widescreen, HD video, modern displays
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  "3:2"
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  1.5
+                </td>
+                <td className="border border-border px-3 py-2">
+                  Photography, print media
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  "21:9"
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  2.333
+                </td>
+                <td className="border border-border px-3 py-2">
+                  Ultrawide monitors, cinematic content
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  "9:16"
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  0.563
+                </td>
+                <td className="border border-border px-3 py-2">
+                  Mobile/portrait video, stories
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// Advanced example with dynamic content
+export const AdvancedExample = () => {
+  const [contentType, setContentType] = React.useState<
+    "image" | "video" | "chart"
+  >("image");
+  const [ratio, setRatio] = React.useState<"1:1" | "4:3" | "16:9" | "21:9">(
+    "16:9"
+  );
+
+  const renderContent = () => {
+    switch (contentType) {
+      case "image":
+        return (
+          <img
+            src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&dpr=2&q=80"
+            alt="Mountain landscape"
+            className="w-full h-full object-cover"
+          />
+        );
+      case "video":
+        return (
+          <div className="flex h-full items-center justify-center bg-black text-white relative">
+            <div className="text-center">
+              <div className="text-4xl mb-2">▶️</div>
+              <div className="text-sm">Video Player</div>
+            </div>
+            <div className="absolute bottom-4 left-4 bg-black/80 px-2 py-1 rounded text-xs">
+              Live Stream
+            </div>
+            <div className="absolute bottom-4 right-4 bg-black/80 px-2 py-1 rounded text-xs">
+              HD
+            </div>
+          </div>
+        );
+      case "chart":
+        return (
+          <div className="flex h-full items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+            <div className="w-full h-full flex items-end justify-around">
+              {[40, 80, 60, 90, 70, 85].map((height, i) => (
+                <div
+                  key={i}
+                  className="bg-blue-500 rounded-t-sm flex-1 mx-1"
+                  style={{ height: `${height}%` }}
+                />
+              ))}
+            </div>
+          </div>
+        );
+    }
+  };
+
+  return (
+    <div className="space-y-4 w-full max-w-2xl">
+      <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Content Type:</label>
+          <div className="flex gap-2">
+            {(["image", "video", "chart"] as const).map((type) => (
+              <button
+                key={type}
+                onClick={() => setContentType(type)}
+                className={`px-3 py-1 text-xs rounded-md border transition-colors capitalize ${
+                  contentType === type
+                    ? "bg-primary text-primary-foreground border-primary"
+                    : "bg-background border-border hover:bg-muted"
+                }`}
+              >
+                {type}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Aspect Ratio:</label>
+          <div className="flex flex-wrap gap-1">
+            {(["1:1", "4:3", "16:9", "21:9"] as const).map((r) => (
+              <button
+                key={r}
+                onClick={() => setRatio(r)}
+                className={`px-2 py-1 text-xs rounded border transition-colors ${
+                  ratio === r
+                    ? "bg-primary text-primary-foreground border-primary"
+                    : "bg-background border-border hover:bg-muted"
+                }`}
+              >
+                {r}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <Card className="overflow-hidden">
+        <AspectRatio ratio={ratio} rounded="lg">
+          {renderContent()}
+        </AspectRatio>
+        <CardContent className="p-4">
+          <div className="flex justify-between items-center">
+            <div>
+              <h3 className="font-semibold capitalize">
+                {contentType} Content
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                Ratio: {ratio} | Type: {contentType}
+              </p>
+            </div>
+            <Badge variant="outline">{contentType}</Badge>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
 };

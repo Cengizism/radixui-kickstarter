@@ -34,24 +34,91 @@ export default {
     layout: "centered",
     docs: {
       description: {
-        component:
-          "An interactive component which expands and collapses content.",
+        component: "An interactive component which expands/collapses a panel.",
       },
     },
   },
   tags: ["autodocs"],
   argTypes: {
+    open: {
+      control: "boolean",
+      description:
+        "The controlled open state of the collapsible. Must be used in conjunction with onOpenChange.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    defaultOpen: {
+      control: "boolean",
+      description:
+        "The open state of the collapsible when it is initially rendered. Use when you do not need to control its open state.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    onOpenChange: {
+      action: "onOpenChange",
+      description:
+        "Event handler called when the open state of the collapsible changes.",
+      table: {
+        type: { summary: "(open: boolean) => void" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    disabled: {
+      control: "boolean",
+      description:
+        "When true, prevents the user from interacting with the collapsible.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    asChild: {
+      control: "boolean",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
     variant: {
       control: "select",
       options: ["default", "ghost", "outline", "link"],
+      description: "The visual variant of the trigger.",
+      table: {
+        type: { summary: "enum" },
+        defaultValue: { summary: "default" },
+      },
     },
     size: {
       control: "select",
       options: ["sm", "default", "lg"],
+      description: "The size variant of the trigger.",
+      table: {
+        type: { summary: "enum" },
+        defaultValue: { summary: "default" },
+      },
     },
     contentVariant: {
       control: "select",
       options: ["default", "bordered", "card", "highlighted"],
+      description: "The visual variant of the content container.",
+      table: {
+        type: { summary: "enum" },
+        defaultValue: { summary: "default" },
+      },
+    },
+    showChevron: {
+      control: "boolean",
+      description: "Whether to show the chevron indicator on the trigger.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "true" },
+      },
     },
   },
 };
@@ -795,4 +862,687 @@ Playground.args = {
   variant: "default",
   size: "default",
   contentVariant: "default",
+};
+
+// Controlled collapsible example
+export const ControlledCollapsible = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [disabled, setDisabled] = useState(false);
+
+  return (
+    <div className="space-y-4 w-full max-w-md">
+      <div className="space-y-2">
+        <label className="text-sm font-medium">Controls:</label>
+        <div className="flex gap-2">
+          <Button
+            onClick={() => setIsOpen(false)}
+            variant="outline"
+            size="sm"
+            disabled={disabled}
+          >
+            Close
+          </Button>
+          <Button
+            onClick={() => setIsOpen(true)}
+            variant="outline"
+            size="sm"
+            disabled={disabled}
+          >
+            Open
+          </Button>
+          <Button
+            onClick={() => setIsOpen(!isOpen)}
+            variant="outline"
+            size="sm"
+            disabled={disabled}
+          >
+            Toggle
+          </Button>
+        </div>
+        <div className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            id="disable-collapsible"
+            checked={disabled}
+            onChange={(e) => setDisabled(e.target.checked)}
+            className="rounded"
+          />
+          <label htmlFor="disable-collapsible" className="text-sm">
+            Disable collapsible
+          </label>
+        </div>
+      </div>
+
+      <Collapsible open={isOpen} onOpenChange={setIsOpen} disabled={disabled}>
+        <CollapsibleTrigger variant="outline">
+          Controlled Collapsible ({isOpen ? "Open" : "Closed"})
+        </CollapsibleTrigger>
+        <CollapsibleContent variant="card">
+          <div className="text-sm text-muted-foreground">
+            This collapsible is fully controlled by external state.
+            <br />
+            Current state: <strong>{isOpen ? "Open" : "Closed"}</strong>
+            <br />
+            Disabled: <strong>{disabled ? "Yes" : "No"}</strong>
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
+    </div>
+  );
+};
+
+// Animation example with CSS variables
+export const AnimationExample = () => (
+  <div className="space-y-4 w-full max-w-md">
+    <div>
+      <h4 className="text-sm font-medium mb-2">CSS Animation Variables</h4>
+      <p className="text-xs text-muted-foreground mb-3">
+        Uses --radix-collapsible-content-height for smooth animations
+      </p>
+    </div>
+
+    <Collapsible>
+      <CollapsibleTrigger variant="outline">
+        Animated Height Transition
+      </CollapsibleTrigger>
+      <CollapsibleContent
+        variant="bordered"
+        className="transition-all duration-300 ease-out"
+        style={{
+          // Using CSS variables provided by Radix
+          height: "var(--radix-collapsible-content-height, auto)",
+        }}
+      >
+        <div className="text-sm text-muted-foreground space-y-2">
+          <p>This content animates smoothly using CSS variables.</p>
+          <p>
+            The height transition is controlled by
+            --radix-collapsible-content-height.
+          </p>
+          <p>You can customize the animation timing and easing as needed.</p>
+        </div>
+      </CollapsibleContent>
+    </Collapsible>
+
+    <Collapsible>
+      <CollapsibleTrigger variant="outline">
+        Custom Animation Timing
+      </CollapsibleTrigger>
+      <CollapsibleContent
+        variant="card"
+        className="transition-all duration-500 ease-in-out"
+        style={{
+          height: "var(--radix-collapsible-content-height, auto)",
+        }}
+      >
+        <div className="text-sm text-muted-foreground">
+          This example uses a slower animation (500ms) with ease-in-out timing.
+        </div>
+      </CollapsibleContent>
+    </Collapsible>
+  </div>
+);
+
+// As child example
+export const AsChildExample = () => (
+  <div className="space-y-4 w-full max-w-md">
+    <div>
+      <h4 className="text-sm font-medium mb-2">Default Trigger</h4>
+      <Collapsible>
+        <CollapsibleTrigger variant="outline">
+          Standard trigger element
+        </CollapsibleTrigger>
+        <CollapsibleContent variant="bordered">
+          <div className="text-sm text-muted-foreground">
+            This uses the default trigger implementation.
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
+    </div>
+
+    <div>
+      <h4 className="text-sm font-medium mb-2">Custom Element (asChild)</h4>
+      <Collapsible>
+        <CollapsibleTrigger asChild>
+          <button className="flex w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+            Custom button trigger
+            <ChevronRight className="h-4 w-4 transition-transform data-[state=open]:rotate-90" />
+          </button>
+        </CollapsibleTrigger>
+        <CollapsibleContent variant="card">
+          <div className="text-sm text-muted-foreground">
+            This trigger uses asChild to render as a custom button element with
+            different styling.
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
+    </div>
+  </div>
+);
+
+// API Reference
+export const APIReference = () => (
+  <div className="space-y-6 max-w-4xl">
+    <div>
+      <h3 className="text-lg font-semibold mb-3">Collapsible API Reference</h3>
+      <p className="text-sm text-muted-foreground mb-4">
+        Complete API reference for all Collapsible components with their props,
+        types, and default values.
+      </p>
+    </div>
+
+    <div className="space-y-4">
+      <div>
+        <h4 className="font-medium mb-2">Collapsible.Root</h4>
+        <div className="text-sm text-muted-foreground mb-2">
+          Contains all the parts of a collapsible.
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse border border-border">
+            <thead>
+              <tr className="border-b border-border bg-muted/50">
+                <th className="border border-border px-3 py-2 text-left">
+                  Prop
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Type
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Default
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Description
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  open
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  boolean
+                </td>
+                <td className="border border-border px-3 py-2">-</td>
+                <td className="border border-border px-3 py-2">
+                  The controlled open state of the collapsible.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  defaultOpen
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  boolean
+                </td>
+                <td className="border border-border px-3 py-2">false</td>
+                <td className="border border-border px-3 py-2">
+                  The open state when initially rendered.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  onOpenChange
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">{`(open: boolean) => void`}</td>
+                <td className="border border-border px-3 py-2">-</td>
+                <td className="border border-border px-3 py-2">
+                  Event handler called when the open state changes.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  disabled
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  boolean
+                </td>
+                <td className="border border-border px-3 py-2">false</td>
+                <td className="border border-border px-3 py-2">
+                  When true, prevents the user from interacting with the
+                  collapsible.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  asChild
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  boolean
+                </td>
+                <td className="border border-border px-3 py-2">false</td>
+                <td className="border border-border px-3 py-2">
+                  Change the default rendered element.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <h4 className="font-medium mb-2">Collapsible.Trigger</h4>
+        <div className="text-sm text-muted-foreground mb-2">
+          The button that toggles the collapsible.
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse border border-border">
+            <thead>
+              <tr className="border-b border-border bg-muted/50">
+                <th className="border border-border px-3 py-2 text-left">
+                  Prop
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Type
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Default
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Description
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  asChild
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  boolean
+                </td>
+                <td className="border border-border px-3 py-2">false</td>
+                <td className="border border-border px-3 py-2">
+                  Change the default rendered element.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  variant
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  enum
+                </td>
+                <td className="border border-border px-3 py-2">default</td>
+                <td className="border border-border px-3 py-2">
+                  Visual variant: "default" | "ghost" | "outline" | "link"
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  size
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  enum
+                </td>
+                <td className="border border-border px-3 py-2">default</td>
+                <td className="border border-border px-3 py-2">
+                  Size variant: "sm" | "default" | "lg"
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  showChevron
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  boolean
+                </td>
+                <td className="border border-border px-3 py-2">true</td>
+                <td className="border border-border px-3 py-2">
+                  Whether to show the chevron indicator.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <h4 className="font-medium mb-2">Collapsible.Content</h4>
+        <div className="text-sm text-muted-foreground mb-2">
+          The component that contains the collapsible content.
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse border border-border">
+            <thead>
+              <tr className="border-b border-border bg-muted/50">
+                <th className="border border-border px-3 py-2 text-left">
+                  Prop
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Type
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Default
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Description
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  asChild
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  boolean
+                </td>
+                <td className="border border-border px-3 py-2">false</td>
+                <td className="border border-border px-3 py-2">
+                  Change the default rendered element.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  forceMount
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  boolean
+                </td>
+                <td className="border border-border px-3 py-2">false</td>
+                <td className="border border-border px-3 py-2">
+                  Used to force mounting when more control is needed.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  variant
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  enum
+                </td>
+                <td className="border border-border px-3 py-2">default</td>
+                <td className="border border-border px-3 py-2">
+                  Content variant: "default" | "bordered" | "card" |
+                  "highlighted"
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <h4 className="font-medium mb-2">CSS Variables & Animation</h4>
+        <div className="text-sm text-muted-foreground mb-2">
+          Available CSS custom properties for animating content size.
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse border border-border">
+            <thead>
+              <tr className="border-b border-border bg-muted/50">
+                <th className="border border-border px-3 py-2 text-left">
+                  Variable
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Description
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Usage
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  --radix-collapsible-content-width
+                </td>
+                <td className="border border-border px-3 py-2">
+                  The width of the content when it opens/closes
+                </td>
+                <td className="border border-border px-3 py-2">
+                  Use for horizontal animations
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  --radix-collapsible-content-height
+                </td>
+                <td className="border border-border px-3 py-2">
+                  The height of the content when it opens/closes
+                </td>
+                <td className="border border-border px-3 py-2">
+                  Use for vertical animations (most common)
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <h4 className="font-medium mb-2">Data Attributes</h4>
+        <div className="text-sm text-muted-foreground mb-2">
+          Available data attributes for styling different states.
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse border border-border">
+            <thead>
+              <tr className="border-b border-border bg-muted/50">
+                <th className="border border-border px-3 py-2 text-left">
+                  Attribute
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Values
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Description
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  data-state
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  "open" | "closed"
+                </td>
+                <td className="border border-border px-3 py-2">
+                  The current open state of the collapsible.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  data-disabled
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  Present when disabled
+                </td>
+                <td className="border border-border px-3 py-2">
+                  Present when the collapsible is disabled.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// Advanced example with dynamic features
+export const AdvancedExample = () => {
+  const [globalOpen, setGlobalOpen] = useState(false);
+  const [sectionStates, setSectionStates] = useState({
+    general: false,
+    advanced: false,
+    developer: true,
+  });
+
+  const toggleSection = (section: keyof typeof sectionStates) => {
+    setSectionStates((prev) => ({
+      ...prev,
+      [section]: !prev[section],
+    }));
+  };
+
+  const handleGlobalToggle = (open: boolean) => {
+    setGlobalOpen(open);
+    setSectionStates((prev) =>
+      Object.keys(prev).reduce(
+        (acc, key) => ({ ...acc, [key]: open }),
+        {} as typeof prev
+      )
+    );
+  };
+
+  return (
+    <div className="space-y-6 w-full max-w-2xl">
+      <div className="flex items-center justify-between">
+        <h3 className="text-lg font-semibold">Advanced Configuration</h3>
+        <div className="flex gap-2">
+          <Button
+            onClick={() => handleGlobalToggle(false)}
+            variant="outline"
+            size="sm"
+          >
+            Collapse All
+          </Button>
+          <Button
+            onClick={() => handleGlobalToggle(true)}
+            variant="outline"
+            size="sm"
+          >
+            Expand All
+          </Button>
+        </div>
+      </div>
+
+      <div className="space-y-3">
+        <Card>
+          <CardHeader className="pb-3">
+            <h4 className="font-medium">System Configuration</h4>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            <Collapsible
+              open={sectionStates.general}
+              onOpenChange={() => toggleSection("general")}
+            >
+              <CollapsibleTrigger variant="ghost" size="sm">
+                <div className="flex items-center gap-2">
+                  <Settings className="h-4 w-4" />
+                  General Settings
+                  <Badge variant="secondary" className="ml-auto mr-2">
+                    {
+                      Object.values({
+                        theme: true,
+                        language: true,
+                        timezone: false,
+                      }).filter(Boolean).length
+                    }
+                    /3
+                  </Badge>
+                </div>
+              </CollapsibleTrigger>
+              <CollapsibleContent variant="highlighted">
+                <div className="space-y-3 text-sm">
+                  <div className="flex items-center justify-between">
+                    <span>Dark mode</span>
+                    <Badge>Enabled</Badge>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span>Language</span>
+                    <Badge variant="outline">English</Badge>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span>Auto-save</span>
+                    <Badge variant="secondary">Disabled</Badge>
+                  </div>
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
+
+            <Separator />
+
+            <Collapsible
+              open={sectionStates.advanced}
+              onOpenChange={() => toggleSection("advanced")}
+            >
+              <CollapsibleTrigger variant="ghost" size="sm">
+                <div className="flex items-center gap-2">
+                  <Shield className="h-4 w-4" />
+                  Advanced Features
+                  <Badge variant="destructive" className="ml-auto mr-2">
+                    Beta
+                  </Badge>
+                </div>
+              </CollapsibleTrigger>
+              <CollapsibleContent variant="card">
+                <div className="space-y-3 text-sm">
+                  <div className="flex items-center justify-between">
+                    <span>Experimental UI</span>
+                    <Button variant="outline" size="sm">
+                      Enable
+                    </Button>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span>Performance mode</span>
+                    <Button variant="outline" size="sm">
+                      Configure
+                    </Button>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span>Debug logging</span>
+                    <Badge variant="secondary">Off</Badge>
+                  </div>
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
+
+            <Separator />
+
+            <Collapsible
+              open={sectionStates.developer}
+              onOpenChange={() => toggleSection("developer")}
+            >
+              <CollapsibleTrigger variant="ghost" size="sm">
+                <div className="flex items-center gap-2">
+                  <Code className="h-4 w-4" />
+                  Developer Tools
+                  <Badge variant="outline" className="ml-auto mr-2">
+                    3 Active
+                  </Badge>
+                </div>
+              </CollapsibleTrigger>
+              <CollapsibleContent
+                variant="highlighted"
+                className="transition-all duration-300 ease-in-out"
+                style={{
+                  height: "var(--radix-collapsible-content-height, auto)",
+                }}
+              >
+                <div className="space-y-3 text-sm">
+                  <div className="flex items-center justify-between">
+                    <span>Source maps</span>
+                    <Badge>Enabled</Badge>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span>Hot reload</span>
+                    <Badge>Active</Badge>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span>Type checking</span>
+                    <Badge>Enabled</Badge>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span>Bundle analyzer</span>
+                    <Button variant="outline" size="sm">
+                      Open
+                    </Button>
+                  </div>
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
+          </CardContent>
+        </Card>
+
+        <div className="text-xs text-muted-foreground">
+          Global state: {globalOpen ? "All expanded" : "Mixed state"} | Active
+          sections: {Object.values(sectionStates).filter(Boolean).length}/3
+        </div>
+      </div>
+    </div>
+  );
 };

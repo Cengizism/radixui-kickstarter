@@ -16,9 +16,122 @@ export default {
     layout: "centered",
   },
   argTypes: {
+    // Root Props
+    defaultChecked: {
+      control: "boolean",
+      description:
+        "The state of the switch when it is initially rendered. Use when you do not need to control its state.",
+      table: {
+        category: "Root Props",
+        type: { summary: "boolean" },
+      },
+    },
+    checked: {
+      control: "boolean",
+      description:
+        "The controlled state of the switch. Must be used in conjunction with onCheckedChange.",
+      table: {
+        category: "Root Props",
+        type: { summary: "boolean" },
+      },
+    },
+    onCheckedChange: {
+      action: "onCheckedChange",
+      description: "Event handler called when the state of the switch changes.",
+      table: {
+        category: "Root Props",
+        type: { summary: "(checked: boolean) => void" },
+      },
+    },
+    disabled: {
+      control: "boolean",
+      description:
+        "When true, prevents the user from interacting with the switch.",
+      table: {
+        category: "Root Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    required: {
+      control: "boolean",
+      description:
+        "When true, indicates that the user must check the switch before the owning form can be submitted.",
+      table: {
+        category: "Root Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    name: {
+      control: "text",
+      description:
+        "The name of the switch. Submitted with its owning form as part of a name/value pair.",
+      table: {
+        category: "Root Props",
+        type: { summary: "string" },
+      },
+    },
+    value: {
+      control: "text",
+      description: "The value given as data when submitted with a name.",
+      table: {
+        category: "Root Props",
+        type: { summary: "string" },
+        defaultValue: { summary: '"on"' },
+      },
+    },
+    asChild: {
+      control: "boolean",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
+      table: {
+        category: "Root Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+
+    // Thumb Props
+    thumbAsChild: {
+      control: "boolean",
+      description:
+        "Change the default rendered element for the thumb to the one passed as a child, merging their props and behavior.",
+      table: {
+        category: "Thumb Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+
+    // Data Attributes (Auto-applied)
+    "data-state": {
+      control: false,
+      description: "The state of the switch. Either 'checked' or 'unchecked'.",
+      table: {
+        category: "Data Attributes",
+        type: { summary: '"checked" | "unchecked"' },
+      },
+    },
+    "data-disabled": {
+      control: false,
+      description: "Present when disabled.",
+      table: {
+        category: "Data Attributes",
+        type: { summary: "" },
+      },
+    },
+
+    // Custom Style Props
     size: {
       control: "select",
       options: ["sm", "default", "lg", "xl"],
+      description: "The size variant of the switch",
+      table: {
+        category: "Custom Style Props",
+        type: { summary: '"sm" | "default" | "lg" | "xl"' },
+        defaultValue: { summary: '"default"' },
+      },
     },
     variant: {
       control: "select",
@@ -30,9 +143,15 @@ export default {
         "success",
         "warning",
       ],
-    },
-    disabled: {
-      control: "boolean",
+      description: "The visual style variant of the switch",
+      table: {
+        category: "Custom Style Props",
+        type: {
+          summary:
+            '"default" | "outline" | "secondary" | "destructive" | "success" | "warning"',
+        },
+        defaultValue: { summary: '"default"' },
+      },
     },
   },
 };
@@ -540,4 +659,644 @@ Playground.args = {
   size: "default",
   variant: "default",
   disabled: false,
+};
+
+// Advanced Examples
+export const AdvancedControlledSwitches = {
+  render: () => {
+    const [settings, setSettings] = React.useState({
+      notifications: true,
+      darkMode: false,
+      autoSave: true,
+      twoFactor: false,
+      analytics: false,
+      marketing: true,
+    });
+    const [switchHistory, setSwitchHistory] = React.useState<
+      Array<{
+        setting: string;
+        value: boolean;
+        timestamp: string;
+      }>
+    >([]);
+    const [pendingChanges, setPendingChanges] = React.useState<Set<string>>(
+      new Set()
+    );
+
+    const handleSwitchChange = (
+      setting: keyof typeof settings,
+      checked: boolean
+    ) => {
+      // Add to pending changes temporarily
+      setPendingChanges((prev) => new Set(prev).add(setting));
+
+      // Simulate async operation
+      setTimeout(
+        () => {
+          setSettings((prev) => ({ ...prev, [setting]: checked }));
+          setSwitchHistory((prev) =>
+            [
+              ...prev,
+              {
+                setting: setting.charAt(0).toUpperCase() + setting.slice(1),
+                value: checked,
+                timestamp: new Date().toLocaleTimeString(),
+              },
+            ].slice(-15)
+          ); // Keep last 15 changes
+          setPendingChanges((prev) => {
+            const next = new Set(prev);
+            next.delete(setting);
+            return next;
+          });
+        },
+        Math.random() * 1000 + 500
+      ); // Random delay 500-1500ms
+    };
+
+    const resetAllSettings = () => {
+      const defaultSettings = {
+        notifications: true,
+        darkMode: false,
+        autoSave: true,
+        twoFactor: false,
+        analytics: false,
+        marketing: true,
+      };
+      setSettings(defaultSettings);
+      setSwitchHistory([]);
+      setPendingChanges(new Set());
+    };
+
+    const toggleAll = (enable: boolean) => {
+      Object.keys(settings).forEach((key) => {
+        handleSwitchChange(key as keyof typeof settings, enable);
+      });
+    };
+
+    const settingsConfig = [
+      {
+        key: "notifications" as const,
+        label: "Push Notifications",
+        description: "Receive notifications about important updates",
+        icon: "🔔",
+        variant: "default" as const,
+        critical: false,
+      },
+      {
+        key: "darkMode" as const,
+        label: "Dark Mode",
+        description: "Use dark theme across the application",
+        icon: "🌙",
+        variant: "secondary" as const,
+        critical: false,
+      },
+      {
+        key: "autoSave" as const,
+        label: "Auto Save",
+        description: "Automatically save your work every 30 seconds",
+        icon: "💾",
+        variant: "success" as const,
+        critical: true,
+      },
+      {
+        key: "twoFactor" as const,
+        label: "Two-Factor Authentication",
+        description: "Add an extra layer of security to your account",
+        icon: "🔐",
+        variant: "warning" as const,
+        critical: true,
+      },
+      {
+        key: "analytics" as const,
+        label: "Usage Analytics",
+        description: "Help us improve by sharing anonymous usage data",
+        icon: "📊",
+        variant: "outline" as const,
+        critical: false,
+      },
+      {
+        key: "marketing" as const,
+        label: "Marketing Emails",
+        description: "Receive product updates and promotional content",
+        icon: "📧",
+        variant: "destructive" as const,
+        critical: false,
+      },
+    ];
+
+    return (
+      <div className="max-w-4xl space-y-6">
+        <div>
+          <h3 className="text-lg font-semibold mb-4">
+            Advanced Settings Dashboard
+          </h3>
+
+          <div className="flex flex-wrap gap-2 mb-6 p-4 bg-muted rounded-lg">
+            <button
+              onClick={() => toggleAll(true)}
+              className="px-3 py-1 rounded text-xs font-medium bg-primary text-primary-foreground hover:bg-primary/90"
+            >
+              Enable All
+            </button>
+            <button
+              onClick={() => toggleAll(false)}
+              className="px-3 py-1 rounded text-xs font-medium bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              Disable All
+            </button>
+            <button
+              onClick={resetAllSettings}
+              className="px-3 py-1 rounded text-xs font-medium bg-background border hover:bg-accent"
+            >
+              Reset to Defaults
+            </button>
+
+            <div className="ml-auto flex items-center gap-2 text-sm">
+              <span>Pending changes:</span>
+              <span className="font-medium">{pendingChanges.size}</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {settingsConfig.map((config) => (
+            <div key={config.key} className="border rounded-lg p-4 space-y-3">
+              <div className="flex items-start justify-between">
+                <div className="flex items-start gap-3 flex-1">
+                  <span className="text-2xl">{config.icon}</span>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <Label htmlFor={config.key} className="font-medium">
+                        {config.label}
+                      </Label>
+                      {config.critical && (
+                        <span className="px-1.5 py-0.5 bg-orange-100 text-orange-700 text-xs rounded-full">
+                          Critical
+                        </span>
+                      )}
+                      {pendingChanges.has(config.key) && (
+                        <div className="w-3 h-3 border border-primary border-t-transparent rounded-full animate-spin"></div>
+                      )}
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      {config.description}
+                    </p>
+                  </div>
+                </div>
+
+                <Switch
+                  id={config.key}
+                  checked={settings[config.key]}
+                  onCheckedChange={(checked) =>
+                    handleSwitchChange(config.key, checked)
+                  }
+                  variant={config.variant}
+                  disabled={pendingChanges.has(config.key)}
+                />
+              </div>
+
+              <div className="text-xs text-muted-foreground">
+                Status:{" "}
+                {settings[config.key] ? (
+                  <span className="text-green-600 font-medium">Enabled</span>
+                ) : (
+                  <span className="text-gray-500 font-medium">Disabled</span>
+                )}
+                {pendingChanges.has(config.key) && (
+                  <span className="text-blue-600 ml-2">• Updating...</span>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Settings Summary */}
+          <div>
+            <h4 className="font-medium mb-3">Settings Summary</h4>
+            <div className="border rounded-lg p-4 space-y-2">
+              <div className="flex justify-between text-sm">
+                <span>Total Settings:</span>
+                <span className="font-medium">{settingsConfig.length}</span>
+              </div>
+              <div className="flex justify-between text-sm">
+                <span>Enabled:</span>
+                <span className="font-medium text-green-600">
+                  {Object.values(settings).filter(Boolean).length}
+                </span>
+              </div>
+              <div className="flex justify-between text-sm">
+                <span>Disabled:</span>
+                <span className="font-medium text-gray-500">
+                  {Object.values(settings).filter((v) => !v).length}
+                </span>
+              </div>
+              <div className="flex justify-between text-sm">
+                <span>Critical Enabled:</span>
+                <span className="font-medium text-orange-600">
+                  {
+                    settingsConfig.filter((c) => c.critical && settings[c.key])
+                      .length
+                  }
+                  /{settingsConfig.filter((c) => c.critical).length}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Change History */}
+          <div>
+            <h4 className="font-medium mb-3">
+              Recent Changes ({switchHistory.length}/15)
+            </h4>
+            <div className="border rounded-lg p-4 max-h-64 overflow-y-auto">
+              {switchHistory.length === 0 ? (
+                <div className="text-center text-sm text-muted-foreground py-8">
+                  No changes yet
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  {switchHistory
+                    .slice()
+                    .reverse()
+                    .map((change, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center justify-between text-sm p-2 bg-muted/50 rounded"
+                      >
+                        <div>
+                          <span className="font-medium">{change.setting}</span>
+                          <span
+                            className={`ml-2 ${change.value ? "text-green-600" : "text-gray-500"}`}
+                          >
+                            {change.value ? "Enabled" : "Disabled"}
+                          </span>
+                        </div>
+                        <span className="text-xs text-muted-foreground">
+                          {change.timestamp}
+                        </span>
+                      </div>
+                    ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="text-sm text-muted-foreground">
+          <strong>Features demonstrated:</strong>
+          <ul className="mt-1 space-y-1">
+            <li>
+              • <strong>Controlled state:</strong> All switches use controlled
+              state with React
+            </li>
+            <li>
+              • <strong>Async operations:</strong> Simulated network delays when
+              toggling
+            </li>
+            <li>
+              • <strong>Loading states:</strong> Visual feedback during state
+              changes
+            </li>
+            <li>
+              • <strong>Bulk operations:</strong> Enable/disable all
+              functionality
+            </li>
+            <li>
+              • <strong>Change history:</strong> Track and display recent
+              setting changes
+            </li>
+            <li>
+              • <strong>Variant styling:</strong> Different visual styles for
+              different setting types
+            </li>
+            <li>
+              • <strong>Critical indicators:</strong> Special marking for
+              important settings
+            </li>
+          </ul>
+        </div>
+      </div>
+    );
+  },
+};
+
+export const FormIntegrationWithValidation = {
+  render: () => {
+    const [formData, setFormData] = React.useState({
+      termsAccepted: false,
+      privacyAccepted: false,
+      marketingOptIn: false,
+      newsletterOptIn: true,
+      smsNotifications: false,
+      emailNotifications: true,
+      betaFeatures: false,
+      dataSharing: false,
+    });
+    const [errors, setErrors] = React.useState<Record<string, string>>({});
+    const [isSubmitted, setIsSubmitted] = React.useState(false);
+    const [touchedFields, setTouchedFields] = React.useState<Set<string>>(
+      new Set()
+    );
+
+    const handleSwitchChange = (
+      field: keyof typeof formData,
+      checked: boolean
+    ) => {
+      setFormData((prev) => ({ ...prev, [field]: checked }));
+      setTouchedFields((prev) => new Set(prev).add(field));
+
+      // Clear error when user interacts
+      if (errors[field]) {
+        setErrors((prev) => ({ ...prev, [field]: "" }));
+      }
+    };
+
+    const validateForm = () => {
+      const newErrors: Record<string, string> = {};
+
+      if (!formData.termsAccepted) {
+        newErrors.termsAccepted =
+          "You must accept the Terms of Service to continue";
+      }
+      if (!formData.privacyAccepted) {
+        newErrors.privacyAccepted =
+          "You must accept the Privacy Policy to continue";
+      }
+      if (formData.smsNotifications && !formData.emailNotifications) {
+        newErrors.emailNotifications =
+          "Email notifications are required when SMS notifications are enabled";
+      }
+
+      setErrors(newErrors);
+      return Object.keys(newErrors).length === 0;
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+
+      // Mark all fields as touched for validation display
+      const allFields = Object.keys(formData) as (keyof typeof formData)[];
+      setTouchedFields(new Set(allFields));
+
+      const isValid = validateForm();
+      if (isValid) {
+        setIsSubmitted(true);
+      }
+    };
+
+    const resetForm = () => {
+      setFormData({
+        termsAccepted: false,
+        privacyAccepted: false,
+        marketingOptIn: false,
+        newsletterOptIn: true,
+        smsNotifications: false,
+        emailNotifications: true,
+        betaFeatures: false,
+        dataSharing: false,
+      });
+      setErrors({});
+      setTouchedFields(new Set());
+      setIsSubmitted(false);
+    };
+
+    if (isSubmitted) {
+      return (
+        <div className="max-w-2xl p-6 border border-green-200 bg-green-50 rounded-lg">
+          <h3 className="text-lg font-semibold text-green-800 mb-4">
+            Account Created Successfully!
+          </h3>
+          <div className="space-y-2 text-sm text-green-700">
+            <h4 className="font-medium">Your preferences:</h4>
+            <div className="grid grid-cols-2 gap-2">
+              {Object.entries(formData).map(([key, value]) => (
+                <div key={key} className="flex justify-between">
+                  <span className="capitalize">
+                    {key.replace(/([A-Z])/g, " $1").toLowerCase()}:
+                  </span>
+                  <span
+                    className={
+                      value ? "text-green-600 font-medium" : "text-gray-500"
+                    }
+                  >
+                    {value ? "Yes" : "No"}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <button
+            onClick={resetForm}
+            className="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+          >
+            Create Another Account
+          </button>
+        </div>
+      );
+    }
+
+    const formSections = [
+      {
+        title: "Required Agreements",
+        description: "These agreements are required to create your account",
+        fields: [
+          {
+            key: "termsAccepted" as const,
+            label: "Accept Terms of Service",
+            description: "I agree to the Terms of Service and User Agreement",
+            required: true,
+            variant: "default" as const,
+          },
+          {
+            key: "privacyAccepted" as const,
+            label: "Accept Privacy Policy",
+            description:
+              "I acknowledge that I have read and understand the Privacy Policy",
+            required: true,
+            variant: "default" as const,
+          },
+        ],
+      },
+      {
+        title: "Communication Preferences",
+        description: "Choose how you want to receive updates and notifications",
+        fields: [
+          {
+            key: "emailNotifications" as const,
+            label: "Email Notifications",
+            description: "Receive important account updates via email",
+            required: false,
+            variant: "success" as const,
+          },
+          {
+            key: "smsNotifications" as const,
+            label: "SMS Notifications",
+            description: "Receive urgent notifications via text message",
+            required: false,
+            variant: "warning" as const,
+          },
+          {
+            key: "newsletterOptIn" as const,
+            label: "Newsletter Subscription",
+            description: "Get our weekly newsletter with tips and updates",
+            required: false,
+            variant: "secondary" as const,
+          },
+        ],
+      },
+      {
+        title: "Optional Features",
+        description: "Additional features you can enable for your account",
+        fields: [
+          {
+            key: "marketingOptIn" as const,
+            label: "Marketing Communications",
+            description: "Receive promotional offers and product announcements",
+            required: false,
+            variant: "outline" as const,
+          },
+          {
+            key: "betaFeatures" as const,
+            label: "Beta Features Access",
+            description: "Get early access to new features and improvements",
+            required: false,
+            variant: "secondary" as const,
+          },
+          {
+            key: "dataSharing" as const,
+            label: "Anonymous Usage Analytics",
+            description:
+              "Help us improve by sharing anonymous usage statistics",
+            required: false,
+            variant: "outline" as const,
+          },
+        ],
+      },
+    ];
+
+    return (
+      <div className="max-w-2xl space-y-8">
+        <div>
+          <h3 className="text-lg font-semibold mb-2">
+            Account Setup - Privacy & Preferences
+          </h3>
+          <p className="text-sm text-muted-foreground">
+            Configure your account settings and communication preferences
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-8">
+          {formSections.map((section) => (
+            <div key={section.title} className="space-y-4">
+              <div>
+                <h4 className="font-medium mb-1">{section.title}</h4>
+                <p className="text-sm text-muted-foreground">
+                  {section.description}
+                </p>
+              </div>
+
+              <div className="space-y-4 pl-4 border-l-2 border-muted">
+                {section.fields.map((field) => (
+                  <div key={field.key} className="space-y-2">
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <Label htmlFor={field.key} className="font-medium">
+                            {field.label}
+                          </Label>
+                          {field.required && (
+                            <span className="text-destructive text-sm">*</span>
+                          )}
+                        </div>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          {field.description}
+                        </p>
+                        {errors[field.key] && touchedFields.has(field.key) && (
+                          <p className="text-sm text-destructive mt-1">
+                            {errors[field.key]}
+                          </p>
+                        )}
+                      </div>
+
+                      <Switch
+                        id={field.key}
+                        checked={formData[field.key]}
+                        onCheckedChange={(checked) =>
+                          handleSwitchChange(field.key, checked)
+                        }
+                        variant={field.variant}
+                        className={
+                          errors[field.key] && touchedFields.has(field.key)
+                            ? "ring-2 ring-destructive/20"
+                            : ""
+                        }
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+
+          {/* Summary */}
+          <div className="p-4 bg-muted rounded-lg">
+            <h4 className="font-medium mb-2">Summary</h4>
+            <div className="text-sm space-y-1">
+              <div className="flex justify-between">
+                <span>Required items completed:</span>
+                <span className="font-medium">
+                  {
+                    formSections[0].fields.filter(
+                      (field) => formData[field.key]
+                    ).length
+                  }
+                  /{formSections[0].fields.length}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span>Communication preferences set:</span>
+                <span className="font-medium">
+                  {
+                    formSections[1].fields.filter(
+                      (field) => formData[field.key]
+                    ).length
+                  }
+                  /{formSections[1].fields.length}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span>Optional features enabled:</span>
+                <span className="font-medium">
+                  {
+                    formSections[2].fields.filter(
+                      (field) => formData[field.key]
+                    ).length
+                  }
+                  /{formSections[2].fields.length}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex gap-4 pt-4 border-t">
+            <button
+              type="submit"
+              className="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90 font-medium"
+            >
+              Create Account
+            </button>
+            <button
+              type="button"
+              onClick={resetForm}
+              className="px-4 py-2 border border-input rounded hover:bg-accent font-medium"
+            >
+              Reset Form
+            </button>
+          </div>
+        </form>
+      </div>
+    );
+  },
 };

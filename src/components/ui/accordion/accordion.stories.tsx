@@ -1,3 +1,4 @@
+import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import {
   Accordion,
@@ -14,7 +15,7 @@ export default {
     docs: {
       description: {
         component:
-          "A collapsible content container with expandable sections. Built with Radix UI primitives for accessibility.",
+          "A vertically stacked set of interactive headings that each reveal an associated section of content. Built with Radix UI primitives for accessibility and keyboard navigation.",
       },
     },
   },
@@ -24,36 +25,84 @@ export default {
       control: "select",
       options: ["single", "multiple"],
       description:
-        "Determines whether one or multiple items can be opened at the same time",
+        "Determines whether one or multiple items can be opened at the same time. When 'single', only one item can be open. When 'multiple', multiple items can be open simultaneously.",
+      table: {
+        type: { summary: '"single" | "multiple"' },
+        defaultValue: { summary: "undefined" },
+      },
     },
     collapsible: {
       control: "boolean",
       description:
-        "When type is 'single', allows closing content when clicking trigger for an open item",
+        "When type is 'single', allows closing content when clicking trigger for an open item. Has no effect when type is 'multiple'.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
     },
     defaultValue: {
       control: "text",
       description:
-        "The value of the item to expand when initially rendered (uncontrolled)",
+        "The value of the item to expand when initially rendered (uncontrolled). Use when you do not need to control the state of the accordion.",
+      table: {
+        type: { summary: "string | string[]" },
+        defaultValue: { summary: "undefined" },
+      },
     },
     value: {
       control: "text",
-      description: "The controlled value of the item to expand (controlled)",
+      description:
+        "The controlled value of the item to expand (controlled). Must be used in conjunction with onValueChange.",
+      table: {
+        type: { summary: "string | string[]" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    onValueChange: {
+      description:
+        "Event handler called when the expanded state of an item changes.",
+      table: {
+        type: { summary: "(value: string | string[]) => void" },
+        defaultValue: { summary: "undefined" },
+      },
     },
     orientation: {
       control: "select",
       options: ["vertical", "horizontal"],
-      description: "The orientation of the accordion",
+      description:
+        "The orientation of the accordion. Affects keyboard navigation behavior.",
+      table: {
+        type: { summary: '"vertical" | "horizontal"' },
+        defaultValue: { summary: '"vertical"' },
+      },
+    },
+    dir: {
+      control: "select",
+      options: ["ltr", "rtl"],
+      description:
+        "The reading direction. If omitted, assumes LTR (left-to-right) reading mode.",
+      table: {
+        type: { summary: '"ltr" | "rtl"' },
+        defaultValue: { summary: '"ltr"' },
+      },
     },
     disabled: {
       control: "boolean",
       description:
-        "When true, prevents the user from interacting with the accordion",
+        "When true, prevents the user from interacting with the accordion and all its items.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
     },
     asChild: {
       control: "boolean",
       description:
-        "Change the default rendered element for the one passed as a child",
+        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
     },
   },
 };
@@ -614,6 +663,441 @@ export const SimpleQA = () => (
         <AccordionContent>
           Click on any header to expand or collapse the content. Only one
           section can be open at a time by default.
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
+  </div>
+);
+
+// Horizontal orientation example
+export const HorizontalOrientation = () => (
+  <div className="w-full max-w-4xl">
+    <div className="mb-4">
+      <h3 className="text-lg font-semibold mb-2">Horizontal Accordion</h3>
+      <p className="text-sm text-muted-foreground mb-4">
+        Use the orientation prop to create a horizontal accordion. Navigation
+        uses left/right arrow keys.
+      </p>
+    </div>
+    <Accordion
+      type="single"
+      orientation="horizontal"
+      collapsible
+      className="flex border rounded-lg"
+    >
+      <AccordionItem
+        value="features"
+        className="flex-1 border-r last:border-r-0"
+      >
+        <AccordionTrigger className="px-4 py-3 text-sm font-medium">
+          Features
+        </AccordionTrigger>
+        <AccordionContent className="px-4 py-3 border-t">
+          <div className="space-y-2 text-sm">
+            <div>• Full keyboard navigation</div>
+            <div>• Supports RTL direction</div>
+            <div>• WAI-ARIA compliant</div>
+            <div>• Smooth animations</div>
+          </div>
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="usage" className="flex-1 border-r last:border-r-0">
+        <AccordionTrigger className="px-4 py-3 text-sm font-medium">
+          Usage
+        </AccordionTrigger>
+        <AccordionContent className="px-4 py-3 border-t">
+          <div className="space-y-2 text-sm">
+            <div>• FAQs and help sections</div>
+            <div>• Settings panels</div>
+            <div>• Progressive disclosure</div>
+            <div>• Content organization</div>
+          </div>
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="customization" className="flex-1">
+        <AccordionTrigger className="px-4 py-3 text-sm font-medium">
+          Customization
+        </AccordionTrigger>
+        <AccordionContent className="px-4 py-3 border-t">
+          <div className="space-y-2 text-sm">
+            <div>• Unstyled by default</div>
+            <div>• CSS-in-JS compatible</div>
+            <div>• Custom animations</div>
+            <div>• Theme integration</div>
+          </div>
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
+  </div>
+);
+
+// Controlled accordion example
+export const ControlledAccordion = () => {
+  const [value, setValue] = React.useState<string>("");
+
+  return (
+    <div className="w-full max-w-lg space-y-4">
+      <div>
+        <h3 className="text-lg font-semibold mb-2">Controlled Accordion</h3>
+        <p className="text-sm text-muted-foreground mb-4">
+          Control the accordion state externally using value and onValueChange
+          props.
+        </p>
+        <div className="flex gap-2 mb-4">
+          <Badge variant="outline" className="text-xs">
+            Current value: {value || "none"}
+          </Badge>
+          <button
+            onClick={() => setValue(value === "item-1" ? "" : "item-1")}
+            className="text-xs px-2 py-1 bg-primary text-primary-foreground rounded"
+          >
+            Toggle Item 1
+          </button>
+          <button
+            onClick={() => setValue(value === "item-2" ? "" : "item-2")}
+            className="text-xs px-2 py-1 bg-primary text-primary-foreground rounded"
+          >
+            Toggle Item 2
+          </button>
+        </div>
+      </div>
+      <Accordion type="single" value={value} onValueChange={setValue}>
+        <AccordionItem value="item-1">
+          <AccordionTrigger>Controlled Item 1</AccordionTrigger>
+          <AccordionContent>
+            This accordion item is controlled externally. Its open/closed state
+            is managed by the parent component.
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="item-2">
+          <AccordionTrigger>Controlled Item 2</AccordionTrigger>
+          <AccordionContent>
+            You can programmatically control which items are expanded using the
+            buttons above.
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    </div>
+  );
+};
+
+// API Reference documentation
+export const APIReference = () => (
+  <div className="w-full max-w-4xl space-y-6">
+    <div className="space-y-4">
+      <h3 className="text-xl font-semibold">Accordion Props</h3>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm border-collapse border border-border">
+          <thead>
+            <tr className="border-b border-border bg-muted/50">
+              <th className="border border-border p-3 text-left font-medium">
+                Prop
+              </th>
+              <th className="border border-border p-3 text-left font-medium">
+                Type
+              </th>
+              <th className="border border-border p-3 text-left font-medium">
+                Default
+              </th>
+              <th className="border border-border p-3 text-left font-medium">
+                Description
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="border border-border p-3 font-mono text-xs">
+                type
+              </td>
+              <td className="border border-border p-3 text-xs">
+                "single" | "multiple"
+              </td>
+              <td className="border border-border p-3 text-xs">—</td>
+              <td className="border border-border p-3 text-xs">
+                Determines whether one or multiple items can be opened at the
+                same time.
+              </td>
+            </tr>
+            <tr className="bg-muted/25">
+              <td className="border border-border p-3 font-mono text-xs">
+                value
+              </td>
+              <td className="border border-border p-3 text-xs">
+                string | string[]
+              </td>
+              <td className="border border-border p-3 text-xs">—</td>
+              <td className="border border-border p-3 text-xs">
+                The controlled value of the item to expand. Must be used with
+                onValueChange.
+              </td>
+            </tr>
+            <tr>
+              <td className="border border-border p-3 font-mono text-xs">
+                defaultValue
+              </td>
+              <td className="border border-border p-3 text-xs">
+                string | string[]
+              </td>
+              <td className="border border-border p-3 text-xs">—</td>
+              <td className="border border-border p-3 text-xs">
+                The value of the item to expand when initially rendered
+                (uncontrolled).
+              </td>
+            </tr>
+            <tr className="bg-muted/25">
+              <td className="border border-border p-3 font-mono text-xs">
+                onValueChange
+              </td>
+              <td className="border border-border p-3 text-xs">
+                (value) =&gt; void
+              </td>
+              <td className="border border-border p-3 text-xs">—</td>
+              <td className="border border-border p-3 text-xs">
+                Event handler called when the expanded state changes.
+              </td>
+            </tr>
+            <tr>
+              <td className="border border-border p-3 font-mono text-xs">
+                collapsible
+              </td>
+              <td className="border border-border p-3 text-xs">boolean</td>
+              <td className="border border-border p-3 text-xs">false</td>
+              <td className="border border-border p-3 text-xs">
+                When type is "single", allows closing an open item.
+              </td>
+            </tr>
+            <tr className="bg-muted/25">
+              <td className="border border-border p-3 font-mono text-xs">
+                disabled
+              </td>
+              <td className="border border-border p-3 text-xs">boolean</td>
+              <td className="border border-border p-3 text-xs">false</td>
+              <td className="border border-border p-3 text-xs">
+                When true, prevents interaction with the accordion.
+              </td>
+            </tr>
+            <tr>
+              <td className="border border-border p-3 font-mono text-xs">
+                orientation
+              </td>
+              <td className="border border-border p-3 text-xs">
+                "horizontal" | "vertical"
+              </td>
+              <td className="border border-border p-3 text-xs">"vertical"</td>
+              <td className="border border-border p-3 text-xs">
+                The orientation of the accordion.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div className="space-y-4">
+      <h3 className="text-xl font-semibold">AccordionItem Props</h3>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm border-collapse border border-border">
+          <thead>
+            <tr className="border-b border-border bg-muted/50">
+              <th className="border border-border p-3 text-left font-medium">
+                Prop
+              </th>
+              <th className="border border-border p-3 text-left font-medium">
+                Type
+              </th>
+              <th className="border border-border p-3 text-left font-medium">
+                Default
+              </th>
+              <th className="border border-border p-3 text-left font-medium">
+                Description
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="border border-border p-3 font-mono text-xs">
+                value
+              </td>
+              <td className="border border-border p-3 text-xs">string</td>
+              <td className="border border-border p-3 text-xs">—</td>
+              <td className="border border-border p-3 text-xs">
+                A unique value for the item.
+              </td>
+            </tr>
+            <tr className="bg-muted/25">
+              <td className="border border-border p-3 font-mono text-xs">
+                disabled
+              </td>
+              <td className="border border-border p-3 text-xs">boolean</td>
+              <td className="border border-border p-3 text-xs">false</td>
+              <td className="border border-border p-3 text-xs">
+                When true, prevents interaction with the item.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+);
+
+// Advanced example with animations and disabled items
+export const AdvancedExample = () => (
+  <div className="w-full max-w-2xl space-y-6">
+    <div>
+      <h2 className="text-2xl font-bold mb-4">Advanced Features</h2>
+      <p className="text-muted-foreground mb-6">
+        Demonstrates disabled items, custom animations, and advanced styling
+        patterns.
+      </p>
+    </div>
+
+    <Accordion type="single" collapsible defaultValue="available">
+      <AccordionItem value="available">
+        <AccordionTrigger className="text-left">
+          <div className="flex items-center justify-between w-full">
+            <span>Available Features</span>
+            <Badge variant="secondary" className="mr-6">
+              Active
+            </Badge>
+          </div>
+        </AccordionTrigger>
+        <AccordionContent>
+          <div className="space-y-4">
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div className="p-3 border rounded-lg space-y-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <span className="font-medium text-sm">
+                    Keyboard Navigation
+                  </span>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Full arrow key support
+                </p>
+              </div>
+              <div className="p-3 border rounded-lg space-y-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <span className="font-medium text-sm">Screen Reader</span>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  ARIA-compliant markup
+                </p>
+              </div>
+              <div className="p-3 border rounded-lg space-y-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <span className="font-medium text-sm">RTL Support</span>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Right-to-left languages
+                </p>
+              </div>
+              <div className="p-3 border rounded-lg space-y-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <span className="font-medium text-sm">Custom Styling</span>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Fully customizable
+                </p>
+              </div>
+            </div>
+          </div>
+        </AccordionContent>
+      </AccordionItem>
+
+      <AccordionItem value="disabled" disabled>
+        <AccordionTrigger className="text-left">
+          <div className="flex items-center justify-between w-full">
+            <span>Premium Features</span>
+            <Badge variant="outline" className="mr-6">
+              Disabled
+            </Badge>
+          </div>
+        </AccordionTrigger>
+        <AccordionContent>
+          This content is not accessible because the item is disabled.
+        </AccordionContent>
+      </AccordionItem>
+
+      <AccordionItem value="animation">
+        <AccordionTrigger className="text-left">
+          <div className="flex items-center justify-between w-full">
+            <span>Animation Details</span>
+            <Badge variant="secondary" className="mr-6">
+              CSS
+            </Badge>
+          </div>
+        </AccordionTrigger>
+        <AccordionContent>
+          <div className="space-y-4">
+            <p className="text-sm">
+              Accordions use CSS variables for smooth height animations:
+            </p>
+            <div className="bg-muted/50 p-4 rounded-lg text-xs font-mono">
+              <div className="text-muted-foreground mb-2">
+                /* CSS Animation Variables */
+              </div>
+              <div>--radix-accordion-content-height</div>
+              <div>--radix-accordion-content-width</div>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2 text-sm">
+              <div className="space-y-1">
+                <span className="font-medium">Height Animation</span>
+                <p className="text-muted-foreground text-xs">
+                  Smooth expand/collapse using CSS transforms
+                </p>
+              </div>
+              <div className="space-y-1">
+                <span className="font-medium">Performance</span>
+                <p className="text-muted-foreground text-xs">
+                  Hardware-accelerated animations
+                </p>
+              </div>
+            </div>
+          </div>
+        </AccordionContent>
+      </AccordionItem>
+
+      <AccordionItem value="accessibility">
+        <AccordionTrigger className="text-left">
+          <div className="flex items-center justify-between w-full">
+            <span>Accessibility Standards</span>
+            <Badge variant="secondary" className="mr-6">
+              WAI-ARIA
+            </Badge>
+          </div>
+        </AccordionTrigger>
+        <AccordionContent>
+          <div className="space-y-3">
+            <p className="text-sm">
+              Follows the WAI-ARIA accordion design pattern with:
+            </p>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li className="flex items-start gap-2">
+                <span className="text-green-500 mt-1">✓</span>
+                <span>Proper ARIA roles and properties</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-500 mt-1">✓</span>
+                <span>Keyboard navigation with arrow keys</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-500 mt-1">✓</span>
+                <span>Screen reader announcements</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-500 mt-1">✓</span>
+                <span>Focus management and indicators</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-500 mt-1">✓</span>
+                <span>High contrast mode support</span>
+              </li>
+            </ul>
+          </div>
         </AccordionContent>
       </AccordionItem>
     </Accordion>

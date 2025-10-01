@@ -1,3 +1,4 @@
+import React from 'react';
 import { Badge } from '../badge/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '../separator/separator';
@@ -53,21 +54,113 @@ export default {
     layout: "centered",
   },
   argTypes: {
-    variant: {
+    // Root Props
+    type: {
       control: "select",
-      options: ["default", "outline", "secondary", "ghost", "solid"],
+      options: ["single", "multiple"],
+      description:
+        "Determines whether one or multiple items can be pressed at a time.",
+      table: { category: "Root Props" },
     },
-    size: {
-      control: "select",
-      options: ["sm", "default", "lg", "xl"],
+    value: {
+      control: "text",
+      description:
+        'The controlled value of the pressed item when type is "single".',
+      table: { category: "Root Props" },
+    },
+    defaultValue: {
+      control: "text",
+      description:
+        'The value of the item to press when initially rendered when type is "single".',
+      table: { category: "Root Props" },
+    },
+    onValueChange: {
+      action: "onValueChange",
+      description: "Event handler called when the pressed state changes.",
+      table: { category: "Root Props" },
+    },
+    multipleValue: {
+      control: "object",
+      description:
+        'The controlled value of the pressed items when type is "multiple".',
+      table: { category: "Root Props" },
+    },
+    defaultMultipleValue: {
+      control: "object",
+      description:
+        'The values of the items to press when initially rendered when type is "multiple".',
+      table: { category: "Root Props" },
+    },
+    onMultipleValueChange: {
+      action: "onMultipleValueChange",
+      description:
+        'Event handler called when the pressed state changes when type is "multiple".',
+      table: { category: "Root Props" },
+    },
+    disabled: {
+      control: "boolean",
+      description:
+        "When true, prevents the user from interacting with the toggle group.",
+      table: { category: "Root Props" },
+    },
+    rovingFocus: {
+      control: "boolean",
+      description: "When false, navigating through the items will be disabled.",
+      table: { category: "Root Props" },
     },
     orientation: {
       control: "select",
       options: ["horizontal", "vertical"],
+      description: "The orientation of the component.",
+      table: { category: "Root Props" },
     },
-    type: {
+    dir: {
       control: "select",
-      options: ["single", "multiple"],
+      options: ["ltr", "rtl"],
+      description: "The reading direction of the toggle group.",
+      table: { category: "Root Props" },
+    },
+    loop: {
+      control: "boolean",
+      description:
+        "When true, keyboard navigation will loop from last item to first, and vice versa.",
+      table: { category: "Root Props" },
+    },
+    asChild: {
+      control: "boolean",
+      description:
+        "Change the default rendered element for the one passed as a child.",
+      table: { category: "Root Props" },
+    },
+
+    // Item Props
+    itemValue: {
+      control: "text",
+      description: "A unique value for the item.",
+      table: { category: "Item Props" },
+    },
+    itemDisabled: {
+      control: "boolean",
+      description:
+        "When true, prevents the user from interacting with the item.",
+      table: { category: "Item Props" },
+    },
+    itemAsChild: {
+      control: "boolean",
+      description: "Change the default rendered element for the item.",
+      table: { category: "Item Props" },
+    },
+
+    // Custom Style Props
+    variant: {
+      control: "select",
+      options: ["default", "outline", "secondary", "ghost", "solid"],
+      table: { category: "Style Props" },
+    },
+    size: {
+      control: "select",
+      options: ["sm", "default", "lg", "xl"],
+      table: { category: "Style Props" },
     },
   },
 };
@@ -802,4 +895,618 @@ Playground.args = {
   size: "default",
   orientation: "horizontal",
   type: "single",
+};
+
+// Advanced Examples
+export const AdvancedToggleGroupInteractions = {
+  render: () => {
+    const [textFormat, setTextFormat] = React.useState<string[]>([]);
+    const [alignment, setAlignment] = React.useState<string>("left");
+    const [layout, setLayout] = React.useState<string>("grid");
+    const [mediaControls, setMediaControls] = React.useState<string[]>([]);
+    const [theme, setTheme] = React.useState<string>("system");
+
+    const [activeGroups, setActiveGroups] = React.useState({
+      formatting: true,
+      alignment: true,
+      layout: true,
+      media: true,
+      theme: true,
+    });
+
+    const [groupSettings, setGroupSettings] = React.useState({
+      orientation: "horizontal" as "horizontal" | "vertical",
+      disabled: false,
+      rovingFocus: true,
+      loop: true,
+      rtl: false,
+    });
+
+    const resetAllSelections = () => {
+      setTextFormat([]);
+      setAlignment("left");
+      setLayout("grid");
+      setMediaControls([]);
+      setTheme("system");
+    };
+
+    const toggleGroupActive = (groupName: keyof typeof activeGroups) => {
+      setActiveGroups((prev) => ({
+        ...prev,
+        [groupName]: !prev[groupName],
+      }));
+    };
+
+    return (
+      <div className="max-w-6xl space-y-8">
+        <div>
+          <h3 className="text-lg font-semibold mb-4">
+            Advanced Toggle Group Interactions
+          </h3>
+
+          {/* Configuration Panel */}
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6 p-4 bg-muted rounded-lg">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Orientation</label>
+              <ToggleGroup
+                type="single"
+                value={groupSettings.orientation}
+                onValueChange={(value) =>
+                  value &&
+                  setGroupSettings((prev) => ({
+                    ...prev,
+                    orientation: value as "horizontal" | "vertical",
+                  }))
+                }
+                size="sm"
+              >
+                <ToggleGroupItem value="horizontal" className="text-xs">
+                  H
+                </ToggleGroupItem>
+                <ToggleGroupItem value="vertical" className="text-xs">
+                  V
+                </ToggleGroupItem>
+              </ToggleGroup>
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id="disabled"
+                checked={groupSettings.disabled}
+                onChange={(e) =>
+                  setGroupSettings((prev) => ({
+                    ...prev,
+                    disabled: e.target.checked,
+                  }))
+                }
+              />
+              <label htmlFor="disabled" className="text-sm">
+                Disabled
+              </label>
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id="rovingFocus"
+                checked={groupSettings.rovingFocus}
+                onChange={(e) =>
+                  setGroupSettings((prev) => ({
+                    ...prev,
+                    rovingFocus: e.target.checked,
+                  }))
+                }
+              />
+              <label htmlFor="rovingFocus" className="text-sm">
+                Roving Focus
+              </label>
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id="loop"
+                checked={groupSettings.loop}
+                onChange={(e) =>
+                  setGroupSettings((prev) => ({
+                    ...prev,
+                    loop: e.target.checked,
+                  }))
+                }
+              />
+              <label htmlFor="loop" className="text-sm">
+                Loop
+              </label>
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id="rtl"
+                checked={groupSettings.rtl}
+                onChange={(e) =>
+                  setGroupSettings((prev) => ({
+                    ...prev,
+                    rtl: e.target.checked,
+                  }))
+                }
+              />
+              <label htmlFor="rtl" className="text-sm">
+                RTL
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Text Formatting (Multiple Selection) */}
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="flex items-center gap-2">
+                    Text Formatting
+                    <Badge variant="outline" className="text-xs">
+                      Multiple
+                    </Badge>
+                  </CardTitle>
+                  <CardDescription>
+                    Apply multiple text formatting options
+                  </CardDescription>
+                </div>
+                <Button
+                  onClick={() => toggleGroupActive("formatting")}
+                  variant="ghost"
+                  size="sm"
+                  className="text-xs"
+                >
+                  {activeGroups.formatting ? "Disable" : "Enable"}
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <ToggleGroup
+                type="multiple"
+                value={textFormat}
+                onValueChange={setTextFormat}
+                orientation={groupSettings.orientation}
+                disabled={groupSettings.disabled || !activeGroups.formatting}
+                rovingFocus={groupSettings.rovingFocus}
+                loop={groupSettings.loop}
+                dir={groupSettings.rtl ? "rtl" : "ltr"}
+                variant="outline"
+              >
+                <ToggleGroupItem value="bold" aria-label="Bold">
+                  <Bold className="h-4 w-4" />
+                </ToggleGroupItem>
+                <ToggleGroupItem value="italic" aria-label="Italic">
+                  <Italic className="h-4 w-4" />
+                </ToggleGroupItem>
+                <ToggleGroupItem value="underline" aria-label="Underline">
+                  <Underline className="h-4 w-4" />
+                </ToggleGroupItem>
+              </ToggleGroup>
+
+              <div className="p-3 bg-muted/20 rounded-lg">
+                <div className="text-sm font-medium mb-2">Preview</div>
+                <div
+                  className={`text-sm ${
+                    textFormat.includes("bold") ? "font-bold" : ""
+                  } ${textFormat.includes("italic") ? "italic" : ""} ${
+                    textFormat.includes("underline") ? "underline" : ""
+                  }`}
+                >
+                  Sample text with formatting
+                </div>
+              </div>
+
+              <div className="text-xs text-muted-foreground">
+                Active: {textFormat.length > 0 ? textFormat.join(", ") : "None"}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Text Alignment (Single Selection) */}
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="flex items-center gap-2">
+                    Text Alignment
+                    <Badge variant="outline" className="text-xs">
+                      Single
+                    </Badge>
+                  </CardTitle>
+                  <CardDescription>
+                    Choose text alignment option
+                  </CardDescription>
+                </div>
+                <Button
+                  onClick={() => toggleGroupActive("alignment")}
+                  variant="ghost"
+                  size="sm"
+                  className="text-xs"
+                >
+                  {activeGroups.alignment ? "Disable" : "Enable"}
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <ToggleGroup
+                type="single"
+                value={alignment}
+                onValueChange={(value) => value && setAlignment(value)}
+                orientation={groupSettings.orientation}
+                disabled={groupSettings.disabled || !activeGroups.alignment}
+                rovingFocus={groupSettings.rovingFocus}
+                loop={groupSettings.loop}
+                dir={groupSettings.rtl ? "rtl" : "ltr"}
+                variant="outline"
+              >
+                <ToggleGroupItem value="left" aria-label="Align Left">
+                  <AlignLeft className="h-4 w-4" />
+                </ToggleGroupItem>
+                <ToggleGroupItem value="center" aria-label="Align Center">
+                  <AlignCenter className="h-4 w-4" />
+                </ToggleGroupItem>
+                <ToggleGroupItem value="right" aria-label="Align Right">
+                  <AlignRight className="h-4 w-4" />
+                </ToggleGroupItem>
+                <ToggleGroupItem value="justify" aria-label="Justify">
+                  <AlignJustify className="h-4 w-4" />
+                </ToggleGroupItem>
+              </ToggleGroup>
+
+              <div className="p-3 bg-muted/20 rounded-lg">
+                <div className="text-sm font-medium mb-2">Preview</div>
+                <div
+                  className={`text-sm ${
+                    alignment === "center"
+                      ? "text-center"
+                      : alignment === "right"
+                        ? "text-right"
+                        : alignment === "justify"
+                          ? "text-justify"
+                          : "text-left"
+                  }`}
+                >
+                  This text will be aligned according to your selection. Lorem
+                  ipsum dolor sit amet.
+                </div>
+              </div>
+
+              <div className="text-xs text-muted-foreground">
+                Active: {alignment || "None"}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Layout Options */}
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="flex items-center gap-2">
+                    Layout Mode
+                    <Badge variant="outline" className="text-xs">
+                      Single
+                    </Badge>
+                  </CardTitle>
+                  <CardDescription>Select layout display mode</CardDescription>
+                </div>
+                <Button
+                  onClick={() => toggleGroupActive("layout")}
+                  variant="ghost"
+                  size="sm"
+                  className="text-xs"
+                >
+                  {activeGroups.layout ? "Disable" : "Enable"}
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <ToggleGroup
+                type="single"
+                value={layout}
+                onValueChange={(value) => value && setLayout(value)}
+                orientation={groupSettings.orientation}
+                disabled={groupSettings.disabled || !activeGroups.layout}
+                rovingFocus={groupSettings.rovingFocus}
+                loop={groupSettings.loop}
+                dir={groupSettings.rtl ? "rtl" : "ltr"}
+                variant="ghost"
+                size="sm"
+              >
+                <ToggleGroupItem value="grid" aria-label="Grid Layout">
+                  <Grid3X3 className="h-4 w-4" />
+                </ToggleGroupItem>
+                <ToggleGroupItem value="list" aria-label="List Layout">
+                  <LayoutGrid className="h-4 w-4" />
+                </ToggleGroupItem>
+                <ToggleGroupItem value="rows" aria-label="Rows Layout">
+                  <Rows3 className="h-4 w-4" />
+                </ToggleGroupItem>
+                <ToggleGroupItem value="columns" aria-label="Columns Layout">
+                  <Columns3 className="h-4 w-4" />
+                </ToggleGroupItem>
+              </ToggleGroup>
+
+              <div className="p-3 bg-muted/20 rounded-lg">
+                <div className="text-sm font-medium mb-2">Layout Preview</div>
+                <div className="space-y-1">
+                  {layout === "grid" && (
+                    <div className="grid grid-cols-3 gap-1">
+                      {[...Array(6)].map((_, i) => (
+                        <div key={i} className="h-6 bg-muted rounded" />
+                      ))}
+                    </div>
+                  )}
+                  {layout === "list" && (
+                    <div className="space-y-1">
+                      {[...Array(3)].map((_, i) => (
+                        <div key={i} className="h-4 bg-muted rounded" />
+                      ))}
+                    </div>
+                  )}
+                  {layout === "rows" && (
+                    <div className="grid grid-cols-1 gap-1">
+                      {[...Array(4)].map((_, i) => (
+                        <div key={i} className="h-3 bg-muted rounded" />
+                      ))}
+                    </div>
+                  )}
+                  {layout === "columns" && (
+                    <div className="grid grid-cols-4 gap-1">
+                      {[...Array(4)].map((_, i) => (
+                        <div key={i} className="h-8 bg-muted rounded" />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="text-xs text-muted-foreground">
+                Active: {layout || "None"}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Media Controls (Multiple Selection) */}
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="flex items-center gap-2">
+                    Media Controls
+                    <Badge variant="outline" className="text-xs">
+                      Multiple
+                    </Badge>
+                  </CardTitle>
+                  <CardDescription>
+                    Control media playback options
+                  </CardDescription>
+                </div>
+                <Button
+                  onClick={() => toggleGroupActive("media")}
+                  variant="ghost"
+                  size="sm"
+                  className="text-xs"
+                >
+                  {activeGroups.media ? "Disable" : "Enable"}
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <ToggleGroup
+                type="multiple"
+                value={mediaControls}
+                onValueChange={setMediaControls}
+                orientation={groupSettings.orientation}
+                disabled={groupSettings.disabled || !activeGroups.media}
+                rovingFocus={groupSettings.rovingFocus}
+                loop={groupSettings.loop}
+                dir={groupSettings.rtl ? "rtl" : "ltr"}
+                variant="secondary"
+                size="lg"
+              >
+                <ToggleGroupItem value="shuffle" aria-label="Shuffle">
+                  🔀
+                </ToggleGroupItem>
+                <ToggleGroupItem value="repeat" aria-label="Repeat">
+                  🔁
+                </ToggleGroupItem>
+                <ToggleGroupItem value="mute" aria-label="Mute">
+                  {mediaControls.includes("mute") ? (
+                    <VolumeX className="h-4 w-4" />
+                  ) : (
+                    <Volume2 className="h-4 w-4" />
+                  )}
+                </ToggleGroupItem>
+                <ToggleGroupItem value="subtitles" aria-label="Subtitles">
+                  📱
+                </ToggleGroupItem>
+                <ToggleGroupItem value="hd" aria-label="HD Quality">
+                  HD
+                </ToggleGroupItem>
+              </ToggleGroup>
+
+              <div className="p-3 bg-muted/20 rounded-lg">
+                <div className="text-sm font-medium mb-2">Active Features</div>
+                <div className="flex flex-wrap gap-1">
+                  {mediaControls.length > 0 ? (
+                    mediaControls.map((control) => (
+                      <Badge
+                        key={control}
+                        variant="secondary"
+                        className="text-xs capitalize"
+                      >
+                        {control}
+                      </Badge>
+                    ))
+                  ) : (
+                    <span className="text-xs text-muted-foreground">
+                      No features active
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <div className="text-xs text-muted-foreground">
+                Active:{" "}
+                {mediaControls.length > 0 ? mediaControls.join(", ") : "None"}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Theme Selection (Horizontal with custom styling) */}
+        <Card>
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle className="flex items-center gap-2">
+                  Theme Selection
+                  <Badge variant="outline" className="text-xs">
+                    Single + Custom
+                  </Badge>
+                </CardTitle>
+                <CardDescription>
+                  Choose application theme with enhanced visual feedback
+                </CardDescription>
+              </div>
+              <Button
+                onClick={() => toggleGroupActive("theme")}
+                variant="ghost"
+                size="sm"
+                className="text-xs"
+              >
+                {activeGroups.theme ? "Disable" : "Enable"}
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <ToggleGroup
+              type="single"
+              value={theme}
+              onValueChange={(value) => value && setTheme(value)}
+              disabled={groupSettings.disabled || !activeGroups.theme}
+              rovingFocus={groupSettings.rovingFocus}
+              loop={groupSettings.loop}
+              dir={groupSettings.rtl ? "rtl" : "ltr"}
+              variant="outline"
+              size="lg"
+              className="justify-center"
+            >
+              <ToggleGroupItem
+                value="light"
+                aria-label="Light Theme"
+                className="flex-col h-20 w-20"
+              >
+                <Sun className="h-6 w-6 mb-1 text-yellow-500" />
+                <span className="text-xs">Light</span>
+              </ToggleGroupItem>
+              <ToggleGroupItem
+                value="dark"
+                aria-label="Dark Theme"
+                className="flex-col h-20 w-20"
+              >
+                <Moon className="h-6 w-6 mb-1 text-blue-500" />
+                <span className="text-xs">Dark</span>
+              </ToggleGroupItem>
+              <ToggleGroupItem
+                value="system"
+                aria-label="System Theme"
+                className="flex-col h-20 w-20"
+              >
+                <Monitor className="h-6 w-6 mb-1 text-gray-500" />
+                <span className="text-xs">System</span>
+              </ToggleGroupItem>
+            </ToggleGroup>
+
+            <div className="p-4 border rounded-lg">
+              <div className="text-sm font-medium mb-3">Theme Preview</div>
+              <div
+                className={`p-3 rounded border transition-colors ${
+                  theme === "light"
+                    ? "bg-white text-black border-gray-200"
+                    : theme === "dark"
+                      ? "bg-gray-900 text-white border-gray-700"
+                      : "bg-gray-100 text-gray-800 border-gray-300"
+                }`}
+              >
+                <div className="text-sm">
+                  <div className="font-medium">Selected Theme: {theme}</div>
+                  <div className="text-xs opacity-70 mt-1">
+                    This preview shows how the {theme} theme would look
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Global Controls */}
+        <div className="flex items-center justify-between p-4 bg-muted/20 rounded-lg">
+          <div className="space-y-1">
+            <div className="font-medium">Global Actions</div>
+            <div className="text-sm text-muted-foreground">
+              Manage all toggle groups at once
+            </div>
+          </div>
+          <div className="flex gap-2">
+            <Button onClick={resetAllSelections} variant="outline" size="sm">
+              Reset All Selections
+            </Button>
+            <Button
+              onClick={() =>
+                setGroupSettings((prev) => ({
+                  ...prev,
+                  disabled: !prev.disabled,
+                }))
+              }
+              variant={groupSettings.disabled ? "destructive" : "default"}
+              size="sm"
+            >
+              {groupSettings.disabled ? "Enable All" : "Disable All"}
+            </Button>
+          </div>
+        </div>
+
+        <div className="text-sm text-muted-foreground">
+          <strong>Features demonstrated:</strong>
+          <ul className="mt-1 space-y-1">
+            <li>
+              • <strong>Single vs Multiple selection:</strong> Different toggle
+              group types with appropriate behaviors
+            </li>
+            <li>
+              • <strong>Dynamic configuration:</strong> Live changes to
+              orientation, focus behavior, and accessibility
+            </li>
+            <li>
+              • <strong>Complex state management:</strong> Multiple groups with
+              independent state and cross-group interactions
+            </li>
+            <li>
+              • <strong>Visual feedback:</strong> Real-time previews showing the
+              effect of toggle selections
+            </li>
+            <li>
+              • <strong>Accessibility features:</strong> Roving focus, keyboard
+              navigation, and RTL support
+            </li>
+            <li>
+              • <strong>Custom styling:</strong> Different variants, sizes, and
+              custom layouts for specialized use cases
+            </li>
+            <li>
+              • <strong>Conditional enabling:</strong> Groups that can be
+              disabled independently or globally
+            </li>
+          </ul>
+        </div>
+      </div>
+    );
+  },
 };

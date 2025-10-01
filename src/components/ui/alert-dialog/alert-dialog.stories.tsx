@@ -24,6 +24,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
+  AlertDialogPortal,
+  AlertDialogOverlay,
 } from "./alert-dialog";
 
 export default {
@@ -34,15 +36,81 @@ export default {
     docs: {
       description: {
         component:
-          "A modal dialog that interrupts the user to confirm an action or communicate important information.",
+          "A modal dialog that interrupts the user with important content and expects a response.",
       },
     },
   },
   tags: ["autodocs"],
   argTypes: {
+    open: {
+      control: "boolean",
+      description:
+        "The controlled open state of the dialog. Must be used in conjunction with onOpenChange.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    defaultOpen: {
+      control: "boolean",
+      description:
+        "The open state of the dialog when it is initially rendered. Use when you do not need to control its open state.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    onOpenChange: {
+      action: "onOpenChange",
+      description:
+        "Event handler called when the open state of the dialog changes.",
+      table: {
+        type: { summary: "(open: boolean) => void" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    modal: {
+      control: "boolean",
+      description:
+        "The modality of the dialog. When set to false, interaction with outside elements will be disabled and only dialog content will be visible to screen readers.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "true" },
+      },
+    },
     size: {
       control: "select",
       options: ["sm", "default", "lg", "full"],
+      description: "Controls the width and max-width of the dialog content.",
+      table: {
+        type: { summary: "enum" },
+        defaultValue: { summary: "default" },
+      },
+    },
+    container: {
+      description: "Specify a container element to portal the content into.",
+      table: {
+        type: { summary: "HTMLElement" },
+        defaultValue: { summary: "document.body" },
+      },
+    },
+    asChild: {
+      control: "boolean",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    forceMount: {
+      control: "boolean",
+      description:
+        "Used to force mounting when more control is needed. Useful when controlling animation with external state.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
     },
   },
 };
@@ -606,4 +674,494 @@ export const Playground = (args: {
 
 Playground.args = {
   size: "default",
+};
+
+// Controlled async operation
+export const ControlledAsyncOperation = () => {
+  const [open, setOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const wait = () => new Promise((resolve) => setTimeout(resolve, 2000));
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      await wait(); // Simulate async operation
+      setOpen(false);
+      setIsSubmitting(false);
+    } catch {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      <AlertDialog open={open} onOpenChange={setOpen}>
+        <AlertDialogTrigger asChild>
+          <Button>Process Payment</Button>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <form onSubmit={handleSubmit}>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Confirm Payment</AlertDialogTitle>
+              <AlertDialogDescription>
+                Are you sure you want to process the payment of $99.00? This
+                action cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel disabled={isSubmitting}>
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction
+                type="submit"
+                disabled={isSubmitting}
+                className="min-w-[100px]"
+              >
+                {isSubmitting ? "Processing..." : "Confirm"}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </form>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <div className="text-sm text-muted-foreground">
+        Click "Process Payment" to see controlled async operation in action.
+      </div>
+    </div>
+  );
+};
+
+// Custom portal container
+export const CustomPortalContainer = () => {
+  const [container, setContainer] = useState<HTMLElement | null>(null);
+
+  return (
+    <div className="space-y-4">
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <Button variant="outline">Open in Custom Container</Button>
+        </AlertDialogTrigger>
+        <AlertDialogPortal container={container}>
+          <AlertDialogOverlay />
+          <AlertDialogContent className="fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg">
+            <AlertDialogHeader>
+              <AlertDialogTitle>Custom Portal</AlertDialogTitle>
+              <AlertDialogDescription>
+                This dialog is rendered in a custom container below instead of
+                the document body.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction>Continue</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogPortal>
+      </AlertDialog>
+
+      <div
+        ref={setContainer}
+        className="relative min-h-[200px] border-2 border-dashed border-muted-foreground/25 rounded-lg p-4 bg-muted/10"
+      >
+        <p className="text-sm text-muted-foreground text-center">
+          Custom Portal Container
+          <br />
+          (Dialog will render here when opened)
+        </p>
+      </div>
+    </div>
+  );
+};
+
+// API Reference
+export const APIReference = () => (
+  <div className="space-y-6 max-w-4xl">
+    <div>
+      <h3 className="text-lg font-semibold mb-3">Alert Dialog API Reference</h3>
+      <p className="text-sm text-muted-foreground mb-4">
+        Complete API reference for all Alert Dialog components with their props,
+        types, and default values.
+      </p>
+    </div>
+
+    <div className="space-y-4">
+      <div>
+        <h4 className="font-medium mb-2">AlertDialog.Root</h4>
+        <div className="text-sm text-muted-foreground mb-2">
+          Contains all the parts of an alert dialog.
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse border border-border">
+            <thead>
+              <tr className="border-b border-border bg-muted/50">
+                <th className="border border-border px-3 py-2 text-left">
+                  Prop
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Type
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Default
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Description
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  open
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  boolean
+                </td>
+                <td className="border border-border px-3 py-2">-</td>
+                <td className="border border-border px-3 py-2">
+                  The controlled open state of the dialog.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  defaultOpen
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  boolean
+                </td>
+                <td className="border border-border px-3 py-2">false</td>
+                <td className="border border-border px-3 py-2">
+                  The open state when initially rendered.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  onOpenChange
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">{`(open: boolean) => void`}</td>
+                <td className="border border-border px-3 py-2">-</td>
+                <td className="border border-border px-3 py-2">
+                  Event handler called when the open state changes.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <h4 className="font-medium mb-2">AlertDialog.Trigger</h4>
+        <div className="text-sm text-muted-foreground mb-2">
+          A button that opens the dialog.
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse border border-border">
+            <thead>
+              <tr className="border-b border-border bg-muted/50">
+                <th className="border border-border px-3 py-2 text-left">
+                  Prop
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Type
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Default
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Description
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  asChild
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  boolean
+                </td>
+                <td className="border border-border px-3 py-2">false</td>
+                <td className="border border-border px-3 py-2">
+                  Change the default rendered element.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <h4 className="font-medium mb-2">AlertDialog.Portal</h4>
+        <div className="text-sm text-muted-foreground mb-2">
+          Portals overlay and content parts into the body.
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse border border-border">
+            <thead>
+              <tr className="border-b border-border bg-muted/50">
+                <th className="border border-border px-3 py-2 text-left">
+                  Prop
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Type
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Default
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Description
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  forceMount
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  boolean
+                </td>
+                <td className="border border-border px-3 py-2">false</td>
+                <td className="border border-border px-3 py-2">
+                  Force mounting for animation control.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  container
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  HTMLElement
+                </td>
+                <td className="border border-border px-3 py-2">
+                  document.body
+                </td>
+                <td className="border border-border px-3 py-2">
+                  Specify a container element to portal into.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <h4 className="font-medium mb-2">AlertDialog.Content</h4>
+        <div className="text-sm text-muted-foreground mb-2">
+          Contains content to be rendered when the dialog is open.
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse border border-border">
+            <thead>
+              <tr className="border-b border-border bg-muted/50">
+                <th className="border border-border px-3 py-2 text-left">
+                  Prop
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Type
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Default
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Description
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  asChild
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  boolean
+                </td>
+                <td className="border border-border px-3 py-2">false</td>
+                <td className="border border-border px-3 py-2">
+                  Change the default rendered element.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  forceMount
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  boolean
+                </td>
+                <td className="border border-border px-3 py-2">false</td>
+                <td className="border border-border px-3 py-2">
+                  Force mounting for animation control.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  onOpenAutoFocus
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">{`(event: Event) => void`}</td>
+                <td className="border border-border px-3 py-2">-</td>
+                <td className="border border-border px-3 py-2">
+                  Event handler called when focus moves into the component.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  onCloseAutoFocus
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">{`(event: Event) => void`}</td>
+                <td className="border border-border px-3 py-2">-</td>
+                <td className="border border-border px-3 py-2">
+                  Event handler called when focus moves to the trigger after
+                  closing.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  onEscapeKeyDown
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">{`(event: KeyboardEvent) => void`}</td>
+                <td className="border border-border px-3 py-2">-</td>
+                <td className="border border-border px-3 py-2">
+                  Event handler called when the escape key is down.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// Advanced example with all features
+export const AdvancedExample = () => {
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [step, setStep] = useState(1);
+
+  const handleNext = () => {
+    if (step < 3) {
+      setStep(step + 1);
+    } else {
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+        setOpen(false);
+        setStep(1);
+      }, 2000);
+    }
+  };
+
+  const handleBack = () => {
+    if (step > 1) {
+      setStep(step - 1);
+    }
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setStep(1);
+  };
+
+  const renderStepContent = () => {
+    switch (step) {
+      case 1:
+        return {
+          title: "Confirm Account Deletion",
+          description:
+            "This action will permanently delete your account and all associated data. This cannot be undone.",
+        };
+      case 2:
+        return {
+          title: "Final Confirmation",
+          description:
+            "Type 'DELETE' in the field below to confirm you want to delete your account.",
+        };
+      case 3:
+        return {
+          title: "Delete Account",
+          description:
+            "Are you absolutely sure? This will immediately delete your account and all data.",
+        };
+      default:
+        return { title: "", description: "" };
+    }
+  };
+
+  const { title, description } = renderStepContent();
+
+  return (
+    <div className="space-y-4">
+      <AlertDialog open={open} onOpenChange={setOpen}>
+        <AlertDialogTrigger asChild>
+          <Button variant="destructive">Advanced Delete Flow</Button>
+        </AlertDialogTrigger>
+        <AlertDialogContent
+          className="sm:max-w-md"
+          onEscapeKeyDown={(e) => {
+            if (loading) e.preventDefault();
+          }}
+        >
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center justify-between">
+              {title}
+              <span className="text-sm font-normal text-muted-foreground">
+                Step {step} of 3
+              </span>
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {description}
+              {step === 2 && (
+                <div className="mt-3">
+                  <input
+                    type="text"
+                    placeholder="Type DELETE to continue"
+                    className="w-full px-3 py-2 border border-border rounded-md text-sm"
+                  />
+                </div>
+              )}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="flex-col sm:flex-row gap-2">
+            <div className="flex gap-2 w-full">
+              {step > 1 && (
+                <Button
+                  variant="outline"
+                  onClick={handleBack}
+                  disabled={loading}
+                  className="flex-1"
+                >
+                  Back
+                </Button>
+              )}
+              <AlertDialogCancel
+                onClick={handleClose}
+                disabled={loading}
+                className="flex-1"
+              >
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction
+                onClick={handleNext}
+                disabled={loading}
+                className="flex-1 bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              >
+                {loading
+                  ? "Deleting..."
+                  : step === 3
+                    ? "Delete Account"
+                    : "Continue"}
+              </AlertDialogAction>
+            </div>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <div className="text-sm text-muted-foreground">
+        This example demonstrates a multi-step confirmation flow with loading
+        states and custom validation.
+      </div>
+    </div>
+  );
 };

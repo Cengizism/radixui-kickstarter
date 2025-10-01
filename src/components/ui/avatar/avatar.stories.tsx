@@ -9,7 +9,7 @@ export default {
     docs: {
       description: {
         component:
-          "A circular profile picture with fallback support for when images fail to load.",
+          "An image element with a fallback for representing the user.",
       },
     },
   },
@@ -18,12 +18,74 @@ export default {
     size: {
       control: "select",
       options: ["sm", "default", "lg", "xl"],
-      description: "The size variant of the avatar",
+      description: "The size variant of the avatar container.",
+      table: {
+        type: { summary: "enum" },
+        defaultValue: { summary: "default" },
+      },
     },
     asChild: {
       control: "boolean",
       description:
-        "Change the default rendered element for the one passed as a child",
+        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    className: {
+      control: "text",
+      description: "Additional CSS classes to apply to the avatar container.",
+      table: {
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    src: {
+      control: "text",
+      description:
+        "The source URL of the image. When provided, renders AvatarImage component.",
+      table: {
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    alt: {
+      control: "text",
+      description: "Alternative text for the image for accessibility.",
+      table: {
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    fallback: {
+      control: "text",
+      description:
+        "The content to display when image fails to load or is not provided.",
+      table: {
+        type: { summary: "ReactNode" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    delayMs: {
+      control: "number",
+      description:
+        "Useful for delaying rendering so it only appears for those with slower connections. In milliseconds.",
+      table: {
+        type: { summary: "number" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    onLoadingStatusChange: {
+      action: "onLoadingStatusChange",
+      description:
+        "A callback providing information about the loading status of the image.",
+      table: {
+        type: {
+          summary: "(status: 'idle' | 'loading' | 'loaded' | 'error') => void",
+        },
+        defaultValue: { summary: "undefined" },
+      },
     },
   },
 };
@@ -498,4 +560,536 @@ Playground.args = {
   size: "default",
   src: "https://github.com/shadcn.png",
   fallback: "PG",
+};
+
+// Loading status control example
+export const LoadingStatusControl = () => {
+  const [loadingStatus, setLoadingStatus] = React.useState<
+    "idle" | "loading" | "loaded" | "error"
+  >("idle");
+  const [imageSrc, setImageSrc] = React.useState(
+    "https://github.com/shadcn.png"
+  );
+
+  const handleStatusChange = (
+    status: "idle" | "loading" | "loaded" | "error"
+  ) => {
+    setLoadingStatus(status);
+  };
+
+  const testUrls = {
+    valid: "https://github.com/shadcn.png",
+    invalid: "https://invalid-url-that-will-fail.jpg",
+    empty: "",
+  };
+
+  return (
+    <div className="space-y-4 w-full max-w-md">
+      <div className="space-y-2">
+        <label className="text-sm font-medium">Test Image URLs:</label>
+        <div className="flex gap-2">
+          {Object.entries(testUrls).map(([key, url]) => (
+            <button
+              key={key}
+              onClick={() => setImageSrc(url)}
+              className={`px-3 py-1 text-xs rounded-md border transition-colors capitalize ${
+                imageSrc === url
+                  ? "bg-primary text-primary-foreground border-primary"
+                  : "bg-background border-border hover:bg-muted"
+              }`}
+            >
+              {key}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex items-center space-x-4">
+        <Avatar size="lg">
+          <AvatarImage
+            src={imageSrc}
+            alt="Status test"
+            onLoadingStatusChange={handleStatusChange}
+          />
+          <AvatarFallback delayMs={600}>ST</AvatarFallback>
+        </Avatar>
+
+        <div className="text-sm">
+          <div className="font-medium">Loading Status:</div>
+          <div
+            className={`capitalize ${
+              loadingStatus === "loaded"
+                ? "text-green-600"
+                : loadingStatus === "error"
+                  ? "text-red-600"
+                  : loadingStatus === "loading"
+                    ? "text-yellow-600"
+                    : "text-gray-600"
+            }`}
+          >
+            {loadingStatus}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Delayed fallback example
+export const DelayedFallback = () => {
+  const [showComparison, setShowComparison] = React.useState(false);
+
+  return (
+    <div className="space-y-4 w-full max-w-md">
+      <button
+        onClick={() => setShowComparison(!showComparison)}
+        className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90"
+      >
+        {showComparison ? "Hide" : "Show"} Fallback Delay Comparison
+      </button>
+
+      {showComparison && (
+        <div className="space-y-4">
+          <div>
+            <h4 className="text-sm font-medium mb-2">
+              No Delay (Immediate Fallback)
+            </h4>
+            <Avatar size="lg">
+              <AvatarImage
+                src="https://slow-loading-image-url.jpg"
+                alt="No delay"
+              />
+              <AvatarFallback>ND</AvatarFallback>
+            </Avatar>
+          </div>
+
+          <div>
+            <h4 className="text-sm font-medium mb-2">600ms Delay</h4>
+            <Avatar size="lg">
+              <AvatarImage
+                src="https://slow-loading-image-url.jpg"
+                alt="With delay"
+              />
+              <AvatarFallback delayMs={600}>WD</AvatarFallback>
+            </Avatar>
+          </div>
+
+          <div>
+            <h4 className="text-sm font-medium mb-2">1000ms Delay</h4>
+            <Avatar size="lg">
+              <AvatarImage
+                src="https://slow-loading-image-url.jpg"
+                alt="Long delay"
+              />
+              <AvatarFallback delayMs={1000}>LD</AvatarFallback>
+            </Avatar>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// As child example with tooltip
+export const AsChildWithTooltip = () => (
+  <div className="space-y-4 w-full max-w-md">
+    <div>
+      <h4 className="text-sm font-medium mb-2">Default Avatar</h4>
+      <Avatar size="lg">
+        <AvatarImage src="https://github.com/shadcn.png" alt="Regular avatar" />
+        <AvatarFallback>RA</AvatarFallback>
+      </Avatar>
+    </div>
+
+    <div>
+      <h4 className="text-sm font-medium mb-2">As Child (Button Element)</h4>
+      <Avatar size="lg" asChild>
+        <button
+          className="hover:ring-2 hover:ring-primary hover:ring-offset-2 transition-all"
+          onClick={() => alert("Avatar clicked!")}
+        >
+          <AvatarImage
+            src="https://github.com/shadcn.png"
+            alt="Clickable avatar"
+          />
+          <AvatarFallback>CA</AvatarFallback>
+        </button>
+      </Avatar>
+    </div>
+  </div>
+);
+
+// API Reference
+export const APIReference = () => (
+  <div className="space-y-6 max-w-4xl">
+    <div>
+      <h3 className="text-lg font-semibold mb-3">Avatar API Reference</h3>
+      <p className="text-sm text-muted-foreground mb-4">
+        Complete API reference for all Avatar components with their props,
+        types, and default values.
+      </p>
+    </div>
+
+    <div className="space-y-4">
+      <div>
+        <h4 className="font-medium mb-2">Avatar.Root</h4>
+        <div className="text-sm text-muted-foreground mb-2">
+          Contains all the parts of an avatar.
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse border border-border">
+            <thead>
+              <tr className="border-b border-border bg-muted/50">
+                <th className="border border-border px-3 py-2 text-left">
+                  Prop
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Type
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Default
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Description
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  asChild
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  boolean
+                </td>
+                <td className="border border-border px-3 py-2">false</td>
+                <td className="border border-border px-3 py-2">
+                  Change the default rendered element for the one passed as a
+                  child.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  size
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  enum
+                </td>
+                <td className="border border-border px-3 py-2">default</td>
+                <td className="border border-border px-3 py-2">
+                  Size variant: "sm" | "default" | "lg" | "xl"
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <h4 className="font-medium mb-2">Avatar.Image</h4>
+        <div className="text-sm text-muted-foreground mb-2">
+          The image to render. By default it will only render when it has
+          loaded.
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse border border-border">
+            <thead>
+              <tr className="border-b border-border bg-muted/50">
+                <th className="border border-border px-3 py-2 text-left">
+                  Prop
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Type
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Default
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Description
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  asChild
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  boolean
+                </td>
+                <td className="border border-border px-3 py-2">false</td>
+                <td className="border border-border px-3 py-2">
+                  Change the default rendered element for the one passed as a
+                  child.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  onLoadingStatusChange
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">{`(status) => void`}</td>
+                <td className="border border-border px-3 py-2">-</td>
+                <td className="border border-border px-3 py-2">
+                  Callback providing information about the loading status.
+                  Status: "idle" | "loading" | "loaded" | "error"
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <h4 className="font-medium mb-2">Avatar.Fallback</h4>
+        <div className="text-sm text-muted-foreground mb-2">
+          An element that renders when the image hasn't loaded. This means
+          whilst it's loading, or if there was an error.
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse border border-border">
+            <thead>
+              <tr className="border-b border-border bg-muted/50">
+                <th className="border border-border px-3 py-2 text-left">
+                  Prop
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Type
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Default
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Description
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  asChild
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  boolean
+                </td>
+                <td className="border border-border px-3 py-2">false</td>
+                <td className="border border-border px-3 py-2">
+                  Change the default rendered element for the one passed as a
+                  child.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  delayMs
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  number
+                </td>
+                <td className="border border-border px-3 py-2">-</td>
+                <td className="border border-border px-3 py-2">
+                  Useful for delaying rendering so it only appears for those
+                  with slower connections.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <h4 className="font-medium mb-2">Size Variants</h4>
+        <div className="text-sm text-muted-foreground mb-2">
+          Available size options and their dimensions.
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse border border-border">
+            <thead>
+              <tr className="border-b border-border bg-muted/50">
+                <th className="border border-border px-3 py-2 text-left">
+                  Size
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Dimensions
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Use Case
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">sm</td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  32px × 32px
+                </td>
+                <td className="border border-border px-3 py-2">
+                  List items, compact layouts, chat messages
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  default
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  40px × 40px
+                </td>
+                <td className="border border-border px-3 py-2">
+                  Standard UI elements, navigation bars
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">lg</td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  48px × 48px
+                </td>
+                <td className="border border-border px-3 py-2">
+                  Profile cards, user details, settings
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">xl</td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  64px × 64px
+                </td>
+                <td className="border border-border px-3 py-2">
+                  Profile headers, large displays, featured content
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// Advanced example with dynamic features
+export const AdvancedExample = () => {
+  const [selectedSize, setSelectedSize] = React.useState<
+    "sm" | "default" | "lg" | "xl"
+  >("default");
+  const [selectedUser, setSelectedUser] = React.useState(0);
+  const [showStatus, setShowStatus] = React.useState(true);
+  const [fallbackDelay, setFallbackDelay] = React.useState(0);
+
+  const users = [
+    {
+      name: "John Doe",
+      initials: "JD",
+      image: "https://github.com/shadcn.png",
+      status: "online",
+    },
+    { name: "Jane Smith", initials: "JS", image: "", status: "away" },
+    {
+      name: "Alex Johnson",
+      initials: "AJ",
+      image: "https://broken-url.jpg",
+      status: "busy",
+    },
+    { name: "Sam Wilson", initials: "SW", image: "", status: "offline" },
+  ];
+
+  const currentUser = users[selectedUser];
+  const statusColors = {
+    online: "bg-green-400",
+    away: "bg-yellow-400",
+    busy: "bg-red-400",
+    offline: "bg-gray-400",
+  };
+
+  return (
+    <div className="space-y-6 w-full max-w-2xl">
+      <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Avatar Size:</label>
+          <div className="flex gap-2">
+            {(["sm", "default", "lg", "xl"] as const).map((size) => (
+              <button
+                key={size}
+                onClick={() => setSelectedSize(size)}
+                className={`px-3 py-1 text-xs rounded-md border transition-colors ${
+                  selectedSize === size
+                    ? "bg-primary text-primary-foreground border-primary"
+                    : "bg-background border-border hover:bg-muted"
+                }`}
+              >
+                {size}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <label className="text-sm font-medium">User:</label>
+          <div className="flex gap-2">
+            {users.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setSelectedUser(index)}
+                className={`px-3 py-1 text-xs rounded-md border transition-colors ${
+                  selectedUser === index
+                    ? "bg-primary text-primary-foreground border-primary"
+                    : "bg-background border-border hover:bg-muted"
+                }`}
+              >
+                User {index + 1}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="flex gap-4">
+        <label className="flex items-center gap-2 text-sm">
+          <input
+            type="checkbox"
+            checked={showStatus}
+            onChange={(e) => setShowStatus(e.target.checked)}
+            className="rounded"
+          />
+          Show Status Indicator
+        </label>
+
+        <div className="flex items-center gap-2 text-sm">
+          <label>Fallback Delay:</label>
+          <select
+            value={fallbackDelay}
+            onChange={(e) => setFallbackDelay(Number(e.target.value))}
+            className="px-2 py-1 border rounded"
+          >
+            <option value={0}>No delay</option>
+            <option value={300}>300ms</option>
+            <option value={600}>600ms</option>
+            <option value={1000}>1000ms</option>
+          </select>
+        </div>
+      </div>
+
+      <div className="flex items-center space-x-4 p-6 border rounded-lg bg-muted/20">
+        <div className="relative">
+          <Avatar size={selectedSize}>
+            <AvatarImage src={currentUser.image} alt={currentUser.name} />
+            <AvatarFallback delayMs={fallbackDelay}>
+              {currentUser.initials}
+            </AvatarFallback>
+          </Avatar>
+
+          {showStatus && (
+            <span
+              className={`absolute bottom-0 right-0 block h-3 w-3 rounded-full ring-2 ring-white ${statusColors[currentUser.status as keyof typeof statusColors]}`}
+            ></span>
+          )}
+        </div>
+
+        <div>
+          <h3 className="font-semibold">{currentUser.name}</h3>
+          <p className="text-sm text-muted-foreground capitalize">
+            Status: {currentUser.status}
+          </p>
+          <p className="text-xs text-muted-foreground">
+            Size: {selectedSize} | Delay: {fallbackDelay}ms
+          </p>
+        </div>
+      </div>
+    </div>
+  );
 };

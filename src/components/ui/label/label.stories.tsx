@@ -1,8 +1,29 @@
+import * as React from 'react';
 import { Badge } from '../badge/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '../checkbox/checkbox';
 import { Input } from '../input/input';
 import { Label } from '@/components/ui/label';
+
+/**
+ * ## API Reference
+ *
+ * ### Label.Root
+ * Contains the content for the label.
+ *
+ * | Prop | Type | Default | Description |
+ * |------|------|---------|-------------|
+ * | `asChild` | `boolean` | `false` | Change the default rendered element for the one passed as a child, merging their props and behavior. |
+ * | `htmlFor` | `string` | - | The id of the element the label is associated with. When provided, clicking the label will focus the associated control. |
+ *
+ * ### Styling Variants
+ *
+ * | Prop | Type | Default | Description |
+ * |------|------|---------|-------------|
+ * | `variant` | `"default" \| "destructive" \| "muted" \| "accent"` | `"default"` | The visual style variant of the label. |
+ * | `size` | `"sm" \| "default" \| "lg"` | `"default"` | The size variant affecting text size and spacing. |
+ * | `weight` | `"normal" \| "medium" \| "semibold" \| "bold"` | `"medium"` | The font weight of the label text. |
+ */
 
 export default {
   title: "UI/Label",
@@ -10,7 +31,7 @@ export default {
   docs: {
     description: {
       component:
-        "A label component for associating text with form controls. Built with Radix UI primitives for proper accessibility and screen reader support.",
+        "Renders an accessible label associated with controls. Built with Radix UI primitives.",
     },
   },
   tags: ["autodocs"],
@@ -18,20 +39,70 @@ export default {
     layout: "centered",
   },
   argTypes: {
+    asChild: {
+      control: "boolean",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+        category: "Root",
+      },
+    },
+    htmlFor: {
+      control: "text",
+      description:
+        "The id of the element the label is associated with. When provided, clicking the label will focus the associated control.",
+      table: {
+        type: { summary: "string" },
+        category: "Root",
+      },
+    },
     variant: {
       control: "select",
       options: ["default", "destructive", "muted", "accent"],
+      description: "The visual style variant of the label.",
+      table: {
+        type: { summary: '"default" | "destructive" | "muted" | "accent"' },
+        defaultValue: { summary: '"default"' },
+        category: "Styling",
+      },
     },
     size: {
       control: "select",
       options: ["sm", "default", "lg"],
+      description: "The size variant of the label text.",
+      table: {
+        type: { summary: '"sm" | "default" | "lg"' },
+        defaultValue: { summary: '"default"' },
+        category: "Styling",
+      },
     },
     weight: {
       control: "select",
       options: ["normal", "medium", "semibold", "bold"],
+      description: "The font weight of the label text.",
+      table: {
+        type: { summary: '"normal" | "medium" | "semibold" | "bold"' },
+        defaultValue: { summary: '"medium"' },
+        category: "Styling",
+      },
     },
-    htmlFor: {
+    className: {
       control: "text",
+      description: "Additional CSS classes to apply to the label.",
+      table: {
+        type: { summary: "string" },
+        category: "HTML",
+      },
+    },
+    onClick: {
+      action: "onClick",
+      description: "Event handler called when the label is clicked.",
+      table: {
+        type: { summary: "MouseEventHandler<HTMLLabelElement>" },
+        category: "Events",
+      },
     },
   },
 };
@@ -432,4 +503,354 @@ Playground.args = {
   size: "default",
   weight: "medium",
   htmlFor: "playground-input",
+};
+
+// Advanced: Text Selection Prevention Demo
+export const TextSelectionDemo = () => (
+  <div className="max-w-lg space-y-6">
+    <div className="space-y-4">
+      <h3 className="font-semibold">Text Selection Prevention</h3>
+      <p className="text-sm text-muted-foreground">
+        Try double-clicking the labels below. Notice how Radix UI Label prevents
+        text selection to improve UX.
+      </p>
+    </div>
+
+    <div className="space-y-4 border border-border rounded-lg p-4">
+      <div className="space-y-2">
+        <Label htmlFor="selection-demo-1" className="text-lg">
+          Try double-clicking this label (selection prevented)
+        </Label>
+        <Input
+          id="selection-demo-1"
+          placeholder="Focus moves here when label is clicked"
+        />
+      </div>
+
+      <div className="space-y-2">
+        <span className="text-lg text-foreground">
+          Regular span text (selection allowed)
+        </span>
+        <Input placeholder="Click this input directly to focus" />
+        <p className="text-xs text-muted-foreground">
+          Double-click the span above - text selection is allowed since it's not
+          a Label component
+        </p>
+      </div>
+    </div>
+
+    <div className="text-xs text-muted-foreground bg-muted p-3 rounded">
+      <strong>Feature:</strong> Radix UI Label automatically prevents text
+      selection on double-click, making it easier for users to interact with
+      form controls without accidentally selecting label text.
+    </div>
+  </div>
+);
+
+// Advanced: Nested vs External Association Patterns
+export const AssociationPatterns = () => (
+  <div className="max-w-lg space-y-8">
+    <div className="space-y-4">
+      <h3 className="font-semibold">Label Association Patterns</h3>
+      <p className="text-sm text-muted-foreground">
+        Demonstrates different ways to associate labels with controls using
+        Radix UI Label.
+      </p>
+    </div>
+
+    <div className="space-y-6">
+      {/* External Association with htmlFor */}
+      <div className="border border-border rounded-lg p-4 space-y-3">
+        <h4 className="font-medium text-sm">
+          1. External Association (htmlFor)
+        </h4>
+        <div className="space-y-2">
+          <Label htmlFor="external-input" className="text-blue-600">
+            Username (click to focus input)
+          </Label>
+          <Input id="external-input" placeholder="Separate label and input" />
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Uses <code className="bg-muted px-1 rounded">htmlFor</code> to
+          associate label with input via{" "}
+          <code className="bg-muted px-1 rounded">id</code>
+        </p>
+      </div>
+
+      {/* Nested Controls */}
+      <div className="border border-border rounded-lg p-4 space-y-3">
+        <h4 className="font-medium text-sm">2. Nested Controls (wrapped)</h4>
+        <div className="space-y-3">
+          <Label className="flex items-center space-x-2 cursor-pointer text-green-600">
+            <Checkbox />
+            <span>Enable notifications (entire area is clickable)</span>
+          </Label>
+
+          <Label className="block cursor-pointer text-green-600">
+            <input type="checkbox" className="mr-2" />
+            Newsletter subscription (block layout)
+          </Label>
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Controls are wrapped inside the label - no{" "}
+          <code className="bg-muted px-1 rounded">htmlFor</code> needed
+        </p>
+      </div>
+
+      {/* Complex Nested Example */}
+      <div className="border border-border rounded-lg p-4 space-y-3">
+        <h4 className="font-medium text-sm">3. Complex Nested Layout</h4>
+        <Label className="flex items-start space-x-3 cursor-pointer text-purple-600">
+          <Checkbox className="mt-1" />
+          <div className="space-y-1">
+            <span className="font-medium">I agree to the terms</span>
+            <p className="text-xs text-muted-foreground">
+              This includes our privacy policy, terms of service, and cookie
+              policy. The entire area is clickable to toggle the checkbox.
+            </p>
+          </div>
+        </Label>
+        <p className="text-xs text-muted-foreground">
+          Complex content can be nested inside labels for rich interactive areas
+        </p>
+      </div>
+    </div>
+  </div>
+);
+
+// Advanced: Accessibility Enhancements
+export const AccessibilityEnhancements = () => (
+  <div className="max-w-lg space-y-8">
+    <div className="space-y-4">
+      <h3 className="font-semibold">Accessibility Best Practices</h3>
+      <p className="text-sm text-muted-foreground">
+        Examples showing how to properly implement accessible form labelling
+        patterns.
+      </p>
+    </div>
+
+    <div className="space-y-6">
+      {/* Required Field Pattern */}
+      <div className="border border-border rounded-lg p-4 space-y-3">
+        <h4 className="font-medium text-sm">
+          Required Field with Clear Indication
+        </h4>
+        <div className="space-y-2">
+          <Label htmlFor="required-field" className="flex items-center gap-1">
+            Email Address
+            <span className="text-destructive" aria-hidden="true">
+              *
+            </span>
+          </Label>
+          <Input
+            id="required-field"
+            type="email"
+            required
+            aria-describedby="email-help email-error"
+            placeholder="user@example.com"
+          />
+          <p id="email-help" className="text-xs text-muted-foreground">
+            Required. We'll use this to send you important updates.
+          </p>
+          <p id="email-error" className="text-xs text-destructive hidden">
+            Please enter a valid email address
+          </p>
+        </div>
+        <div className="text-xs text-muted-foreground bg-muted p-2 rounded">
+          <strong>Accessibility:</strong> Uses <code>aria-describedby</code> to
+          associate help text and error messages
+        </div>
+      </div>
+
+      {/* Custom Control Pattern */}
+      <div className="border border-border rounded-lg p-4 space-y-3">
+        <h4 className="font-medium text-sm">Custom Control with Proper Base</h4>
+        <div className="space-y-2">
+          <Label htmlFor="custom-toggle">Dark Mode</Label>
+          <button
+            id="custom-toggle"
+            type="button"
+            role="switch"
+            aria-checked="false"
+            className="relative inline-flex h-6 w-11 items-center rounded-full bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <span className="sr-only">Toggle dark mode</span>
+            <span className="inline-block h-4 w-4 transform rounded-full bg-background shadow-lg transition-transform translate-x-1" />
+          </button>
+        </div>
+        <div className="text-xs text-muted-foreground bg-muted p-2 rounded">
+          <strong>Best Practice:</strong> Custom controls use native button
+          element as base for proper accessibility
+        </div>
+      </div>
+
+      {/* Fieldset with Legend */}
+      <fieldset className="border border-border rounded-lg p-4 space-y-3">
+        <legend className="font-medium text-sm px-2">
+          Contact Preferences
+        </legend>
+
+        <Label className="flex items-center space-x-2 cursor-pointer">
+          <input
+            type="radio"
+            name="contact-pref"
+            value="email"
+            className="rounded-full"
+          />
+          <span>Email notifications</span>
+        </Label>
+
+        <Label className="flex items-center space-x-2 cursor-pointer">
+          <input
+            type="radio"
+            name="contact-pref"
+            value="sms"
+            className="rounded-full"
+          />
+          <span>SMS notifications</span>
+        </Label>
+
+        <Label className="flex items-center space-x-2 cursor-pointer">
+          <input
+            type="radio"
+            name="contact-pref"
+            value="none"
+            className="rounded-full"
+          />
+          <span>No notifications</span>
+        </Label>
+
+        <div className="text-xs text-muted-foreground bg-muted p-2 rounded">
+          <strong>Pattern:</strong> Fieldset and legend provide group context
+          for related form controls
+        </div>
+      </fieldset>
+    </div>
+  </div>
+);
+
+// Advanced: Dynamic Label States
+export const DynamicLabelStates = () => {
+  const [hasError, setHasError] = React.useState(false);
+  const [isOptional, setIsOptional] = React.useState(false);
+  const [value, setValue] = React.useState("");
+
+  const validateEmail = (email: string) => {
+    const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    setHasError(!isValid && email.length > 0);
+  };
+
+  return (
+    <div className="max-w-lg space-y-8">
+      <div className="space-y-4">
+        <h3 className="font-semibold">Dynamic Label States</h3>
+        <p className="text-sm text-muted-foreground">
+          Interactive examples showing how labels adapt to different form states
+          and contexts.
+        </p>
+      </div>
+
+      <div className="space-y-6">
+        {/* Validation State Example */}
+        <div className="border border-border rounded-lg p-4 space-y-3">
+          <div className="flex items-center gap-2">
+            <h4 className="font-medium text-sm">Validation State Changes</h4>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => setIsOptional(!isOptional)}
+            >
+              Toggle Optional
+            </Button>
+          </div>
+
+          <div className="space-y-2">
+            <Label
+              htmlFor="dynamic-email"
+              variant={hasError ? "destructive" : "default"}
+              className="flex items-center gap-2"
+            >
+              Email Address
+              {!isOptional && (
+                <span className="text-destructive text-xs" aria-hidden="true">
+                  *
+                </span>
+              )}
+              {isOptional && (
+                <Badge variant="outline" className="text-xs">
+                  Optional
+                </Badge>
+              )}
+            </Label>
+
+            <Input
+              id="dynamic-email"
+              type="email"
+              value={value}
+              onChange={(e) => {
+                setValue(e.target.value);
+                validateEmail(e.target.value);
+              }}
+              className={
+                hasError
+                  ? "border-destructive focus-visible:ring-destructive"
+                  : ""
+              }
+              placeholder="Enter your email"
+              required={!isOptional}
+              aria-describedby="email-feedback"
+            />
+
+            <div id="email-feedback" className="min-h-[1.25rem]">
+              {hasError && (
+                <p className="text-xs text-destructive">
+                  Please enter a valid email address
+                </p>
+              )}
+              {!hasError && value.length > 0 && (
+                <p className="text-xs text-green-600">
+                  Email format looks good
+                </p>
+              )}
+            </div>
+          </div>
+
+          <div className="text-xs text-muted-foreground bg-muted p-2 rounded">
+            <strong>Feature:</strong> Label variant changes dynamically based on
+            validation state
+          </div>
+        </div>
+
+        {/* Character Counter Example */}
+        <div className="border border-border rounded-lg p-4 space-y-3">
+          <h4 className="font-medium text-sm">Character Counter in Label</h4>
+
+          <div className="space-y-2">
+            <Label
+              htmlFor="bio-input"
+              className="flex items-center justify-between"
+            >
+              <span>Bio</span>
+              <span className="text-xs text-muted-foreground font-normal">
+                {value.length}/160 characters
+              </span>
+            </Label>
+
+            <textarea
+              id="bio-input"
+              value={value}
+              onChange={(e) => setValue(e.target.value.slice(0, 160))}
+              className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              placeholder="Tell us about yourself..."
+            />
+          </div>
+
+          <div className="text-xs text-muted-foreground bg-muted p-2 rounded">
+            <strong>Pattern:</strong> Labels can contain dynamic content like
+            character counters
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };

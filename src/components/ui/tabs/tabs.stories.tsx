@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '../input/input';
 import { Label } from '../label/label';
@@ -25,15 +26,188 @@ const meta = {
   },
   tags: ["autodocs"],
   argTypes: {
+    // Root Props
+    defaultValue: {
+      control: "text",
+      description:
+        "The value of the tab that should be active when initially rendered. Use when you do not need to control the state of the tabs.",
+      table: {
+        category: "Root Props",
+        type: { summary: "string" },
+      },
+    },
+    value: {
+      control: "text",
+      description:
+        "The controlled value of the tab to activate. Should be used in conjunction with onValueChange.",
+      table: {
+        category: "Root Props",
+        type: { summary: "string" },
+      },
+    },
+    onValueChange: {
+      action: "onValueChange",
+      description: "Event handler called when the value changes.",
+      table: {
+        category: "Root Props",
+        type: { summary: "(value: string) => void" },
+      },
+    },
     orientation: {
       control: { type: "select" },
       options: ["horizontal", "vertical"],
-      description: "The orientation of the tabs",
+      description: "The orientation of the tabs.",
+      table: {
+        category: "Root Props",
+        type: { summary: '"horizontal" | "vertical"' },
+        defaultValue: { summary: '"horizontal"' },
+      },
+    },
+    dir: {
+      control: "select",
+      options: ["ltr", "rtl"],
+      description:
+        "The reading direction of the tabs. If omitted, inherits globally from DirectionProvider or assumes LTR (left-to-right) reading mode.",
+      table: {
+        category: "Root Props",
+        type: { summary: '"ltr" | "rtl"' },
+        defaultValue: { summary: '"ltr"' },
+      },
+    },
+    activationMode: {
+      control: "select",
+      options: ["automatic", "manual"],
+      description:
+        "When automatic, tabs are activated when receiving focus. When manual, tabs are activated when clicked.",
+      table: {
+        category: "Root Props",
+        type: { summary: '"automatic" | "manual"' },
+        defaultValue: { summary: '"automatic"' },
+      },
+    },
+    asChild: {
+      control: "boolean",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
+      table: {
+        category: "Root Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+
+    // List Props
+    listAsChild: {
+      control: "boolean",
+      description:
+        "Change the default rendered element for the list to the one passed as a child, merging their props and behavior.",
+      table: {
+        category: "List Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    loop: {
+      control: "boolean",
+      description:
+        "When true, keyboard navigation will loop from last tab to first, and vice versa.",
+      table: {
+        category: "List Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "true" },
+      },
+    },
+
+    // Trigger Props
+    triggerAsChild: {
+      control: "boolean",
+      description:
+        "Change the default rendered element for the trigger to the one passed as a child, merging their props and behavior.",
+      table: {
+        category: "Trigger Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    triggerValue: {
+      control: "text",
+      description: "A unique value that associates the trigger with a content.",
+      table: {
+        category: "Trigger Props",
+        type: { summary: "string" },
+      },
+    },
+    triggerDisabled: {
+      control: "boolean",
+      description:
+        "When true, prevents the user from interacting with the tab.",
+      table: {
+        category: "Trigger Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+
+    // Content Props
+    contentAsChild: {
+      control: "boolean",
+      description:
+        "Change the default rendered element for the content to the one passed as a child, merging their props and behavior.",
+      table: {
+        category: "Content Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    contentValue: {
+      control: "text",
+      description: "A unique value that associates the content with a trigger.",
+      table: {
+        category: "Content Props",
+        type: { summary: "string" },
+      },
+    },
+    forceMount: {
+      control: "boolean",
+      description:
+        "Used to force mounting when more control is needed. Useful when controlling animation with React animation libraries.",
+      table: {
+        category: "Content Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+
+    // Custom Style Props
+    variant: {
+      control: "select",
+      options: ["default", "outline", "underline"],
+      description: "The visual style variant of the tabs",
+      table: {
+        category: "Custom Style Props",
+        type: { summary: '"default" | "outline" | "underline"' },
+        defaultValue: { summary: '"default"' },
+      },
+    },
+    size: {
+      control: "select",
+      options: ["sm", "default", "lg"],
+      description: "The size variant of the tabs",
+      table: {
+        category: "Custom Style Props",
+        type: { summary: '"sm" | "default" | "lg"' },
+        defaultValue: { summary: '"default"' },
+      },
     },
     spacing: {
       control: { type: "select" },
       options: ["none", "sm", "default", "lg"],
       description: "Spacing between tab list and content",
+      table: {
+        category: "Custom Style Props",
+        type: { summary: '"none" | "sm" | "default" | "lg"' },
+        defaultValue: { summary: '"default"' },
+      },
     },
   },
 } satisfies Meta<typeof Tabs>;
@@ -919,5 +1093,759 @@ export const SpacingVariants: Story = {
         story: "Different spacing options between tab list and content.",
       },
     },
+  },
+};
+
+// Advanced Examples
+export const AdvancedControlledTabs: Story = {
+  render: () => {
+    const [activeTab, setActiveTab] = React.useState("overview");
+    const [tabHistory, setTabHistory] = React.useState<
+      Array<{
+        tab: string;
+        timestamp: string;
+      }>
+    >([{ tab: "overview", timestamp: new Date().toLocaleTimeString() }]);
+    const [tabConfig, setTabConfig] = React.useState({
+      orientation: "horizontal" as "horizontal" | "vertical",
+      activationMode: "automatic" as "automatic" | "manual",
+      loop: true,
+      dir: "ltr" as "ltr" | "rtl",
+    });
+    const [tabData, setTabData] = React.useState({
+      overview: { visits: 0, lastVisit: new Date().toISOString() },
+      analytics: { visits: 0, lastVisit: new Date().toISOString() },
+      settings: { visits: 0, lastVisit: new Date().toISOString() },
+      security: { visits: 0, lastVisit: new Date().toISOString() },
+      billing: { visits: 0, lastVisit: new Date().toISOString() },
+    });
+
+    const handleTabChange = (value: string) => {
+      setActiveTab(value);
+      setTabHistory((prev) =>
+        [
+          ...prev,
+          {
+            tab: value,
+            timestamp: new Date().toLocaleTimeString(),
+          },
+        ].slice(-20)
+      ); // Keep last 20 tab changes
+
+      setTabData((prev) => ({
+        ...prev,
+        [value]: {
+          visits: prev[value as keyof typeof prev].visits + 1,
+          lastVisit: new Date().toISOString(),
+        },
+      }));
+    };
+
+    const resetTabHistory = () => {
+      setTabHistory([
+        { tab: activeTab, timestamp: new Date().toLocaleTimeString() },
+      ]);
+      setTabData(
+        Object.keys(tabData).reduce(
+          (acc, key) => ({
+            ...acc,
+            [key]: {
+              visits: key === activeTab ? 1 : 0,
+              lastVisit: new Date().toISOString(),
+            },
+          }),
+          {} as typeof tabData
+        )
+      );
+    };
+
+    const tabs = [
+      {
+        value: "overview",
+        label: "Overview",
+        icon: "📊",
+        description: "General dashboard and key metrics",
+      },
+      {
+        value: "analytics",
+        label: "Analytics",
+        icon: "📈",
+        description: "Detailed analytics and reporting",
+      },
+      {
+        value: "settings",
+        label: "Settings",
+        icon: "⚙️",
+        description: "Application configuration",
+      },
+      {
+        value: "security",
+        label: "Security",
+        icon: "🔒",
+        description: "Security and authentication settings",
+      },
+      {
+        value: "billing",
+        label: "Billing",
+        icon: "💳",
+        description: "Subscription and payment management",
+      },
+    ];
+
+    return (
+      <div className="max-w-6xl space-y-6">
+        <div>
+          <h3 className="text-lg font-semibold mb-4">
+            Advanced Controlled Tabs Dashboard
+          </h3>
+
+          {/* Configuration Panel */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 p-4 bg-muted rounded-lg">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Orientation</label>
+              <div className="flex gap-2">
+                {(["horizontal", "vertical"] as const).map((orientation) => (
+                  <button
+                    key={orientation}
+                    onClick={() =>
+                      setTabConfig((prev) => ({ ...prev, orientation }))
+                    }
+                    className={`px-2 py-1 rounded text-xs ${
+                      tabConfig.orientation === orientation
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-background border"
+                    }`}
+                  >
+                    {orientation}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Activation Mode</label>
+              <div className="flex gap-2">
+                {(["automatic", "manual"] as const).map((mode) => (
+                  <button
+                    key={mode}
+                    onClick={() =>
+                      setTabConfig((prev) => ({
+                        ...prev,
+                        activationMode: mode,
+                      }))
+                    }
+                    className={`px-2 py-1 rounded text-xs ${
+                      tabConfig.activationMode === mode
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-background border"
+                    }`}
+                  >
+                    {mode}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id="loop"
+                checked={tabConfig.loop}
+                onChange={(e) =>
+                  setTabConfig((prev) => ({ ...prev, loop: e.target.checked }))
+                }
+              />
+              <label htmlFor="loop" className="text-sm">
+                Loop Navigation
+              </label>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Direction</label>
+              <div className="flex gap-2">
+                {(["ltr", "rtl"] as const).map((dir) => (
+                  <button
+                    key={dir}
+                    onClick={() => setTabConfig((prev) => ({ ...prev, dir }))}
+                    className={`px-2 py-1 rounded text-xs uppercase ${
+                      tabConfig.dir === dir
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-background border"
+                    }`}
+                  >
+                    {dir}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          className={`${tabConfig.orientation === "vertical" ? "flex gap-6" : ""}`}
+        >
+          <Tabs
+            value={activeTab}
+            onValueChange={handleTabChange}
+            orientation={tabConfig.orientation}
+            activationMode={tabConfig.activationMode}
+            dir={tabConfig.dir}
+            className={
+              tabConfig.orientation === "vertical" ? "flex-1" : "w-full"
+            }
+          >
+            <TabsList
+              className={
+                tabConfig.orientation === "vertical" ? "flex-col h-fit" : ""
+              }
+            >
+              {tabs.map((tab) => (
+                <TabsTrigger
+                  key={tab.value}
+                  value={tab.value}
+                  className={
+                    tabConfig.orientation === "vertical"
+                      ? "w-full justify-start"
+                      : ""
+                  }
+                >
+                  <span className="mr-2">{tab.icon}</span>
+                  {tab.label}
+                  {tabData[tab.value as keyof typeof tabData].visits > 0 && (
+                    <span className="ml-2 px-1.5 py-0.5 bg-primary/20 text-primary text-xs rounded-full">
+                      {tabData[tab.value as keyof typeof tabData].visits}
+                    </span>
+                  )}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+
+            {tabs.map((tab) => (
+              <TabsContent
+                key={tab.value}
+                value={tab.value}
+                className="space-y-4"
+              >
+                <div className="border rounded-lg p-6">
+                  <div className="flex items-start gap-3">
+                    <span className="text-2xl">{tab.icon}</span>
+                    <div className="flex-1">
+                      <h4 className="text-lg font-semibold">{tab.label}</h4>
+                      <p className="text-muted-foreground">{tab.description}</p>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <div className="p-4 bg-muted/50 rounded-lg">
+                      <div className="text-2xl font-bold">
+                        {tabData[tab.value as keyof typeof tabData].visits}
+                      </div>
+                      <div className="text-sm text-muted-foreground">
+                        Total Visits
+                      </div>
+                    </div>
+
+                    <div className="p-4 bg-muted/50 rounded-lg">
+                      <div className="text-sm font-medium">
+                        {new Date(
+                          tabData[tab.value as keyof typeof tabData].lastVisit
+                        ).toLocaleTimeString()}
+                      </div>
+                      <div className="text-sm text-muted-foreground">
+                        Last Visit
+                      </div>
+                    </div>
+
+                    <div className="p-4 bg-muted/50 rounded-lg">
+                      <div className="text-sm font-medium">
+                        {activeTab === tab.value ? "Active" : "Inactive"}
+                      </div>
+                      <div className="text-sm text-muted-foreground">
+                        Status
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-6">
+                    <h5 className="font-medium mb-3">{tab.label} Content</h5>
+                    <div className="prose text-sm text-muted-foreground">
+                      {tab.value === "overview" && (
+                        <div>
+                          <p>
+                            Welcome to your dashboard overview. Here you can see
+                            key metrics and recent activity.
+                          </p>
+                          <ul className="mt-2 space-y-1">
+                            <li>• Total active sessions: 1,234</li>
+                            <li>• Revenue this month: $45,678</li>
+                            <li>• System health: 99.9%</li>
+                          </ul>
+                        </div>
+                      )}
+                      {tab.value === "analytics" && (
+                        <div>
+                          <p>
+                            Detailed analytics and performance metrics for your
+                            application.
+                          </p>
+                          <ul className="mt-2 space-y-1">
+                            <li>• Page views: 89,432</li>
+                            <li>• Bounce rate: 32%</li>
+                            <li>• Conversion rate: 4.2%</li>
+                          </ul>
+                        </div>
+                      )}
+                      {tab.value === "settings" && (
+                        <div>
+                          <p>
+                            Configure your application settings and preferences.
+                          </p>
+                          <div className="mt-4 space-y-2">
+                            <div className="flex items-center justify-between p-2 border rounded">
+                              <span>Dark mode</span>
+                              <Switch />
+                            </div>
+                            <div className="flex items-center justify-between p-2 border rounded">
+                              <span>Notifications</span>
+                              <Switch defaultChecked />
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      {tab.value === "security" && (
+                        <div>
+                          <p>
+                            Manage your security settings and authentication
+                            methods.
+                          </p>
+                          <ul className="mt-2 space-y-1">
+                            <li>• Two-factor authentication: Enabled</li>
+                            <li>• Last login: 2 hours ago</li>
+                            <li>• Active sessions: 3 devices</li>
+                          </ul>
+                        </div>
+                      )}
+                      {tab.value === "billing" && (
+                        <div>
+                          <p>
+                            View and manage your subscription and billing
+                            information.
+                          </p>
+                          <ul className="mt-2 space-y-1">
+                            <li>• Current plan: Pro ($29/month)</li>
+                            <li>• Next billing: Jan 15, 2024</li>
+                            <li>• Payment method: •••• 1234</li>
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </TabsContent>
+            ))}
+          </Tabs>
+
+          {/* Tab Analytics Sidebar */}
+          <div
+            className={`${tabConfig.orientation === "vertical" ? "w-80" : "mt-6"}`}
+          >
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h4 className="font-medium">Tab Analytics</h4>
+                <Button onClick={resetTabHistory} variant="outline" size="sm">
+                  Reset History
+                </Button>
+              </div>
+
+              <div className="border rounded-lg p-4 space-y-3">
+                <h5 className="text-sm font-medium">Current Session</h5>
+                <div className="text-sm space-y-1">
+                  <div className="flex justify-between">
+                    <span>Active tab:</span>
+                    <span className="font-medium">{activeTab}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Total switches:</span>
+                    <span className="font-medium">{tabHistory.length - 1}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Configuration:</span>
+                    <span className="font-medium">
+                      {tabConfig.orientation}, {tabConfig.activationMode}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="border rounded-lg p-4">
+                <h5 className="text-sm font-medium mb-3">
+                  Recent Tab History ({tabHistory.length}/20)
+                </h5>
+                <div className="max-h-48 overflow-y-auto space-y-2">
+                  {tabHistory
+                    .slice()
+                    .reverse()
+                    .slice(0, 10)
+                    .map((entry, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center justify-between text-xs p-2 bg-muted/50 rounded"
+                      >
+                        <div className="flex items-center gap-2">
+                          <span>
+                            {tabs.find((t) => t.value === entry.tab)?.icon}
+                          </span>
+                          <span className="capitalize">{entry.tab}</span>
+                        </div>
+                        <span className="text-muted-foreground">
+                          {entry.timestamp}
+                        </span>
+                      </div>
+                    ))}
+                </div>
+              </div>
+
+              <div className="border rounded-lg p-4">
+                <h5 className="text-sm font-medium mb-3">Visit Count</h5>
+                <div className="space-y-2">
+                  {tabs.map((tab) => (
+                    <div
+                      key={tab.value}
+                      className="flex items-center justify-between text-xs"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span>{tab.icon}</span>
+                        <span>{tab.label}</span>
+                      </div>
+                      <span className="font-medium">
+                        {tabData[tab.value as keyof typeof tabData].visits}{" "}
+                        visits
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="text-sm text-muted-foreground">
+          <strong>Features demonstrated:</strong>
+          <ul className="mt-1 space-y-1">
+            <li>
+              • <strong>Controlled state:</strong> Tabs controlled via React
+              state with onValueChange
+            </li>
+            <li>
+              • <strong>Dynamic configuration:</strong> Change orientation,
+              activation mode, and direction
+            </li>
+            <li>
+              • <strong>Tab analytics:</strong> Track visits, timing, and
+              navigation patterns
+            </li>
+            <li>
+              • <strong>History tracking:</strong> Maintain session history of
+              tab switches
+            </li>
+            <li>
+              • <strong>Loop navigation:</strong> Toggle keyboard navigation
+              looping
+            </li>
+            <li>
+              • <strong>Activation modes:</strong> Automatic (focus) vs Manual
+              (click) tab activation
+            </li>
+            <li>
+              • <strong>RTL support:</strong> Right-to-left reading direction
+            </li>
+          </ul>
+        </div>
+      </div>
+    );
+  },
+};
+
+export const DynamicTabManagement: Story = {
+  render: () => {
+    const [tabs, setTabs] = React.useState([
+      {
+        id: "1",
+        label: "Tab 1",
+        content: "Content for Tab 1",
+        closable: false,
+      },
+      { id: "2", label: "Tab 2", content: "Content for Tab 2", closable: true },
+      { id: "3", label: "Tab 3", content: "Content for Tab 3", closable: true },
+    ]);
+    const [activeTab, setActiveTab] = React.useState("1");
+    const [nextId, setNextId] = React.useState(4);
+
+    const addTab = () => {
+      const newTab = {
+        id: nextId.toString(),
+        label: `New Tab ${nextId}`,
+        content: `This is the content for dynamically created tab ${nextId}. You can edit this content.`,
+        closable: true,
+      };
+      setTabs((prev) => [...prev, newTab]);
+      setActiveTab(newTab.id);
+      setNextId((prev) => prev + 1);
+    };
+
+    const closeTab = (tabId: string) => {
+      setTabs((prev) => {
+        const newTabs = prev.filter((tab) => tab.id !== tabId);
+        // If closing the active tab, switch to another tab
+        if (tabId === activeTab && newTabs.length > 0) {
+          setActiveTab(newTabs[0].id);
+        }
+        return newTabs;
+      });
+    };
+
+    const duplicateTab = (tabId: string) => {
+      const tabToDuplicate = tabs.find((tab) => tab.id === tabId);
+      if (tabToDuplicate) {
+        const newTab = {
+          id: nextId.toString(),
+          label: `${tabToDuplicate.label} (Copy)`,
+          content: tabToDuplicate.content,
+          closable: true,
+        };
+        setTabs((prev) => [...prev, newTab]);
+        setActiveTab(newTab.id);
+        setNextId((prev) => prev + 1);
+      }
+    };
+
+    const updateTabLabel = (tabId: string, newLabel: string) => {
+      setTabs((prev) =>
+        prev.map((tab) =>
+          tab.id === tabId ? { ...tab, label: newLabel } : tab
+        )
+      );
+    };
+
+    const updateTabContent = (tabId: string, newContent: string) => {
+      setTabs((prev) =>
+        prev.map((tab) =>
+          tab.id === tabId ? { ...tab, content: newContent } : tab
+        )
+      );
+    };
+
+    const reorderTabs = (fromIndex: number, toIndex: number) => {
+      setTabs((prev) => {
+        const newTabs = [...prev];
+        const [removed] = newTabs.splice(fromIndex, 1);
+        newTabs.splice(toIndex, 0, removed);
+        return newTabs;
+      });
+    };
+
+    return (
+      <div className="max-w-4xl space-y-6">
+        <div>
+          <h3 className="text-lg font-semibold mb-4">Dynamic Tab Management</h3>
+
+          <div className="flex gap-2 mb-4">
+            <Button onClick={addTab} size="sm">
+              + Add Tab
+            </Button>
+            <Button
+              onClick={() => duplicateTab(activeTab)}
+              variant="outline"
+              size="sm"
+              disabled={tabs.length === 0}
+            >
+              Duplicate Active
+            </Button>
+          </div>
+        </div>
+
+        {tabs.length === 0 ? (
+          <div className="text-center py-12 border rounded-lg border-dashed">
+            <p className="text-muted-foreground mb-4">No tabs available</p>
+            <Button onClick={addTab}>Create First Tab</Button>
+          </div>
+        ) : (
+          <Tabs value={activeTab} onValueChange={setActiveTab}>
+            <TabsList className="w-full justify-start overflow-x-auto">
+              {tabs.map((tab) => (
+                <div key={tab.id} className="flex items-center group relative">
+                  <TabsTrigger
+                    value={tab.id}
+                    className="pr-8 max-w-40"
+                    onDoubleClick={() => {
+                      const newLabel = prompt("Enter new tab name:", tab.label);
+                      if (newLabel && newLabel.trim()) {
+                        updateTabLabel(tab.id, newLabel.trim());
+                      }
+                    }}
+                  >
+                    <span className="truncate">{tab.label}</span>
+                  </TabsTrigger>
+
+                  {tab.closable && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        closeTab(tab.id);
+                      }}
+                      className="absolute right-1 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full hover:bg-destructive/10 hover:text-destructive opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-xs"
+                    >
+                      ×
+                    </button>
+                  )}
+
+                  {/* Drag handle (visual only in this demo) */}
+                  <div
+                    className="absolute -right-2 top-1/2 -translate-y-1/2 w-1 h-4 bg-border rounded-full cursor-grab opacity-0 group-hover:opacity-50 transition-opacity"
+                    title="Drag to reorder"
+                  />
+                </div>
+              ))}
+            </TabsList>
+
+            {tabs.map((tab) => (
+              <TabsContent key={tab.id} value={tab.id} className="space-y-4">
+                <div className="border rounded-lg p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <h4 className="text-lg font-semibold">{tab.label}</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Tab ID: {tab.id}
+                      </p>
+                    </div>
+
+                    <div className="flex gap-2">
+                      <Button
+                        onClick={() => duplicateTab(tab.id)}
+                        variant="outline"
+                        size="sm"
+                      >
+                        Duplicate
+                      </Button>
+                      {tab.closable && (
+                        <Button
+                          onClick={() => closeTab(tab.id)}
+                          variant="outline"
+                          size="sm"
+                          className="text-destructive hover:text-destructive"
+                        >
+                          Close
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div>
+                      <Label
+                        htmlFor={`tab-label-${tab.id}`}
+                        className="text-sm font-medium"
+                      >
+                        Tab Label
+                      </Label>
+                      <Input
+                        id={`tab-label-${tab.id}`}
+                        value={tab.label}
+                        onChange={(e) => updateTabLabel(tab.id, e.target.value)}
+                        className="mt-1"
+                      />
+                    </div>
+
+                    <div>
+                      <Label
+                        htmlFor={`tab-content-${tab.id}`}
+                        className="text-sm font-medium"
+                      >
+                        Tab Content
+                      </Label>
+                      <textarea
+                        id={`tab-content-${tab.id}`}
+                        value={tab.content}
+                        onChange={(e) =>
+                          updateTabContent(tab.id, e.target.value)
+                        }
+                        className="mt-1 w-full h-32 px-3 py-2 border border-input rounded-md text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                        placeholder="Enter tab content..."
+                      />
+                    </div>
+
+                    <div className="p-4 bg-muted/50 rounded-lg">
+                      <h5 className="font-medium mb-2">Preview</h5>
+                      <div className="text-sm text-muted-foreground whitespace-pre-wrap">
+                        {tab.content}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </TabsContent>
+            ))}
+          </Tabs>
+        )}
+
+        <div className="border rounded-lg p-4">
+          <h4 className="font-medium mb-3">Tab Statistics</h4>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+            <div>
+              <div className="font-medium">{tabs.length}</div>
+              <div className="text-muted-foreground">Total Tabs</div>
+            </div>
+            <div>
+              <div className="font-medium">
+                {tabs.filter((t) => t.closable).length}
+              </div>
+              <div className="text-muted-foreground">Closable</div>
+            </div>
+            <div>
+              <div className="font-medium">
+                {tabs.filter((t) => !t.closable).length}
+              </div>
+              <div className="text-muted-foreground">Permanent</div>
+            </div>
+            <div>
+              <div className="font-medium">{activeTab}</div>
+              <div className="text-muted-foreground">Active Tab ID</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="text-sm text-muted-foreground">
+          <strong>Features demonstrated:</strong>
+          <ul className="mt-1 space-y-1">
+            <li>
+              • <strong>Dynamic tab creation:</strong> Add new tabs
+              programmatically
+            </li>
+            <li>
+              • <strong>Tab closing:</strong> Remove tabs with closable property
+              control
+            </li>
+            <li>
+              • <strong>Tab duplication:</strong> Clone existing tabs with
+              content
+            </li>
+            <li>
+              • <strong>Inline editing:</strong> Double-click tab labels to
+              rename
+            </li>
+            <li>
+              • <strong>Content editing:</strong> Live editing of tab content
+            </li>
+            <li>
+              • <strong>Tab management:</strong> Control closable vs permanent
+              tabs
+            </li>
+            <li>
+              • <strong>Active tab handling:</strong> Auto-switch when closing
+              active tab
+            </li>
+          </ul>
+        </div>
+      </div>
+    );
   },
 };

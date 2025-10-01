@@ -3,13 +3,17 @@ import { Button } from '@/components/ui/button';
 import { Label } from '../label/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
+type Story = {
+  render: () => JSX.Element;
+};
+
 export default {
   title: "UI/RadioGroup",
   component: RadioGroup,
   docs: {
     description: {
       component:
-        "A radio group component that allows users to select a single option from a list of choices. Built with Radix UI primitives for accessibility.",
+        "A set of checkable buttons—known as radio buttons—where no more than one of the buttons can be checked at a time. Built with Radix UI primitives for keyboard navigation and screen reader accessibility.",
     },
   },
   tags: ["autodocs"],
@@ -17,13 +21,164 @@ export default {
     layout: "centered",
   },
   argTypes: {
+    // Root Props
+    defaultValue: {
+      control: "text",
+      description:
+        "The value of the radio item that should be checked when initially rendered. Use when you do not need to control the state of the radio items.",
+      table: {
+        category: "Root",
+      },
+    },
+    value: {
+      control: "text",
+      description:
+        "The controlled value of the radio item to check. Should be used in conjunction with onValueChange.",
+      table: {
+        category: "Root",
+      },
+    },
+    onValueChange: {
+      control: false,
+      description: "Event handler called when the value changes.",
+      table: {
+        category: "Root",
+        type: { summary: "(value: string) => void" },
+      },
+    },
+    name: {
+      control: "text",
+      description:
+        "The name of the group. Submitted with its owning form as part of a name/value pair.",
+      table: {
+        category: "Root",
+      },
+    },
+    disabled: {
+      control: "boolean",
+      description:
+        "When true, prevents the user from interacting with radio items.",
+      table: {
+        category: "Root",
+      },
+    },
+    required: {
+      control: "boolean",
+      description:
+        "When true, indicates that the user must check a radio item before the owning form can be submitted.",
+      table: {
+        category: "Root",
+      },
+    },
     orientation: {
       control: "select",
       options: ["vertical", "horizontal"],
+      description:
+        "The orientation of the component, which determines how focus moves: horizontal for left/right arrows, vertical for up/down arrows.",
+      table: {
+        category: "Root",
+      },
     },
+    dir: {
+      control: "select",
+      options: ["ltr", "rtl"],
+      description:
+        "The reading direction of the radio group. If omitted, assumes LTR (left-to-right) reading mode.",
+      table: {
+        category: "Root",
+      },
+    },
+    loop: {
+      control: "boolean",
+      description:
+        "When true, keyboard navigation will loop from last item to first, and vice versa.",
+      table: {
+        category: "Root",
+      },
+    },
+    asChild: {
+      control: "boolean",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
+      table: {
+        category: "Root",
+      },
+    },
+
+    // Item Props
+    itemValue: {
+      control: "text",
+      description: "The value given as data when submitted with a name.",
+      table: {
+        category: "Item",
+      },
+    },
+    itemDisabled: {
+      control: "boolean",
+      description:
+        "When true, prevents the user from interacting with the radio item.",
+      table: {
+        category: "Item",
+      },
+    },
+    itemRequired: {
+      control: "boolean",
+      description:
+        "When true, indicates that the user must check the radio item before the owning form can be submitted.",
+      table: {
+        category: "Item",
+      },
+    },
+    itemAsChild: {
+      control: "boolean",
+      description: "Change the default rendered element for the item.",
+      table: {
+        category: "Item",
+      },
+    },
+
+    // Indicator Props
+    indicatorAsChild: {
+      control: "boolean",
+      description: "Change the default rendered element for the indicator.",
+      table: {
+        category: "Indicator",
+      },
+    },
+    forceMount: {
+      control: "boolean",
+      description:
+        "Used to force mounting when more control is needed. Useful when controlling animation with React animation libraries.",
+      table: {
+        category: "Indicator",
+      },
+    },
+
+    // Custom Style Props
     size: {
       control: "select",
-      options: ["sm", "default", "lg"],
+      options: ["sm", "default", "lg", "xl"],
+      description:
+        "Controls the size of the radio items for different visual hierarchy needs.",
+      table: {
+        category: "Styling",
+      },
+    },
+    variant: {
+      control: "select",
+      options: ["default", "outline", "ghost"],
+      description: "Controls the visual style variant of the radio items.",
+      table: {
+        category: "Styling",
+      },
+    },
+    indicator: {
+      control: "select",
+      options: ["circle", "dot", "filled"],
+      description: "Controls the style of the selection indicator.",
+      table: {
+        category: "Styling",
+      },
     },
   },
 };
@@ -755,4 +910,485 @@ export const Playground = (args: {
 Playground.args = {
   orientation: "vertical",
   size: "default",
+};
+
+// Advanced Examples
+export const AdvancedControlledState: Story = {
+  render: () => {
+    const [value, setValue] = React.useState<string>("option-1");
+    const [history, setHistory] = React.useState<string[]>(["option-1"]);
+
+    const handleValueChange = (newValue: string) => {
+      setValue(newValue);
+      setHistory((prev) => [...prev, newValue]);
+    };
+
+    return (
+      <div className="space-y-6">
+        <div>
+          <h3 className="text-lg font-semibold mb-4">
+            Controlled Radio Group with History
+          </h3>
+          <RadioGroup value={value} onValueChange={handleValueChange}>
+            {["option-1", "option-2", "option-3", "option-4"].map((option) => (
+              <div key={option} className="flex items-center space-x-2">
+                <RadioGroupItem value={option} id={option} />
+                <Label htmlFor={option} className="capitalize">
+                  {option.replace("-", " ")}
+                </Label>
+              </div>
+            ))}
+          </RadioGroup>
+        </div>
+
+        <div className="p-4 bg-muted rounded-lg">
+          <h4 className="font-medium mb-2">Current Value: {value}</h4>
+          <div className="text-sm text-muted-foreground">
+            <p className="mb-2">
+              Selection History ({history.length} changes):
+            </p>
+            <div className="flex flex-wrap gap-1">
+              {history.map((item, index) => (
+                <span
+                  key={index}
+                  className="px-2 py-1 bg-primary/10 rounded text-xs"
+                >
+                  {index + 1}. {item}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  },
+};
+
+export const DynamicOptionsWithLooping: Story = {
+  render: () => {
+    const [options, setOptions] = React.useState(["apple", "banana", "cherry"]);
+    const [selectedValue, setSelectedValue] = React.useState<string>("");
+    const [isLoopEnabled, setIsLoopEnabled] = React.useState(true);
+
+    const addOption = () => {
+      const fruits = ["date", "elderberry", "fig", "grape", "honeydew"];
+      const availableFruits = fruits.filter(
+        (fruit) => !options.includes(fruit)
+      );
+      if (availableFruits.length > 0) {
+        const newFruit =
+          availableFruits[Math.floor(Math.random() * availableFruits.length)];
+        setOptions((prev) => [...prev, newFruit]);
+      }
+    };
+
+    const removeOption = (optionToRemove: string) => {
+      setOptions((prev) => prev.filter((option) => option !== optionToRemove));
+      if (selectedValue === optionToRemove) {
+        setSelectedValue("");
+      }
+    };
+
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-semibold">
+            Dynamic Options with Keyboard Navigation
+          </h3>
+          <div className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              id="loop-toggle"
+              checked={isLoopEnabled}
+              onChange={(e) => setIsLoopEnabled(e.target.checked)}
+              className="rounded"
+            />
+            <Label htmlFor="loop-toggle" className="text-sm">
+              Enable Loop Navigation
+            </Label>
+          </div>
+        </div>
+
+        <div className="flex gap-2">
+          <button
+            onClick={addOption}
+            className="px-3 py-1 bg-primary text-primary-foreground rounded text-sm hover:bg-primary/90"
+            disabled={options.length >= 8}
+          >
+            Add Option
+          </button>
+        </div>
+
+        <RadioGroup
+          value={selectedValue}
+          onValueChange={setSelectedValue}
+          loop={isLoopEnabled}
+          className="focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 rounded-lg p-2"
+        >
+          {options.map((option, index) => (
+            <div
+              key={option}
+              className="flex items-center justify-between group"
+            >
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value={option} id={option} />
+                <Label htmlFor={option} className="capitalize">
+                  {option} (#{index + 1})
+                </Label>
+              </div>
+              {options.length > 1 && (
+                <button
+                  onClick={() => removeOption(option)}
+                  className="opacity-0 group-hover:opacity-100 px-2 py-1 text-destructive hover:bg-destructive/10 rounded text-sm transition-opacity"
+                >
+                  Remove
+                </button>
+              )}
+            </div>
+          ))}
+        </RadioGroup>
+
+        <div className="text-sm text-muted-foreground">
+          <p>
+            <strong>Keyboard Navigation:</strong> Use ↑↓ arrow keys to navigate
+            between options
+          </p>
+          <p>
+            <strong>Loop Mode:</strong>{" "}
+            {isLoopEnabled
+              ? "Navigation wraps around from last to first option"
+              : "Navigation stops at first/last option"}
+          </p>
+          <p>
+            <strong>Selected:</strong> {selectedValue || "None"}
+          </p>
+        </div>
+      </div>
+    );
+  },
+};
+
+export const ComplexFormIntegration: Story = {
+  render: () => {
+    const [formData, setFormData] = React.useState({
+      deliveryMethod: "",
+      paymentMethod: "",
+      notificationPrefs: "",
+      priority: "standard",
+    });
+    const [errors, setErrors] = React.useState<Record<string, string>>({});
+    const [isSubmitted, setIsSubmitted] = React.useState(false);
+
+    const validateForm = () => {
+      const newErrors: Record<string, string> = {};
+
+      if (!formData.deliveryMethod) {
+        newErrors.deliveryMethod = "Please select a delivery method";
+      }
+      if (!formData.paymentMethod) {
+        newErrors.paymentMethod = "Please select a payment method";
+      }
+      if (!formData.notificationPrefs) {
+        newErrors.notificationPrefs = "Please select notification preferences";
+      }
+
+      setErrors(newErrors);
+      return Object.keys(newErrors).length === 0;
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+      const isValid = validateForm();
+
+      if (isValid) {
+        setIsSubmitted(true);
+        // Form data would be submitted to backend here
+      }
+    };
+
+    const updateFormData = (field: string) => (value: string) => {
+      setFormData((prev) => ({ ...prev, [field]: value }));
+      // Clear error when user makes selection
+      if (errors[field]) {
+        setErrors((prev) => ({ ...prev, [field]: "" }));
+      }
+    };
+
+    if (isSubmitted) {
+      return (
+        <div className="p-6 border border-green-200 bg-green-50 rounded-lg">
+          <h3 className="text-lg font-semibold text-green-800 mb-2">
+            Order Submitted Successfully!
+          </h3>
+          <div className="text-sm text-green-700 space-y-1">
+            <p>
+              <strong>Delivery:</strong> {formData.deliveryMethod}
+            </p>
+            <p>
+              <strong>Payment:</strong> {formData.paymentMethod}
+            </p>
+            <p>
+              <strong>Notifications:</strong> {formData.notificationPrefs}
+            </p>
+            <p>
+              <strong>Priority:</strong> {formData.priority}
+            </p>
+          </div>
+          <button
+            onClick={() => setIsSubmitted(false)}
+            className="mt-3 px-3 py-1 bg-green-600 text-white rounded text-sm hover:bg-green-700"
+          >
+            Reset Form
+          </button>
+        </div>
+      );
+    }
+
+    return (
+      <form onSubmit={handleSubmit} className="space-y-8">
+        <h3 className="text-lg font-semibold">Complex Order Form</h3>
+
+        {/* Delivery Method - Required */}
+        <div className={`space-y-3 ${errors.deliveryMethod ? "pb-2" : ""}`}>
+          <div className="flex items-center justify-between">
+            <Label className="text-base font-medium">Delivery Method *</Label>
+            {errors.deliveryMethod && (
+              <span className="text-sm text-destructive">
+                {errors.deliveryMethod}
+              </span>
+            )}
+          </div>
+
+          <RadioGroup
+            value={formData.deliveryMethod}
+            onValueChange={updateFormData("deliveryMethod")}
+            className={
+              errors.deliveryMethod
+                ? "ring-2 ring-destructive/20 rounded-lg p-2"
+                : ""
+            }
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {[
+                {
+                  value: "standard",
+                  label: "Standard Delivery",
+                  desc: "5-7 business days",
+                  price: "Free",
+                },
+                {
+                  value: "express",
+                  label: "Express Delivery",
+                  desc: "2-3 business days",
+                  price: "$9.99",
+                },
+                {
+                  value: "overnight",
+                  label: "Overnight Delivery",
+                  desc: "Next business day",
+                  price: "$24.99",
+                },
+                {
+                  value: "pickup",
+                  label: "Store Pickup",
+                  desc: "Ready in 2 hours",
+                  price: "Free",
+                },
+              ].map((option) => (
+                <div
+                  key={option.value}
+                  className="border rounded-lg p-3 hover:border-primary/50"
+                >
+                  <div className="flex items-start space-x-2">
+                    <RadioGroupItem
+                      value={option.value}
+                      id={`delivery-${option.value}`}
+                      className="mt-1"
+                    />
+                    <div className="flex-1">
+                      <Label
+                        htmlFor={`delivery-${option.value}`}
+                        className="font-medium"
+                      >
+                        {option.label}
+                      </Label>
+                      <p className="text-sm text-muted-foreground">
+                        {option.desc}
+                      </p>
+                      <p className="text-sm font-medium text-primary">
+                        {option.price}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </RadioGroup>
+        </div>
+
+        {/* Payment Method - Required */}
+        <div className={`space-y-3 ${errors.paymentMethod ? "pb-2" : ""}`}>
+          <div className="flex items-center justify-between">
+            <Label className="text-base font-medium">Payment Method *</Label>
+            {errors.paymentMethod && (
+              <span className="text-sm text-destructive">
+                {errors.paymentMethod}
+              </span>
+            )}
+          </div>
+
+          <RadioGroup
+            value={formData.paymentMethod}
+            onValueChange={updateFormData("paymentMethod")}
+            orientation="horizontal"
+            className={`flex flex-wrap gap-4 ${errors.paymentMethod ? "ring-2 ring-destructive/20 rounded-lg p-2" : ""}`}
+          >
+            {[
+              { value: "card", label: "💳 Credit Card" },
+              { value: "paypal", label: "🅿️ PayPal" },
+              { value: "apple-pay", label: "🍎 Apple Pay" },
+              { value: "google-pay", label: "🔍 Google Pay" },
+            ].map((option) => (
+              <div
+                key={option.value}
+                className="flex items-center space-x-2 border rounded-lg px-3 py-2 hover:border-primary/50"
+              >
+                <RadioGroupItem
+                  value={option.value}
+                  id={`payment-${option.value}`}
+                />
+                <Label
+                  htmlFor={`payment-${option.value}`}
+                  className="cursor-pointer"
+                >
+                  {option.label}
+                </Label>
+              </div>
+            ))}
+          </RadioGroup>
+        </div>
+
+        {/* Notification Preferences - Required */}
+        <div className={`space-y-3 ${errors.notificationPrefs ? "pb-2" : ""}`}>
+          <div className="flex items-center justify-between">
+            <Label className="text-base font-medium">
+              Notification Preferences *
+            </Label>
+            {errors.notificationPrefs && (
+              <span className="text-sm text-destructive">
+                {errors.notificationPrefs}
+              </span>
+            )}
+          </div>
+
+          <RadioGroup
+            value={formData.notificationPrefs}
+            onValueChange={updateFormData("notificationPrefs")}
+            className={
+              errors.notificationPrefs
+                ? "ring-2 ring-destructive/20 rounded-lg p-2"
+                : ""
+            }
+          >
+            {[
+              {
+                value: "email",
+                label: "Email Only",
+                desc: "Order updates via email",
+              },
+              {
+                value: "sms",
+                label: "SMS Only",
+                desc: "Text message notifications",
+              },
+              {
+                value: "both",
+                label: "Email & SMS",
+                desc: "Comprehensive notifications",
+              },
+              {
+                value: "none",
+                label: "No Notifications",
+                desc: "Check order status manually",
+              },
+            ].map((option) => (
+              <div
+                key={option.value}
+                className="flex items-center space-x-2 p-2 rounded hover:bg-accent/50"
+              >
+                <RadioGroupItem
+                  value={option.value}
+                  id={`notif-${option.value}`}
+                />
+                <div>
+                  <Label
+                    htmlFor={`notif-${option.value}`}
+                    className="font-medium"
+                  >
+                    {option.label}
+                  </Label>
+                  <p className="text-sm text-muted-foreground">{option.desc}</p>
+                </div>
+              </div>
+            ))}
+          </RadioGroup>
+        </div>
+
+        {/* Priority Level - Optional with default */}
+        <div className="space-y-3">
+          <Label className="text-base font-medium">Order Priority</Label>
+          <RadioGroup
+            value={formData.priority}
+            onValueChange={updateFormData("priority")}
+            orientation="horizontal"
+            className="flex gap-6"
+          >
+            {[
+              { value: "low", label: "Low", color: "text-blue-600" },
+              { value: "standard", label: "Standard", color: "text-gray-600" },
+              { value: "high", label: "High", color: "text-orange-600" },
+              { value: "urgent", label: "Urgent", color: "text-red-600" },
+            ].map((option) => (
+              <div key={option.value} className="flex items-center space-x-2">
+                <RadioGroupItem
+                  value={option.value}
+                  id={`priority-${option.value}`}
+                />
+                <Label
+                  htmlFor={`priority-${option.value}`}
+                  className={`font-medium ${option.color}`}
+                >
+                  {option.label}
+                </Label>
+              </div>
+            ))}
+          </RadioGroup>
+        </div>
+
+        <div className="flex gap-4 pt-4 border-t">
+          <button
+            type="submit"
+            className="px-6 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90 font-medium"
+          >
+            Submit Order
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setFormData({
+                deliveryMethod: "",
+                paymentMethod: "",
+                notificationPrefs: "",
+                priority: "standard",
+              });
+              setErrors({});
+            }}
+            className="px-6 py-2 border border-input rounded hover:bg-accent font-medium"
+          >
+            Reset
+          </button>
+        </div>
+      </form>
+    );
+  },
 };

@@ -1,9 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useState } from 'react';
-import type { Meta, StoryObj } from "@storybook/react-vite";
 
-const meta = {
+export default {
   title: "UI/Checkbox",
   component: Checkbox,
   parameters: {
@@ -11,43 +10,108 @@ const meta = {
     docs: {
       description: {
         component:
-          "A control that allows the user to toggle between checked and unchecked states. Supports indeterminate state and full keyboard navigation.",
+          "A control that allows the user to toggle between checked and not checked.",
       },
     },
   },
   tags: ["autodocs"],
   argTypes: {
+    checked: {
+      control: "select",
+      options: [true, false, "indeterminate"],
+      description:
+        "The controlled checked state of the checkbox. Must be used in conjunction with onCheckedChange.",
+      table: {
+        type: { summary: "boolean | 'indeterminate'" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    defaultChecked: {
+      control: "select",
+      options: [true, false, "indeterminate"],
+      description:
+        "The checked state of the checkbox when it is initially rendered. Use when you do not need to control its checked state.",
+      table: {
+        type: { summary: "boolean | 'indeterminate'" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    onCheckedChange: {
+      action: "onCheckedChange",
+      description:
+        "Event handler called when the checked state of the checkbox changes.",
+      table: {
+        type: { summary: "(checked: boolean | 'indeterminate') => void" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    disabled: {
+      control: "boolean",
+      description:
+        "When true, prevents the user from interacting with the checkbox.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    required: {
+      control: "boolean",
+      description:
+        "When true, indicates that the user must check the checkbox before the owning form can be submitted.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    name: {
+      control: "text",
+      description:
+        "The name of the checkbox. Submitted with its owning form as part of a name/value pair.",
+      table: {
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    value: {
+      control: "text",
+      description: "The value given as data when submitted with a name.",
+      table: {
+        type: { summary: "string" },
+        defaultValue: { summary: "on" },
+      },
+    },
     size: {
       control: "select",
       options: ["sm", "default", "lg"],
-      description: "The size of the checkbox",
+      description: "The size variant of the checkbox.",
+      table: {
+        type: { summary: "enum" },
+        defaultValue: { summary: "default" },
+      },
     },
     variant: {
       control: "select",
       options: ["default", "destructive", "outline"],
-      description: "The visual variant of the checkbox",
+      description: "The visual variant of the checkbox.",
+      table: {
+        type: { summary: "enum" },
+        defaultValue: { summary: "default" },
+      },
     },
-    checked: {
-      control: "select",
-      options: [true, false, "indeterminate"],
-      description: "The checked state of the checkbox",
-    },
-    disabled: {
+    asChild: {
       control: "boolean",
-      description: "Whether the checkbox is disabled",
-    },
-    required: {
-      control: "boolean",
-      description: "Whether the checkbox is required",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
     },
   },
-} satisfies Meta<typeof Checkbox>;
-
-export default meta;
-type Story = StoryObj<typeof meta>;
+};
 
 // Default story
-export const Default: Story = {
+export const Default = {
   render: () => (
     <div className="flex items-center space-x-2">
       <Checkbox id="default" defaultChecked />
@@ -62,7 +126,7 @@ export const Default: Story = {
 };
 
 // Sizes
-export const Sizes: Story = {
+export const Sizes = {
   render: () => (
     <div className="space-y-4">
       <div className="flex items-center space-x-2">
@@ -95,7 +159,7 @@ export const Sizes: Story = {
 };
 
 // Variants
-export const Variants: Story = {
+export const Variants = {
   render: () => (
     <div className="space-y-4">
       <div className="flex items-center space-x-2">
@@ -132,7 +196,7 @@ export const Variants: Story = {
 };
 
 // States
-export const States: Story = {
+export const States = {
   render: () => (
     <div className="grid grid-cols-2 gap-6">
       <div className="space-y-3">
@@ -185,7 +249,7 @@ export const States: Story = {
 };
 
 // Indeterminate state
-export const Indeterminate: Story = {
+export const Indeterminate = {
   render: function IndeterminateExample() {
     const [checked, setChecked] = useState<boolean | "indeterminate">(
       "indeterminate"
@@ -231,7 +295,7 @@ export const Indeterminate: Story = {
 };
 
 // Select all pattern
-export const SelectAllPattern: Story = {
+export const SelectAllPattern = {
   render: function SelectAllExample() {
     const [todoItems, setTodoItems] = useState([
       { id: 1, text: "Review pull request", checked: true },
@@ -308,7 +372,7 @@ export const SelectAllPattern: Story = {
 };
 
 // Form integration
-export const FormIntegration: Story = {
+export const FormIntegration = {
   render: () => (
     <form className="space-y-6 w-80">
       <fieldset className="space-y-3">
@@ -388,58 +452,113 @@ export const FormIntegration: Story = {
   },
 };
 
-// Keyboard navigation
-export const KeyboardNavigation: Story = {
-  render: () => (
-    <div className="space-y-4">
-      <div className="bg-muted/50 p-4 rounded-lg">
-        <h4 className="font-medium mb-2">Keyboard Navigation</h4>
-        <p className="text-sm text-muted-foreground mb-3">
-          Use{" "}
-          <kbd className="bg-muted px-1.5 py-0.5 rounded text-xs">Space</kbd> to
-          toggle checkboxes.
-        </p>
+// Controlled checkbox example
+export const ControlledCheckbox = {
+  render: function ControlledExample() {
+    const [checked, setChecked] = useState<boolean | "indeterminate">(false);
+    const [disabled, setDisabled] = useState(false);
 
+    return (
+      <div className="space-y-4 w-full max-w-md">
         <div className="space-y-2">
-          <div className="flex items-center space-x-2">
-            <Checkbox id="kb-nav-1" />
-            <label htmlFor="kb-nav-1" className="text-sm">
-              First checkbox
+          <label className="text-sm font-medium">Controls:</label>
+          <div className="flex gap-2">
+            <Button
+              onClick={() => setChecked(false)}
+              variant="outline"
+              size="sm"
+              disabled={disabled}
+            >
+              Uncheck
+            </Button>
+            <Button
+              onClick={() => setChecked("indeterminate")}
+              variant="outline"
+              size="sm"
+              disabled={disabled}
+            >
+              Indeterminate
+            </Button>
+            <Button
+              onClick={() => setChecked(true)}
+              variant="outline"
+              size="sm"
+              disabled={disabled}
+            >
+              Check
+            </Button>
+          </div>
+          <div className="flex items-center gap-2">
+            <Checkbox
+              id="disable-control"
+              checked={disabled}
+              onCheckedChange={(checked) => setDisabled(checked === true)}
+            />
+            <label htmlFor="disable-control" className="text-sm">
+              Disable checkbox
             </label>
           </div>
-          <div className="flex items-center space-x-2">
-            <Checkbox id="kb-nav-2" />
-            <label htmlFor="kb-nav-2" className="text-sm">
-              Second checkbox
-            </label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <Checkbox id="kb-nav-3" />
-            <label htmlFor="kb-nav-3" className="text-sm">
-              Third checkbox
-            </label>
-          </div>
+        </div>
+
+        <div className="flex items-center space-x-2 p-4 border rounded-lg bg-muted/20">
+          <Checkbox
+            id="controlled-checkbox"
+            checked={checked}
+            onCheckedChange={setChecked}
+            disabled={disabled}
+          />
+          <label htmlFor="controlled-checkbox" className="text-sm font-medium">
+            Controlled checkbox: {String(checked)}
+          </label>
         </div>
       </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Fully controlled checkbox with external state management and controls.",
+      },
+    },
+  },
+};
 
-      <div className="grid grid-cols-2 gap-4 text-xs">
-        <div>
-          <h5 className="font-medium mb-1">✅ WCAG Features</h5>
-          <ul className="space-y-1 text-muted-foreground">
-            <li>• Keyboard accessible</li>
-            <li>• Screen reader friendly</li>
-            <li>• Focus indicators</li>
-            <li>• Proper ARIA attributes</li>
-          </ul>
-        </div>
-        <div>
-          <h5 className="font-medium mb-1">✅ Supports</h5>
-          <ul className="space-y-1 text-muted-foreground">
-            <li>• Indeterminate state</li>
-            <li>• Controlled/uncontrolled</li>
-            <li>• Form integration</li>
-            <li>• Custom styling</li>
-          </ul>
+// Indicator customization
+export const CustomIndicators = {
+  render: () => (
+    <div className="space-y-4 w-full max-w-md">
+      <div>
+        <h4 className="text-sm font-medium mb-3">Custom Indicators</h4>
+        <div className="space-y-3">
+          <div className="flex items-center space-x-2">
+            <Checkbox id="custom-check" defaultChecked />
+            <label htmlFor="custom-check" className="text-sm">
+              Default check icon
+            </label>
+          </div>
+
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="custom-indeterminate"
+              checked="indeterminate"
+              className="data-[state=indeterminate]:bg-orange-500 data-[state=indeterminate]:border-orange-500"
+            />
+            <label htmlFor="custom-indeterminate" className="text-sm">
+              Custom indeterminate styling
+            </label>
+          </div>
+
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="custom-colors"
+              defaultChecked
+              className="data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
+            />
+            <label htmlFor="custom-colors" className="text-sm">
+              Custom checked colors
+            </label>
+          </div>
         </div>
       </div>
     </div>
@@ -447,8 +566,473 @@ export const KeyboardNavigation: Story = {
   parameters: {
     docs: {
       description: {
+        story: "Examples of customizing checkbox indicators and styling.",
+      },
+    },
+  },
+};
+
+// API Reference
+export const APIReference = {
+  render: () => (
+    <div className="space-y-6 max-w-4xl">
+      <div>
+        <h3 className="text-lg font-semibold mb-3">Checkbox API Reference</h3>
+        <p className="text-sm text-muted-foreground mb-4">
+          Complete API reference for all Checkbox components with their props,
+          types, and default values.
+        </p>
+      </div>
+
+      <div className="space-y-4">
+        <div>
+          <h4 className="font-medium mb-2">Checkbox.Root</h4>
+          <div className="text-sm text-muted-foreground mb-2">
+            Contains all the parts of a checkbox. An input will also render when
+            used within a form to ensure events propagate correctly.
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm border-collapse border border-border">
+              <thead>
+                <tr className="border-b border-border bg-muted/50">
+                  <th className="border border-border px-3 py-2 text-left">
+                    Prop
+                  </th>
+                  <th className="border border-border px-3 py-2 text-left">
+                    Type
+                  </th>
+                  <th className="border border-border px-3 py-2 text-left">
+                    Default
+                  </th>
+                  <th className="border border-border px-3 py-2 text-left">
+                    Description
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="border border-border px-3 py-2 font-mono">
+                    checked
+                  </td>
+                  <td className="border border-border px-3 py-2 font-mono">
+                    boolean | "indeterminate"
+                  </td>
+                  <td className="border border-border px-3 py-2">-</td>
+                  <td className="border border-border px-3 py-2">
+                    The controlled checked state of the checkbox.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="border border-border px-3 py-2 font-mono">
+                    defaultChecked
+                  </td>
+                  <td className="border border-border px-3 py-2 font-mono">
+                    boolean | "indeterminate"
+                  </td>
+                  <td className="border border-border px-3 py-2">false</td>
+                  <td className="border border-border px-3 py-2">
+                    The checked state when initially rendered.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="border border-border px-3 py-2 font-mono">
+                    onCheckedChange
+                  </td>
+                  <td className="border border-border px-3 py-2 font-mono">{`(checked: boolean | "indeterminate") => void`}</td>
+                  <td className="border border-border px-3 py-2">-</td>
+                  <td className="border border-border px-3 py-2">
+                    Event handler called when the checked state changes.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="border border-border px-3 py-2 font-mono">
+                    disabled
+                  </td>
+                  <td className="border border-border px-3 py-2 font-mono">
+                    boolean
+                  </td>
+                  <td className="border border-border px-3 py-2">false</td>
+                  <td className="border border-border px-3 py-2">
+                    When true, prevents the user from interacting with the
+                    checkbox.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="border border-border px-3 py-2 font-mono">
+                    required
+                  </td>
+                  <td className="border border-border px-3 py-2 font-mono">
+                    boolean
+                  </td>
+                  <td className="border border-border px-3 py-2">false</td>
+                  <td className="border border-border px-3 py-2">
+                    When true, indicates that the user must check the checkbox
+                    before submitting.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="border border-border px-3 py-2 font-mono">
+                    name
+                  </td>
+                  <td className="border border-border px-3 py-2 font-mono">
+                    string
+                  </td>
+                  <td className="border border-border px-3 py-2">-</td>
+                  <td className="border border-border px-3 py-2">
+                    The name of the checkbox for form submission.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="border border-border px-3 py-2 font-mono">
+                    value
+                  </td>
+                  <td className="border border-border px-3 py-2 font-mono">
+                    string
+                  </td>
+                  <td className="border border-border px-3 py-2">"on"</td>
+                  <td className="border border-border px-3 py-2">
+                    The value given as data when submitted with a name.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="border border-border px-3 py-2 font-mono">
+                    asChild
+                  </td>
+                  <td className="border border-border px-3 py-2 font-mono">
+                    boolean
+                  </td>
+                  <td className="border border-border px-3 py-2">false</td>
+                  <td className="border border-border px-3 py-2">
+                    Change the default rendered element.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div>
+          <h4 className="font-medium mb-2">Checkbox.Indicator</h4>
+          <div className="text-sm text-muted-foreground mb-2">
+            Renders when the checkbox is in a checked or indeterminate state.
+            You can style this element directly, or you can use it as a wrapper
+            to put an icon into, or both.
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm border-collapse border border-border">
+              <thead>
+                <tr className="border-b border-border bg-muted/50">
+                  <th className="border border-border px-3 py-2 text-left">
+                    Prop
+                  </th>
+                  <th className="border border-border px-3 py-2 text-left">
+                    Type
+                  </th>
+                  <th className="border border-border px-3 py-2 text-left">
+                    Default
+                  </th>
+                  <th className="border border-border px-3 py-2 text-left">
+                    Description
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="border border-border px-3 py-2 font-mono">
+                    asChild
+                  </td>
+                  <td className="border border-border px-3 py-2 font-mono">
+                    boolean
+                  </td>
+                  <td className="border border-border px-3 py-2">false</td>
+                  <td className="border border-border px-3 py-2">
+                    Change the default rendered element.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="border border-border px-3 py-2 font-mono">
+                    forceMount
+                  </td>
+                  <td className="border border-border px-3 py-2 font-mono">
+                    boolean
+                  </td>
+                  <td className="border border-border px-3 py-2">false</td>
+                  <td className="border border-border px-3 py-2">
+                    Used to force mounting when more control is needed.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div>
+          <h4 className="font-medium mb-2">Data Attributes</h4>
+          <div className="text-sm text-muted-foreground mb-2">
+            Available data attributes for styling different states.
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm border-collapse border border-border">
+              <thead>
+                <tr className="border-b border-border bg-muted/50">
+                  <th className="border border-border px-3 py-2 text-left">
+                    Attribute
+                  </th>
+                  <th className="border border-border px-3 py-2 text-left">
+                    Values
+                  </th>
+                  <th className="border border-border px-3 py-2 text-left">
+                    Description
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="border border-border px-3 py-2 font-mono">
+                    data-state
+                  </td>
+                  <td className="border border-border px-3 py-2 font-mono">
+                    "checked" | "unchecked" | "indeterminate"
+                  </td>
+                  <td className="border border-border px-3 py-2">
+                    The current checked state of the checkbox.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="border border-border px-3 py-2 font-mono">
+                    data-disabled
+                  </td>
+                  <td className="border border-border px-3 py-2 font-mono">
+                    Present when disabled
+                  </td>
+                  <td className="border border-border px-3 py-2">
+                    Present when the checkbox is disabled.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: "Complete API reference with all props and data attributes.",
+      },
+    },
+  },
+};
+
+// Advanced example with dynamic features
+export const AdvancedExample = {
+  render: function AdvancedCheckboxExample() {
+    const [groupState, setGroupState] = useState({
+      notifications: {
+        email: false,
+        push: true,
+        sms: false,
+      },
+      permissions: {
+        camera: true,
+        microphone: false,
+        location: true,
+        contacts: false,
+      },
+    });
+
+    const [showAdvanced, setShowAdvanced] = useState(false);
+
+    const getGroupStatus = (group: keyof typeof groupState) => {
+      const items = Object.values(groupState[group]);
+      const checkedCount = items.filter(Boolean).length;
+      const totalCount = items.length;
+
+      if (checkedCount === 0) return false;
+      if (checkedCount === totalCount) return true;
+      return "indeterminate";
+    };
+
+    const handleGroupToggle = (
+      group: keyof typeof groupState,
+      checked: boolean | "indeterminate"
+    ) => {
+      const newValue = checked === true;
+      setGroupState((prev) => ({
+        ...prev,
+        [group]: Object.keys(prev[group]).reduce(
+          (acc, key) => ({ ...acc, [key]: newValue }),
+          {} as Record<string, boolean>
+        ),
+      }));
+    };
+
+    const handleItemToggle = (group: keyof typeof groupState, item: string) => {
+      setGroupState((prev) => ({
+        ...prev,
+        [group]: {
+          ...prev[group],
+          [item]: !prev[group][item as keyof (typeof prev)[typeof group]],
+        },
+      }));
+    };
+
+    return (
+      <div className="space-y-6 w-full max-w-2xl">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-semibold">Settings Management</h3>
+          <Button
+            onClick={() => setShowAdvanced(!showAdvanced)}
+            variant="outline"
+            size="sm"
+          >
+            {showAdvanced ? "Hide" : "Show"} Advanced
+          </Button>
+        </div>
+
+        <div className="space-y-4">
+          {/* Notifications Group */}
+          <div className="space-y-3 p-4 border rounded-lg">
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="notifications-all"
+                checked={getGroupStatus("notifications")}
+                onCheckedChange={(checked) =>
+                  handleGroupToggle("notifications", checked)
+                }
+              />
+              <label
+                htmlFor="notifications-all"
+                className="text-sm font-semibold"
+              >
+                Notifications (
+                {Object.values(groupState.notifications).filter(Boolean).length}
+                /{Object.values(groupState.notifications).length})
+              </label>
+            </div>
+
+            <div className="ml-6 space-y-2">
+              {Object.entries(groupState.notifications).map(([key, value]) => (
+                <div key={key} className="flex items-center space-x-2">
+                  <Checkbox
+                    id={`notification-${key}`}
+                    checked={value}
+                    onCheckedChange={() =>
+                      handleItemToggle("notifications", key)
+                    }
+                    size="sm"
+                  />
+                  <label
+                    htmlFor={`notification-${key}`}
+                    className="text-sm capitalize"
+                  >
+                    {key} notifications
+                  </label>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Permissions Group */}
+          <div className="space-y-3 p-4 border rounded-lg">
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="permissions-all"
+                checked={getGroupStatus("permissions")}
+                onCheckedChange={(checked) =>
+                  handleGroupToggle("permissions", checked)
+                }
+                variant="destructive"
+              />
+              <label
+                htmlFor="permissions-all"
+                className="text-sm font-semibold"
+              >
+                Permissions (
+                {Object.values(groupState.permissions).filter(Boolean).length}/
+                {Object.values(groupState.permissions).length})
+              </label>
+            </div>
+
+            <div className="ml-6 space-y-2">
+              {Object.entries(groupState.permissions).map(([key, value]) => (
+                <div key={key} className="flex items-center space-x-2">
+                  <Checkbox
+                    id={`permission-${key}`}
+                    checked={value}
+                    onCheckedChange={() => handleItemToggle("permissions", key)}
+                    size="sm"
+                    variant="destructive"
+                  />
+                  <label
+                    htmlFor={`permission-${key}`}
+                    className="text-sm capitalize"
+                  >
+                    {key} access
+                  </label>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {showAdvanced && (
+            <div className="space-y-3 p-4 border-2 border-dashed rounded-lg bg-muted/20">
+              <h4 className="text-sm font-semibold">Advanced Options</h4>
+              <div className="space-y-2">
+                <div className="flex items-center space-x-2">
+                  <Checkbox id="advanced-logging" size="sm" variant="outline" />
+                  <label htmlFor="advanced-logging" className="text-sm">
+                    Enable detailed logging
+                  </label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="advanced-analytics"
+                    size="sm"
+                    variant="outline"
+                  />
+                  <label htmlFor="advanced-analytics" className="text-sm">
+                    Share usage analytics
+                  </label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="advanced-beta"
+                    size="sm"
+                    variant="outline"
+                    defaultChecked
+                  />
+                  <label htmlFor="advanced-beta" className="text-sm">
+                    Beta features access
+                  </label>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="flex justify-between items-center pt-4 border-t">
+          <div className="text-sm text-muted-foreground">
+            Total enabled:{" "}
+            {Object.values(groupState.notifications).filter(Boolean).length +
+              Object.values(groupState.permissions).filter(Boolean).length}
+          </div>
+          <div className="flex gap-2">
+            <Button variant="outline" size="sm">
+              Cancel
+            </Button>
+            <Button size="sm">Save Settings</Button>
+          </div>
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
         story:
-          "Checkboxes with proper accessibility patterns and keyboard navigation.",
+          "Advanced checkbox example with nested groups, indeterminate states, and dynamic controls.",
       },
     },
   },

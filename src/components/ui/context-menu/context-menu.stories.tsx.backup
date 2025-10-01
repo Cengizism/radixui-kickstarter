@@ -72,190 +72,304 @@ export default {
   },
   tags: ["autodocs"],
   argTypes: {
-    className: {
-      control: "text",
-      description: "Additional CSS classes to apply to the component.",
+    // Root Props
+    defaultOpen: {
+      control: 'boolean',
+      description: 'The open state of the context menu when it is initially rendered.',
+      table: { category: 'Root Props' }
     },
     open: {
       control: "boolean",
       description:
         "The controlled open state of the context menu. Must be used in conjunction with onOpenChange.",
-      table: { category: "Root Props" },
+      table: { category: 'Root Props' }
     },
     onOpenChange: {
-      action: "onOpenChange",
-      description:
-        "Event handler called when the open state of the context menu changes.",
-      table: { category: "Root Props" },
+      action: 'onOpenChange',
+      description: 'Event handler called when the open state of the context menu changes.',
+      table: { category: 'Root Props' }
     },
     modal: {
-      control: "boolean",
-      description: "The modality of the context menu.",
-      table: { category: "Root Props" },
+      control: 'boolean',
+      description: 'The modality of the context menu.',
+      table: { category: 'Root Props' }
     },
 
     // Trigger Props
     triggerAsChild: {
-      control: "boolean",
-      description: "Change the default rendered element for the trigger.",
-      table: { category: "Trigger Props" },
+      control: 'boolean',
+      description: 'Change the default rendered element for the trigger.',
+      table: { category: 'Trigger Props' }
     },
     disabled: {
-      control: "boolean",
-      description: "When true, the context menu trigger will be disabled.",
-      table: { category: "Trigger Props" },
+      control: 'boolean',
+      description: 'When true, the context menu trigger will be disabled.',
+      table: { category: 'Trigger Props' }
     },
 
     // Content Props
     contentAsChild: {
-      control: "boolean",
-      description: "Change the default rendered element for the content.",
-      table: { category: "Content Props" },
+      control: 'boolean',
+      description: 'Change the default rendered element for the content.',
+      table: { category: 'Content Props' }
     },
     loop: {
-      control: "boolean",
-      description:
-        "When true, keyboard navigation will loop from last item to first, and vice versa.",
-      table: { category: "Content Props" },
+      control: 'boolean',
+      description: 'When true, keyboard navigation will loop from last item to first, and vice versa.',
+      table: { category: 'Content Props' }
     },
     onCloseAutoFocus: {
-      action: "onCloseAutoFocus",
-      description: "Event handler called when auto-focusing on close.",
-      table: { category: "Content Props" },
+      action: 'onCloseAutoFocus',
+      description: 'Event handler called when auto-focusing on close.',
+      table: { category: 'Content Props' }
     },
     onEscapeKeyDown: {
-      action: "onEscapeKeyDown",
-      description: "Event handler called when the escape key is down.",
-      table: { category: "Content Props" },
+      action: 'onEscapeKeyDown',
+      description: 'Event handler called when the escape key is down.',
+      table: { category: 'Content Props' }
     },
     onPointerDownOutside: {
-      action: "onPointerDownOutside",
-      description:
-        "Event handler called when a pointer event occurs outside the bounds.",
-      table: { category: "Content Props" },
+      action: 'onPointerDownOutside',
+      description: 'Event handler called when a pointer event occurs outside the bounds.',
+      table: { category: 'Content Props' }
     },
     onFocusOutside: {
-      action: "onFocusOutside",
-      description: "Event handler called when focus moves outside the bounds.",
-      table: { category: "Content Props" },
+      action: 'onFocusOutside',
+      description: 'Event handler called when focus moves outside the bounds.',
+      table: { category: 'Content Props' }
     },
     onInteractOutside: {
-      action: "onInteractOutside",
-      description:
-        "Event handler called when an interaction happens outside the bounds.",
-      table: { category: "Content Props" },
+      action: 'onInteractOutside',
+      description: 'Event handler called when an interaction happens outside the bounds.',
+      table: { category: 'Content Props' }
     },
     forceMount: {
-      control: "boolean",
-      description: "Used to force mounting when more control is needed.",
-      table: { category: "Content Props" },
+      control: 'boolean',
+      description: 'Used to force mounting when more control is needed.',
+      table: { category: 'Content Props' }
     },
     side: {
-      control: "select",
-      options: ["top", "right", "bottom", "left"],
-      description: "The preferred side of the trigger to render against.",
-      table: { category: "Content Props" },
+      control: 'select',
+      options: ['top', 'right', 'bottom', 'left'],
+      description: 'The preferred side of the trigger to render against.',
+      table: { category: 'Content Props' }
     },
     sideOffset: {
-      control: { type: "number", min: -50, max: 50 },
-      description: "The distance in pixels from the trigger.",
-      table: { category: "Content Props" },
+      control: { type: 'number', min: -50, max: 50 },
+      description: 'The distance in pixels from the trigger.',
+      table: { category: 'Content Props' }
     },
     align: {
-      control: "select",
-      options: ["start", "center", "end"],
-      description: "The preferred alignment against the trigger.",
-      table: { category: "Content Props" },
+      control: 'select',
+      options: ['start', 'center', 'end'],
+      description: 'The preferred alignment against the trigger.',
+      table: { category: 'Content Props' }
     },
     alignOffset: {
-      control: { type: "number", min: -50, max: 50 },
-      description:
-        'An offset in pixels from the "start" or "end" alignment options.',
-      table: { category: "Content Props" },
+      control: { type: 'number', min: -50, max: 50 },
+      description: 'An offset in pixels from the "start" or "end" alignment options.',
+      table: { category: 'Content Props' }
     },
     avoidCollisions: {
-      control: "boolean",
-      description:
-        "When true, overrides the side and align to prevent collisions with boundary edges.",
-      table: { category: "Content Props" },
+      control: 'boolean',
+      description: 'When true, overrides the side and align to prevent collisions with boundary edges.',
+      table: { category: 'Content Props' }
     },
     collisionBoundary: {
-      control: "object",
-      description: "The element used as the collision boundary.",
-      table: { category: "Content Props" },
+      control: 'object',
+      description: 'The element used as the collision boundary.',
+      table: { category: 'Content Props' }
     },
     collisionPadding: {
-      control: { type: "number", min: 0, max: 50 },
-      description:
-        "The distance in pixels from the boundary edges where collision detection should occur.",
-      table: { category: "Content Props" },
+      control: { type: 'number', min: 0, max: 50 },
+      description: 'The distance in pixels from the boundary edges where collision detection should occur.',
+      table: { category: 'Content Props' }
     },
     sticky: {
-      control: "select",
-      options: ["partial", "always"],
-      description: "The sticky behavior on the align axis.",
-      table: { category: "Content Props" },
+      control: 'select',
+      options: ['partial', 'always'],
+      description: 'The sticky behavior on the align axis.',
+      table: { category: 'Content Props' }
     },
     hideWhenDetached: {
-      control: "boolean",
-      description: "Whether to hide when the trigger becomes fully occluded.",
-      table: { category: "Content Props" },
+      control: 'boolean',
+      description: 'Whether to hide when the trigger becomes fully occluded.',
+      table: { category: 'Content Props' }
     },
 
     // Item Props
     itemDisabled: {
-      control: "boolean",
-      description:
-        "When true, prevents the user from interacting with the item.",
-      table: { category: "Item Props" },
+      control: 'boolean',
+      description: 'When true, prevents the user from interacting with the item.',
+      table: { category: 'Item Props' }
     },
     itemAsChild: {
-      control: "boolean",
-      description: "Change the default rendered element for the item.",
-      table: { category: "Item Props" },
+      control: 'boolean',
+      description: 'Change the default rendered element for the item.',
+      table: { category: 'Item Props' }
     },
     textValue: {
-      control: "text",
-      description: "Optional text used for typeahead purposes.",
-      table: { category: "Item Props" },
+      control: 'text',
+      description: 'Optional text used for typeahead purposes.',
+      table: { category: 'Item Props' }
     },
 
     // Checkbox Item Props
     checkboxChecked: {
-      control: "boolean",
-      description: "The controlled checked state of the checkbox item.",
-      table: { category: "Checkbox Item Props" },
+      control: 'boolean',
+      description: 'The controlled checked state of the checkbox item.',
+      table: { category: 'Checkbox Item Props' }
     },
     onCheckboxCheckedChange: {
-      action: "onCheckboxCheckedChange",
-      description: "Event handler called when the checked state changes.",
-      table: { category: "Checkbox Item Props" },
+      action: 'onCheckboxCheckedChange',
+      description: 'Event handler called when the checked state changes.',
+      table: { category: 'Checkbox Item Props' }
     },
 
     // Radio Item Props
     radioValue: {
-      control: "text",
-      description: "The unique value of the radio item.",
-      table: { category: "Radio Item Props" },
+      control: 'text',
+      description: 'The unique value of the radio item.',
+      table: { category: 'Radio Item Props' }
     },
 
     // Sub Menu Props
     subDefaultOpen: {
-      control: "boolean",
-      description:
-        "The open state of the submenu when it is initially rendered.",
-      table: { category: "Sub Menu Props" },
+      control: 'boolean',
+      description: 'The open state of the submenu when it is initially rendered.',
+      table: { category: 'Sub Menu Props' }
     },
     subOpen: {
-      control: "boolean",
-      description: "The controlled open state of the submenu.",
-      table: { category: "Sub Menu Props" },
+      control: 'boolean',
+      description: 'The controlled open state of the submenu.',
+      table: { category: 'Sub Menu Props' }
     },
     onSubOpenChange: {
-      action: "onSubOpenChange",
+      action: 'onSubOpenChange',
+      description: 'Event handler called when the open state of the submenu changes.',
+      table: { category: 'Sub Menu Props' }
+    }
+  },
+    align: {
+      control: "select",
+      options: ["start", "center", "end"],
+      description: "The preferred alignment against the trigger.",
+      table: {
+        type: { summary: "enum" },
+        defaultValue: { summary: "center" },
+      },
+    },
+    sideOffset: {
+      control: "number",
+      description: "The distance in pixels from the trigger.",
+      table: {
+        type: { summary: "number" },
+        defaultValue: { summary: "0" },
+      },
+    },
+    alignOffset: {
+      control: "number",
       description:
-        "Event handler called when the open state of the submenu changes.",
-      table: { category: "Sub Menu Props" },
+        "An offset in pixels from the start or end alignment options.",
+      table: {
+        type: { summary: "number" },
+        defaultValue: { summary: "0" },
+      },
+    },
+    avoidCollisions: {
+      control: "boolean",
+      description:
+        "When true, overrides the side and align preferences to prevent collisions with boundary edges.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "true" },
+      },
+    },
+    // Item props
+    disabled: {
+      control: "boolean",
+      description:
+        "When true, prevents the user from interacting with the item.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    onSelect: {
+      action: "onSelect",
+      description:
+        "Event handler called when the user selects an item (via mouse or keyboard). Calling event.preventDefault in this handler will prevent the context menu from closing when selecting that item.",
+      table: {
+        type: { summary: "(event: Event) => void" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    // Checkbox item props
+    checked: {
+      control: "select",
+      options: [true, false, "indeterminate"],
+      description:
+        "The controlled checked state of the checkbox item. Must be used in conjunction with onCheckedChange.",
+      table: {
+        type: { summary: "boolean | 'indeterminate'" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    onCheckedChange: {
+      action: "onCheckedChange",
+      description:
+        "Event handler called when the checked state of the checkbox item changes.",
+      table: {
+        type: { summary: "(checked: boolean | 'indeterminate') => void" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    // Radio group props
+    value: {
+      control: "text",
+      description:
+        "The value of the selected item in the group. Must be used in conjunction with onValueChange.",
+      table: {
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    onValueChange: {
+      action: "onValueChange",
+      description:
+        "Event handler called when the value changes in the radio group.",
+      table: {
+        type: { summary: "(value: string) => void" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    // Custom variant props
+    size: {
+      control: "select",
+      options: ["sm", "default", "lg"],
+      description: "The size variant of the context menu content.",
+      table: {
+        type: { summary: "enum" },
+        defaultValue: { summary: "default" },
+      },
+    },
+    variant: {
+      control: "select",
+      options: ["default", "destructive"],
+      description: "The visual variant of context menu items.",
+      table: {
+        type: { summary: "enum" },
+        defaultValue: { summary: "default" },
+      },
+    },
+    inset: {
+      control: "boolean",
+      description:
+        "When true, adds left padding to accommodate checkbox/radio indicators.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
     },
   },
 };

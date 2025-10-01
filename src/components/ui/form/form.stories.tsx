@@ -1,12 +1,31 @@
-import { AlertCircle, CreditCard, User } from 'lucide-react';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Separator } from '@/components/ui/separator';
-import { Switch } from '@/components/ui/switch';
-import { Textarea } from '@/components/ui/textarea';
+import { Badge } from '@/components/ui/badge/badge';
+import { Button } from '@/components/ui/button/button';
+import { Checkbox } from '@/components/ui/checkbox/checkbox';
+import { Input } from '@/components/ui/input/input';
+import { Label } from '@/components/ui/label/label';
+import { Separator } from '@/components/ui/separator/separator';
+import { Switch } from '@/components/ui/switch/switch';
+import { Textarea } from '@/components/ui/textarea/textarea';
 import { useState } from 'react';
+import {
+  AlertCircle,
+  CreditCard,
+  User,
+  FileText,
+  MapPin,
+  Shield,
+  Check,
+  X,
+  Info,
+  Eye,
+  EyeOff,
+  Save,
+  Send,
+} from "lucide-react";
+import {
+  RadioGroup,
+  RadioGroupItem,
+} from "@/components/ui/radio-group/radio-group";
 import {
   Form,
   FormControl,
@@ -22,14 +41,14 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/ui/select/select";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/card/card";
 
 export default {
   title: "UI/Form",
@@ -37,7 +56,7 @@ export default {
   docs: {
     description: {
       component:
-        "A form component built with React Hook Form and Zod for validation. Provides consistent form styling and validation handling.",
+        "A form component built on top of Radix UI Form primitives with enhanced validation capabilities. Supports built-in browser validation, custom validation rules, and comprehensive accessibility features.",
     },
   },
   tags: ["autodocs"],
@@ -45,17 +64,282 @@ export default {
     layout: "padded",
   },
   argTypes: {
+    // Root Props
+    onSubmit: {
+      action: "onSubmit",
+      description:
+        "Event handler called when the form is submitted. Only triggered if it passes client-side validation. Receives FormEvent as parameter.",
+      table: {
+        type: { summary: "(event: FormEvent<HTMLFormElement>) => void" },
+        category: "Root",
+      },
+    },
+    onInvalidSubmit: {
+      action: "onInvalidSubmit",
+      description:
+        "Event handler called when the form is submitted with invalid data. Useful for handling validation errors.",
+      table: {
+        type: { summary: "(event: FormEvent<HTMLFormElement>) => void" },
+        category: "Root",
+      },
+    },
+    onClearServerErrors: {
+      action: "onClearServerErrors",
+      description:
+        "Event handler called to clear server errors. Called before form re-submission and when form is reset.",
+      table: {
+        type: { summary: "() => void" },
+        category: "Root",
+      },
+    },
+
+    // Field Props
+    name: {
+      control: "text",
+      description:
+        "The name of the field. Used to associate labels, controls, and validation messages automatically.",
+      table: {
+        type: { summary: "string" },
+        category: "Field",
+      },
+    },
+    serverInvalid: {
+      control: "boolean",
+      description:
+        "Whether the field is invalid according to server-side validation. Marks the field as invalid regardless of client-side validation.",
+      table: {
+        type: { summary: "boolean" },
+        category: "Field",
+      },
+    },
+
+    // Control Props
+    asChild: {
+      control: "boolean",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+        category: "Control",
+      },
+    },
     variant: {
       control: "select",
       options: ["default", "destructive"],
+      description: "The visual style variant of the form control.",
+      table: {
+        type: { summary: '"default" | "destructive"' },
+        defaultValue: { summary: '"default"' },
+        category: "Control",
+      },
     },
     size: {
       control: "select",
       options: ["sm", "default", "lg"],
+      description: "The size variant of the form control.",
+      table: {
+        type: { summary: '"sm" | "default" | "lg"' },
+        defaultValue: { summary: '"default"' },
+        category: "Control",
+      },
     },
+
+    // Label Props
+    labelVariant: {
+      control: "select",
+      options: ["default", "destructive"],
+      description: "The visual style variant of the form label.",
+      table: {
+        type: { summary: '"default" | "destructive"' },
+        defaultValue: { summary: '"default"' },
+        category: "Label",
+      },
+    },
+    labelSize: {
+      control: "select",
+      options: ["sm", "default", "lg"],
+      description: "The size variant of the form label.",
+      table: {
+        type: { summary: '"sm" | "default" | "lg"' },
+        defaultValue: { summary: '"default"' },
+        category: "Label",
+      },
+    },
+
+    // Message Props
+    match: {
+      description:
+        "Determines when the message should show. Can be a ValidityState property name or a custom validation function.",
+      table: {
+        type: {
+          summary:
+            "keyof ValidityState | ((value: string, formData: FormData) => boolean | Promise<boolean>)",
+        },
+        category: "Message",
+      },
+    },
+    forceMatch: {
+      control: "boolean",
+      description:
+        "When true, forces the message to show regardless of client-side validation. Useful for server-side validation errors.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+        category: "Message",
+      },
+    },
+    messageVariant: {
+      control: "select",
+      options: ["default", "destructive"],
+      description: "The visual style variant of the validation message.",
+      table: {
+        type: { summary: '"default" | "destructive"' },
+        defaultValue: { summary: '"destructive"' },
+        category: "Message",
+      },
+    },
+    messageSize: {
+      control: "select",
+      options: ["sm", "default", "lg"],
+      description: "The size variant of the validation message.",
+      table: {
+        type: { summary: '"sm" | "default" | "lg"' },
+        defaultValue: { summary: '"default"' },
+        category: "Message",
+      },
+    },
+
+    // Field Layout Props
     layout: {
       control: "select",
       options: ["default", "horizontal", "inline"],
+      description: "The layout style of the form field.",
+      table: {
+        type: { summary: '"default" | "horizontal" | "inline"' },
+        defaultValue: { summary: '"default"' },
+        category: "Field",
+      },
+    },
+
+    // Submit Props
+    submitVariant: {
+      control: "select",
+      options: [
+        "default",
+        "destructive",
+        "outline",
+        "secondary",
+        "ghost",
+        "link",
+      ],
+      description: "The visual style variant of the submit button.",
+      table: {
+        type: {
+          summary:
+            '"default" | "destructive" | "outline" | "secondary" | "ghost" | "link"',
+        },
+        defaultValue: { summary: '"default"' },
+        category: "Submit",
+      },
+    },
+    submitSize: {
+      control: "select",
+      options: ["sm", "default", "lg", "icon"],
+      description: "The size variant of the submit button.",
+      table: {
+        type: { summary: '"sm" | "default" | "lg" | "icon"' },
+        defaultValue: { summary: '"default"' },
+        category: "Submit",
+      },
+    },
+
+    // ValidityState Props
+    children: {
+      description:
+        "Render prop function that receives the current ValidityState of the field. Used to access validation state in render.",
+      table: {
+        type: { summary: "(validity: ValidityState) => React.ReactNode" },
+        category: "ValidityState",
+      },
+    },
+
+    // Built-in Validation Matches
+    valueMissing: {
+      description:
+        "Matches when required field is empty. Corresponds to the 'required' HTML attribute.",
+      table: {
+        type: { summary: "ValidityState property" },
+        category: "Validation",
+      },
+    },
+    typeMismatch: {
+      description:
+        "Matches when input type doesn't match expected format (e.g., invalid email format).",
+      table: {
+        type: { summary: "ValidityState property" },
+        category: "Validation",
+      },
+    },
+    patternMismatch: {
+      description:
+        "Matches when input doesn't match the specified pattern attribute.",
+      table: {
+        type: { summary: "ValidityState property" },
+        category: "Validation",
+      },
+    },
+    tooLong: {
+      description: "Matches when input exceeds maxlength attribute.",
+      table: {
+        type: { summary: "ValidityState property" },
+        category: "Validation",
+      },
+    },
+    tooShort: {
+      description: "Matches when input is shorter than minlength attribute.",
+      table: {
+        type: { summary: "ValidityState property" },
+        category: "Validation",
+      },
+    },
+    rangeUnderflow: {
+      description: "Matches when numeric input is less than min attribute.",
+      table: {
+        type: { summary: "ValidityState property" },
+        category: "Validation",
+      },
+    },
+    rangeOverflow: {
+      description: "Matches when numeric input exceeds max attribute.",
+      table: {
+        type: { summary: "ValidityState property" },
+        category: "Validation",
+      },
+    },
+    stepMismatch: {
+      description:
+        "Matches when numeric input doesn't fit step attribute constraints.",
+      table: {
+        type: { summary: "ValidityState property" },
+        category: "Validation",
+      },
+    },
+    badInput: {
+      description:
+        "Matches when browser cannot convert input to expected type.",
+      table: {
+        type: { summary: "ValidityState property" },
+        category: "Validation",
+      },
+    },
+    customError: {
+      description:
+        "Matches when custom validation function returns true. Used for custom validation rules.",
+      table: {
+        type: { summary: "ValidityState property" },
+        category: "Validation",
+      },
     },
   },
 };
@@ -843,4 +1127,1128 @@ Playground.args = {
   variant: "default",
   size: "default",
   layout: "default",
+};
+
+// API Reference
+export const APIReference = () => (
+  <div className="max-w-4xl space-y-6">
+    <div>
+      <h2 className="text-2xl font-bold mb-4">Form API Reference</h2>
+      <p className="text-muted-foreground mb-6">
+        Complete API documentation for all Form components based on Radix UI
+        primitives with built-in browser validation.
+      </p>
+    </div>
+
+    {/* Root Component */}
+    <Card>
+      <CardHeader>
+        <h3 className="text-lg font-semibold">Form.Root</h3>
+        <p className="text-sm text-muted-foreground">
+          Contains all the parts of a form. Built on top of the native browser
+          constraint validation API.
+        </p>
+      </CardHeader>
+      <CardContent>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse border border-border">
+            <thead>
+              <tr className="border-b border-border bg-muted/50">
+                <th className="p-2 text-left">Prop</th>
+                <th className="p-2 text-left">Type</th>
+                <th className="p-2 text-left">Default</th>
+                <th className="p-2 text-left">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-border">
+                <td className="p-2 font-mono text-sm">asChild</td>
+                <td className="p-2 font-mono text-sm text-blue-600">boolean</td>
+                <td className="p-2 font-mono text-sm">false</td>
+                <td className="p-2 text-sm">
+                  Change the default rendered element for the one passed as a
+                  child.
+                </td>
+              </tr>
+              <tr className="border-b border-border">
+                <td className="p-2 font-mono text-sm">onSubmit</td>
+                <td className="p-2 font-mono text-sm text-blue-600">{`(event: FormEvent) => void`}</td>
+                <td className="p-2 font-mono text-sm">-</td>
+                <td className="p-2 text-sm">
+                  Event handler called when form is submitted. Only triggered if
+                  it passes client-side validation.
+                </td>
+              </tr>
+              <tr className="border-b border-border">
+                <td className="p-2 font-mono text-sm">onInvalidSubmit</td>
+                <td className="p-2 font-mono text-sm text-blue-600">{`(event: FormEvent) => void`}</td>
+                <td className="p-2 font-mono text-sm">-</td>
+                <td className="p-2 text-sm">
+                  Event handler called when form is submitted with invalid data.
+                </td>
+              </tr>
+              <tr className="border-b border-border">
+                <td className="p-2 font-mono text-sm">onClearServerErrors</td>
+                <td className="p-2 font-mono text-sm text-blue-600">{`() => void`}</td>
+                <td className="p-2 font-mono text-sm">-</td>
+                <td className="p-2 text-sm">
+                  Event handler to clear server errors. Called before
+                  re-submission and on form reset.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </CardContent>
+    </Card>
+
+    {/* Field Component */}
+    <Card>
+      <CardHeader>
+        <h3 className="text-lg font-semibold">Form.Field</h3>
+        <p className="text-sm text-muted-foreground">
+          The wrapper for a field. Handles id/name and label accessibility
+          automatically.
+        </p>
+      </CardHeader>
+      <CardContent>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse border border-border">
+            <thead>
+              <tr className="border-b border-border bg-muted/50">
+                <th className="p-2 text-left">Prop</th>
+                <th className="p-2 text-left">Type</th>
+                <th className="p-2 text-left">Default</th>
+                <th className="p-2 text-left">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-border">
+                <td className="p-2 font-mono text-sm">asChild</td>
+                <td className="p-2 font-mono text-sm text-blue-600">boolean</td>
+                <td className="p-2 font-mono text-sm">false</td>
+                <td className="p-2 text-sm">
+                  Change the default rendered element for the one passed as a
+                  child.
+                </td>
+              </tr>
+              <tr className="border-b border-border">
+                <td className="p-2 font-mono text-sm">name</td>
+                <td className="p-2 font-mono text-sm text-blue-600">string</td>
+                <td className="p-2 font-mono text-sm">-</td>
+                <td className="p-2 text-sm">
+                  The name of the field. Required for proper form functionality.
+                </td>
+              </tr>
+              <tr className="border-b border-border">
+                <td className="p-2 font-mono text-sm">serverInvalid</td>
+                <td className="p-2 font-mono text-sm text-blue-600">boolean</td>
+                <td className="p-2 font-mono text-sm">-</td>
+                <td className="p-2 text-sm">
+                  Whether the field is invalid according to server-side
+                  validation.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </CardContent>
+    </Card>
+
+    {/* Label Component */}
+    <Card>
+      <CardHeader>
+        <h3 className="text-lg font-semibold">Form.Label</h3>
+        <p className="text-sm text-muted-foreground">
+          A label element which is automatically wired when nested inside a
+          Field part.
+        </p>
+      </CardHeader>
+      <CardContent>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse border border-border">
+            <thead>
+              <tr className="border-b border-border bg-muted/50">
+                <th className="p-2 text-left">Prop</th>
+                <th className="p-2 text-left">Type</th>
+                <th className="p-2 text-left">Default</th>
+                <th className="p-2 text-left">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-border">
+                <td className="p-2 font-mono text-sm">asChild</td>
+                <td className="p-2 font-mono text-sm text-blue-600">boolean</td>
+                <td className="p-2 font-mono text-sm">false</td>
+                <td className="p-2 text-sm">
+                  Change the default rendered element for the one passed as a
+                  child.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </CardContent>
+    </Card>
+
+    {/* Control Component */}
+    <Card>
+      <CardHeader>
+        <h3 className="text-lg font-semibold">Form.Control</h3>
+        <p className="text-sm text-muted-foreground">
+          A control element (by default an input) which is automatically wired
+          when nested inside a Field part.
+        </p>
+      </CardHeader>
+      <CardContent>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse border border-border">
+            <thead>
+              <tr className="border-b border-border bg-muted/50">
+                <th className="p-2 text-left">Prop</th>
+                <th className="p-2 text-left">Type</th>
+                <th className="p-2 text-left">Default</th>
+                <th className="p-2 text-left">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-border">
+                <td className="p-2 font-mono text-sm">asChild</td>
+                <td className="p-2 font-mono text-sm text-blue-600">boolean</td>
+                <td className="p-2 font-mono text-sm">false</td>
+                <td className="p-2 text-sm">
+                  Change the default rendered element for the one passed as a
+                  child.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </CardContent>
+    </Card>
+
+    {/* Message Component */}
+    <Card>
+      <CardHeader>
+        <h3 className="text-lg font-semibold">Form.Message</h3>
+        <p className="text-sm text-muted-foreground">
+          A validation message automatically wired to a control. Shows based on
+          validation state matching.
+        </p>
+      </CardHeader>
+      <CardContent>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse border border-border">
+            <thead>
+              <tr className="border-b border-border bg-muted/50">
+                <th className="p-2 text-left">Prop</th>
+                <th className="p-2 text-left">Type</th>
+                <th className="p-2 text-left">Default</th>
+                <th className="p-2 text-left">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-border">
+                <td className="p-2 font-mono text-sm">asChild</td>
+                <td className="p-2 font-mono text-sm text-blue-600">boolean</td>
+                <td className="p-2 font-mono text-sm">false</td>
+                <td className="p-2 text-sm">
+                  Change the default rendered element for the one passed as a
+                  child.
+                </td>
+              </tr>
+              <tr className="border-b border-border">
+                <td className="p-2 font-mono text-sm">match</td>
+                <td className="p-2 font-mono text-sm text-blue-600">{`ValidityState | Function`}</td>
+                <td className="p-2 font-mono text-sm">-</td>
+                <td className="p-2 text-sm">
+                  Determines when message should show. Can match ValidityState
+                  properties or custom function.
+                </td>
+              </tr>
+              <tr className="border-b border-border">
+                <td className="p-2 font-mono text-sm">forceMatch</td>
+                <td className="p-2 font-mono text-sm text-blue-600">boolean</td>
+                <td className="p-2 font-mono text-sm">false</td>
+                <td className="p-2 text-sm">
+                  Forces message to show regardless of client-side validation.
+                  Useful for server errors.
+                </td>
+              </tr>
+              <tr className="border-b border-border">
+                <td className="p-2 font-mono text-sm">name</td>
+                <td className="p-2 font-mono text-sm text-blue-600">string</td>
+                <td className="p-2 font-mono text-sm">-</td>
+                <td className="p-2 text-sm">
+                  Field name when used outside a Field component.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </CardContent>
+    </Card>
+
+    {/* ValidityState Component */}
+    <Card>
+      <CardHeader>
+        <h3 className="text-lg font-semibold">Form.ValidityState</h3>
+        <p className="text-sm text-muted-foreground">
+          Render-prop component to access a field's validity state. Provides
+          access to native browser ValidityState.
+        </p>
+      </CardHeader>
+      <CardContent>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse border border-border">
+            <thead>
+              <tr className="border-b border-border bg-muted/50">
+                <th className="p-2 text-left">Prop</th>
+                <th className="p-2 text-left">Type</th>
+                <th className="p-2 text-left">Default</th>
+                <th className="p-2 text-left">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-border">
+                <td className="p-2 font-mono text-sm">children</td>
+                <td className="p-2 font-mono text-sm text-blue-600">{`(validity: ValidityState) => ReactNode`}</td>
+                <td className="p-2 font-mono text-sm">-</td>
+                <td className="p-2 text-sm">
+                  Render function that receives the current ValidityState of the
+                  field.
+                </td>
+              </tr>
+              <tr className="border-b border-border">
+                <td className="p-2 font-mono text-sm">name</td>
+                <td className="p-2 font-mono text-sm text-blue-600">string</td>
+                <td className="p-2 font-mono text-sm">-</td>
+                <td className="p-2 text-sm">
+                  Field name when used outside a Field component.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </CardContent>
+    </Card>
+
+    {/* Submit Component */}
+    <Card>
+      <CardHeader>
+        <h3 className="text-lg font-semibold">Form.Submit</h3>
+        <p className="text-sm text-muted-foreground">
+          The submit button. Automatically handles form submission and
+          validation.
+        </p>
+      </CardHeader>
+      <CardContent>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse border border-border">
+            <thead>
+              <tr className="border-b border-border bg-muted/50">
+                <th className="p-2 text-left">Prop</th>
+                <th className="p-2 text-left">Type</th>
+                <th className="p-2 text-left">Default</th>
+                <th className="p-2 text-left">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-border">
+                <td className="p-2 font-mono text-sm">asChild</td>
+                <td className="p-2 font-mono text-sm text-blue-600">boolean</td>
+                <td className="p-2 font-mono text-sm">false</td>
+                <td className="p-2 text-sm">
+                  Change the default rendered element for the one passed as a
+                  child.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </CardContent>
+    </Card>
+
+    <div className="mt-6 space-y-4">
+      <Card>
+        <CardHeader>
+          <h4 className="font-semibold">Validation State Properties</h4>
+          <p className="text-sm text-muted-foreground">
+            Built-in ValidityState properties that can be used in Form.Message
+            match prop:
+          </p>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div>
+              <ul className="space-y-2">
+                <li>
+                  <code className="bg-background px-1 rounded">
+                    valueMissing
+                  </code>{" "}
+                  - Required field is empty
+                </li>
+                <li>
+                  <code className="bg-background px-1 rounded">
+                    typeMismatch
+                  </code>{" "}
+                  - Input type doesn't match expected format
+                </li>
+                <li>
+                  <code className="bg-background px-1 rounded">
+                    patternMismatch
+                  </code>{" "}
+                  - Input doesn't match pattern attribute
+                </li>
+                <li>
+                  <code className="bg-background px-1 rounded">tooLong</code> -
+                  Input exceeds maxlength
+                </li>
+                <li>
+                  <code className="bg-background px-1 rounded">tooShort</code> -
+                  Input shorter than minlength
+                </li>
+              </ul>
+            </div>
+            <div>
+              <ul className="space-y-2">
+                <li>
+                  <code className="bg-background px-1 rounded">
+                    rangeUnderflow
+                  </code>{" "}
+                  - Numeric input less than min
+                </li>
+                <li>
+                  <code className="bg-background px-1 rounded">
+                    rangeOverflow
+                  </code>{" "}
+                  - Numeric input exceeds max
+                </li>
+                <li>
+                  <code className="bg-background px-1 rounded">
+                    stepMismatch
+                  </code>{" "}
+                  - Doesn't fit step constraints
+                </li>
+                <li>
+                  <code className="bg-background px-1 rounded">badInput</code> -
+                  Browser cannot convert input
+                </li>
+                <li>
+                  <code className="bg-background px-1 rounded">
+                    customError
+                  </code>{" "}
+                  - Custom validation failed
+                </li>
+              </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <h4 className="font-semibold">Data Attributes</h4>
+          <p className="text-sm text-muted-foreground">
+            Automatically applied data attributes for styling:
+          </p>
+        </CardHeader>
+        <CardContent>
+          <ul className="text-sm space-y-1">
+            <li>
+              <code className="bg-background px-1 rounded">data-valid</code> -
+              Present when field is valid
+            </li>
+            <li>
+              <code className="bg-background px-1 rounded">data-invalid</code> -
+              Present when field is invalid
+            </li>
+          </ul>
+        </CardContent>
+      </Card>
+    </div>
+  </div>
+);
+
+// Advanced Interactive Example
+export const AdvancedInteractiveExample = () => {
+  const [formData, setFormData] = useState({
+    // Personal Information
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    dateOfBirth: "",
+
+    // Address
+    address: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    country: "",
+
+    // Account Settings
+    username: "",
+    password: "",
+    confirmPassword: "",
+
+    // Preferences
+    newsletter: true,
+    notifications: false,
+    theme: "system",
+    language: "en",
+
+    // Professional
+    company: "",
+    position: "",
+    website: "",
+    bio: "",
+
+    // Advanced
+    customValidation: "",
+  });
+
+  const [serverErrors, setServerErrors] = useState({
+    email: false,
+    username: false,
+  });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitMessage("");
+
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    // Simulate server validation errors (randomly)
+    if (Math.random() > 0.7) {
+      setServerErrors({
+        email: formData.email === "test@example.com",
+        username: formData.username === "admin",
+      });
+      setSubmitMessage("Server validation errors occurred.");
+    } else {
+      setServerErrors({ email: false, username: false });
+      setSubmitMessage("Form submitted successfully!");
+    }
+
+    setIsSubmitting(false);
+  };
+
+  const clearServerErrors = () => {
+    setServerErrors({ email: false, username: false });
+  };
+
+  // Custom validation function
+  const validateCustomField = (value: string) => {
+    return value.length >= 5 && /[A-Z]/.test(value) && /[0-9]/.test(value);
+  };
+
+  return (
+    <div className="space-y-8 max-w-4xl">
+      <div>
+        <h2 className="text-2xl font-bold mb-4">
+          Advanced Interactive Form Example
+        </h2>
+        <p className="text-muted-foreground mb-6">
+          A comprehensive form demonstrating all Form features including
+          built-in validation, custom validation, server-side validation, and
+          complex form interactions.
+        </p>
+      </div>
+
+      <Form onSubmit={handleSubmit} onClearServerErrors={clearServerErrors}>
+        <div className="space-y-8">
+          {/* Personal Information Section */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <User className="h-5 w-5" />
+                Personal Information
+              </CardTitle>
+              <CardDescription>
+                Basic information about yourself
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <FormFieldStyled name="firstName">
+                  <FormLabelStyled>First Name *</FormLabelStyled>
+                  <FormControl>
+                    <Input
+                      value={formData.firstName}
+                      onChange={(e) =>
+                        setFormData({ ...formData, firstName: e.target.value })
+                      }
+                      required
+                      minLength={2}
+                    />
+                  </FormControl>
+                  <FormMessageStyled match="valueMissing">
+                    Please enter your first name
+                  </FormMessageStyled>
+                  <FormMessageStyled match="tooShort">
+                    First name must be at least 2 characters
+                  </FormMessageStyled>
+                </FormFieldStyled>
+
+                <FormFieldStyled name="lastName">
+                  <FormLabelStyled>Last Name *</FormLabelStyled>
+                  <FormControl>
+                    <Input
+                      value={formData.lastName}
+                      onChange={(e) =>
+                        setFormData({ ...formData, lastName: e.target.value })
+                      }
+                      required
+                      minLength={2}
+                    />
+                  </FormControl>
+                  <FormMessageStyled match="valueMissing">
+                    Please enter your last name
+                  </FormMessageStyled>
+                  <FormMessageStyled match="tooShort">
+                    Last name must be at least 2 characters
+                  </FormMessageStyled>
+                </FormFieldStyled>
+              </div>
+
+              <FormFieldStyled name="email" serverInvalid={serverErrors.email}>
+                <FormLabelStyled>Email Address *</FormLabelStyled>
+                <FormControl>
+                  <Input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => {
+                      setFormData({ ...formData, email: e.target.value });
+                      setServerErrors((prev) => ({ ...prev, email: false }));
+                    }}
+                    required
+                  />
+                </FormControl>
+                <FormMessageStyled match="valueMissing">
+                  Please enter your email address
+                </FormMessageStyled>
+                <FormMessageStyled match="typeMismatch">
+                  Please enter a valid email address
+                </FormMessageStyled>
+                <FormMessageStyled forceMatch={serverErrors.email}>
+                  This email is already registered. Please use a different
+                  email.
+                </FormMessageStyled>
+              </FormFieldStyled>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <FormFieldStyled name="phone">
+                  <FormLabelStyled>Phone Number</FormLabelStyled>
+                  <FormControl>
+                    <Input
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e) =>
+                        setFormData({ ...formData, phone: e.target.value })
+                      }
+                      pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                      placeholder="123-456-7890"
+                    />
+                  </FormControl>
+                  <FormMessageStyled match="patternMismatch">
+                    Please enter phone in format: 123-456-7890
+                  </FormMessageStyled>
+                </FormFieldStyled>
+
+                <FormFieldStyled name="dateOfBirth">
+                  <FormLabelStyled>Date of Birth</FormLabelStyled>
+                  <FormControl>
+                    <Input
+                      type="date"
+                      value={formData.dateOfBirth}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          dateOfBirth: e.target.value,
+                        })
+                      }
+                    />
+                  </FormControl>
+                </FormFieldStyled>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Address Section */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <MapPin className="h-5 w-5" />
+                Address Information
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <FormFieldStyled name="address">
+                <FormLabelStyled>Street Address</FormLabelStyled>
+                <FormControl>
+                  <Input
+                    value={formData.address}
+                    onChange={(e) =>
+                      setFormData({ ...formData, address: e.target.value })
+                    }
+                    placeholder="123 Main Street"
+                  />
+                </FormControl>
+              </FormFieldStyled>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <FormFieldStyled name="city">
+                  <FormLabelStyled>City</FormLabelStyled>
+                  <FormControl>
+                    <Input
+                      value={formData.city}
+                      onChange={(e) =>
+                        setFormData({ ...formData, city: e.target.value })
+                      }
+                    />
+                  </FormControl>
+                </FormFieldStyled>
+
+                <FormFieldStyled name="state">
+                  <FormLabelStyled>State</FormLabelStyled>
+                  <FormControl asChild>
+                    <Select
+                      value={formData.state}
+                      onValueChange={(value) =>
+                        setFormData({ ...formData, state: value })
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select state" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="ca">California</SelectItem>
+                        <SelectItem value="ny">New York</SelectItem>
+                        <SelectItem value="tx">Texas</SelectItem>
+                        <SelectItem value="fl">Florida</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                </FormFieldStyled>
+
+                <FormFieldStyled name="zipCode">
+                  <FormLabelStyled>ZIP Code</FormLabelStyled>
+                  <FormControl>
+                    <Input
+                      value={formData.zipCode}
+                      onChange={(e) =>
+                        setFormData({ ...formData, zipCode: e.target.value })
+                      }
+                      pattern="[0-9]{5}(-[0-9]{4})?"
+                      placeholder="12345"
+                    />
+                  </FormControl>
+                  <FormMessageStyled match="patternMismatch">
+                    Please enter a valid ZIP code (12345 or 12345-6789)
+                  </FormMessageStyled>
+                </FormFieldStyled>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Account Settings */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Shield className="h-5 w-5" />
+                Account Settings
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <FormFieldStyled
+                name="username"
+                serverInvalid={serverErrors.username}
+              >
+                <FormLabelStyled>Username *</FormLabelStyled>
+                <FormControl>
+                  <Input
+                    value={formData.username}
+                    onChange={(e) => {
+                      setFormData({ ...formData, username: e.target.value });
+                      setServerErrors((prev) => ({ ...prev, username: false }));
+                    }}
+                    required
+                    minLength={3}
+                    maxLength={20}
+                    pattern="[a-zA-Z0-9_]+"
+                  />
+                </FormControl>
+                <FormDescription>
+                  3-20 characters, letters, numbers, and underscores only
+                </FormDescription>
+                <FormMessageStyled match="valueMissing">
+                  Please enter a username
+                </FormMessageStyled>
+                <FormMessageStyled match="tooShort">
+                  Username must be at least 3 characters
+                </FormMessageStyled>
+                <FormMessageStyled match="tooLong">
+                  Username cannot exceed 20 characters
+                </FormMessageStyled>
+                <FormMessageStyled match="patternMismatch">
+                  Username can only contain letters, numbers, and underscores
+                </FormMessageStyled>
+                <FormMessageStyled forceMatch={serverErrors.username}>
+                  This username is already taken. Please choose a different one.
+                </FormMessageStyled>
+              </FormFieldStyled>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <FormFieldStyled name="password">
+                  <FormLabelStyled>Password *</FormLabelStyled>
+                  <div className="relative">
+                    <FormControl>
+                      <Input
+                        type={showPassword ? "text" : "password"}
+                        value={formData.password}
+                        onChange={(e) =>
+                          setFormData({ ...formData, password: e.target.value })
+                        }
+                        required
+                        minLength={8}
+                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                      />
+                    </FormControl>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? (
+                        <EyeOff className="h-4 w-4" />
+                      ) : (
+                        <Eye className="h-4 w-4" />
+                      )}
+                    </Button>
+                  </div>
+                  <FormDescription>
+                    At least 8 characters with uppercase, lowercase, number, and
+                    special character
+                  </FormDescription>
+                  <FormMessageStyled match="valueMissing">
+                    Please enter a password
+                  </FormMessageStyled>
+                  <FormMessageStyled match="tooShort">
+                    Password must be at least 8 characters
+                  </FormMessageStyled>
+                  <FormMessageStyled match="patternMismatch">
+                    Password must contain uppercase, lowercase, number, and
+                    special character
+                  </FormMessageStyled>
+                </FormFieldStyled>
+
+                <FormFieldStyled name="confirmPassword">
+                  <FormLabelStyled>Confirm Password *</FormLabelStyled>
+                  <div className="relative">
+                    <FormControl>
+                      <Input
+                        type={showConfirmPassword ? "text" : "password"}
+                        value={formData.confirmPassword}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            confirmPassword: e.target.value,
+                          })
+                        }
+                        required
+                      />
+                    </FormControl>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7"
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
+                    >
+                      {showConfirmPassword ? (
+                        <EyeOff className="h-4 w-4" />
+                      ) : (
+                        <Eye className="h-4 w-4" />
+                      )}
+                    </Button>
+                  </div>
+                  <FormMessageStyled match="valueMissing">
+                    Please confirm your password
+                  </FormMessageStyled>
+                  <FormMessageStyled
+                    match={(value) => value !== formData.password}
+                  >
+                    Passwords do not match
+                  </FormMessageStyled>
+                </FormFieldStyled>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Preferences */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Info className="h-5 w-5" />
+                Preferences
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <FormFieldStyled name="newsletter" layout="horizontal">
+                <div className="flex-1">
+                  <FormLabelStyled>Newsletter Subscription</FormLabelStyled>
+                  <FormDescription>
+                    Receive our weekly newsletter with updates and tips
+                  </FormDescription>
+                </div>
+                <Switch
+                  checked={formData.newsletter}
+                  onCheckedChange={(checked) =>
+                    setFormData({ ...formData, newsletter: checked })
+                  }
+                />
+              </FormFieldStyled>
+
+              <FormFieldStyled name="notifications" layout="horizontal">
+                <div className="flex-1">
+                  <FormLabelStyled>Push Notifications</FormLabelStyled>
+                  <FormDescription>
+                    Get notified about important account activities
+                  </FormDescription>
+                </div>
+                <Switch
+                  checked={formData.notifications}
+                  onCheckedChange={(checked) =>
+                    setFormData({ ...formData, notifications: checked })
+                  }
+                />
+              </FormFieldStyled>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <FormFieldStyled name="theme">
+                  <FormLabelStyled>Theme Preference</FormLabelStyled>
+                  <RadioGroup
+                    value={formData.theme}
+                    onValueChange={(value) =>
+                      setFormData({ ...formData, theme: value })
+                    }
+                    className="mt-2"
+                  >
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="light" id="light" />
+                      <Label htmlFor="light">Light</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="dark" id="dark" />
+                      <Label htmlFor="dark">Dark</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="system" id="system" />
+                      <Label htmlFor="system">System</Label>
+                    </div>
+                  </RadioGroup>
+                </FormFieldStyled>
+
+                <FormFieldStyled name="language">
+                  <FormLabelStyled>Language</FormLabelStyled>
+                  <FormControl asChild>
+                    <Select
+                      value={formData.language}
+                      onValueChange={(value) =>
+                        setFormData({ ...formData, language: value })
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="en">English</SelectItem>
+                        <SelectItem value="es">Español</SelectItem>
+                        <SelectItem value="fr">Français</SelectItem>
+                        <SelectItem value="de">Deutsch</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                </FormFieldStyled>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Custom Validation Example */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <FileText className="h-5 w-5" />
+                Custom Validation Example
+              </CardTitle>
+              <CardDescription>
+                Demonstration of custom validation functions
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <FormFieldStyled name="customValidation">
+                <FormLabelStyled>Custom Field</FormLabelStyled>
+                <FormControl>
+                  <Input
+                    value={formData.customValidation}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        customValidation: e.target.value,
+                      })
+                    }
+                    placeholder="Enter text with uppercase and number"
+                  />
+                </FormControl>
+                <FormDescription>
+                  Must be at least 5 characters with at least one uppercase
+                  letter and one number
+                </FormDescription>
+                <FormMessageStyled
+                  match={(value) =>
+                    !validateCustomField(value) && value.length > 0
+                  }
+                >
+                  Field must be at least 5 characters with uppercase letter and
+                  number
+                </FormMessageStyled>
+                {/* Show validation state */}
+                {formData.customValidation && (
+                  <div className="flex items-center gap-2 text-sm mt-1">
+                    {validateCustomField(formData.customValidation) ? (
+                      <Badge
+                        variant="outline"
+                        className="text-green-600 border-green-600"
+                      >
+                        <Check className="h-3 w-3 mr-1" />
+                        Valid
+                      </Badge>
+                    ) : (
+                      <Badge
+                        variant="outline"
+                        className="text-red-600 border-red-600"
+                      >
+                        <X className="h-3 w-3 mr-1" />
+                        Invalid
+                      </Badge>
+                    )}
+                  </div>
+                )}
+              </FormFieldStyled>
+            </CardContent>
+          </Card>
+
+          {/* Submit Section */}
+          <div className="flex flex-col sm:flex-row gap-4 items-center">
+            <FormSubmitStyled
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full sm:w-auto"
+            >
+              {isSubmitting ? (
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
+                  Submitting...
+                </>
+              ) : (
+                <>
+                  <Send className="h-4 w-4 mr-2" />
+                  Create Account
+                </>
+              )}
+            </FormSubmitStyled>
+
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full sm:w-auto"
+            >
+              <Save className="h-4 w-4 mr-2" />
+              Save Draft
+            </Button>
+          </div>
+
+          {/* Status Message */}
+          {submitMessage && (
+            <Card
+              className={
+                submitMessage.includes("success")
+                  ? "border-green-200 bg-green-50"
+                  : "border-red-200 bg-red-50"
+              }
+            >
+              <CardContent className="pt-4">
+                <div className="flex items-center gap-2">
+                  {submitMessage.includes("success") ? (
+                    <Check className="h-5 w-5 text-green-600" />
+                  ) : (
+                    <AlertCircle className="h-5 w-5 text-red-600" />
+                  )}
+                  <span
+                    className={
+                      submitMessage.includes("success")
+                        ? "text-green-800"
+                        : "text-red-800"
+                    }
+                  >
+                    {submitMessage}
+                  </span>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      </Form>
+
+      {/* Form State Display */}
+      <Card>
+        <CardHeader>
+          <h3 className="font-semibold">Current Form State</h3>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+            <div>
+              <h4 className="font-medium mb-2">Personal Info</h4>
+              <ul className="space-y-1">
+                <li>
+                  Name: {formData.firstName} {formData.lastName}
+                </li>
+                <li>Email: {formData.email || "Not provided"}</li>
+                <li>Phone: {formData.phone || "Not provided"}</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-medium mb-2">Account</h4>
+              <ul className="space-y-1">
+                <li>Username: {formData.username || "Not set"}</li>
+                <li>Password: {formData.password ? "••••••••" : "Not set"}</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-medium mb-2">Preferences</h4>
+              <ul className="space-y-1">
+                <li>
+                  Newsletter: {formData.newsletter ? "Enabled" : "Disabled"}
+                </li>
+                <li>Theme: {formData.theme}</li>
+                <li>Language: {formData.language}</li>
+              </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
 };

@@ -1,4 +1,6 @@
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Input } from '../input/input';
 import { Label } from '../label/label';
 import { Textarea } from '../textarea/textarea';
@@ -22,15 +24,115 @@ export default {
     docs: {
       description: {
         component:
-          "A modal overlay that appears on top of the main content to display important information or collect user input.",
+          "A window overlaid on either the primary window or another dialog window, rendering the content underneath inert. Built with Radix UI primitives for accessibility and keyboard navigation.",
       },
     },
   },
   tags: ["autodocs"],
   argTypes: {
+    open: {
+      control: "boolean",
+      description:
+        "The controlled open state of the dialog. Must be used in conjunction with onOpenChange.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    defaultOpen: {
+      control: "boolean",
+      description:
+        "The open state of the dialog when it is initially rendered. Use when you do not need to control its open state.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    onOpenChange: {
+      action: "onOpenChange",
+      description:
+        "Event handler called when the open state of the dialog changes.",
+      table: {
+        type: { summary: "(open: boolean) => void" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    modal: {
+      control: "boolean",
+      description:
+        "The modality of the dialog. When set to true, interaction with outside elements will be disabled and only dialog content will be visible to screen readers.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "true" },
+      },
+    },
+    // Content props
     size: {
       control: "select",
       options: ["sm", "default", "lg", "xl", "full"],
+      description: "The size variant of the dialog content.",
+      table: {
+        type: { summary: "enum" },
+        defaultValue: { summary: "default" },
+      },
+    },
+    // Overlay props
+    forceMount: {
+      control: "boolean",
+      description:
+        "Used to force mounting when more control is needed. Useful when controlling animation with React animation libraries.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    // Portal props
+    container: {
+      description: "Specify a container element to portal the content into.",
+      table: {
+        type: { summary: "HTMLElement" },
+        defaultValue: { summary: "document.body" },
+      },
+    },
+    // Trigger props
+    asChild: {
+      control: "boolean",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    // Content interaction props
+    onPointerDownOutside: {
+      action: "onPointerDownOutside",
+      description:
+        "Event handler called when a pointer event occurs outside the bounds of the component.",
+      table: {
+        type: { summary: "(event: PointerDownOutsideEvent) => void" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    onEscapeKeyDown: {
+      action: "onEscapeKeyDown",
+      description: "Event handler called when the escape key is down.",
+      table: {
+        type: { summary: "(event: KeyboardEvent) => void" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    onInteractOutside: {
+      action: "onInteractOutside",
+      description:
+        "Event handler called when an interaction happens outside the component.",
+      table: {
+        type: {
+          summary:
+            "(event: FocusOutsideEvent | PointerDownOutsideEvent) => void",
+        },
+        defaultValue: { summary: "undefined" },
+      },
     },
   },
 };
@@ -706,4 +808,779 @@ export const Playground = (args: {
 
 Playground.args = {
   size: "default",
+};
+
+// API Reference
+export const APIReference = () => (
+  <div className="space-y-6 max-w-4xl">
+    <div>
+      <h3 className="text-lg font-semibold mb-3">Dialog API Reference</h3>
+      <p className="text-sm text-muted-foreground mb-4">
+        Complete API reference for the Dialog component. Based on Radix UI
+        primitives.
+      </p>
+    </div>
+
+    <div className="space-y-4">
+      <div>
+        <h4 className="font-medium mb-2">Dialog.Root</h4>
+        <div className="text-sm text-muted-foreground mb-2">
+          Contains all the parts of a dialog.
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse border border-border">
+            <thead>
+              <tr className="border-b border-border bg-muted/50">
+                <th className="border border-border px-3 py-2 text-left">
+                  Prop
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Type
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Default
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Description
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  open
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  boolean
+                </td>
+                <td className="border border-border px-3 py-2">-</td>
+                <td className="border border-border px-3 py-2">
+                  The controlled open state of the dialog. Must be used in
+                  conjunction with onOpenChange.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  defaultOpen
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  boolean
+                </td>
+                <td className="border border-border px-3 py-2">false</td>
+                <td className="border border-border px-3 py-2">
+                  The open state when initially rendered. Use when you do not
+                  need to control its open state.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  onOpenChange
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">{`(open: boolean) => void`}</td>
+                <td className="border border-border px-3 py-2">-</td>
+                <td className="border border-border px-3 py-2">
+                  Event handler called when the open state changes.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  modal
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  boolean
+                </td>
+                <td className="border border-border px-3 py-2">true</td>
+                <td className="border border-border px-3 py-2">
+                  The modality of the dialog. When true, interaction with
+                  outside elements is disabled.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <h4 className="font-medium mb-2">Dialog.Content</h4>
+        <div className="text-sm text-muted-foreground mb-2">
+          Contains content to be rendered in the open dialog.
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse border border-border">
+            <thead>
+              <tr className="border-b border-border bg-muted/50">
+                <th className="border border-border px-3 py-2 text-left">
+                  Prop
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Type
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Default
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Description
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  forceMount
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  boolean
+                </td>
+                <td className="border border-border px-3 py-2">false</td>
+                <td className="border border-border px-3 py-2">
+                  Used to force mounting when more control is needed. Useful for
+                  animation libraries.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  onPointerDownOutside
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">{`(event: PointerDownOutsideEvent) => void`}</td>
+                <td className="border border-border px-3 py-2">-</td>
+                <td className="border border-border px-3 py-2">
+                  Event handler called when a pointer event occurs outside the
+                  component bounds.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  onEscapeKeyDown
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">{`(event: KeyboardEvent) => void`}</td>
+                <td className="border border-border px-3 py-2">-</td>
+                <td className="border border-border px-3 py-2">
+                  Event handler called when the escape key is down.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  onInteractOutside
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">{`(event: FocusOutsideEvent | PointerDownOutsideEvent) => void`}</td>
+                <td className="border border-border px-3 py-2">-</td>
+                <td className="border border-border px-3 py-2">
+                  Event handler called when an interaction happens outside the
+                  component.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <h4 className="font-medium mb-2">Dialog.Trigger</h4>
+        <div className="text-sm text-muted-foreground mb-2">
+          The button that opens the dialog.
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse border border-border">
+            <thead>
+              <tr className="border-b border-border bg-muted/50">
+                <th className="border border-border px-3 py-2 text-left">
+                  Prop
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Type
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Default
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Description
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  asChild
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  boolean
+                </td>
+                <td className="border border-border px-3 py-2">false</td>
+                <td className="border border-border px-3 py-2">
+                  Change the default rendered element for the one passed as a
+                  child.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <h4 className="font-medium mb-2">Data Attributes</h4>
+        <div className="text-sm text-muted-foreground mb-2">
+          Data attributes are automatically applied and can be used for styling.
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse border border-border">
+            <thead>
+              <tr className="border-b border-border bg-muted/50">
+                <th className="border border-border px-3 py-2 text-left">
+                  Attribute
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Values
+                </th>
+                <th className="border border-border px-3 py-2 text-left">
+                  Description
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border border-border px-3 py-2 font-mono">
+                  [data-state]
+                </td>
+                <td className="border border-border px-3 py-2 font-mono">
+                  "open" | "closed"
+                </td>
+                <td className="border border-border px-3 py-2">
+                  Present on Trigger, Overlay, and Content. The open state of
+                  the dialog.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// Advanced Example
+export const AdvancedExample = () => {
+  const [dialogStates, setDialogStates] = useState({
+    profile: false,
+    settings: false,
+    confirm: false,
+    wizard: false,
+  });
+
+  const [formData, setFormData] = useState({
+    name: "John Doe",
+    email: "john@example.com",
+    bio: "",
+    notifications: true,
+    theme: "light",
+    language: "en",
+  });
+
+  const [wizardStep, setWizardStep] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const openDialog = (dialog: keyof typeof dialogStates) => {
+    setDialogStates((prev) => ({ ...prev, [dialog]: true }));
+  };
+
+  const closeDialog = (dialog: keyof typeof dialogStates) => {
+    setDialogStates((prev) => ({ ...prev, [dialog]: false }));
+    if (dialog === "wizard") {
+      setWizardStep(1);
+    }
+  };
+
+  const handleSave = async (dialog: keyof typeof dialogStates) => {
+    setIsLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    setIsLoading(false);
+    closeDialog(dialog);
+  };
+
+  const updateFormData = (key: string, value: string | boolean) => {
+    setFormData((prev) => ({ ...prev, [key]: value }));
+  };
+
+  return (
+    <div className="space-y-6 w-full max-w-4xl">
+      <div className="flex items-center justify-between">
+        <h3 className="text-lg font-semibold">
+          Advanced Dialog Management System
+        </h3>
+        <Badge
+          variant={
+            Object.values(dialogStates).some(Boolean) ? "default" : "secondary"
+          }
+        >
+          {Object.values(dialogStates).filter(Boolean).length} dialogs open
+        </Badge>
+      </div>
+
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <Button onClick={() => openDialog("profile")} variant="outline">
+          Edit Profile
+        </Button>
+        <Button onClick={() => openDialog("settings")} variant="outline">
+          Settings
+        </Button>
+        <Button onClick={() => openDialog("confirm")} variant="destructive">
+          Delete Account
+        </Button>
+        <Button onClick={() => openDialog("wizard")} variant="outline">
+          Setup Wizard
+        </Button>
+      </div>
+
+      {/* Profile Dialog */}
+      <Dialog
+        open={dialogStates.profile}
+        onOpenChange={(open) => !open && closeDialog("profile")}
+      >
+        <DialogContent size="lg">
+          <DialogHeader>
+            <DialogTitle>Edit Profile</DialogTitle>
+            <DialogDescription>
+              Update your personal information and preferences.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-6">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="profile-name">Full Name</Label>
+                <Input
+                  id="profile-name"
+                  value={formData.name}
+                  onChange={(e) => updateFormData("name", e.target.value)}
+                />
+              </div>
+              <div>
+                <Label htmlFor="profile-email">Email</Label>
+                <Input
+                  id="profile-email"
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => updateFormData("email", e.target.value)}
+                />
+              </div>
+            </div>
+            <div>
+              <Label htmlFor="profile-bio">Bio</Label>
+              <Textarea
+                id="profile-bio"
+                placeholder="Tell us about yourself..."
+                value={formData.bio}
+                onChange={(e) => updateFormData("bio", e.target.value)}
+                rows={4}
+              />
+            </div>
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id="profile-notifications"
+                checked={formData.notifications}
+                onChange={(e) =>
+                  updateFormData("notifications", e.target.checked)
+                }
+                className="rounded"
+              />
+              <Label htmlFor="profile-notifications">
+                Send me email notifications
+              </Label>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => closeDialog("profile")}
+              disabled={isLoading}
+            >
+              Cancel
+            </Button>
+            <Button onClick={() => handleSave("profile")} disabled={isLoading}>
+              {isLoading ? "Saving..." : "Save Changes"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Settings Dialog */}
+      <Dialog
+        open={dialogStates.settings}
+        onOpenChange={(open) => !open && closeDialog("settings")}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Application Settings</DialogTitle>
+            <DialogDescription>
+              Configure your application preferences.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-6">
+            <div>
+              <Label htmlFor="settings-theme">Theme</Label>
+              <select
+                id="settings-theme"
+                value={formData.theme}
+                onChange={(e) => updateFormData("theme", e.target.value)}
+                className="w-full mt-1 px-3 py-2 border border-input bg-background rounded-md"
+              >
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+                <option value="system">System</option>
+              </select>
+            </div>
+            <div>
+              <Label htmlFor="settings-language">Language</Label>
+              <select
+                id="settings-language"
+                value={formData.language}
+                onChange={(e) => updateFormData("language", e.target.value)}
+                className="w-full mt-1 px-3 py-2 border border-input bg-background rounded-md"
+              >
+                <option value="en">English</option>
+                <option value="es">Spanish</option>
+                <option value="fr">French</option>
+                <option value="de">German</option>
+              </select>
+            </div>
+
+            {/* Nested Dialog Example */}
+            <div>
+              <Label>Advanced Options</Label>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" className="w-full mt-2">
+                    Configure Advanced Settings
+                  </Button>
+                </DialogTrigger>
+                <DialogContent size="sm">
+                  <DialogHeader>
+                    <DialogTitle>Advanced Settings</DialogTitle>
+                    <DialogDescription>
+                      Configure advanced application behavior.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-4">
+                    <div className="flex items-center space-x-2">
+                      <input type="checkbox" id="debug" className="rounded" />
+                      <Label htmlFor="debug">Enable debug mode</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        id="analytics"
+                        className="rounded"
+                      />
+                      <Label htmlFor="analytics">
+                        Share anonymous analytics
+                      </Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <input type="checkbox" id="beta" className="rounded" />
+                      <Label htmlFor="beta">Participate in beta features</Label>
+                    </div>
+                  </div>
+                  <DialogFooter>
+                    <DialogClose asChild>
+                      <Button size="sm">Save Advanced Settings</Button>
+                    </DialogClose>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => closeDialog("settings")}
+              disabled={isLoading}
+            >
+              Cancel
+            </Button>
+            <Button onClick={() => handleSave("settings")} disabled={isLoading}>
+              {isLoading ? "Saving..." : "Save Settings"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Confirmation Dialog */}
+      <Dialog
+        open={dialogStates.confirm}
+        onOpenChange={(open) => !open && closeDialog("confirm")}
+      >
+        <DialogContent size="sm">
+          <DialogHeader>
+            <DialogTitle>Delete Account</DialogTitle>
+            <DialogDescription>
+              Are you absolutely sure? This action cannot be undone and will
+              permanently delete your account and all associated data.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="py-4">
+            <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
+              <h4 className="font-medium text-destructive mb-2">
+                This will delete:
+              </h4>
+              <ul className="text-sm text-destructive space-y-1">
+                <li>• Your profile and personal information</li>
+                <li>• All your projects and files</li>
+                <li>• Your subscription and billing history</li>
+                <li>• All shared content and collaborations</li>
+              </ul>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => closeDialog("confirm")}
+              disabled={isLoading}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={() => handleSave("confirm")}
+              disabled={isLoading}
+            >
+              {isLoading ? "Deleting..." : "Delete Account"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Multi-step Wizard Dialog */}
+      <Dialog
+        open={dialogStates.wizard}
+        onOpenChange={(open) => !open && closeDialog("wizard")}
+      >
+        <DialogContent size="xl">
+          <DialogHeader>
+            <DialogTitle>
+              Account Setup Wizard - Step {wizardStep} of 3
+            </DialogTitle>
+            <DialogDescription>
+              Complete your account setup with this guided wizard.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="py-6">
+            {/* Progress Bar */}
+            <div className="flex items-center mb-8">
+              {Array.from({ length: 3 }, (_, i) => (
+                <div key={i} className="flex items-center flex-1">
+                  <div
+                    className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium border-2 ${
+                      i + 1 <= wizardStep
+                        ? "bg-primary border-primary text-primary-foreground"
+                        : "bg-background border-muted-foreground/30 text-muted-foreground"
+                    }`}
+                  >
+                    {i + 1}
+                  </div>
+                  {i < 2 && (
+                    <div
+                      className={`flex-1 h-1 mx-4 ${
+                        i + 1 < wizardStep ? "bg-primary" : "bg-muted"
+                      }`}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Step Content */}
+            <div className="min-h-[300px]">
+              {wizardStep === 1 && (
+                <div className="space-y-6">
+                  <div className="text-center">
+                    <h3 className="text-lg font-medium mb-2">Welcome!</h3>
+                    <p className="text-muted-foreground">
+                      Let's start by setting up your basic information.
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 max-w-lg mx-auto">
+                    <div>
+                      <Label htmlFor="wizard-first">First Name</Label>
+                      <Input id="wizard-first" placeholder="John" />
+                    </div>
+                    <div>
+                      <Label htmlFor="wizard-last">Last Name</Label>
+                      <Input id="wizard-last" placeholder="Doe" />
+                    </div>
+                    <div className="col-span-2">
+                      <Label htmlFor="wizard-email">Email Address</Label>
+                      <Input
+                        id="wizard-email"
+                        type="email"
+                        placeholder="john@example.com"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {wizardStep === 2 && (
+                <div className="space-y-6">
+                  <div className="text-center">
+                    <h3 className="text-lg font-medium mb-2">
+                      Company Information
+                    </h3>
+                    <p className="text-muted-foreground">
+                      Tell us about your organization.
+                    </p>
+                  </div>
+                  <div className="space-y-4 max-w-lg mx-auto">
+                    <div>
+                      <Label htmlFor="wizard-company">Company Name</Label>
+                      <Input
+                        id="wizard-company"
+                        placeholder="Acme Corporation"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="wizard-role">Your Role</Label>
+                      <select
+                        id="wizard-role"
+                        className="w-full px-3 py-2 border border-input bg-background rounded-md"
+                      >
+                        <option value="">Select your role</option>
+                        <option value="developer">Developer</option>
+                        <option value="designer">Designer</option>
+                        <option value="manager">Manager</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+                    <div>
+                      <Label htmlFor="wizard-size">Company Size</Label>
+                      <select
+                        id="wizard-size"
+                        className="w-full px-3 py-2 border border-input bg-background rounded-md"
+                      >
+                        <option value="">Select size</option>
+                        <option value="1-10">1-10 employees</option>
+                        <option value="11-50">11-50 employees</option>
+                        <option value="51-200">51-200 employees</option>
+                        <option value="200+">200+ employees</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {wizardStep === 3 && (
+                <div className="space-y-6">
+                  <div className="text-center">
+                    <h3 className="text-lg font-medium mb-2">Final Setup</h3>
+                    <p className="text-muted-foreground">
+                      Configure your preferences to complete the setup.
+                    </p>
+                  </div>
+                  <div className="space-y-4 max-w-lg mx-auto">
+                    <div>
+                      <Label className="text-base font-medium">
+                        Notification Preferences
+                      </Label>
+                      <div className="space-y-3 mt-3">
+                        <label className="flex items-center space-x-2">
+                          <input type="checkbox" className="rounded" />
+                          <span className="text-sm">Product updates</span>
+                        </label>
+                        <label className="flex items-center space-x-2">
+                          <input type="checkbox" className="rounded" />
+                          <span className="text-sm">
+                            Marketing communications
+                          </span>
+                        </label>
+                        <label className="flex items-center space-x-2">
+                          <input type="checkbox" className="rounded" />
+                          <span className="text-sm">Security alerts</span>
+                        </label>
+                      </div>
+                    </div>
+                    <div>
+                      <Label htmlFor="wizard-timezone">Timezone</Label>
+                      <select
+                        id="wizard-timezone"
+                        className="w-full px-3 py-2 border border-input bg-background rounded-md"
+                      >
+                        <option value="">Select timezone</option>
+                        <option value="UTC">UTC</option>
+                        <option value="EST">Eastern Time</option>
+                        <option value="PST">Pacific Time</option>
+                        <option value="GMT">GMT</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <DialogFooter>
+            {wizardStep > 1 && (
+              <Button
+                variant="outline"
+                onClick={() => setWizardStep((prev) => prev - 1)}
+                disabled={isLoading}
+              >
+                Previous
+              </Button>
+            )}
+            {wizardStep < 3 ? (
+              <Button onClick={() => setWizardStep((prev) => prev + 1)}>
+                Next
+              </Button>
+            ) : (
+              <Button onClick={() => handleSave("wizard")} disabled={isLoading}>
+                {isLoading ? "Completing..." : "Complete Setup"}
+              </Button>
+            )}
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Status Display */}
+      <Card>
+        <CardHeader>
+          <h4 className="font-medium">Dialog States</h4>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-2 text-sm">
+            <div className="flex justify-between">
+              <span>Profile Dialog:</span>
+              <Badge variant={dialogStates.profile ? "default" : "secondary"}>
+                {dialogStates.profile ? "Open" : "Closed"}
+              </Badge>
+            </div>
+            <div className="flex justify-between">
+              <span>Settings Dialog:</span>
+              <Badge variant={dialogStates.settings ? "default" : "secondary"}>
+                {dialogStates.settings ? "Open" : "Closed"}
+              </Badge>
+            </div>
+            <div className="flex justify-between">
+              <span>Confirm Dialog:</span>
+              <Badge
+                variant={dialogStates.confirm ? "destructive" : "secondary"}
+              >
+                {dialogStates.confirm ? "Open" : "Closed"}
+              </Badge>
+            </div>
+            <div className="flex justify-between">
+              <span>Wizard Dialog:</span>
+              <Badge variant={dialogStates.wizard ? "default" : "secondary"}>
+                {dialogStates.wizard ? `Open (Step ${wizardStep})` : "Closed"}
+              </Badge>
+            </div>
+          </div>
+          <div className="mt-4 pt-4 border-t">
+            <div className="text-xs text-muted-foreground">
+              Form Data: Name={formData.name}, Email={formData.email}, Theme=
+              {formData.theme}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
 };

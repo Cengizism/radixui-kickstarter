@@ -1,3 +1,4 @@
+import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -46,6 +47,159 @@ export default {
     layout: "centered",
   },
   argTypes: {
+    // Provider Props
+    swipeDirection: {
+      control: "select",
+      options: ["right", "left", "up", "down"],
+      description:
+        "The direction of the pointer down event that should close the toast.",
+      table: { category: "Provider Props" },
+    },
+    swipeThreshold: {
+      control: { type: "number", min: 0, max: 200 },
+      description:
+        "The distance in pixels that the swipe must pass before a close is triggered.",
+      table: { category: "Provider Props" },
+    },
+    providerLabel: {
+      control: "text",
+      description: "An author-localized label for each toast.",
+      table: { category: "Provider Props" },
+    },
+    providerDuration: {
+      control: { type: "number", min: 0, max: 10000 },
+      description:
+        "The time in milliseconds that should elapse before automatically closing each toast.",
+      table: { category: "Provider Props" },
+    },
+
+    // Root Props
+    type: {
+      control: "select",
+      options: ["foreground", "background"],
+      description:
+        "Control the sensitivity of the toast for accessibility purposes.",
+      table: { category: "Root Props" },
+    },
+    duration: {
+      control: { type: "number", min: 0, max: 10000 },
+      description:
+        "The time in milliseconds that should elapse before automatically closing the toast.",
+      table: { category: "Root Props" },
+    },
+    open: {
+      control: "boolean",
+      description:
+        "The open state of the dialog when it is initially rendered.",
+      table: { category: "Root Props" },
+    },
+    defaultOpen: {
+      control: "boolean",
+      description:
+        "The open state of the dialog when it is initially rendered.",
+      table: { category: "Root Props" },
+    },
+    onOpenChange: {
+      action: "onOpenChange",
+      description:
+        "Event handler called when the open state of the dialog changes.",
+      table: { category: "Root Props" },
+    },
+    onEscapeKeyDown: {
+      action: "onEscapeKeyDown",
+      description: "Event handler called when the escape key is down.",
+      table: { category: "Root Props" },
+    },
+    onPause: {
+      action: "onPause",
+      description: "Event handler called when the dismiss timer is paused.",
+      table: { category: "Root Props" },
+    },
+    onResume: {
+      action: "onResume",
+      description: "Event handler called when the dismiss timer is resumed.",
+      table: { category: "Root Props" },
+    },
+    onSwipeStart: {
+      action: "onSwipeStart",
+      description: "Event handler called when starting a swipe interaction.",
+      table: { category: "Root Props" },
+    },
+    onSwipeMove: {
+      action: "onSwipeMove",
+      description: "Event handler called during a swipe interaction.",
+      table: { category: "Root Props" },
+    },
+    onSwipeCancel: {
+      action: "onSwipeCancel",
+      description:
+        "Event handler called when a swipe interaction is cancelled.",
+      table: { category: "Root Props" },
+    },
+    onSwipeEnd: {
+      action: "onSwipeEnd",
+      description: "Event handler called at the end of a swipe interaction.",
+      table: { category: "Root Props" },
+    },
+    forceMount: {
+      control: "boolean",
+      description: "Used to force mounting when more control is needed.",
+      table: { category: "Root Props" },
+    },
+    asChild: {
+      control: "boolean",
+      description:
+        "Change the default rendered element for the one passed as a child.",
+      table: { category: "Root Props" },
+    },
+
+    // Title Props
+    titleAsChild: {
+      control: "boolean",
+      description: "Change the default rendered element for the title.",
+      table: { category: "Title Props" },
+    },
+
+    // Description Props
+    descriptionAsChild: {
+      control: "boolean",
+      description: "Change the default rendered element for the description.",
+      table: { category: "Description Props" },
+    },
+
+    // Action Props
+    actionAltText: {
+      control: "text",
+      description: "A description for the action for screen reader users.",
+      table: { category: "Action Props" },
+    },
+    actionAsChild: {
+      control: "boolean",
+      description: "Change the default rendered element for the action.",
+      table: { category: "Action Props" },
+    },
+
+    // Close Props
+    closeAsChild: {
+      control: "boolean",
+      description: "Change the default rendered element for the close button.",
+      table: { category: "Close Props" },
+    },
+
+    // Viewport Props
+    hotkey: {
+      control: "object",
+      description:
+        "The keys to use as the keyboard shortcut that will move focus to the toast viewport.",
+      table: { category: "Viewport Props" },
+    },
+    viewportLabel: {
+      control: "text",
+      description: "An author-localized label for the toast viewport.",
+      table: { category: "Viewport Props" },
+    },
+
+    // Custom Style Props
     variant: {
       control: "select",
       options: [
@@ -647,4 +801,616 @@ export const Playground = (args: {
 Playground.args = {
   variant: "default",
   size: "default",
+};
+
+// Advanced Examples
+export const AdvancedToastQueue = {
+  render: () => {
+    const [toasts, setToasts] = React.useState<
+      Array<{
+        id: string;
+        type: "success" | "error" | "warning" | "info" | "loading";
+        title: string;
+        description: string;
+        action?: { label: string; onClick: () => void };
+        duration?: number;
+        priority: "low" | "normal" | "high" | "critical";
+        category: string;
+        timestamp: Date;
+        progress?: number;
+        metadata?: any;
+      }>
+    >([]);
+
+    const [queueSettings, setQueueSettings] = React.useState({
+      maxToasts: 5,
+      position: "bottom-right" as
+        | "top-left"
+        | "top-right"
+        | "bottom-left"
+        | "bottom-right",
+      swipeDirection: "right" as "right" | "left" | "up" | "down",
+      pauseOnHover: true,
+      pauseOnFocusLoss: true,
+      newestOnTop: true,
+      showProgress: true,
+    });
+
+    const [globalStats, setGlobalStats] = React.useState({
+      totalShown: 0,
+      dismissed: 0,
+      actionsClicked: 0,
+      averageViewTime: 0,
+    });
+
+    const addToast = (
+      type: (typeof toasts)[0]["type"],
+      overrides: Partial<(typeof toasts)[0]> = {}
+    ) => {
+      const toastId = `toast-${Date.now()}-${Math.random()}`;
+      const baseToasts = {
+        success: {
+          title: "Success!",
+          description: "Operation completed successfully.",
+          duration: 4000,
+        },
+        error: {
+          title: "Error",
+          description: "Something went wrong. Please try again.",
+          duration: 6000,
+          action: {
+            label: "Retry",
+            onClick: () => console.log("Retry clicked"),
+          },
+        },
+        warning: {
+          title: "Warning",
+          description: "Please review your input and try again.",
+          duration: 5000,
+        },
+        info: {
+          title: "Information",
+          description: "Here is some important information.",
+          duration: 4000,
+        },
+        loading: {
+          title: "Processing...",
+          description: "Please wait while we process your request.",
+          duration: 0,
+          progress: 0,
+        },
+      };
+
+      const newToast = {
+        id: toastId,
+        type,
+        ...baseToasts[type],
+        priority: "normal" as const,
+        category: "General",
+        timestamp: new Date(),
+        ...overrides,
+      };
+
+      setToasts((prev) => {
+        const filteredToasts = prev.slice(0, queueSettings.maxToasts - 1);
+        const ordered = queueSettings.newestOnTop
+          ? [newToast, ...filteredToasts]
+          : [...filteredToasts, newToast];
+
+        // Sort by priority
+        return ordered.sort((a, b) => {
+          const priorityOrder = { critical: 4, high: 3, normal: 2, low: 1 };
+          return priorityOrder[b.priority] - priorityOrder[a.priority];
+        });
+      });
+
+      setGlobalStats((prev) => ({ ...prev, totalShown: prev.totalShown + 1 }));
+
+      // Simulate progress for loading toasts
+      if (type === "loading") {
+        let progress = 0;
+        const interval = setInterval(() => {
+          progress += Math.random() * 20;
+          if (progress >= 100) {
+            clearInterval(interval);
+            updateToast(toastId, {
+              type: "success",
+              title: "Complete!",
+              description: "Processing finished successfully.",
+              duration: 3000,
+              progress: undefined,
+            });
+          } else {
+            updateToast(toastId, { progress });
+          }
+        }, 300);
+      }
+    };
+
+    const updateToast = (id: string, updates: Partial<(typeof toasts)[0]>) => {
+      setToasts((prev) =>
+        prev.map((toast) =>
+          toast.id === id ? { ...toast, ...updates } : toast
+        )
+      );
+    };
+
+    const removeToast = (id: string) => {
+      setToasts((prev) => prev.filter((toast) => toast.id !== id));
+      setGlobalStats((prev) => ({ ...prev, dismissed: prev.dismissed + 1 }));
+    };
+
+    const clearAllToasts = () => {
+      setToasts([]);
+    };
+
+    const handleActionClick = (toastId: string, action: () => void) => {
+      action();
+      setGlobalStats((prev) => ({
+        ...prev,
+        actionsClicked: prev.actionsClicked + 1,
+      }));
+      removeToast(toastId);
+    };
+
+    const presetScenarios = [
+      {
+        label: "File Upload Success",
+        action: () =>
+          addToast("success", {
+            title: "File uploaded",
+            description: "Your document was uploaded successfully.",
+            category: "File System",
+            priority: "normal",
+          }),
+      },
+      {
+        label: "Network Error",
+        action: () =>
+          addToast("error", {
+            title: "Network Error",
+            description:
+              "Failed to connect to server. Check your internet connection.",
+            category: "Network",
+            priority: "high",
+            action: {
+              label: "Retry",
+              onClick: () => console.log("Network retry"),
+            },
+          }),
+      },
+      {
+        label: "Form validation",
+        action: () =>
+          addToast("warning", {
+            title: "Validation Error",
+            description:
+              "Please fill in all required fields before submitting.",
+            category: "Validation",
+            priority: "normal",
+          }),
+      },
+      {
+        label: "System Maintenance",
+        action: () =>
+          addToast("info", {
+            title: "Scheduled Maintenance",
+            description:
+              "System will be unavailable from 2:00 AM - 3:00 AM UTC.",
+            category: "System",
+            priority: "low",
+            duration: 8000,
+          }),
+      },
+      {
+        label: "Critical Security Alert",
+        action: () =>
+          addToast("error", {
+            title: "Security Alert",
+            description: "Suspicious login detected from unknown device.",
+            category: "Security",
+            priority: "critical",
+            duration: 0,
+            action: {
+              label: "Review",
+              onClick: () => console.log("Review security"),
+            },
+          }),
+      },
+      {
+        label: "Long Process",
+        action: () =>
+          addToast("loading", {
+            title: "Generating Report",
+            description: "This may take a few moments...",
+            category: "Reports",
+            priority: "normal",
+          }),
+      },
+    ];
+
+    return (
+      <ToastProvider
+        swipeDirection={queueSettings.swipeDirection}
+        duration={5000}
+      >
+        <div className="max-w-6xl space-y-6">
+          <div>
+            <h3 className="text-lg font-semibold mb-4">
+              Advanced Toast Queue Management
+            </h3>
+
+            {/* Configuration Panel */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 p-4 bg-muted rounded-lg">
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Max Toasts</Label>
+                <Input
+                  type="number"
+                  min="1"
+                  max="10"
+                  value={queueSettings.maxToasts}
+                  onChange={(e) =>
+                    setQueueSettings((prev) => ({
+                      ...prev,
+                      maxToasts: parseInt(e.target.value) || 5,
+                    }))
+                  }
+                  className="w-full"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Position</Label>
+                <select
+                  value={queueSettings.position}
+                  onChange={(e) =>
+                    setQueueSettings((prev) => ({
+                      ...prev,
+                      position: e.target.value as any,
+                    }))
+                  }
+                  className="w-full px-3 py-2 text-sm border rounded-md"
+                >
+                  <option value="top-left">Top Left</option>
+                  <option value="top-right">Top Right</option>
+                  <option value="bottom-left">Bottom Left</option>
+                  <option value="bottom-right">Bottom Right</option>
+                </select>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Swipe Direction</Label>
+                <select
+                  value={queueSettings.swipeDirection}
+                  onChange={(e) =>
+                    setQueueSettings((prev) => ({
+                      ...prev,
+                      swipeDirection: e.target.value as any,
+                    }))
+                  }
+                  className="w-full px-3 py-2 text-sm border rounded-md"
+                >
+                  <option value="right">Right</option>
+                  <option value="left">Left</option>
+                  <option value="up">Up</option>
+                  <option value="down">Down</option>
+                </select>
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    id="newestOnTop"
+                    checked={queueSettings.newestOnTop}
+                    onChange={(e) =>
+                      setQueueSettings((prev) => ({
+                        ...prev,
+                        newestOnTop: e.target.checked,
+                      }))
+                    }
+                  />
+                  <Label htmlFor="newestOnTop" className="text-sm">
+                    Newest on Top
+                  </Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    id="showProgress"
+                    checked={queueSettings.showProgress}
+                    onChange={(e) =>
+                      setQueueSettings((prev) => ({
+                        ...prev,
+                        showProgress: e.target.checked,
+                      }))
+                    }
+                  />
+                  <Label htmlFor="showProgress" className="text-sm">
+                    Show Progress
+                  </Label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Actions */}
+          <div className="space-y-4">
+            <h4 className="font-medium">Quick Test Scenarios</h4>
+            <div className="flex flex-wrap gap-2">
+              {presetScenarios.map((scenario, index) => (
+                <Button
+                  key={index}
+                  onClick={scenario.action}
+                  variant="outline"
+                  size="sm"
+                >
+                  {scenario.label}
+                </Button>
+              ))}
+            </div>
+
+            <div className="flex gap-2">
+              <Button onClick={clearAllToasts} variant="ghost" size="sm">
+                Clear All
+              </Button>
+              <Button
+                onClick={() => {
+                  // Stress test - add multiple toasts quickly
+                  for (let i = 0; i < 3; i++) {
+                    setTimeout(() => {
+                      const types = [
+                        "success",
+                        "error",
+                        "warning",
+                        "info",
+                      ] as const;
+                      const type =
+                        types[Math.floor(Math.random() * types.length)];
+                      addToast(type, {
+                        title: `Stress Test ${i + 1}`,
+                        description: `This is stress test toast number ${i + 1}`,
+                        category: "Test",
+                      });
+                    }, i * 200);
+                  }
+                }}
+                variant="outline"
+                size="sm"
+              >
+                Stress Test
+              </Button>
+            </div>
+          </div>
+
+          {/* Statistics Dashboard */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="p-4 bg-muted/50 rounded-lg">
+              <div className="text-2xl font-bold">{globalStats.totalShown}</div>
+              <div className="text-sm text-muted-foreground">Total Shown</div>
+            </div>
+            <div className="p-4 bg-muted/50 rounded-lg">
+              <div className="text-2xl font-bold">{toasts.length}</div>
+              <div className="text-sm text-muted-foreground">
+                Currently Active
+              </div>
+            </div>
+            <div className="p-4 bg-muted/50 rounded-lg">
+              <div className="text-2xl font-bold">{globalStats.dismissed}</div>
+              <div className="text-sm text-muted-foreground">Dismissed</div>
+            </div>
+            <div className="p-4 bg-muted/50 rounded-lg">
+              <div className="text-2xl font-bold">
+                {globalStats.actionsClicked}
+              </div>
+              <div className="text-sm text-muted-foreground">
+                Actions Clicked
+              </div>
+            </div>
+          </div>
+
+          {/* Active Toasts List */}
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h4 className="font-medium">Active Toasts ({toasts.length})</h4>
+              {toasts.length > 0 && (
+                <Button onClick={clearAllToasts} variant="ghost" size="sm">
+                  Clear All
+                </Button>
+              )}
+            </div>
+
+            {toasts.length === 0 ? (
+              <div className="text-center py-8 border rounded-lg border-dashed">
+                <p className="text-muted-foreground mb-4">No active toasts</p>
+                <p className="text-sm text-muted-foreground">
+                  Try the quick scenarios above to see toasts in action
+                </p>
+              </div>
+            ) : (
+              <div className="max-h-96 overflow-y-auto space-y-2 p-4 border rounded-lg">
+                {toasts.map((toast) => (
+                  <div
+                    key={toast.id}
+                    className="flex items-center justify-between p-3 bg-muted/30 rounded-md text-sm"
+                  >
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Badge
+                          variant={
+                            toast.priority === "critical"
+                              ? "destructive"
+                              : "secondary"
+                          }
+                        >
+                          {toast.priority}
+                        </Badge>
+                        <Badge variant="outline" className="text-xs">
+                          {toast.category}
+                        </Badge>
+                        <span className="font-medium">{toast.title}</span>
+                      </div>
+                      <div className="text-muted-foreground">
+                        {toast.description}
+                      </div>
+                      <div className="text-xs text-muted-foreground mt-1">
+                        {toast.timestamp.toLocaleTimeString()}
+                        {toast.progress !== undefined && (
+                          <span>
+                            {" "}
+                            • Progress: {Math.round(toast.progress)}%
+                          </span>
+                        )}
+                      </div>
+                      {queueSettings.showProgress &&
+                        toast.progress !== undefined && (
+                          <div className="w-full bg-muted rounded-full h-1 mt-2">
+                            <div
+                              className="bg-primary h-1 rounded-full transition-all duration-300"
+                              style={{ width: `${toast.progress}%` }}
+                            />
+                          </div>
+                        )}
+                    </div>
+                    <div className="flex items-center gap-2 ml-4">
+                      {toast.action && (
+                        <Button
+                          onClick={() =>
+                            handleActionClick(toast.id, toast.action!.onClick)
+                          }
+                          variant="outline"
+                          size="sm"
+                        >
+                          {toast.action.label}
+                        </Button>
+                      )}
+                      <Button
+                        onClick={() => removeToast(toast.id)}
+                        variant="ghost"
+                        size="sm"
+                      >
+                        ×
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="text-sm text-muted-foreground">
+            <strong>Features demonstrated:</strong>
+            <ul className="mt-1 space-y-1">
+              <li>
+                • <strong>Toast queue management:</strong> Maximum toast limits
+                and priority-based sorting
+              </li>
+              <li>
+                • <strong>Dynamic configuration:</strong> Position, swipe
+                direction, and display options
+              </li>
+              <li>
+                • <strong>Progress tracking:</strong> Loading toasts with
+                real-time progress updates
+              </li>
+              <li>
+                • <strong>Priority system:</strong> Critical, high, normal, and
+                low priority toasts
+              </li>
+              <li>
+                • <strong>Category organization:</strong> Group toasts by
+                functional categories
+              </li>
+              <li>
+                • <strong>Action handling:</strong> Interactive buttons with
+                callback tracking
+              </li>
+              <li>
+                • <strong>Analytics dashboard:</strong> Track toast metrics and
+                user interactions
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <ToastViewport
+          className={`fixed ${
+            queueSettings.position === "top-left"
+              ? "top-4 left-4"
+              : queueSettings.position === "top-right"
+                ? "top-4 right-4"
+                : queueSettings.position === "bottom-left"
+                  ? "bottom-4 left-4"
+                  : "bottom-4 right-4"
+          } flex flex-col gap-2 max-w-sm z-50`}
+        />
+
+        {/* Render active toasts */}
+        {toasts.map((toast) => (
+          <Toast
+            key={toast.id}
+            variant={
+              toast.type === "error"
+                ? "destructive"
+                : toast.type === "success"
+                  ? "default"
+                  : toast.type
+            }
+            duration={toast.duration}
+            onOpenChange={(open) => !open && removeToast(toast.id)}
+          >
+            <div className="flex items-start gap-3 w-full">
+              <div className="flex-shrink-0 mt-0.5">
+                {toast.type === "success" && (
+                  <CheckCircle className="h-4 w-4 text-green-500" />
+                )}
+                {toast.type === "error" && (
+                  <AlertCircle className="h-4 w-4 text-red-500" />
+                )}
+                {toast.type === "warning" && (
+                  <AlertTriangle className="h-4 w-4 text-yellow-500" />
+                )}
+                {toast.type === "info" && (
+                  <Info className="h-4 w-4 text-blue-500" />
+                )}
+                {toast.type === "loading" && (
+                  <Loader2 className="h-4 w-4 text-muted-foreground animate-spin" />
+                )}
+              </div>
+              <div className="flex-1 min-w-0">
+                <ToastTitle className="flex items-center gap-2">
+                  {toast.title}
+                  {toast.priority === "critical" && (
+                    <Badge variant="destructive" className="text-xs">
+                      Critical
+                    </Badge>
+                  )}
+                </ToastTitle>
+                <ToastDescription>{toast.description}</ToastDescription>
+                {queueSettings.showProgress && toast.progress !== undefined && (
+                  <div className="w-full bg-muted rounded-full h-1 mt-2">
+                    <div
+                      className="bg-primary h-1 rounded-full transition-all duration-300"
+                      style={{ width: `${toast.progress}%` }}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+            {toast.action && (
+              <ToastAction
+                altText={toast.action.label}
+                onClick={() =>
+                  handleActionClick(toast.id, toast.action!.onClick)
+                }
+              >
+                {toast.action.label}
+              </ToastAction>
+            )}
+            <ToastClose />
+          </Toast>
+        ))}
+      </ToastProvider>
+    );
+  },
 };

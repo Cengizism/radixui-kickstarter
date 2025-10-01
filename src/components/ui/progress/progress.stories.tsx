@@ -13,47 +13,133 @@ const meta = {
     docs: {
       description: {
         component:
-          "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
+          "Displays an indicator showing the completion progress of a task. Built with Radix UI primitives for accessibility and screen reader support. Supports determinate and indeterminate states.",
       },
     },
   },
   tags: ["autodocs"],
   argTypes: {
+    // Root Props
     value: {
       control: { type: "range", min: 0, max: 100, step: 1 },
       description:
-        "The progress value. Use null/undefined for indeterminate state",
+        "The progress value. Can be null or undefined for indeterminate state. When provided, should be between 0 and max.",
+      table: {
+        category: "Root",
+      },
     },
     max: {
       control: { type: "number", min: 1, max: 200, step: 1 },
-      description: "The maximum progress value",
+      description:
+        "The maximum progress value. Used to calculate the percentage when value is provided.",
+      table: {
+        category: "Root",
+      },
     },
+    getValueLabel: {
+      control: false,
+      description:
+        "A function to get the accessible label text representing the current value in a human-readable format.",
+      table: {
+        category: "Root",
+        type: { summary: "(value: number, max: number) => string" },
+      },
+    },
+    asChild: {
+      control: "boolean",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
+      table: {
+        category: "Root",
+      },
+    },
+
+    // Custom Style Props
     size: {
       control: "select",
       options: ["sm", "default", "lg", "xl"],
-      description: "Controls the height of the progress bar",
+      description:
+        "Controls the height of the progress bar for different visual hierarchy needs.",
+      table: {
+        category: "Styling",
+      },
     },
     variant: {
       control: "select",
       options: ["default", "square", "rounded"],
-      description: "Controls the corner radius of the progress bar",
+      description: "Controls the corner radius styling of the progress bar.",
+      table: {
+        category: "Styling",
+      },
     },
     color: {
       control: "select",
       options: ["default", "secondary", "success", "warning", "danger", "info"],
-      description: "Controls the color of the progress indicator",
+      description:
+        "Controls the color theme of the progress indicator to convey different states or meanings.",
+      table: {
+        category: "Styling",
+      },
     },
+
+    // Enhanced Props
     animated: {
       control: "boolean",
-      description: "Whether to animate progress changes",
+      description:
+        "Whether to animate progress changes with smooth transitions.",
+      table: {
+        category: "Enhancement",
+      },
     },
     showLabel: {
       control: "boolean",
-      description: "Whether to show automatic percentage label",
+      description:
+        "Whether to display automatic percentage or custom label text.",
+      table: {
+        category: "Enhancement",
+      },
     },
     label: {
       control: "text",
-      description: "Custom label text (overrides automatic label)",
+      description:
+        "Custom label text that overrides the automatic percentage display.",
+      table: {
+        category: "Enhancement",
+      },
+    },
+    formatLabel: {
+      control: false,
+      description:
+        "Function to customize the label format when showLabel is true.",
+      table: {
+        category: "Enhancement",
+        type: { summary: "(value: number, max: number) => string" },
+      },
+    },
+
+    // Accessibility Props
+    "aria-label": {
+      control: "text",
+      description:
+        "Accessible label for the progress bar when no visible label is present.",
+      table: {
+        category: "Accessibility",
+      },
+    },
+    "aria-describedby": {
+      control: "text",
+      description:
+        "Reference to elements that provide additional description for the progress bar.",
+      table: {
+        category: "Accessibility",
+      },
+    },
+    "aria-labelledby": {
+      control: "text",
+      description: "Reference to elements that label the progress bar.",
+      table: {
+        category: "Accessibility",
+      },
     },
   },
 } satisfies Meta<typeof Progress>;
@@ -422,6 +508,291 @@ export const MultipleStates: Story = {
       description: {
         story:
           "Multiple progress indicators showing different states and statuses.",
+      },
+    },
+  },
+};
+
+// Advanced accessibility features
+export const AccessibilityFeatures: Story = {
+  render: () => (
+    <div className="w-80 space-y-8">
+      <div className="space-y-2">
+        <div className="text-sm font-medium" id="file-progress-label">
+          File Upload Progress
+        </div>
+        <div className="text-xs text-muted-foreground" id="file-progress-desc">
+          Uploading document.pdf (3.2 MB) - 45% complete
+        </div>
+        <Progress
+          value={45}
+          aria-labelledby="file-progress-label"
+          aria-describedby="file-progress-desc"
+          getValueLabel={(value, max) =>
+            `${value} percent of ${max} percent complete`
+          }
+        />
+      </div>
+
+      <div className="space-y-2">
+        <Progress
+          value={72}
+          aria-label="System backup progress"
+          getValueLabel={(value) => `Backup ${value} percent complete`}
+          color="info"
+        />
+        <div className="text-xs text-muted-foreground">
+          Custom aria-label for screen readers when no visible label
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <Progress
+          value={null}
+          aria-label="Loading content, please wait"
+          color="secondary"
+        />
+        <div className="text-xs text-muted-foreground">
+          Indeterminate progress with accessible loading message
+        </div>
+      </div>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Progress bars with proper ARIA labels and descriptions for screen reader accessibility.",
+      },
+    },
+  },
+};
+
+// Custom value formatting and labeling
+export const CustomFormatting: Story = {
+  render: function CustomFormattingExample() {
+    const [downloadProgress, setDownloadProgress] = useState(0);
+    const [uploadBytes, setUploadBytes] = useState(0);
+    const [processingItems, setProcessingItems] = useState(0);
+
+    useEffect(() => {
+      const timer = setInterval(() => {
+        setDownloadProgress((prev) => Math.min(prev + Math.random() * 3, 100));
+        setUploadBytes((prev) =>
+          Math.min(prev + Math.random() * 50000, 2500000)
+        );
+        setProcessingItems((prev) => Math.min(prev + Math.random() * 2, 150));
+      }, 200);
+
+      return () => clearInterval(timer);
+    }, []);
+
+    return (
+      <div className="w-80 space-y-6">
+        <div className="space-y-2">
+          <div className="text-sm font-medium">Download Speed</div>
+          <Progress
+            value={downloadProgress}
+            showLabel
+            formatLabel={(value) => `${value.toFixed(1)}%`}
+            getValueLabel={(value) =>
+              `Download ${value.toFixed(1)} percent complete`
+            }
+            color="info"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <div className="text-sm font-medium">File Upload</div>
+          <Progress
+            value={uploadBytes}
+            max={2500000}
+            showLabel
+            formatLabel={(value, max) => {
+              const mbValue = (value / 1000000).toFixed(1);
+              const mbMax = (max / 1000000).toFixed(1);
+              return `${mbValue} MB / ${mbMax} MB`;
+            }}
+            getValueLabel={(value, max) => {
+              const percent = Math.round((value / max) * 100);
+              return `Uploaded ${(value / 1000000).toFixed(1)} megabytes of ${(max / 1000000).toFixed(1)} megabytes, ${percent} percent complete`;
+            }}
+            color="success"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <div className="text-sm font-medium">Items Processed</div>
+          <Progress
+            value={processingItems}
+            max={150}
+            showLabel
+            formatLabel={(value, max) => `${Math.floor(value)} / ${max} items`}
+            getValueLabel={(value, max) =>
+              `Processed ${Math.floor(value)} of ${max} items`
+            }
+            color="warning"
+          />
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Custom formatting functions for different data types and units with proper accessibility labels.",
+      },
+    },
+  },
+};
+
+// Multi-step process indicator
+export const MultiStepProcess: Story = {
+  render: function MultiStepExample() {
+    const [currentStep, setCurrentStep] = useState(0);
+    const [stepProgress, setStepProgress] = useState(0);
+
+    const steps = [
+      { name: "Validation", duration: 2000 },
+      { name: "Processing", duration: 4000 },
+      { name: "Optimization", duration: 3000 },
+      { name: "Deployment", duration: 2500 },
+      { name: "Verification", duration: 1500 },
+    ];
+
+    useEffect(() => {
+      if (currentStep >= steps.length) return;
+
+      const stepDuration = steps[currentStep].duration;
+      const increment = 100 / (stepDuration / 50); // 50ms intervals
+
+      const timer = setInterval(() => {
+        setStepProgress((prev) => {
+          if (prev >= 100) {
+            setCurrentStep((curr) => curr + 1);
+            return 0;
+          }
+          return prev + increment;
+        });
+      }, 50);
+
+      return () => clearInterval(timer);
+    }, [currentStep]);
+
+    const overallProgress =
+      currentStep >= steps.length
+        ? 100
+        : (currentStep * 100 + stepProgress) / steps.length;
+
+    return (
+      <div className="w-80 space-y-6">
+        <div className="space-y-2">
+          <div className="flex justify-between items-center">
+            <div className="text-sm font-medium">Overall Progress</div>
+            <div className="text-xs text-muted-foreground">
+              Step {Math.min(currentStep + 1, steps.length)} of {steps.length}
+            </div>
+          </div>
+          <Progress
+            value={overallProgress}
+            showLabel
+            color={overallProgress === 100 ? "success" : "info"}
+            getValueLabel={(value) =>
+              `Overall progress ${value.toFixed(0)} percent complete`
+            }
+          />
+        </div>
+
+        <div className="space-y-4">
+          {steps.map((step, index) => {
+            let stepStatus: "pending" | "active" | "completed";
+            let stepValue: number | null;
+            let stepColor: "default" | "info" | "success";
+
+            if (index < currentStep) {
+              stepStatus = "completed";
+              stepValue = 100;
+              stepColor = "success";
+            } else if (index === currentStep) {
+              stepStatus = "active";
+              stepValue = stepProgress;
+              stepColor = "info";
+            } else {
+              stepStatus = "pending";
+              stepValue = 0;
+              stepColor = "default";
+            }
+
+            return (
+              <div key={step.name} className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-2">
+                    <div
+                      className={`w-2 h-2 rounded-full ${
+                        stepStatus === "completed"
+                          ? "bg-green-500"
+                          : stepStatus === "active"
+                            ? "bg-blue-500"
+                            : "bg-gray-300"
+                      }`}
+                    />
+                    <span
+                      className={`text-sm ${
+                        stepStatus === "active" ? "font-medium" : ""
+                      }`}
+                    >
+                      {step.name}
+                    </span>
+                  </div>
+                  <Badge
+                    variant={
+                      stepStatus === "completed"
+                        ? "default"
+                        : stepStatus === "active"
+                          ? "secondary"
+                          : "outline"
+                    }
+                    className="text-xs"
+                  >
+                    {stepStatus === "completed"
+                      ? "Done"
+                      : stepStatus === "active"
+                        ? "Running"
+                        : "Pending"}
+                  </Badge>
+                </div>
+                <Progress
+                  value={stepValue}
+                  color={stepColor}
+                  size="sm"
+                  getValueLabel={(value) =>
+                    `${step.name} step ${value?.toFixed(0) || 0} percent complete`
+                  }
+                />
+              </div>
+            );
+          })}
+        </div>
+
+        {overallProgress === 100 && (
+          <div className="p-3 bg-green-50 rounded-lg">
+            <div className="text-sm font-medium text-green-800">
+              ✅ Process Complete
+            </div>
+            <div className="text-xs text-green-600">
+              All steps have been successfully completed.
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Complex multi-step process with individual step progress and overall completion tracking.",
       },
     },
   },
