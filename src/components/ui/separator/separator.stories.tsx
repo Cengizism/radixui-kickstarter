@@ -1,7 +1,17 @@
 import React from 'react';
 import { Badge } from '../badge/badge';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Separator } from '@/components/ui/separator';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default {
   title: "UI/Separator",
@@ -543,42 +553,42 @@ export const AdvancedAccessibilityDemo = {
           </h3>
 
           <div className="flex items-center gap-4 mb-6 p-4 bg-muted rounded-lg">
-            <div className="flex items-center space-x-2">
-              <input
-                type="radio"
-                id="decorative-radio"
-                name="separator-type"
-                checked={separatorType === "decorative"}
-                onChange={() => setSeparatorType("decorative")}
-              />
-              <label htmlFor="decorative-radio" className="text-sm font-medium">
-                Decorative (Hidden from screen readers)
-              </label>
-            </div>
+            <RadioGroup
+              value={separatorType}
+              onValueChange={(value: "decorative" | "semantic") =>
+                setSeparatorType(value)
+              }
+              className="flex items-center gap-4"
+            >
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="decorative" id="decorative-radio" />
+                <Label
+                  htmlFor="decorative-radio"
+                  className="text-sm font-medium"
+                >
+                  Decorative (Hidden from screen readers)
+                </Label>
+              </div>
 
-            <div className="flex items-center space-x-2">
-              <input
-                type="radio"
-                id="semantic-radio"
-                name="separator-type"
-                checked={separatorType === "semantic"}
-                onChange={() => setSeparatorType("semantic")}
-              />
-              <label htmlFor="semantic-radio" className="text-sm font-medium">
-                Semantic (Announced to screen readers)
-              </label>
-            </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="semantic" id="semantic-radio" />
+                <Label htmlFor="semantic-radio" className="text-sm font-medium">
+                  Semantic (Announced to screen readers)
+                </Label>
+              </div>
+            </RadioGroup>
 
             <div className="flex items-center space-x-2 ml-4">
-              <input
-                type="checkbox"
+              <Checkbox
                 id="show-sr-text"
                 checked={showScreenReaderText}
-                onChange={(e) => setShowScreenReaderText(e.target.checked)}
+                onCheckedChange={(checked) =>
+                  setShowScreenReaderText(checked === true)
+                }
               />
-              <label htmlFor="show-sr-text" className="text-sm">
+              <Label htmlFor="show-sr-text" className="text-sm">
                 Show screen reader attributes
-              </label>
+              </Label>
             </div>
           </div>
         </div>
@@ -947,13 +957,13 @@ export const DynamicLayoutSeparators = {
 
             {/* Separator Variant */}
             <div className="space-y-2">
-              <label className="text-sm font-medium">Separator Variant:</label>
-              <select
+              <Label className="text-sm font-medium">Separator Variant:</Label>
+              <Select
                 value={separatorStyle.variant}
-                onChange={(e) =>
+                onValueChange={(value) =>
                   setSeparatorStyle((prev) => ({
                     ...prev,
-                    variant: e.target.value as
+                    variant: value as
                       | "default"
                       | "subtle"
                       | "strong"
@@ -961,47 +971,56 @@ export const DynamicLayoutSeparators = {
                       | "primary",
                   }))
                 }
-                className="px-2 py-1 text-sm border rounded"
               >
-                <option value="default">Default</option>
-                <option value="subtle">Subtle</option>
-                <option value="strong">Strong</option>
-                <option value="accent">Accent</option>
-                <option value="primary">Primary</option>
-              </select>
+                <SelectTrigger className="w-full">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="default">Default</SelectItem>
+                  <SelectItem value="subtle">Subtle</SelectItem>
+                  <SelectItem value="strong">Strong</SelectItem>
+                  <SelectItem value="accent">Accent</SelectItem>
+                  <SelectItem value="primary">Primary</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             {/* Separator Size */}
             <div className="space-y-2">
-              <label className="text-sm font-medium">Size:</label>
-              <select
+              <Label className="text-sm font-medium">Size:</Label>
+              <Select
                 value={separatorStyle.size}
-                onChange={(e) =>
+                onValueChange={(value) =>
                   setSeparatorStyle((prev) => ({
                     ...prev,
-                    size: e.target.value as "sm" | "default" | "md" | "lg",
+                    size: value as "sm" | "default" | "md" | "lg",
                   }))
                 }
-                className="px-2 py-1 text-sm border rounded"
               >
-                <option value="sm">Small</option>
-                <option value="default">Default</option>
-                <option value="md">Medium</option>
-                <option value="lg">Large</option>
-              </select>
+                <SelectTrigger className="w-full">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="sm">Small</SelectItem>
+                  <SelectItem value="default">Default</SelectItem>
+                  <SelectItem value="md">Medium</SelectItem>
+                  <SelectItem value="lg">Large</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             {/* Show/Hide Toggle */}
             <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
+              <Checkbox
                 id="show-separators"
                 checked={showSeparators}
-                onChange={(e) => setShowSeparators(e.target.checked)}
+                onCheckedChange={(checked) =>
+                  setShowSeparators(checked === true)
+                }
               />
-              <label htmlFor="show-separators" className="text-sm">
+              <Label htmlFor="show-separators" className="text-sm">
                 Show separators
-              </label>
+              </Label>
             </div>
           </div>
         </div>

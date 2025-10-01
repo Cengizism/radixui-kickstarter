@@ -1,6 +1,20 @@
 import React, { useState } from 'react';
+import { Button } from '../button/button';
 import { Label } from '../label/label';
 import { Switch } from '@/components/ui/switch';
+import {
+  Smartphone,
+  Monitor,
+  Mail,
+  Moon,
+  Sun,
+  VolumeX,
+  Volume2,
+  Bell,
+  Save,
+  Lock,
+  BarChart3,
+} from "lucide-react";
 
 export default {
   title: "UI/Switch",
@@ -415,12 +429,9 @@ export const FormIntegration = () => {
         </div>
       </div>
 
-      <button
-        type="submit"
-        className="w-full px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
-      >
+      <Button type="submit" className="w-full">
         Save Preferences
-      </button>
+      </Button>
     </form>
   );
 };
@@ -544,27 +555,27 @@ export const WithIcons = () => (
   <div className="space-y-4">
     <div className="flex items-center space-x-4">
       <div className="flex items-center space-x-2">
-        <span className="text-sm">🌙</span>
+        <Moon className="h-4 w-4" />
         <Switch id="dark-mode-icon" />
-        <span className="text-sm">☀️</span>
+        <Sun className="h-4 w-4" />
       </div>
       <Label htmlFor="dark-mode-icon">Dark Mode</Label>
     </div>
 
     <div className="flex items-center space-x-4">
       <div className="flex items-center space-x-2">
-        <span className="text-sm">🔇</span>
+        <VolumeX className="h-4 w-4" />
         <Switch id="sound-icon" defaultChecked />
-        <span className="text-sm">🔊</span>
+        <Volume2 className="h-4 w-4" />
       </div>
       <Label htmlFor="sound-icon">Sound</Label>
     </div>
 
     <div className="flex items-center space-x-4">
       <div className="flex items-center space-x-2">
-        <span className="text-sm">📱</span>
+        <Smartphone className="h-4 w-4 text-muted-foreground" />
         <Switch id="mobile-icon" />
-        <span className="text-sm">💻</span>
+        <Monitor className="h-4 w-4 text-muted-foreground" />
       </div>
       <Label htmlFor="mobile-icon">Desktop Mode</Label>
     </div>
@@ -680,7 +691,7 @@ export const AdvancedControlledSwitches = {
         key: "notifications" as const,
         label: "Push Notifications",
         description: "Receive notifications about important updates",
-        icon: "🔔",
+        icon: <Bell className="h-4 w-4" />,
         variant: "default" as const,
         critical: false,
       },
@@ -688,7 +699,7 @@ export const AdvancedControlledSwitches = {
         key: "darkMode" as const,
         label: "Dark Mode",
         description: "Use dark theme across the application",
-        icon: "🌙",
+        icon: <Moon className="h-4 w-4" />,
         variant: "secondary" as const,
         critical: false,
       },
@@ -696,7 +707,7 @@ export const AdvancedControlledSwitches = {
         key: "autoSave" as const,
         label: "Auto Save",
         description: "Automatically save your work every 30 seconds",
-        icon: "💾",
+        icon: <Save className="h-4 w-4" />,
         variant: "success" as const,
         critical: true,
       },
@@ -704,7 +715,7 @@ export const AdvancedControlledSwitches = {
         key: "twoFactor" as const,
         label: "Two-Factor Authentication",
         description: "Add an extra layer of security to your account",
-        icon: "🔐",
+        icon: <Lock className="h-4 w-4" />,
         variant: "warning" as const,
         critical: true,
       },
@@ -712,7 +723,7 @@ export const AdvancedControlledSwitches = {
         key: "analytics" as const,
         label: "Usage Analytics",
         description: "Help us improve by sharing anonymous usage data",
-        icon: "📊",
+        icon: <BarChart3 className="h-4 w-4" />,
         variant: "outline" as const,
         critical: false,
       },
@@ -720,7 +731,7 @@ export const AdvancedControlledSwitches = {
         key: "marketing" as const,
         label: "Marketing Emails",
         description: "Receive product updates and promotional content",
-        icon: "📧",
+        icon: <Mail className="h-4 w-4" />,
         variant: "destructive" as const,
         critical: false,
       },
@@ -734,24 +745,19 @@ export const AdvancedControlledSwitches = {
           </h3>
 
           <div className="flex flex-wrap gap-2 mb-6 p-4 bg-muted rounded-lg">
-            <button
-              onClick={() => toggleAll(true)}
-              className="px-3 py-1 rounded text-xs font-medium bg-primary text-primary-foreground hover:bg-primary/90"
-            >
+            <Button onClick={() => toggleAll(true)} size="sm">
               Enable All
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => toggleAll(false)}
-              className="px-3 py-1 rounded text-xs font-medium bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              variant="destructive"
+              size="sm"
             >
               Disable All
-            </button>
-            <button
-              onClick={resetAllSettings}
-              className="px-3 py-1 rounded text-xs font-medium bg-background border hover:bg-accent"
-            >
+            </Button>
+            <Button onClick={resetAllSettings} variant="outline" size="sm">
               Reset to Defaults
-            </button>
+            </Button>
 
             <div className="ml-auto flex items-center gap-2 text-sm">
               <span>Pending changes:</span>
@@ -765,7 +771,7 @@ export const AdvancedControlledSwitches = {
             <div key={config.key} className="border rounded-lg p-4 space-y-3">
               <div className="flex items-start justify-between">
                 <div className="flex items-start gap-3 flex-1">
-                  <span className="text-2xl">{config.icon}</span>
+                  <div className="text-muted-foreground">{config.icon}</div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
                       <Label htmlFor={config.key} className="font-medium">
@@ -1028,12 +1034,9 @@ export const FormIntegrationWithValidation = {
               ))}
             </div>
           </div>
-          <button
-            onClick={resetForm}
-            className="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-          >
+          <Button onClick={resetForm} className="mt-4" variant="default">
             Create Another Account
-          </button>
+          </Button>
         </div>
       );
     }
@@ -1222,19 +1225,12 @@ export const FormIntegrationWithValidation = {
           </div>
 
           <div className="flex gap-4 pt-4 border-t">
-            <button
-              type="submit"
-              className="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90 font-medium"
-            >
+            <Button type="submit" className="flex-1">
               Create Account
-            </button>
-            <button
-              type="button"
-              onClick={resetForm}
-              className="px-4 py-2 border border-input rounded hover:bg-accent font-medium"
-            >
+            </Button>
+            <Button type="button" onClick={resetForm} variant="outline">
               Reset Form
-            </button>
+            </Button>
           </div>
         </form>
       </div>

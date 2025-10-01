@@ -1,9 +1,17 @@
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useState } from 'react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Toast,
   ToastProvider,
@@ -1062,60 +1070,63 @@ export const AdvancedToastQueue = {
 
               <div className="space-y-2">
                 <Label className="text-sm font-medium">Position</Label>
-                <select
+                <Select
                   value={queueSettings.position}
-                  onChange={(e) =>
+                  onValueChange={(value) =>
                     setQueueSettings((prev) => ({
                       ...prev,
-                      position: e.target.value as
+                      position: value as
                         | "top-left"
                         | "top-right"
                         | "bottom-left"
                         | "bottom-right",
                     }))
                   }
-                  className="w-full px-3 py-2 text-sm border rounded-md"
                 >
-                  <option value="top-left">Top Left</option>
-                  <option value="top-right">Top Right</option>
-                  <option value="bottom-left">Bottom Left</option>
-                  <option value="bottom-right">Bottom Right</option>
-                </select>
+                  <SelectTrigger className="w-full">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="top-left">Top Left</SelectItem>
+                    <SelectItem value="top-right">Top Right</SelectItem>
+                    <SelectItem value="bottom-left">Bottom Left</SelectItem>
+                    <SelectItem value="bottom-right">Bottom Right</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
 
               <div className="space-y-2">
                 <Label className="text-sm font-medium">Swipe Direction</Label>
-                <select
+                <Select
                   value={queueSettings.swipeDirection}
-                  onChange={(e) =>
+                  onValueChange={(value) =>
                     setQueueSettings((prev) => ({
                       ...prev,
-                      swipeDirection: e.target.value as
-                        | "left"
-                        | "right"
-                        | "up"
-                        | "down",
+                      swipeDirection: value as "left" | "right" | "up" | "down",
                     }))
                   }
-                  className="w-full px-3 py-2 text-sm border rounded-md"
                 >
-                  <option value="right">Right</option>
-                  <option value="left">Left</option>
-                  <option value="up">Up</option>
-                  <option value="down">Down</option>
-                </select>
+                  <SelectTrigger className="w-full">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="right">Right</SelectItem>
+                    <SelectItem value="left">Left</SelectItem>
+                    <SelectItem value="up">Up</SelectItem>
+                    <SelectItem value="down">Down</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
 
               <div className="space-y-2">
                 <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
+                  <Checkbox
                     id="newestOnTop"
                     checked={queueSettings.newestOnTop}
-                    onChange={(e) =>
+                    onCheckedChange={(checked) =>
                       setQueueSettings((prev) => ({
                         ...prev,
-                        newestOnTop: e.target.checked,
+                        newestOnTop: !!checked,
                       }))
                     }
                   />
@@ -1124,14 +1135,13 @@ export const AdvancedToastQueue = {
                   </Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
+                  <Checkbox
                     id="showProgress"
                     checked={queueSettings.showProgress}
-                    onChange={(e) =>
+                    onCheckedChange={(checked) =>
                       setQueueSettings((prev) => ({
                         ...prev,
-                        showProgress: e.target.checked,
+                        showProgress: !!checked,
                       }))
                     }
                   />

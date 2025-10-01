@@ -1,6 +1,9 @@
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Input } from '@/components/ui/input';
+import { Slider } from '@/components/ui/slider';
 import {
   Tooltip,
   TooltipContent,
@@ -619,11 +622,7 @@ export const FormFieldHelp = () => (
           <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
         </SimpleTooltip>
       </label>
-      <input
-        type="text"
-        placeholder="Enter username"
-        className="w-full px-3 py-2 border border-input rounded-md"
-      />
+      <Input type="text" placeholder="Enter username" />
     </div>
 
     <div className="space-y-2">
@@ -647,11 +646,7 @@ export const FormFieldHelp = () => (
           <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
         </SimpleTooltip>
       </label>
-      <input
-        type="password"
-        placeholder="Enter password"
-        className="w-full px-3 py-2 border border-input rounded-md"
-      />
+      <Input type="password" placeholder="Enter password" />
     </div>
   </div>
 );
@@ -901,16 +896,15 @@ export const AdvancedTooltipSystem = {
                 <label className="text-sm font-medium">
                   Delay Duration ({tooltipSettings.delayDuration}ms)
                 </label>
-                <input
-                  type="range"
-                  min="0"
-                  max="2000"
-                  step="100"
-                  value={tooltipSettings.delayDuration}
-                  onChange={(e) =>
+                <Slider
+                  min={0}
+                  max={2000}
+                  step={100}
+                  value={[tooltipSettings.delayDuration]}
+                  onValueChange={(values) =>
                     setTooltipSettings((prev) => ({
                       ...prev,
-                      delayDuration: parseInt(e.target.value),
+                      delayDuration: values[0],
                     }))
                   }
                   className="w-full"
@@ -921,16 +915,15 @@ export const AdvancedTooltipSystem = {
                 <label className="text-sm font-medium">
                   Skip Delay ({tooltipSettings.skipDelayDuration}ms)
                 </label>
-                <input
-                  type="range"
-                  min="0"
-                  max="1000"
-                  step="50"
-                  value={tooltipSettings.skipDelayDuration}
-                  onChange={(e) =>
+                <Slider
+                  min={0}
+                  max={1000}
+                  step={50}
+                  value={[tooltipSettings.skipDelayDuration]}
+                  onValueChange={(values) =>
                     setTooltipSettings((prev) => ({
                       ...prev,
-                      skipDelayDuration: parseInt(e.target.value),
+                      skipDelayDuration: values[0],
                     }))
                   }
                   className="w-full"
@@ -938,14 +931,13 @@ export const AdvancedTooltipSystem = {
               </div>
 
               <div className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
+                <Checkbox
                   id="disableHoverable"
                   checked={tooltipSettings.disableHoverableContent}
-                  onChange={(e) =>
+                  onCheckedChange={(checked) =>
                     setTooltipSettings((prev) => ({
                       ...prev,
-                      disableHoverableContent: e.target.checked,
+                      disableHoverableContent: !!checked,
                     }))
                   }
                 />
@@ -955,14 +947,13 @@ export const AdvancedTooltipSystem = {
               </div>
 
               <div className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
+                <Checkbox
                   id="globalDisabled"
                   checked={tooltipSettings.globalDisabled}
-                  onChange={(e) =>
+                  onCheckedChange={(checked) =>
                     setTooltipSettings((prev) => ({
                       ...prev,
-                      globalDisabled: e.target.checked,
+                      globalDisabled: !!checked,
                     }))
                   }
                 />

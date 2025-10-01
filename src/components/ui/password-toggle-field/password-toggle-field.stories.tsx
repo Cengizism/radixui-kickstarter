@@ -1,5 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { User } from 'lucide-react';
 import { useState } from 'react';
@@ -166,13 +168,12 @@ export const LoginForm = () => {
       <CardContent className="space-y-4">
         <div className="space-y-2">
           <Label htmlFor="email-login">Email</Label>
-          <input
+          <Input
             id="email-login"
             type="email"
             placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           />
         </div>
 
@@ -192,13 +193,13 @@ export const LoginForm = () => {
         </div>
 
         <div className="flex items-center justify-between text-sm">
-          <label className="flex items-center space-x-2">
-            <input type="checkbox" className="rounded border-gray-300" />
+          <Label className="flex items-center space-x-2">
+            <Checkbox />
             <span>Remember me</span>
-          </label>
-          <button className="text-primary hover:underline">
+          </Label>
+          <Button variant="link" className="p-0 h-auto text-sm">
             Forgot password?
-          </button>
+          </Button>
         </div>
 
         <Button className="w-full" disabled={!email || !password}>

@@ -1,6 +1,7 @@
 import { Badge } from '../badge/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '../card/card';
+import { Checkbox } from '../checkbox/checkbox';
 import { Separator } from '../separator/separator';
 import { useState } from 'react';
 import {
@@ -907,12 +908,10 @@ export const ControlledCollapsible = () => {
           </Button>
         </div>
         <div className="flex items-center gap-2">
-          <input
-            type="checkbox"
+          <Checkbox
             id="disable-collapsible"
             checked={disabled}
-            onChange={(e) => setDisabled(e.target.checked)}
-            className="rounded"
+            onCheckedChange={(checked) => setDisabled(checked === true)}
           />
           <label htmlFor="disable-collapsible" className="text-sm">
             Disable collapsible
@@ -1011,10 +1010,10 @@ export const AsChildExample = () => (
       <h4 className="text-sm font-medium mb-2">Custom Element (asChild)</h4>
       <Collapsible>
         <CollapsibleTrigger asChild>
-          <button className="flex w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+          <Button variant="outline" className="w-full justify-between">
             Custom button trigger
             <ChevronRight className="h-4 w-4 transition-transform data-[state=open]:rotate-90" />
-          </button>
+          </Button>
         </CollapsibleTrigger>
         <CollapsibleContent variant="card">
           <div className="text-sm text-muted-foreground">

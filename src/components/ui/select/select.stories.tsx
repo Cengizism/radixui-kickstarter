@@ -1,5 +1,9 @@
 import { Badge } from '../badge/badge';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Flag } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Slider } from '@/components/ui/slider';
 import { useState } from 'react';
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import {
@@ -400,12 +404,12 @@ const fruits = [
 ];
 
 const countries = [
-  { value: "us", label: "United States", flag: "🇺🇸" },
-  { value: "uk", label: "United Kingdom", flag: "🇬🇧" },
-  { value: "fr", label: "France", flag: "🇫🇷" },
-  { value: "de", label: "Germany", flag: "🇩🇪" },
-  { value: "jp", label: "Japan", flag: "🇯🇵" },
-  { value: "cn", label: "China", flag: "🇨🇳" },
+  { value: "us", label: "United States", flag: <Flag className="h-4 w-4" /> },
+  { value: "uk", label: "United Kingdom", flag: <Flag className="h-4 w-4" /> },
+  { value: "fr", label: "France", flag: <Flag className="h-4 w-4" /> },
+  { value: "de", label: "Germany", flag: <Flag className="h-4 w-4" /> },
+  { value: "jp", label: "Japan", flag: <Flag className="h-4 w-4" /> },
+  { value: "cn", label: "China", flag: <Flag className="h-4 w-4" /> },
 ];
 
 // Interactive playground for testing different select configurations
@@ -573,7 +577,7 @@ export const RichContent: Story = {
         {countries.map((country) => (
           <SelectItem key={country.value} value={country.value}>
             <div className="flex items-center gap-2">
-              <span className="text-lg">{country.flag}</span>
+              {country.flag}
               <span>{country.label}</span>
             </div>
           </SelectItem>
@@ -1144,18 +1148,18 @@ export const PositioningAndCollisionHandling: Story = {
 
             <div className="space-y-2">
               <label className="text-sm font-medium">Side Offset</label>
-              <input
-                type="range"
-                min="-20"
-                max="20"
-                value={positioning.sideOffset}
-                onChange={(e) =>
+              <Slider
+                value={[positioning.sideOffset]}
+                onValueChange={(value) =>
                   setPositioning((prev) => ({
                     ...prev,
-                    sideOffset: Number(e.target.value),
+                    sideOffset: value[0],
                   }))
                 }
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                min={-20}
+                max={20}
+                step={1}
+                className="w-full"
               />
               <div className="text-xs text-center">
                 {positioning.sideOffset}px
@@ -1164,18 +1168,18 @@ export const PositioningAndCollisionHandling: Story = {
 
             <div className="space-y-2">
               <label className="text-sm font-medium">Align Offset</label>
-              <input
-                type="range"
-                min="-20"
-                max="20"
-                value={positioning.alignOffset}
-                onChange={(e) =>
+              <Slider
+                value={[positioning.alignOffset]}
+                onValueChange={(value) =>
                   setPositioning((prev) => ({
                     ...prev,
-                    alignOffset: Number(e.target.value),
+                    alignOffset: value[0],
                   }))
                 }
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                min={-20}
+                max={20}
+                step={1}
+                className="w-full"
               />
               <div className="text-xs text-center">
                 {positioning.alignOffset}px
@@ -1185,14 +1189,13 @@ export const PositioningAndCollisionHandling: Story = {
 
           <div className="flex flex-wrap gap-4 mb-6">
             <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
+              <Checkbox
                 id="avoid-collisions"
                 checked={positioning.avoidCollisions}
-                onChange={(e) =>
+                onCheckedChange={(checked) =>
                   setPositioning((prev) => ({
                     ...prev,
-                    avoidCollisions: e.target.checked,
+                    avoidCollisions: checked === true,
                   }))
                 }
               />
@@ -1203,18 +1206,18 @@ export const PositioningAndCollisionHandling: Story = {
 
             <div className="flex items-center space-x-2">
               <label className="text-sm">Collision Padding:</label>
-              <input
+              <Input
                 type="number"
                 min="0"
                 max="50"
-                value={positioning.collisionPadding}
+                value={positioning.collisionPadding.toString()}
                 onChange={(e) =>
                   setPositioning((prev) => ({
                     ...prev,
                     collisionPadding: Number(e.target.value),
                   }))
                 }
-                className="w-16 px-2 py-1 text-sm border rounded"
+                className="w-16"
               />
               <span className="text-xs text-muted-foreground">px</span>
             </div>

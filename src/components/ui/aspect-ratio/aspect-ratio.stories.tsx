@@ -1,7 +1,18 @@
 import * as React from 'react';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import {
+  Smartphone,
+  User,
+  Play,
+  Camera,
+  Monitor,
+  ShoppingBag,
+  Headphones,
+  Watch,
+} from "lucide-react";
 
 export default {
   title: "UI/AspectRatio",
@@ -237,18 +248,17 @@ export const ImageContainers = () => (
       <div className="w-[120px]">
         <AspectRatio ratio="1:1" rounded="full">
           <div className="flex h-full items-center justify-center bg-gradient-to-br from-indigo-400 to-purple-600 text-white">
-            👤
+            <User className="h-8 w-8" />
           </div>
         </AspectRatio>
       </div>
-    </div>
-
+    </div>{" "}
     <div>
       <h3 className="mb-2 text-sm font-medium">Video Thumbnail (16:9)</h3>
       <div className="w-[320px]">
         <AspectRatio ratio="16:9" rounded="lg">
           <div className="flex h-full items-center justify-center bg-black text-white relative">
-            <div className="text-4xl">▶️</div>
+            <Play className="h-12 w-12" fill="white" />
             <div className="absolute bottom-2 right-2 bg-black/80 px-2 py-1 rounded text-xs">
               4:32
             </div>
@@ -256,14 +266,13 @@ export const ImageContainers = () => (
         </AspectRatio>
       </div>
     </div>
-
     <div>
       <h3 className="mb-2 text-sm font-medium">Photo Frame (4:3)</h3>
       <div className="w-[240px]">
         <AspectRatio ratio="4:3" rounded="default">
           <div className="flex h-full items-center justify-center bg-gradient-to-br from-emerald-100 to-emerald-300">
             <div className="text-center">
-              <div className="text-2xl mb-2">📸</div>
+              <Camera className="h-8 w-8 mb-2 mx-auto text-emerald-600" />
               <div className="text-xs text-emerald-700">Photo placeholder</div>
             </div>
           </div>
@@ -324,7 +333,7 @@ export const ProductShowcase = () => (
       <AspectRatio ratio="1:1">
         <div className="flex h-full items-center justify-center bg-gradient-to-br from-orange-100 to-orange-200">
           <div className="text-center">
-            <div className="text-3xl mb-2">👟</div>
+            <ShoppingBag className="h-12 w-12 mb-2 text-orange-600" />
             <Badge variant="secondary">New</Badge>
           </div>
         </div>
@@ -343,7 +352,7 @@ export const ProductShowcase = () => (
       <AspectRatio ratio="1:1">
         <div className="flex h-full items-center justify-center bg-gradient-to-br from-blue-100 to-blue-200">
           <div className="text-center">
-            <div className="text-3xl mb-2">🎧</div>
+            <Headphones className="h-12 w-12 mb-2 text-blue-600" />
             <Badge variant="destructive">Sale</Badge>
           </div>
         </div>
@@ -360,7 +369,7 @@ export const ProductShowcase = () => (
       <AspectRatio ratio="1:1">
         <div className="flex h-full items-center justify-center bg-gradient-to-br from-green-100 to-green-200">
           <div className="text-center">
-            <div className="text-3xl mb-2">⌚</div>
+            <Watch className="h-12 w-12 mb-2 text-green-600" />
             <Badge>Featured</Badge>
           </div>
         </div>
@@ -419,7 +428,7 @@ export const ResponsiveDesign = () => (
         <AspectRatio ratio="9:16" rounded="lg">
           <div className="flex h-full items-center justify-center bg-gradient-to-b from-indigo-500 to-purple-600 text-white">
             <div className="text-center">
-              <div className="text-lg font-bold">📱</div>
+              <Smartphone className="h-6 w-6 mx-auto" />
               <div className="text-xs mt-2">Mobile Video</div>
             </div>
           </div>
@@ -432,7 +441,7 @@ export const ResponsiveDesign = () => (
       <AspectRatio ratio="21:9" rounded="lg">
         <div className="flex h-full items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-600 text-white">
           <div className="text-center">
-            <div className="text-xl font-bold">🖥️</div>
+            <Monitor className="h-8 w-8 mx-auto font-bold" />
             <div className="text-sm mt-2">Ultra-wide Banner</div>
           </div>
         </div>
@@ -485,17 +494,15 @@ export const ControlledRatio = () => {
         <label className="text-sm font-medium">Select Aspect Ratio:</label>
         <div className="flex flex-wrap gap-2">
           {ratioOptions.map((option) => (
-            <button
+            <Button
               key={option.value}
+              variant={currentRatio === option.value ? "default" : "outline"}
+              size="sm"
               onClick={() => setCurrentRatio(option.value)}
-              className={`px-3 py-1 text-xs rounded-md border transition-colors ${
-                currentRatio === option.value
-                  ? "bg-primary text-primary-foreground border-primary"
-                  : "bg-background border-border hover:bg-muted"
-              }`}
+              className="text-xs"
             >
               {option.label}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
@@ -566,7 +573,7 @@ export const AdvancedExample = () => {
         return (
           <div className="flex h-full items-center justify-center bg-black text-white relative">
             <div className="text-center">
-              <div className="text-4xl mb-2">▶️</div>
+              <Play className="h-12 w-12 mb-2" fill="white" />
               <div className="text-sm">Video Player</div>
             </div>
             <div className="absolute bottom-4 left-4 bg-black/80 px-2 py-1 rounded text-xs">
@@ -601,17 +608,15 @@ export const AdvancedExample = () => {
           <label className="text-sm font-medium">Content Type:</label>
           <div className="flex gap-2">
             {(["image", "video", "chart"] as const).map((type) => (
-              <button
+              <Button
                 key={type}
+                variant={contentType === type ? "default" : "outline"}
+                size="sm"
                 onClick={() => setContentType(type)}
-                className={`px-3 py-1 text-xs rounded-md border transition-colors capitalize ${
-                  contentType === type
-                    ? "bg-primary text-primary-foreground border-primary"
-                    : "bg-background border-border hover:bg-muted"
-                }`}
+                className="text-xs capitalize"
               >
                 {type}
-              </button>
+              </Button>
             ))}
           </div>
         </div>
@@ -620,17 +625,15 @@ export const AdvancedExample = () => {
           <label className="text-sm font-medium">Aspect Ratio:</label>
           <div className="flex flex-wrap gap-1">
             {(["1:1", "4:3", "16:9", "21:9"] as const).map((r) => (
-              <button
+              <Button
                 key={r}
+                variant={ratio === r ? "default" : "outline"}
+                size="sm"
                 onClick={() => setRatio(r)}
-                className={`px-2 py-1 text-xs rounded border transition-colors ${
-                  ratio === r
-                    ? "bg-primary text-primary-foreground border-primary"
-                    : "bg-background border-border hover:bg-muted"
-                }`}
+                className="text-xs px-2"
               >
                 {r}
-              </button>
+              </Button>
             ))}
           </div>
         </div>

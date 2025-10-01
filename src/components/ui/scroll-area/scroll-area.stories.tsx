@@ -2,8 +2,11 @@ import React from 'react';
 import { Avatar, AvatarFallback } from '../avatar/avatar';
 import { Badge } from '../badge/badge';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '../separator/separator';
+import { Slider } from '@/components/ui/slider';
 import {
   Card,
   CardContent,
@@ -23,6 +26,14 @@ import {
   Clock,
   User,
   Settings,
+  Folder,
+  Code,
+  Layers,
+  Wrench,
+  Zap,
+  CircleDot,
+  X,
+  WavesIcon as Wave,
 } from "lucide-react";
 
 export default {
@@ -544,7 +555,7 @@ export const FileBrowser = () => {
                   <div className="flex items-center justify-center w-8 h-8">
                     {file.type === "folder" ? (
                       <div className="w-6 h-6 bg-blue-100 rounded flex items-center justify-center">
-                        📁
+                        <Folder className="h-4 w-4 text-blue-600" />
                       </div>
                     ) : (
                       IconComponent && (
@@ -580,7 +591,7 @@ export const ChatMessages = () => {
     {
       id: 1,
       user: "Alice",
-      message: "Hey everyone! 👋",
+      message: "Hey everyone!",
       time: "10:30 AM",
       avatar: "A",
     },
@@ -644,7 +655,7 @@ export const ChatMessages = () => {
     {
       id: 10,
       user: "Diana",
-      message: "Alright, I'm here now! 🎉",
+      message: "Alright, I'm here now!",
       time: "10:45 AM",
       avatar: "D",
     },
@@ -988,24 +999,21 @@ export const AdvancedScrollBehavior = {
 
             <div className="space-y-2">
               <label className="text-sm font-medium">Hide Delay (ms):</label>
-              <input
-                type="range"
-                min="0"
-                max="2000"
-                step="100"
-                value={hideDelay}
-                onChange={(e) => setHideDelay(Number(e.target.value))}
+              <Slider
+                value={[hideDelay]}
+                onValueChange={(value) => setHideDelay(value[0])}
+                max={2000}
+                step={100}
                 className="w-32"
               />
               <div className="text-xs text-muted-foreground">{hideDelay}ms</div>
             </div>
 
             <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
+              <Checkbox
                 id="rtl-toggle"
                 checked={isRTL}
-                onChange={(e) => setIsRTL(e.target.checked)}
+                onCheckedChange={(checked) => setIsRTL(checked === true)}
               />
               <label htmlFor="rtl-toggle" className="text-sm font-medium">
                 RTL Direction
@@ -1175,11 +1183,10 @@ export const DynamicContentScrolling = {
             </Button>
 
             <div className="flex items-center ml-4">
-              <input
-                type="checkbox"
+              <Checkbox
                 id="auto-scroll"
                 checked={autoScroll}
-                onChange={(e) => setAutoScroll(e.target.checked)}
+                onCheckedChange={(checked) => setAutoScroll(checked === true)}
                 className="mr-2"
               />
               <label htmlFor="auto-scroll" className="text-sm">
@@ -1222,7 +1229,7 @@ export const DynamicContentScrolling = {
                         setItems((prev) => prev.filter((_, i) => i !== index))
                       }
                     >
-                      ✕
+                      <X className="h-4 w-4" />
                     </Button>
                   </div>
                 ))}
@@ -1432,8 +1439,9 @@ export const useComponentState = (initialValue: boolean = false) => {
                   <div className="space-y-1">
                     {Object.entries(fileStructure).map(([folder, files]) => (
                       <div key={folder}>
-                        <div className="font-medium text-sm px-2 py-1 text-muted-foreground">
-                          📁 {folder}/
+                        <div className="font-medium text-sm px-2 py-1 text-muted-foreground flex items-center gap-1">
+                          <Folder className="h-3 w-3" />
+                          {folder}/
                         </div>
                         <div className="ml-4 space-y-1">
                           {files.map((file) => (
@@ -1448,7 +1456,8 @@ export const useComponentState = (initialValue: boolean = false) => {
                                   : ""
                               }`}
                             >
-                              📄 {file}
+                              <FileText className="inline h-3 w-3 mr-1" />
+                              {file}
                             </button>
                           ))}
                         </div>
@@ -1461,20 +1470,25 @@ export const useComponentState = (initialValue: boolean = false) => {
                   <div className="space-y-1 text-sm">
                     <div className="font-medium px-2 py-1">Outline</div>
                     <div className="ml-2 space-y-1">
-                      <div className="px-2 py-1 hover:bg-muted rounded cursor-pointer">
-                        📋 Imports
+                      <div className="px-2 py-1 hover:bg-muted rounded cursor-pointer flex items-center gap-2">
+                        <Code className="h-3 w-3" />
+                        Imports
                       </div>
-                      <div className="px-2 py-1 hover:bg-muted rounded cursor-pointer">
-                        🏗️ Interface
+                      <div className="px-2 py-1 hover:bg-muted rounded cursor-pointer flex items-center gap-2">
+                        <Layers className="h-3 w-3" />
+                        Interface
                       </div>
-                      <div className="px-2 py-1 hover:bg-muted rounded cursor-pointer">
-                        ⚛️ Component
+                      <div className="px-2 py-1 hover:bg-muted rounded cursor-pointer flex items-center gap-2">
+                        <Zap className="h-3 w-3" />
+                        Component
                       </div>
-                      <div className="px-2 py-1 hover:bg-muted rounded cursor-pointer">
-                        🔧 Utils
+                      <div className="px-2 py-1 hover:bg-muted rounded cursor-pointer flex items-center gap-2">
+                        <Wrench className="h-3 w-3" />
+                        Utils
                       </div>
-                      <div className="px-2 py-1 hover:bg-muted rounded cursor-pointer">
-                        🪝 Hooks
+                      <div className="px-2 py-1 hover:bg-muted rounded cursor-pointer flex items-center gap-2">
+                        <Wave className="h-3 w-3" />
+                        Hooks
                       </div>
                     </div>
                   </div>
@@ -1482,10 +1496,7 @@ export const useComponentState = (initialValue: boolean = false) => {
 
                 {activePanel === "search" && (
                   <div className="space-y-2">
-                    <input
-                      placeholder="Search files..."
-                      className="w-full px-2 py-1 text-sm border rounded"
-                    />
+                    <Input placeholder="Search files..." className="text-sm" />
                     <div className="text-sm text-muted-foreground px-2">
                       Search results will appear here...
                     </div>
@@ -1536,7 +1547,10 @@ export const useComponentState = (initialValue: boolean = false) => {
                 {selectedFile && <span>UTF-8</span>}
               </div>
               <div className="flex items-center space-x-2">
-                <span className="text-green-600">● No errors</span>
+                <span className="text-green-600 flex items-center gap-1">
+                  <CircleDot className="h-3 w-3" />
+                  No errors
+                </span>
                 <span>{selectedFile ? "Modified" : "No file selected"}</span>
               </div>
             </div>

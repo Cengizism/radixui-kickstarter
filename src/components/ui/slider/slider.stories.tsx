@@ -1,8 +1,20 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '../input/input';
 import { Label } from '../label/label';
 import { Slider } from '@/components/ui/slider';
+import {
+  VolumeX,
+  Volume2,
+  Moon,
+  Sun,
+  Snowflake,
+  Flame,
+  SkipBack,
+  Play,
+  SkipForward,
+} from "lucide-react";
 
 export default {
   title: "UI/Slider",
@@ -359,8 +371,14 @@ export const ControlledSlider = () => {
         </div>
         <Slider value={volume} onValueChange={setVolume} max={100} step={1} />
         <div className="flex justify-between text-xs text-muted-foreground">
-          <span>🔇 Mute</span>
-          <span>🔊 Loud</span>
+          <span className="flex items-center gap-1">
+            <VolumeX className="h-3 w-3" />
+            Mute
+          </span>
+          <span className="flex items-center gap-1">
+            <Volume2 className="h-3 w-3" />
+            Loud
+          </span>
         </div>
       </div>
 
@@ -376,8 +394,14 @@ export const ControlledSlider = () => {
           step={5}
         />
         <div className="flex justify-between text-xs text-muted-foreground">
-          <span>🌙 Dim</span>
-          <span>☀️ Bright</span>
+          <span className="flex items-center gap-1">
+            <Moon className="h-3 w-3" />
+            Dim
+          </span>
+          <span className="flex items-center gap-1">
+            <Sun className="h-3 w-3" />
+            Bright
+          </span>
         </div>
       </div>
 
@@ -394,8 +418,14 @@ export const ControlledSlider = () => {
           step={1}
         />
         <div className="flex justify-between text-xs text-muted-foreground">
-          <span>❄️ Cold</span>
-          <span>🔥 Hot</span>
+          <span className="flex items-center gap-1">
+            <Snowflake className="h-3 w-3" />
+            Cold
+          </span>
+          <span className="flex items-center gap-1">
+            <Flame className="h-3 w-3" />
+            Hot
+          </span>
         </div>
       </div>
     </div>
@@ -643,11 +673,13 @@ export const MediaControls = () => {
 
       <div className="flex justify-center space-x-3">
         <Button variant="outline" size="sm">
-          ⏮
+          <SkipBack className="h-4 w-4" />
         </Button>
-        <Button size="sm">⏯</Button>
+        <Button size="sm">
+          <Play className="h-4 w-4" />
+        </Button>
         <Button variant="outline" size="sm">
-          ⏭
+          <SkipForward className="h-4 w-4" />
         </Button>
       </div>
     </div>
@@ -883,71 +915,69 @@ export const AdvancedControlledSliders = {
             </div>
 
             <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
+              <Checkbox
                 id="inverted"
                 checked={sliderConfig.inverted}
-                onChange={(e) =>
+                onCheckedChange={(checked) =>
                   setSliderConfig((prev) => ({
                     ...prev,
-                    inverted: e.target.checked,
+                    inverted: checked === true,
                   }))
                 }
               />
-              <label htmlFor="inverted" className="text-sm">
+              <Label htmlFor="inverted" className="text-sm">
                 Inverted
-              </label>
+              </Label>
             </div>
 
             <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
+              <Checkbox
                 id="disabled"
                 checked={sliderConfig.disabled}
-                onChange={(e) =>
+                onCheckedChange={(checked) =>
                   setSliderConfig((prev) => ({
                     ...prev,
-                    disabled: e.target.checked,
+                    disabled: checked === true,
                   }))
                 }
               />
-              <label htmlFor="disabled" className="text-sm">
+              <Label htmlFor="disabled" className="text-sm">
                 Disabled
-              </label>
+              </Label>
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">Step Size</label>
-              <input
+              <Label className="text-sm font-medium">Step Size</Label>
+              <Input
                 type="number"
                 min="0.1"
                 max="10"
                 step="0.1"
-                value={sliderConfig.step}
+                value={sliderConfig.step.toString()}
                 onChange={(e) =>
                   setSliderConfig((prev) => ({
                     ...prev,
                     step: Number(e.target.value),
                   }))
                 }
-                className="w-full px-2 py-1 text-sm border rounded"
+                className="w-full"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">Min Steps Between</label>
-              <input
+              <Label className="text-sm font-medium">Min Steps Between</Label>
+              <Input
                 type="number"
                 min="0"
                 max="10"
-                value={sliderConfig.minStepsBetweenThumbs}
+                value={sliderConfig.minStepsBetweenThumbs.toString()}
                 onChange={(e) =>
                   setSliderConfig((prev) => ({
                     ...prev,
                     minStepsBetweenThumbs: Number(e.target.value),
                   }))
                 }
-                className="w-full px-2 py-1 text-sm border rounded"
+                className="w-full"
               />
             </div>
 

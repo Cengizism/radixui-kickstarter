@@ -1,13 +1,14 @@
-import {
-  ArrowDown,
-  ArrowUp,
-  ArrowUpDown,
-  MoreHorizontal
-  } from 'lucide-react';
 import { Badge } from '../badge/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '../checkbox/checkbox';
 import { useState } from 'react';
+import {
+  ArrowDown,
+  ArrowUp,
+  ArrowUpDown,
+  MoreHorizontal,
+  Star,
+} from "lucide-react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import {
   Table,
@@ -625,7 +626,12 @@ export const Sortable: Story = {
               <TableCell>{product.category}</TableCell>
               <TableCell className="text-right">${product.price}</TableCell>
               <TableCell className="text-right">{product.stock}</TableCell>
-              <TableCell className="text-right">⭐ {product.rating}</TableCell>
+              <TableCell className="text-right">
+                <div className="flex items-center justify-end gap-1">
+                  <Star className="h-4 w-4 fill-current text-yellow-500" />
+                  {product.rating}
+                </div>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

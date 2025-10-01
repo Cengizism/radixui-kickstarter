@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '../checkbox/checkbox';
 import { Input } from '../input/input';
 import { Label } from '../label/label';
 import { Switch } from '../switch/switch';
@@ -9,7 +10,15 @@ import {
   TabsList,
   TabsTrigger
   } from '@/components/ui/tabs';
+import { Textarea } from '../textarea/textarea';
 import { useState } from 'react';
+import {
+  BarChart3,
+  TrendingUp,
+  Settings,
+  Lock,
+  CreditCard,
+} from "lucide-react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta = {
@@ -781,17 +790,17 @@ export const DashboardExample: Story = {
             <h3 className="text-lg font-medium mb-4">Recent Tasks</h3>
             <div className="space-y-2">
               <div className="flex items-center gap-2 p-2 border rounded">
-                <input type="checkbox" className="rounded" />
+                <Checkbox />
                 <span className="text-sm">Review design mockups</span>
               </div>
               <div className="flex items-center gap-2 p-2 border rounded">
-                <input type="checkbox" className="rounded" defaultChecked />
+                <Checkbox defaultChecked />
                 <span className="text-sm line-through text-muted-foreground">
                   Update documentation
                 </span>
               </div>
               <div className="flex items-center gap-2 p-2 border rounded">
-                <input type="checkbox" className="rounded" />
+                <Checkbox />
                 <span className="text-sm">Deploy to staging</span>
               </div>
             </div>
@@ -1078,31 +1087,31 @@ export const AdvancedControlledTabs: Story = {
       {
         value: "overview",
         label: "Overview",
-        icon: "📊",
+        icon: <BarChart3 className="h-4 w-4" />,
         description: "General dashboard and key metrics",
       },
       {
         value: "analytics",
         label: "Analytics",
-        icon: "📈",
+        icon: <TrendingUp className="h-4 w-4" />,
         description: "Detailed analytics and reporting",
       },
       {
         value: "settings",
         label: "Settings",
-        icon: "⚙️",
+        icon: <Settings className="h-4 w-4" />,
         description: "Application configuration",
       },
       {
         value: "security",
         label: "Security",
-        icon: "🔒",
+        icon: <Lock className="h-4 w-4" />,
         description: "Security and authentication settings",
       },
       {
         value: "billing",
         label: "Billing",
-        icon: "💳",
+        icon: <CreditCard className="h-4 w-4" />,
         description: "Subscription and payment management",
       },
     ];
@@ -1120,19 +1129,21 @@ export const AdvancedControlledTabs: Story = {
               <label className="text-sm font-medium">Orientation</label>
               <div className="flex gap-2">
                 {(["horizontal", "vertical"] as const).map((orientation) => (
-                  <button
+                  <Button
                     key={orientation}
                     onClick={() =>
                       setTabConfig((prev) => ({ ...prev, orientation }))
                     }
-                    className={`px-2 py-1 rounded text-xs ${
+                    variant={
                       tabConfig.orientation === orientation
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-background border"
-                    }`}
+                        ? "default"
+                        : "outline"
+                    }
+                    size="sm"
+                    className="text-xs"
                   >
                     {orientation}
-                  </button>
+                  </Button>
                 ))}
               </div>
             </div>
@@ -1141,7 +1152,7 @@ export const AdvancedControlledTabs: Story = {
               <label className="text-sm font-medium">Activation Mode</label>
               <div className="flex gap-2">
                 {(["automatic", "manual"] as const).map((mode) => (
-                  <button
+                  <Button
                     key={mode}
                     onClick={() =>
                       setTabConfig((prev) => ({
@@ -1149,25 +1160,24 @@ export const AdvancedControlledTabs: Story = {
                         activationMode: mode,
                       }))
                     }
-                    className={`px-2 py-1 rounded text-xs ${
-                      tabConfig.activationMode === mode
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-background border"
-                    }`}
+                    variant={
+                      tabConfig.activationMode === mode ? "default" : "outline"
+                    }
+                    size="sm"
+                    className="text-xs"
                   >
                     {mode}
-                  </button>
+                  </Button>
                 ))}
               </div>
             </div>
 
             <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
+              <Checkbox
                 id="loop"
                 checked={tabConfig.loop}
-                onChange={(e) =>
-                  setTabConfig((prev) => ({ ...prev, loop: e.target.checked }))
+                onCheckedChange={(checked) =>
+                  setTabConfig((prev) => ({ ...prev, loop: !!checked }))
                 }
               />
               <label htmlFor="loop" className="text-sm">
@@ -1179,17 +1189,15 @@ export const AdvancedControlledTabs: Story = {
               <label className="text-sm font-medium">Direction</label>
               <div className="flex gap-2">
                 {(["ltr", "rtl"] as const).map((dir) => (
-                  <button
+                  <Button
                     key={dir}
                     onClick={() => setTabConfig((prev) => ({ ...prev, dir }))}
-                    className={`px-2 py-1 rounded text-xs uppercase ${
-                      tabConfig.dir === dir
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-background border"
-                    }`}
+                    variant={tabConfig.dir === dir ? "default" : "outline"}
+                    size="sm"
+                    className="text-xs uppercase"
                   >
                     {dir}
-                  </button>
+                  </Button>
                 ))}
               </div>
             </div>
@@ -1669,13 +1677,13 @@ export const DynamicTabManagement: Story = {
                       >
                         Tab Content
                       </Label>
-                      <textarea
+                      <Textarea
                         id={`tab-content-${tab.id}`}
                         value={tab.content}
                         onChange={(e) =>
                           updateTabContent(tab.id, e.target.value)
                         }
-                        className="mt-1 w-full h-32 px-3 py-2 border border-input rounded-md text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                        className="mt-1 h-32 resize-none"
                         placeholder="Enter tab content..."
                       />
                     </div>

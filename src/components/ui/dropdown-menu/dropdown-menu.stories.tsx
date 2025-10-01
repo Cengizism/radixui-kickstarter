@@ -825,7 +825,7 @@ export const ContextMenuStyle = () => (
         <DropdownMenuTrigger asChild>
           <div className="cursor-pointer p-4 hover:bg-accent rounded-md">
             <div className="w-16 h-16 bg-muted rounded-lg mb-2 flex items-center justify-center">
-              📄
+              <FileText className="h-8 w-8 text-blue-500" />
             </div>
             <p className="text-sm">Document.pdf</p>
             <p className="text-xs text-muted-foreground">Right-click menu</p>
@@ -880,9 +880,13 @@ export const DifferentTriggers = () => (
       <span className="text-sm w-20">Avatar:</span>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="h-8 w-8 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90">
+          <Button
+            variant="default"
+            size="icon"
+            className="h-8 w-8 rounded-full"
+          >
             JD
-          </button>
+          </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem>Profile</DropdownMenuItem>
@@ -914,7 +918,9 @@ export const DifferentTriggers = () => (
       <span className="text-sm w-20">Text:</span>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="text-sm hover:underline">Click me</button>
+          <Button variant="link" size="sm">
+            Click me
+          </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem>Option A</DropdownMenuItem>

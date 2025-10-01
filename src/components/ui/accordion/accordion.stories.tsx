@@ -1,5 +1,7 @@
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Check } from 'lucide-react';
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import {
   Accordion,
@@ -321,10 +323,22 @@ export const Playground = {
           <div className="space-y-3">
             <p>Comprehensive browser support:</p>
             <div className="grid grid-cols-2 gap-2 text-sm">
-              <div>✅ Chrome 80+</div>
-              <div>✅ Firefox 75+</div>
-              <div>✅ Safari 13+</div>
-              <div>✅ Edge 80+</div>
+              <div className="flex items-center gap-1">
+                <Check className="h-3 w-3 text-green-600" />
+                Chrome 80+
+              </div>
+              <div className="flex items-center gap-1">
+                <Check className="h-3 w-3 text-green-600" />
+                Firefox 75+
+              </div>
+              <div className="flex items-center gap-1">
+                <Check className="h-3 w-3 text-green-600" />
+                Safari 13+
+              </div>
+              <div className="flex items-center gap-1">
+                <Check className="h-3 w-3 text-green-600" />
+                Edge 80+
+              </div>
             </div>
             <p className="text-xs text-muted-foreground">
               Includes assistive technology compatibility and mobile support.
@@ -577,18 +591,20 @@ export const ControlledAccordion = () => {
           <Badge variant="outline" className="text-xs">
             Current value: {value || "none"}
           </Badge>
-          <button
+          <Button
             onClick={() => setValue(value === "item-1" ? "" : "item-1")}
-            className="text-xs px-2 py-1 bg-primary text-primary-foreground rounded"
+            size="sm"
+            className="text-xs"
           >
             Toggle Item 1
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={() => setValue(value === "item-2" ? "" : "item-2")}
-            className="text-xs px-2 py-1 bg-primary text-primary-foreground rounded"
+            size="sm"
+            className="text-xs"
           >
             Toggle Item 2
-          </button>
+          </Button>
         </div>
       </div>
       <Accordion type="single" value={value} onValueChange={setValue}>
@@ -747,23 +763,23 @@ export const AdvancedExample = () => (
             </p>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex items-start gap-2">
-                <span className="text-green-500 mt-1">✓</span>
+                <Check className="h-3 w-3 text-green-600 mt-1 flex-shrink-0" />
                 <span>Proper ARIA roles and properties</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-green-500 mt-1">✓</span>
+                <Check className="h-3 w-3 text-green-600 mt-1 flex-shrink-0" />
                 <span>Keyboard navigation with arrow keys</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-green-500 mt-1">✓</span>
+                <Check className="h-3 w-3 text-green-600 mt-1 flex-shrink-0" />
                 <span>Screen reader announcements</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-green-500 mt-1">✓</span>
+                <Check className="h-3 w-3 text-green-600 mt-1 flex-shrink-0" />
                 <span>Focus management and indicators</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-green-500 mt-1">✓</span>
+                <Check className="h-3 w-3 text-green-600 mt-1 flex-shrink-0" />
                 <span>High contrast mode support</span>
               </li>
             </ul>

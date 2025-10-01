@@ -1,6 +1,11 @@
 import { Badge } from '../badge/badge';
 import { Button } from '@/components/ui/button';
-import { Pause, Play, RotateCcw } from 'lucide-react';
+import {
+  CheckCircle,
+  Pause,
+  Play,
+  RotateCcw
+  } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 import { useEffect, useMemo, useState } from 'react';
 import type { Meta, StoryObj } from "@storybook/react-vite";
@@ -710,8 +715,9 @@ export const MultiStepProcess: Story = {
 
         {overallProgress === 100 && (
           <div className="p-3 bg-green-50 rounded-lg">
-            <div className="text-sm font-medium text-green-800">
-              ✅ Process Complete
+            <div className="flex items-center gap-2 text-sm font-medium text-green-800">
+              <CheckCircle className="h-4 w-4" />
+              Process Complete
             </div>
             <div className="text-xs text-green-600">
               All steps have been successfully completed.

@@ -1,5 +1,7 @@
 import React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Check, Star } from 'lucide-react';
 
 export default {
   title: "UI/Avatar",
@@ -310,7 +312,7 @@ export const WithBadges = () => (
         <AvatarFallback className="bg-blue-500 text-white">VF</AvatarFallback>
       </Avatar>
       <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-blue-500 text-white">
-        ✓
+        <Check className="h-3 w-3" />
       </span>
       <p className="text-xs text-center mt-2">Verified</p>
     </div>
@@ -321,7 +323,7 @@ export const WithBadges = () => (
         <AvatarFallback className="bg-yellow-500 text-white">PR</AvatarFallback>
       </Avatar>
       <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-yellow-500 text-white">
-        ⭐
+        <Star className="h-3 w-3" fill="currentColor" />
       </span>
       <p className="text-xs text-center mt-2">Premium</p>
     </div>
@@ -399,17 +401,15 @@ export const LoadingStatusControl = () => {
         <label className="text-sm font-medium">Test Image URLs:</label>
         <div className="flex gap-2">
           {Object.entries(testUrls).map(([key, url]) => (
-            <button
+            <Button
               key={key}
+              variant={imageSrc === url ? "default" : "outline"}
+              size="sm"
               onClick={() => setImageSrc(url)}
-              className={`px-3 py-1 text-xs rounded-md border transition-colors capitalize ${
-                imageSrc === url
-                  ? "bg-primary text-primary-foreground border-primary"
-                  : "bg-background border-border hover:bg-muted"
-              }`}
+              className="text-xs capitalize"
             >
               {key}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
@@ -451,12 +451,9 @@ export const DelayedFallback = () => {
 
   return (
     <div className="space-y-4 w-full max-w-md">
-      <button
-        onClick={() => setShowComparison(!showComparison)}
-        className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90"
-      >
+      <Button onClick={() => setShowComparison(!showComparison)}>
         {showComparison ? "Hide" : "Show"} Fallback Delay Comparison
-      </button>
+      </Button>
 
       {showComparison && (
         <div className="space-y-4">
@@ -514,8 +511,9 @@ export const AsChildWithTooltip = () => (
     <div>
       <h4 className="text-sm font-medium mb-2">As Child (Button Element)</h4>
       <Avatar size="lg" asChild>
-        <button
-          className="hover:ring-2 hover:ring-primary hover:ring-offset-2 transition-all"
+        <Button
+          variant="ghost"
+          className="hover:ring-2 hover:ring-primary hover:ring-offset-2 transition-all p-0 h-auto rounded-full"
           onClick={() => alert("Avatar clicked!")}
         >
           <AvatarImage
@@ -523,7 +521,7 @@ export const AsChildWithTooltip = () => (
             alt="Clickable avatar"
           />
           <AvatarFallback>CA</AvatarFallback>
-        </button>
+        </Button>
       </Avatar>
     </div>
   </div>

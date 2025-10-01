@@ -1,9 +1,27 @@
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
 import { useState } from 'react';
+import {
+  Smartphone,
+  Menu,
+  Settings,
+  Folder,
+  Camera,
+  FileText,
+  Phone,
+  Bell,
+} from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Sheet,
   SheetContent,
@@ -200,7 +218,10 @@ export const SideVariations = () => (
 export const NavigationMenu = () => (
   <Sheet>
     <SheetTrigger asChild>
-      <Button variant="outline">☰ Menu</Button>
+      <Button variant="outline">
+        <Menu className="h-4 w-4 mr-2" />
+        Menu
+      </Button>
     </SheetTrigger>
     <SheetContent side="left">
       <SheetHeader>
@@ -282,7 +303,10 @@ export const NavigationMenu = () => (
 export const SettingsPanel = () => (
   <Sheet>
     <SheetTrigger asChild>
-      <Button variant="outline">⚙️ Settings</Button>
+      <Button variant="outline">
+        <Settings className="h-4 w-4 mr-2" />
+        Settings
+      </Button>
     </SheetTrigger>
     <SheetContent>
       <SheetHeader>
@@ -297,17 +321,19 @@ export const SettingsPanel = () => (
           <div className="space-y-3">
             <div>
               <Label htmlFor="theme">Theme</Label>
-              <select
-                id="theme"
-                className="w-full mt-1 px-3 py-2 border border-input bg-background rounded-md"
-              >
-                <option value="light">Light</option>
-                <option value="dark">Dark</option>
-                <option value="system">System</option>
-              </select>
+              <Select>
+                <SelectTrigger className="w-full mt-1">
+                  <SelectValue placeholder="Select theme" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="light">Light</SelectItem>
+                  <SelectItem value="dark">Dark</SelectItem>
+                  <SelectItem value="system">System</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div className="flex items-center space-x-2">
-              <input type="checkbox" id="animations" className="rounded" />
+              <Checkbox id="animations" />
               <Label htmlFor="animations">Enable animations</Label>
             </div>
           </div>
@@ -319,28 +345,15 @@ export const SettingsPanel = () => (
           <h4 className="font-medium">Notifications</h4>
           <div className="space-y-3">
             <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                id="email-notifications"
-                className="rounded"
-                defaultChecked
-              />
+              <Checkbox id="email-notifications" defaultChecked />
               <Label htmlFor="email-notifications">Email notifications</Label>
             </div>
             <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                id="push-notifications"
-                className="rounded"
-              />
+              <Checkbox id="push-notifications" />
               <Label htmlFor="push-notifications">Push notifications</Label>
             </div>
             <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                id="marketing-emails"
-                className="rounded"
-              />
+              <Checkbox id="marketing-emails" />
               <Label htmlFor="marketing-emails">Marketing emails</Label>
             </div>
           </div>
@@ -352,21 +365,11 @@ export const SettingsPanel = () => (
           <h4 className="font-medium">Privacy</h4>
           <div className="space-y-3">
             <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                id="analytics"
-                className="rounded"
-                defaultChecked
-              />
+              <Checkbox id="analytics" defaultChecked />
               <Label htmlFor="analytics">Allow analytics</Label>
             </div>
             <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                id="cookies"
-                className="rounded"
-                defaultChecked
-              />
+              <Checkbox id="cookies" defaultChecked />
               <Label htmlFor="cookies">Accept cookies</Label>
             </div>
           </div>
@@ -423,7 +426,7 @@ export const ContactForm = () => (
           />
         </div>
         <div className="flex items-center space-x-2">
-          <input type="checkbox" id="newsletter" className="rounded" />
+          <Checkbox id="newsletter" />
           <Label htmlFor="newsletter" className="text-sm">
             Subscribe to our newsletter for updates
           </Label>
@@ -511,7 +514,10 @@ export const ProductDetails = () => (
 export const MobileActionSheet = () => (
   <Sheet>
     <SheetTrigger asChild>
-      <Button variant="outline">📱 Actions</Button>
+      <Button variant="outline">
+        <Smartphone className="h-4 w-4 mr-2" />
+        Actions
+      </Button>
     </SheetTrigger>
     <SheetContent side="bottom">
       <SheetHeader>
@@ -520,19 +526,19 @@ export const MobileActionSheet = () => (
       </SheetHeader>
       <div className="grid grid-cols-2 gap-4 py-4">
         <Button variant="outline" className="h-16 flex-col space-y-2">
-          <span className="text-lg">📁</span>
+          <Folder className="h-6 w-6" />
           <span className="text-sm">Files</span>
         </Button>
         <Button variant="outline" className="h-16 flex-col space-y-2">
-          <span className="text-lg">📷</span>
+          <Camera className="h-6 w-6" />
           <span className="text-sm">Camera</span>
         </Button>
         <Button variant="outline" className="h-16 flex-col space-y-2">
-          <span className="text-lg">📝</span>
+          <FileText className="h-6 w-6" />
           <span className="text-sm">Notes</span>
         </Button>
         <Button variant="outline" className="h-16 flex-col space-y-2">
-          <span className="text-lg">📞</span>
+          <Phone className="h-6 w-6" />
           <span className="text-sm">Contacts</span>
         </Button>
       </div>
@@ -544,7 +550,10 @@ export const MobileActionSheet = () => (
 export const NotificationCenter = () => (
   <Sheet>
     <SheetTrigger asChild>
-      <Button variant="outline">🔔 Notifications (3)</Button>
+      <Button variant="outline">
+        <Bell className="h-4 w-4 mr-2" />
+        Notifications (3)
+      </Button>
     </SheetTrigger>
     <SheetContent side="top">
       <SheetHeader>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Menubar,
   MenubarMenu,
@@ -45,6 +46,9 @@ import {
   Sun,
   Moon,
   Palette,
+  Apple,
+  Cherry,
+  Citrus,
 } from "lucide-react";
 
 export default {
@@ -1724,10 +1728,9 @@ export const InteractionPatterns = () => {
         <h3 className="font-semibold mb-2">Interaction Controls</h3>
         <div className="space-y-2 text-sm">
           <label className="flex items-center">
-            <input
-              type="checkbox"
+            <Checkbox
               checked={preventClose}
-              onChange={(e) => setPreventClose(e.target.checked)}
+              onCheckedChange={(checked) => setPreventClose(checked === true)}
               className="mr-2"
             />
             Prevent menu close on item selection
@@ -1805,13 +1808,16 @@ export const InteractionPatterns = () => {
           <MenubarContent>
             <MenubarLabel>Typeahead Support</MenubarLabel>
             <MenubarItem textValue="apple fruit red">
-              🍎 Apple (try typing "fruit")
+              <Apple className="mr-2 h-4 w-4" />
+              Apple (try typing "fruit")
             </MenubarItem>
             <MenubarItem textValue="banana yellow fruit">
-              🍌 Banana (try typing "yellow")
+              <Citrus className="mr-2 h-4 w-4" />
+              Banana (try typing "yellow")
             </MenubarItem>
             <MenubarItem textValue="cherry red small">
-              🍒 Cherry (try typing "small")
+              <Cherry className="mr-2 h-4 w-4" />
+              Cherry (try typing "small")
             </MenubarItem>
             <MenubarSeparator />
             <MenubarItem textValue="settings preferences config">

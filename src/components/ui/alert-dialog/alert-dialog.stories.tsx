@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { useState } from 'react';
 import {
   AlertTriangle,
@@ -747,10 +748,10 @@ export const AdvancedExample = () => {
               {description}
               {step === 2 && (
                 <div className="mt-3">
-                  <input
+                  <Input
                     type="text"
                     placeholder="Type DELETE to continue"
-                    className="w-full px-3 py-2 border border-border rounded-md text-sm"
+                    className="text-sm"
                   />
                 </div>
               )}

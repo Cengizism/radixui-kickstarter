@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Form } from '@/components/ui/form';
 import { useState } from 'react';
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
@@ -337,7 +338,7 @@ export const SelectAllPattern = {
 // Form integration
 export const FormIntegration = {
   render: () => (
-    <form className="space-y-6 w-80">
+    <Form className="space-y-6 w-80">
       <fieldset className="space-y-3">
         <legend className="text-sm font-semibold">
           Newsletter Preferences
@@ -404,7 +405,7 @@ export const FormIntegration = {
       <Button type="submit" className="w-full">
         Save Preferences
       </Button>
-    </form>
+    </Form>
   ),
   parameters: {
     docs: {

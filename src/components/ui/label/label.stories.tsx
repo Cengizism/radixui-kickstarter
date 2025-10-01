@@ -4,6 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '../checkbox/checkbox';
 import { Input } from '../input/input';
 import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Textarea } from '@/components/ui/textarea';
 
 export default {
   title: "UI/Label",
@@ -206,18 +208,20 @@ export const NestedControls = () => (
       <span>I agree to the terms and conditions</span>
     </Label>
 
-    <Label className="flex items-center space-x-2 cursor-pointer">
-      <input type="radio" name="option" className="rounded border-input" />
-      <span>Option 1</span>
-    </Label>
+    <RadioGroup defaultValue="option1" className="space-y-4">
+      <Label className="flex items-center space-x-2 cursor-pointer">
+        <RadioGroupItem value="option1" />
+        <span>Option 1</span>
+      </Label>
+
+      <Label className="flex items-center space-x-2 cursor-pointer">
+        <RadioGroupItem value="option2" />
+        <span>Option 2</span>
+      </Label>
+    </RadioGroup>
 
     <Label className="flex items-center space-x-2 cursor-pointer">
-      <input type="radio" name="option" className="rounded border-input" />
-      <span>Option 2</span>
-    </Label>
-
-    <Label className="flex items-center space-x-2 cursor-pointer">
-      <input type="checkbox" className="rounded border-input" />
+      <Checkbox />
       <span>Subscribe to newsletter</span>
     </Label>
   </div>
@@ -268,9 +272,9 @@ export const ComplexFormLabels = () => (
           (0/500 characters)
         </span>
       </Label>
-      <textarea
+      <Textarea
         id="description"
-        className="flex min-h-[100px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        className="min-h-[100px]"
         placeholder="Describe your project..."
       />
     </div>
@@ -349,35 +353,22 @@ export const RadioGroupLabels = () => (
     <fieldset className="space-y-3">
       <legend className="text-sm font-medium">Preferred Contact Method</legend>
 
-      <Label className="flex items-center space-x-2 cursor-pointer">
-        <input
-          type="radio"
-          name="contact-method"
-          value="email"
-          className="rounded-full"
-        />
-        <span>Email</span>
-      </Label>
+      <RadioGroup defaultValue="email" className="space-y-3">
+        <Label className="flex items-center space-x-2 cursor-pointer">
+          <RadioGroupItem value="email" />
+          <span>Email</span>
+        </Label>
 
-      <Label className="flex items-center space-x-2 cursor-pointer">
-        <input
-          type="radio"
-          name="contact-method"
-          value="phone"
-          className="rounded-full"
-        />
-        <span>Phone</span>
-      </Label>
+        <Label className="flex items-center space-x-2 cursor-pointer">
+          <RadioGroupItem value="phone" />
+          <span>Phone</span>
+        </Label>
 
-      <Label className="flex items-center space-x-2 cursor-pointer">
-        <input
-          type="radio"
-          name="contact-method"
-          value="sms"
-          className="rounded-full"
-        />
-        <span>SMS</span>
-      </Label>
+        <Label className="flex items-center space-x-2 cursor-pointer">
+          <RadioGroupItem value="sms" />
+          <span>SMS</span>
+        </Label>
+      </RadioGroup>
     </fieldset>
   </div>
 );
@@ -424,9 +415,9 @@ export const CompleteForm = () => (
 
       <div className="space-y-2 md:col-span-2">
         <Label htmlFor="reg-bio">Bio (Optional)</Label>
-        <textarea
+        <Textarea
           id="reg-bio"
-          className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          className="min-h-[80px]"
           placeholder="Tell us about yourself..."
         />
       </div>
@@ -570,9 +561,9 @@ export const AssociationPatterns = () => (
             <span>Enable notifications (entire area is clickable)</span>
           </Label>
 
-          <Label className="block cursor-pointer text-green-600">
-            <input type="checkbox" className="mr-2" />
-            Newsletter subscription (block layout)
+          <Label className="flex items-center space-x-2 cursor-pointer text-green-600">
+            <Checkbox />
+            <span>Newsletter subscription (block layout)</span>
           </Label>
         </div>
         <p className="text-xs text-muted-foreground">
@@ -651,20 +642,21 @@ export const AccessibilityEnhancements = () => (
         <h4 className="font-medium text-sm">Custom Control with Proper Base</h4>
         <div className="space-y-2">
           <Label htmlFor="custom-toggle">Dark Mode</Label>
-          <button
+          <Button
             id="custom-toggle"
-            type="button"
+            variant="ghost"
+            size="sm"
             role="switch"
             aria-checked="false"
-            className="relative inline-flex h-6 w-11 items-center rounded-full bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="relative inline-flex h-6 w-11 items-center rounded-full bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring p-0"
           >
             <span className="sr-only">Toggle dark mode</span>
             <span className="inline-block h-4 w-4 transform rounded-full bg-background shadow-lg transition-transform translate-x-1" />
-          </button>
+          </Button>
         </div>
         <div className="text-xs text-muted-foreground bg-muted p-2 rounded">
-          <strong>Best Practice:</strong> Custom controls use native button
-          element as base for proper accessibility
+          <strong>Best Practice:</strong> Custom controls use Button component
+          as base for proper accessibility
         </div>
       </div>
 
@@ -674,35 +666,22 @@ export const AccessibilityEnhancements = () => (
           Contact Preferences
         </legend>
 
-        <Label className="flex items-center space-x-2 cursor-pointer">
-          <input
-            type="radio"
-            name="contact-pref"
-            value="email"
-            className="rounded-full"
-          />
-          <span>Email notifications</span>
-        </Label>
+        <RadioGroup defaultValue="email" className="space-y-3">
+          <Label className="flex items-center space-x-2 cursor-pointer">
+            <RadioGroupItem value="email" />
+            <span>Email notifications</span>
+          </Label>
 
-        <Label className="flex items-center space-x-2 cursor-pointer">
-          <input
-            type="radio"
-            name="contact-pref"
-            value="sms"
-            className="rounded-full"
-          />
-          <span>SMS notifications</span>
-        </Label>
+          <Label className="flex items-center space-x-2 cursor-pointer">
+            <RadioGroupItem value="sms" />
+            <span>SMS notifications</span>
+          </Label>
 
-        <Label className="flex items-center space-x-2 cursor-pointer">
-          <input
-            type="radio"
-            name="contact-pref"
-            value="none"
-            className="rounded-full"
-          />
-          <span>No notifications</span>
-        </Label>
+          <Label className="flex items-center space-x-2 cursor-pointer">
+            <RadioGroupItem value="none" />
+            <span>No notifications</span>
+          </Label>
+        </RadioGroup>
 
         <div className="text-xs text-muted-foreground bg-muted p-2 rounded">
           <strong>Pattern:</strong> Fieldset and legend provide group context
@@ -820,11 +799,11 @@ export const DynamicLabelStates = () => {
               </span>
             </Label>
 
-            <textarea
+            <Textarea
               id="bio-input"
               value={value}
               onChange={(e) => setValue(e.target.value.slice(0, 160))}
-              className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="min-h-[80px]"
               placeholder="Tell us about yourself..."
             />
           </div>

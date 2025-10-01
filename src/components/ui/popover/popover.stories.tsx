@@ -1,16 +1,28 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Input } from '../input/input';
+import { Label } from '../label/label';
+import { Separator } from '../separator/separator';
 import {
   Calendar,
   HelpCircle,
   Info,
   Settings,
   User,
-  X
-  } from 'lucide-react';
-import { Input } from '../input/input';
-import { Label } from '../label/label';
-import { Separator } from '../separator/separator';
+  X,
+  BookOpen,
+  MessageCircle,
+  Mail,
+  Video,
+  FileText,
+  Folder,
+  Upload,
+  Edit3,
+  Link2,
+  Download,
+  Trash2,
+} from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -627,17 +639,17 @@ export const SettingsPopover = () => (
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-sm">Notifications</span>
-            <input type="checkbox" defaultChecked className="rounded" />
+            <Checkbox defaultChecked />
           </div>
 
           <div className="flex items-center justify-between">
             <span className="text-sm">Dark Mode</span>
-            <input type="checkbox" className="rounded" />
+            <Checkbox />
           </div>
 
           <div className="flex items-center justify-between">
             <span className="text-sm">Auto Save</span>
-            <input type="checkbox" defaultChecked className="rounded" />
+            <Checkbox defaultChecked />
           </div>
         </div>
 
@@ -709,28 +721,32 @@ export const InfoPopover = () => (
                 size="sm"
                 className="w-full justify-start"
               >
-                📚 Documentation
+                <BookOpen className="mr-2 h-4 w-4" />
+                Documentation
               </Button>
               <Button
                 variant="ghost"
                 size="sm"
                 className="w-full justify-start"
               >
-                💬 Live Chat
+                <MessageCircle className="mr-2 h-4 w-4" />
+                Live Chat
               </Button>
               <Button
                 variant="ghost"
                 size="sm"
                 className="w-full justify-start"
               >
-                📧 Email Support
+                <Mail className="mr-2 h-4 w-4" />
+                Email Support
               </Button>
               <Button
                 variant="ghost"
                 size="sm"
                 className="w-full justify-start"
               >
-                🎥 Video Tutorials
+                <Video className="mr-2 h-4 w-4" />
+                Video Tutorials
               </Button>
             </div>
           </div>
@@ -806,25 +822,31 @@ export const ActionMenuPopover = () => (
     <PopoverContent align="start">
       <div className="space-y-1">
         <Button variant="ghost" size="sm" className="w-full justify-start">
-          📄 New Document
+          <FileText className="mr-2 h-4 w-4" />
+          New Document
         </Button>
         <Button variant="ghost" size="sm" className="w-full justify-start">
-          📁 New Folder
+          <Folder className="mr-2 h-4 w-4" />
+          New Folder
         </Button>
         <Button variant="ghost" size="sm" className="w-full justify-start">
-          📤 Upload File
+          <Upload className="mr-2 h-4 w-4" />
+          Upload File
         </Button>
 
         <Separator />
 
         <Button variant="ghost" size="sm" className="w-full justify-start">
-          ✏️ Rename
+          <Edit3 className="mr-2 h-4 w-4" />
+          Rename
         </Button>
         <Button variant="ghost" size="sm" className="w-full justify-start">
-          📋 Copy Link
+          <Link2 className="mr-2 h-4 w-4" />
+          Copy Link
         </Button>
         <Button variant="ghost" size="sm" className="w-full justify-start">
-          📥 Download
+          <Download className="mr-2 h-4 w-4" />
+          Download
         </Button>
 
         <Separator />
@@ -834,7 +856,8 @@ export const ActionMenuPopover = () => (
           size="sm"
           className="w-full justify-start text-red-500"
         >
-          🗑️ Delete
+          <Trash2 className="mr-2 h-4 w-4" />
+          Delete
         </Button>
       </div>
     </PopoverContent>
@@ -1398,14 +1421,12 @@ export const ComplexFormExample = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          <input
-            type="checkbox"
+          <Checkbox
             id="newsletter"
             checked={formData.newsletter}
-            onChange={(e) =>
-              setFormData((prev) => ({ ...prev, newsletter: e.target.checked }))
+            onCheckedChange={(checked) =>
+              setFormData((prev) => ({ ...prev, newsletter: checked === true }))
             }
-            className="rounded"
           />
           <Label htmlFor="newsletter" className="text-sm">
             Subscribe to newsletter
@@ -1449,21 +1470,24 @@ export const ComplexFormExample = () => {
                     size="sm"
                     className="w-full justify-start text-xs"
                   >
-                    📧 Contact Support
+                    <Mail className="mr-2 h-3 w-3" />
+                    Contact Support
                   </Button>
                   <Button
                     variant="ghost"
                     size="sm"
                     className="w-full justify-start text-xs"
                   >
-                    📖 View Documentation
+                    <BookOpen className="mr-2 h-3 w-3" />
+                    View Documentation
                   </Button>
                   <Button
                     variant="ghost"
                     size="sm"
                     className="w-full justify-start text-xs"
                   >
-                    💬 Live Chat
+                    <MessageCircle className="mr-2 h-3 w-3" />
+                    Live Chat
                   </Button>
                 </div>
               </div>

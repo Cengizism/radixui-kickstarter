@@ -1268,7 +1268,7 @@ export const AdvancedToggleGroups = {
                 <div className="font-medium mb-1">Statistics</div>
                 <div className="space-y-1 text-muted-foreground">
                   <div>
-                    ❤️ Hearts:{" "}
+                    Hearts:{" "}
                     {
                       Array.from(favoriteItems).filter(
                         (id) => !id.includes("-")
@@ -1276,7 +1276,7 @@ export const AdvancedToggleGroups = {
                     }
                   </div>
                   <div>
-                    🔖 Bookmarks:{" "}
+                    Bookmarks:{" "}
                     {
                       Array.from(favoriteItems).filter((id) =>
                         id.startsWith("bookmark-")
@@ -1284,7 +1284,7 @@ export const AdvancedToggleGroups = {
                     }
                   </div>
                   <div>
-                    ⭐ Stars:{" "}
+                    Stars:{" "}
                     {
                       Array.from(favoriteItems).filter((id) =>
                         id.startsWith("star-")

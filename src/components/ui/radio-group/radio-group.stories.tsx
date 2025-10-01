@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
+import {
+  Apple,
+  CircleDollarSign,
+  CreditCard,
+  Search
+  } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '../label/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
@@ -996,12 +1003,10 @@ export const DynamicOptionsWithLooping: Story = {
             Dynamic Options with Keyboard Navigation
           </h3>
           <div className="flex items-center space-x-2">
-            <input
-              type="checkbox"
+            <Checkbox
               id="loop-toggle"
               checked={isLoopEnabled}
-              onChange={(e) => setIsLoopEnabled(e.target.checked)}
-              className="rounded"
+              onCheckedChange={(checked) => setIsLoopEnabled(checked === true)}
             />
             <Label htmlFor="loop-toggle" className="text-sm">
               Enable Loop Navigation
@@ -1244,10 +1249,10 @@ export const ComplexFormIntegration: Story = {
             className={`flex flex-wrap gap-4 ${errors.paymentMethod ? "ring-2 ring-destructive/20 rounded-lg p-2" : ""}`}
           >
             {[
-              { value: "card", label: "💳 Credit Card" },
-              { value: "paypal", label: "🅿️ PayPal" },
-              { value: "apple-pay", label: "🍎 Apple Pay" },
-              { value: "google-pay", label: "🔍 Google Pay" },
+              { value: "card", label: "Credit Card", icon: CreditCard },
+              { value: "paypal", label: "PayPal", icon: CircleDollarSign },
+              { value: "apple-pay", label: "Apple Pay", icon: Apple },
+              { value: "google-pay", label: "Google Pay", icon: Search },
             ].map((option) => (
               <div
                 key={option.value}
@@ -1259,8 +1264,9 @@ export const ComplexFormIntegration: Story = {
                 />
                 <Label
                   htmlFor={`payment-${option.value}`}
-                  className="cursor-pointer"
+                  className="flex items-center gap-2 cursor-pointer"
                 >
+                  <option.icon className="h-4 w-4" />
                   {option.label}
                 </Label>
               </div>

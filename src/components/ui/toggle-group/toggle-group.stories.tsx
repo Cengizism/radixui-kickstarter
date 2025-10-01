@@ -1,6 +1,7 @@
 import React from 'react';
 import { Badge } from '../badge/badge';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '../checkbox/checkbox';
 import { Separator } from '../separator/separator';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { useState } from 'react';
@@ -38,6 +39,9 @@ import {
   Sun,
   Moon,
   Monitor,
+  Shuffle,
+  Repeat,
+  Smartphone,
 } from "lucide-react";
 
 export default {
@@ -972,14 +976,13 @@ export const AdvancedToggleGroupInteractions = {
             </div>
 
             <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
+              <Checkbox
                 id="disabled"
                 checked={groupSettings.disabled}
-                onChange={(e) =>
+                onCheckedChange={(checked) =>
                   setGroupSettings((prev) => ({
                     ...prev,
-                    disabled: e.target.checked,
+                    disabled: !!checked,
                   }))
                 }
               />
@@ -989,14 +992,13 @@ export const AdvancedToggleGroupInteractions = {
             </div>
 
             <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
+              <Checkbox
                 id="rovingFocus"
                 checked={groupSettings.rovingFocus}
-                onChange={(e) =>
+                onCheckedChange={(checked) =>
                   setGroupSettings((prev) => ({
                     ...prev,
-                    rovingFocus: e.target.checked,
+                    rovingFocus: !!checked,
                   }))
                 }
               />
@@ -1006,14 +1008,13 @@ export const AdvancedToggleGroupInteractions = {
             </div>
 
             <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
+              <Checkbox
                 id="loop"
                 checked={groupSettings.loop}
-                onChange={(e) =>
+                onCheckedChange={(checked) =>
                   setGroupSettings((prev) => ({
                     ...prev,
-                    loop: e.target.checked,
+                    loop: !!checked,
                   }))
                 }
               />
@@ -1023,14 +1024,13 @@ export const AdvancedToggleGroupInteractions = {
             </div>
 
             <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
+              <Checkbox
                 id="rtl"
                 checked={groupSettings.rtl}
-                onChange={(e) =>
+                onCheckedChange={(checked) =>
                   setGroupSettings((prev) => ({
                     ...prev,
-                    rtl: e.target.checked,
+                    rtl: !!checked,
                   }))
                 }
               />
@@ -1313,10 +1313,10 @@ export const AdvancedToggleGroupInteractions = {
                 size="lg"
               >
                 <ToggleGroupItem value="shuffle" aria-label="Shuffle">
-                  🔀
+                  <Shuffle className="h-4 w-4" />
                 </ToggleGroupItem>
                 <ToggleGroupItem value="repeat" aria-label="Repeat">
-                  🔁
+                  <Repeat className="h-4 w-4" />
                 </ToggleGroupItem>
                 <ToggleGroupItem value="mute" aria-label="Mute">
                   {mediaControls.includes("mute") ? (
@@ -1326,7 +1326,7 @@ export const AdvancedToggleGroupInteractions = {
                   )}
                 </ToggleGroupItem>
                 <ToggleGroupItem value="subtitles" aria-label="Subtitles">
-                  📱
+                  <Smartphone className="h-4 w-4" />
                 </ToggleGroupItem>
                 <ToggleGroupItem value="hd" aria-label="HD Quality">
                   HD

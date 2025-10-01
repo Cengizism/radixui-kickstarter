@@ -1,10 +1,18 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '../input/input';
 import { Label } from '../label/label';
 import { Textarea } from '../textarea/textarea';
 import { useState } from 'react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Dialog,
   DialogContent,
@@ -406,15 +414,16 @@ export const FeedbackDialog = () => {
           </div>
           <div>
             <Label htmlFor="feedback-type">Feedback Type</Label>
-            <select
-              id="feedback-type"
-              className="w-full mt-1 px-3 py-2 border border-input bg-background rounded-md"
-            >
-              <option value="">Select type</option>
-              <option value="bug">Bug Report</option>
-              <option value="feature">Feature Request</option>
-              <option value="general">General Feedback</option>
-            </select>
+            <Select>
+              <SelectTrigger className="w-full mt-1">
+                <SelectValue placeholder="Select type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="bug">Bug Report</SelectItem>
+                <SelectItem value="feature">Feature Request</SelectItem>
+                <SelectItem value="general">General Feedback</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
           <div>
             <Label htmlFor="feedback-message">Message</Label>
@@ -593,16 +602,17 @@ export const MultiStepDialog = () => {
               </div>
               <div>
                 <Label htmlFor="step2-role">Your Role</Label>
-                <select
-                  id="step2-role"
-                  className="w-full mt-1 px-3 py-2 border border-input bg-background rounded-md"
-                >
-                  <option value="">Select your role</option>
-                  <option value="developer">Developer</option>
-                  <option value="designer">Designer</option>
-                  <option value="manager">Manager</option>
-                  <option value="other">Other</option>
-                </select>
+                <Select>
+                  <SelectTrigger className="w-full mt-1">
+                    <SelectValue placeholder="Select your role" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="developer">Developer</SelectItem>
+                    <SelectItem value="designer">Designer</SelectItem>
+                    <SelectItem value="manager">Manager</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
           )}
@@ -611,18 +621,24 @@ export const MultiStepDialog = () => {
             <div className="space-y-4">
               <h3 className="font-medium">Preferences</h3>
               <div className="space-y-3">
-                <label className="flex items-center space-x-2">
-                  <input type="checkbox" className="rounded" />
-                  <span className="text-sm">Send me product updates</span>
-                </label>
-                <label className="flex items-center space-x-2">
-                  <input type="checkbox" className="rounded" />
-                  <span className="text-sm">Send me marketing emails</span>
-                </label>
-                <label className="flex items-center space-x-2">
-                  <input type="checkbox" className="rounded" />
-                  <span className="text-sm">Send me security alerts</span>
-                </label>
+                <div className="flex items-center space-x-2">
+                  <Checkbox id="updates" />
+                  <Label htmlFor="updates" className="text-sm">
+                    Send me product updates
+                  </Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox id="marketing" />
+                  <Label htmlFor="marketing" className="text-sm">
+                    Send me marketing emails
+                  </Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox id="security" />
+                  <Label htmlFor="security" className="text-sm">
+                    Send me security alerts
+                  </Label>
+                </div>
               </div>
               <div>
                 <Label htmlFor="step3-notes">Additional Notes</Label>
@@ -671,11 +687,16 @@ export const NestedDialog = () => (
       <div className="py-4 space-y-4">
         <div className="space-y-2">
           <Label>Theme</Label>
-          <select className="w-full px-3 py-2 border border-input bg-background rounded-md">
-            <option>Light</option>
-            <option>Dark</option>
-            <option>System</option>
-          </select>
+          <Select>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select theme" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="light">Light</SelectItem>
+              <SelectItem value="dark">Dark</SelectItem>
+              <SelectItem value="system">System</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
         <Dialog>
@@ -692,14 +713,18 @@ export const NestedDialog = () => (
               </DialogDescription>
             </DialogHeader>
             <div className="py-4 space-y-3">
-              <label className="flex items-center space-x-2">
-                <input type="checkbox" className="rounded" />
-                <span className="text-sm">Enable debug mode</span>
-              </label>
-              <label className="flex items-center space-x-2">
-                <input type="checkbox" className="rounded" />
-                <span className="text-sm">Auto-save changes</span>
-              </label>
+              <div className="flex items-center space-x-2">
+                <Checkbox id="debug-mode" />
+                <Label htmlFor="debug-mode" className="text-sm">
+                  Enable debug mode
+                </Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Checkbox id="auto-save" />
+                <Label htmlFor="auto-save" className="text-sm">
+                  Auto-save changes
+                </Label>
+              </div>
             </div>
             <DialogFooter>
               <DialogClose asChild>
@@ -871,14 +896,12 @@ export const AdvancedExample = () => {
               />
             </div>
             <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
+              <Checkbox
                 id="profile-notifications"
                 checked={formData.notifications}
-                onChange={(e) =>
-                  updateFormData("notifications", e.target.checked)
+                onCheckedChange={(checked) =>
+                  updateFormData("notifications", checked === true)
                 }
-                className="rounded"
               />
               <Label htmlFor="profile-notifications">
                 Send me email notifications
@@ -915,30 +938,36 @@ export const AdvancedExample = () => {
           <div className="space-y-6">
             <div>
               <Label htmlFor="settings-theme">Theme</Label>
-              <select
-                id="settings-theme"
+              <Select
                 value={formData.theme}
-                onChange={(e) => updateFormData("theme", e.target.value)}
-                className="w-full mt-1 px-3 py-2 border border-input bg-background rounded-md"
+                onValueChange={(value) => updateFormData("theme", value)}
               >
-                <option value="light">Light</option>
-                <option value="dark">Dark</option>
-                <option value="system">System</option>
-              </select>
+                <SelectTrigger className="w-full mt-1">
+                  <SelectValue placeholder="Select theme" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="light">Light</SelectItem>
+                  <SelectItem value="dark">Dark</SelectItem>
+                  <SelectItem value="system">System</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div>
               <Label htmlFor="settings-language">Language</Label>
-              <select
-                id="settings-language"
+              <Select
                 value={formData.language}
-                onChange={(e) => updateFormData("language", e.target.value)}
-                className="w-full mt-1 px-3 py-2 border border-input bg-background rounded-md"
+                onValueChange={(value) => updateFormData("language", value)}
               >
-                <option value="en">English</option>
-                <option value="es">Spanish</option>
-                <option value="fr">French</option>
-                <option value="de">German</option>
-              </select>
+                <SelectTrigger className="w-full mt-1">
+                  <SelectValue placeholder="Select language" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="en">English</SelectItem>
+                  <SelectItem value="es">Spanish</SelectItem>
+                  <SelectItem value="fr">French</SelectItem>
+                  <SelectItem value="de">German</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             {/* Nested Dialog Example */}
@@ -959,21 +988,17 @@ export const AdvancedExample = () => {
                   </DialogHeader>
                   <div className="space-y-4">
                     <div className="flex items-center space-x-2">
-                      <input type="checkbox" id="debug" className="rounded" />
+                      <Checkbox id="debug" />
                       <Label htmlFor="debug">Enable debug mode</Label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        id="analytics"
-                        className="rounded"
-                      />
+                      <Checkbox id="analytics" />
                       <Label htmlFor="analytics">
                         Share anonymous analytics
                       </Label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <input type="checkbox" id="beta" className="rounded" />
+                      <Checkbox id="beta" />
                       <Label htmlFor="beta">Participate in beta features</Label>
                     </div>
                   </div>
@@ -1137,29 +1162,33 @@ export const AdvancedExample = () => {
                     </div>
                     <div>
                       <Label htmlFor="wizard-role">Your Role</Label>
-                      <select
-                        id="wizard-role"
-                        className="w-full px-3 py-2 border border-input bg-background rounded-md"
-                      >
-                        <option value="">Select your role</option>
-                        <option value="developer">Developer</option>
-                        <option value="designer">Designer</option>
-                        <option value="manager">Manager</option>
-                        <option value="other">Other</option>
-                      </select>
+                      <Select>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select your role" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="developer">Developer</SelectItem>
+                          <SelectItem value="designer">Designer</SelectItem>
+                          <SelectItem value="manager">Manager</SelectItem>
+                          <SelectItem value="other">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </div>
                     <div>
                       <Label htmlFor="wizard-size">Company Size</Label>
-                      <select
-                        id="wizard-size"
-                        className="w-full px-3 py-2 border border-input bg-background rounded-md"
-                      >
-                        <option value="">Select size</option>
-                        <option value="1-10">1-10 employees</option>
-                        <option value="11-50">11-50 employees</option>
-                        <option value="51-200">51-200 employees</option>
-                        <option value="200+">200+ employees</option>
-                      </select>
+                      <Select>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select company size" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="1-10">1-10 employees</SelectItem>
+                          <SelectItem value="11-50">11-50 employees</SelectItem>
+                          <SelectItem value="51-200">
+                            51-200 employees
+                          </SelectItem>
+                          <SelectItem value="200+">200+ employees</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </div>
                   </div>
                 </div>
@@ -1180,33 +1209,34 @@ export const AdvancedExample = () => {
                       </Label>
                       <div className="space-y-3 mt-3">
                         <label className="flex items-center space-x-2">
-                          <input type="checkbox" className="rounded" />
+                          <Checkbox />
                           <span className="text-sm">Product updates</span>
                         </label>
                         <label className="flex items-center space-x-2">
-                          <input type="checkbox" className="rounded" />
+                          <Checkbox />
                           <span className="text-sm">
                             Marketing communications
                           </span>
                         </label>
                         <label className="flex items-center space-x-2">
-                          <input type="checkbox" className="rounded" />
+                          <Checkbox />
                           <span className="text-sm">Security alerts</span>
                         </label>
                       </div>
                     </div>
                     <div>
                       <Label htmlFor="wizard-timezone">Timezone</Label>
-                      <select
-                        id="wizard-timezone"
-                        className="w-full px-3 py-2 border border-input bg-background rounded-md"
-                      >
-                        <option value="">Select timezone</option>
-                        <option value="UTC">UTC</option>
-                        <option value="EST">Eastern Time</option>
-                        <option value="PST">Pacific Time</option>
-                        <option value="GMT">GMT</option>
-                      </select>
+                      <Select>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select timezone" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="UTC">UTC</SelectItem>
+                          <SelectItem value="EST">Eastern Time</SelectItem>
+                          <SelectItem value="PST">Pacific Time</SelectItem>
+                          <SelectItem value="GMT">GMT</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </div>
                   </div>
                 </div>
