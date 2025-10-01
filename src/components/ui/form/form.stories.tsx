@@ -358,7 +358,7 @@ export const Basic = () => {
         <div className="space-y-4">
           <FormFieldStyled name="email">
             <FormLabelStyled>Email</FormLabelStyled>
-            <FormControl>
+            <FormControl asChild>
               <Input
                 type="email"
                 placeholder="Enter your email"
@@ -373,7 +373,7 @@ export const Basic = () => {
 
           <FormFieldStyled name="password">
             <FormLabelStyled>Password</FormLabelStyled>
-            <FormControl>
+            <FormControl asChild>
               <Input
                 type="password"
                 placeholder="Enter your password"
@@ -460,7 +460,7 @@ export const WithValidation = () => {
                 >
                   Username
                 </FormLabelStyled>
-                <FormControl>
+                <FormControl asChild>
                   <Input
                     variant={errors.username ? "destructive" : "default"}
                     placeholder="Choose a username"
@@ -484,7 +484,7 @@ export const WithValidation = () => {
                 >
                   Email
                 </FormLabelStyled>
-                <FormControl>
+                <FormControl asChild>
                   <Input
                     variant={errors.email ? "destructive" : "default"}
                     type="email"
@@ -509,7 +509,7 @@ export const WithValidation = () => {
                 >
                   Password
                 </FormLabelStyled>
-                <FormControl>
+                <FormControl asChild>
                   <Input
                     variant={errors.password ? "destructive" : "default"}
                     type="password"
@@ -538,7 +538,7 @@ export const WithValidation = () => {
                 >
                   Confirm Password
                 </FormLabelStyled>
-                <FormControl>
+                <FormControl asChild>
                   <Input
                     variant={errors.confirmPassword ? "destructive" : "default"}
                     type="password"
@@ -580,14 +580,14 @@ export const FormLayouts = () => (
         <div className="space-y-4 max-w-sm">
           <FormFieldStyled name="name" layout="default">
             <FormLabelStyled>Full Name</FormLabelStyled>
-            <FormControl>
+            <FormControl asChild>
               <Input placeholder="Enter your name" />
             </FormControl>
           </FormFieldStyled>
 
           <FormFieldStyled name="email" layout="default">
             <FormLabelStyled>Email</FormLabelStyled>
-            <FormControl>
+            <FormControl asChild>
               <Input type="email" placeholder="Enter your email" />
             </FormControl>
           </FormFieldStyled>
@@ -601,14 +601,14 @@ export const FormLayouts = () => (
         <div className="space-y-4">
           <FormFieldStyled name="name" layout="horizontal">
             <FormLabelStyled className="w-24">Name</FormLabelStyled>
-            <FormControl>
+            <FormControl asChild>
               <Input placeholder="Enter your name" />
             </FormControl>
           </FormFieldStyled>
 
           <FormFieldStyled name="email" layout="horizontal">
             <FormLabelStyled className="w-24">Email</FormLabelStyled>
-            <FormControl>
+            <FormControl asChild>
               <Input type="email" placeholder="Enter your email" />
             </FormControl>
           </FormFieldStyled>
@@ -622,14 +622,14 @@ export const FormLayouts = () => (
         <div className="flex flex-wrap gap-4">
           <FormFieldStyled name="firstName" layout="inline">
             <FormLabelStyled>First:</FormLabelStyled>
-            <FormControl>
+            <FormControl asChild>
               <Input placeholder="John" className="w-24" />
             </FormControl>
           </FormFieldStyled>
 
           <FormFieldStyled name="lastName" layout="inline">
             <FormLabelStyled>Last:</FormLabelStyled>
-            <FormControl>
+            <FormControl asChild>
               <Input placeholder="Doe" className="w-24" />
             </FormControl>
           </FormFieldStyled>
@@ -666,7 +666,7 @@ export const PaymentForm = () => {
             <div className="space-y-4">
               <FormFieldStyled name="cardNumber">
                 <FormLabelStyled>Card Number</FormLabelStyled>
-                <FormControl>
+                <FormControl asChild>
                   <Input
                     placeholder="1234 5678 9012 3456"
                     value={formData.cardNumber}
@@ -680,7 +680,7 @@ export const PaymentForm = () => {
               <div className="grid grid-cols-2 gap-4">
                 <FormFieldStyled name="expiryDate">
                   <FormLabelStyled>Expiry Date</FormLabelStyled>
-                  <FormControl>
+                  <FormControl asChild>
                     <Input
                       placeholder="MM/YY"
                       value={formData.expiryDate}
@@ -693,7 +693,7 @@ export const PaymentForm = () => {
 
                 <FormFieldStyled name="cvv">
                   <FormLabelStyled>CVV</FormLabelStyled>
-                  <FormControl>
+                  <FormControl asChild>
                     <Input
                       placeholder="123"
                       value={formData.cvv}
@@ -707,7 +707,7 @@ export const PaymentForm = () => {
 
               <FormFieldStyled name="name">
                 <FormLabelStyled>Cardholder Name</FormLabelStyled>
-                <FormControl>
+                <FormControl asChild>
                   <Input
                     placeholder="John Doe"
                     value={formData.name}
@@ -761,7 +761,7 @@ export const Playground = (args: {
           <FormLabelStyled variant={args.variant} size={args.size}>
             Playground Field
           </FormLabelStyled>
-          <FormControl>
+          <FormControl asChild>
             <Input placeholder="Test the form controls" />
           </FormControl>
           <FormDescription>
@@ -897,7 +897,7 @@ export const AdvancedInteractiveExample = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormFieldStyled name="firstName">
                   <FormLabelStyled>First Name *</FormLabelStyled>
-                  <FormControl>
+                  <FormControl asChild>
                     <Input
                       value={formData.firstName}
                       onChange={(e) =>
@@ -917,7 +917,7 @@ export const AdvancedInteractiveExample = () => {
 
                 <FormFieldStyled name="lastName">
                   <FormLabelStyled>Last Name *</FormLabelStyled>
-                  <FormControl>
+                  <FormControl asChild>
                     <Input
                       value={formData.lastName}
                       onChange={(e) =>
@@ -938,7 +938,7 @@ export const AdvancedInteractiveExample = () => {
 
               <FormFieldStyled name="email" serverInvalid={serverErrors.email}>
                 <FormLabelStyled>Email Address *</FormLabelStyled>
-                <FormControl>
+                <FormControl asChild>
                   <Input
                     type="email"
                     value={formData.email}
@@ -964,7 +964,7 @@ export const AdvancedInteractiveExample = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormFieldStyled name="phone">
                   <FormLabelStyled>Phone Number</FormLabelStyled>
-                  <FormControl>
+                  <FormControl asChild>
                     <Input
                       type="tel"
                       value={formData.phone}
@@ -982,7 +982,7 @@ export const AdvancedInteractiveExample = () => {
 
                 <FormFieldStyled name="dateOfBirth">
                   <FormLabelStyled>Date of Birth</FormLabelStyled>
-                  <FormControl>
+                  <FormControl asChild>
                     <Input
                       type="date"
                       value={formData.dateOfBirth}
@@ -1010,7 +1010,7 @@ export const AdvancedInteractiveExample = () => {
             <CardContent className="space-y-4">
               <FormFieldStyled name="address">
                 <FormLabelStyled>Street Address</FormLabelStyled>
-                <FormControl>
+                <FormControl asChild>
                   <Input
                     value={formData.address}
                     onChange={(e) =>
@@ -1024,7 +1024,7 @@ export const AdvancedInteractiveExample = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <FormFieldStyled name="city">
                   <FormLabelStyled>City</FormLabelStyled>
-                  <FormControl>
+                  <FormControl asChild>
                     <Input
                       value={formData.city}
                       onChange={(e) =>
@@ -1058,7 +1058,7 @@ export const AdvancedInteractiveExample = () => {
 
                 <FormFieldStyled name="zipCode">
                   <FormLabelStyled>ZIP Code</FormLabelStyled>
-                  <FormControl>
+                  <FormControl asChild>
                     <Input
                       value={formData.zipCode}
                       onChange={(e) =>
@@ -1090,7 +1090,7 @@ export const AdvancedInteractiveExample = () => {
                 serverInvalid={serverErrors.username}
               >
                 <FormLabelStyled>Username *</FormLabelStyled>
-                <FormControl>
+                <FormControl asChild>
                   <Input
                     value={formData.username}
                     onChange={(e) => {
@@ -1127,7 +1127,7 @@ export const AdvancedInteractiveExample = () => {
                 <FormFieldStyled name="password">
                   <FormLabelStyled>Password *</FormLabelStyled>
                   <div className="relative">
-                    <FormControl>
+                    <FormControl asChild>
                       <Input
                         type={showPassword ? "text" : "password"}
                         value={formData.password}
@@ -1172,7 +1172,7 @@ export const AdvancedInteractiveExample = () => {
                 <FormFieldStyled name="confirmPassword">
                   <FormLabelStyled>Confirm Password *</FormLabelStyled>
                   <div className="relative">
-                    <FormControl>
+                    <FormControl asChild>
                       <Input
                         type={showConfirmPassword ? "text" : "password"}
                         value={formData.confirmPassword}
@@ -1317,7 +1317,7 @@ export const AdvancedInteractiveExample = () => {
             <CardContent>
               <FormFieldStyled name="customValidation">
                 <FormLabelStyled>Custom Field</FormLabelStyled>
-                <FormControl>
+                <FormControl asChild>
                   <Input
                     value={formData.customValidation}
                     onChange={(e) =>
