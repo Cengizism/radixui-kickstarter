@@ -25,6 +25,7 @@ const meta = {
     },
   },
   tags: ["autodocs"],
+  // @ts-ignore - Some argTypes properties are for documentation purposes and may not exist on component interface
   argTypes: {
     // Root Props
     defaultValue: {
@@ -97,6 +98,7 @@ const meta = {
     },
 
     // List Props
+    // @ts-expect-error - Property added for documentation purposes
     listAsChild: {
       control: "boolean",
       description:
@@ -1633,15 +1635,6 @@ export const DynamicTabManagement: Story = {
           tab.id === tabId ? { ...tab, content: newContent } : tab
         )
       );
-    };
-
-    const reorderTabs = (fromIndex: number, toIndex: number) => {
-      setTabs((prev) => {
-        const newTabs = [...prev];
-        const [removed] = newTabs.splice(fromIndex, 1);
-        newTabs.splice(toIndex, 0, removed);
-        return newTabs;
-      });
     };
 
     return (

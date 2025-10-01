@@ -132,6 +132,7 @@ const meta = {
     },
 
     // Trigger Props
+    // @ts-expect-error - Property added for documentation purposes
     triggerAsChild: {
       control: "boolean",
       description:

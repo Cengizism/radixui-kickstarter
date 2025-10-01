@@ -2,7 +2,7 @@ import { Badge } from '../badge/badge';
 import { Button } from '@/components/ui/button';
 import { Pause, Play, RotateCcw } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta = {
@@ -653,13 +653,16 @@ export const MultiStepProcess: Story = {
     const [currentStep, setCurrentStep] = useState(0);
     const [stepProgress, setStepProgress] = useState(0);
 
-    const steps = [
-      { name: "Validation", duration: 2000 },
-      { name: "Processing", duration: 4000 },
-      { name: "Optimization", duration: 3000 },
-      { name: "Deployment", duration: 2500 },
-      { name: "Verification", duration: 1500 },
-    ];
+    const steps = useMemo(
+      () => [
+        { name: "Validation", duration: 2000 },
+        { name: "Processing", duration: 4000 },
+        { name: "Optimization", duration: 3000 },
+        { name: "Deployment", duration: 2500 },
+        { name: "Verification", duration: 1500 },
+      ],
+      []
+    );
 
     useEffect(() => {
       if (currentStep >= steps.length) return;
@@ -678,7 +681,7 @@ export const MultiStepProcess: Story = {
       }, 50);
 
       return () => clearInterval(timer);
-    }, [currentStep]);
+    }, [currentStep, steps]);
 
     const overallProgress =
       currentStep >= steps.length
