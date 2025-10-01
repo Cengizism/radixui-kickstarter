@@ -77,7 +77,7 @@ export default {
         "The controlled open state of the dropdown menu. Must be used in conjunction with onOpenChange.",
       table: {
         type: { summary: "boolean" },
-        category: "Root",
+        category: "Root Props",
       },
     },
     defaultOpen: {
@@ -87,7 +87,7 @@ export default {
       table: {
         type: { summary: "boolean" },
         defaultValue: { summary: "false" },
-        category: "Root",
+        category: "Root Props",
       },
     },
     onOpenChange: {
@@ -96,7 +96,7 @@ export default {
         "Event handler called when the open state of the dropdown menu changes.",
       table: {
         type: { summary: "(open: boolean) => void" },
-        category: "Root",
+        category: "Event Handlers",
       },
     },
     modal: {
@@ -106,7 +106,7 @@ export default {
       table: {
         type: { summary: "boolean" },
         defaultValue: { summary: "true" },
-        category: "Root",
+        category: "State Props",
       },
     },
     dir: {
@@ -116,7 +116,7 @@ export default {
         "The reading direction of the dropdown menu when applicable. If omitted, inherits globally from DirectionProvider or assumes LTR (left-to-right) reading mode.",
       table: {
         type: { summary: '"ltr" | "rtl"' },
-        category: "Root",
+        category: "Root Props",
       },
     },
 
@@ -128,7 +128,7 @@ export default {
       table: {
         type: { summary: "boolean" },
         defaultValue: { summary: "false" },
-        category: "Trigger",
+        category: "Trigger Props",
       },
     },
 
@@ -140,7 +140,7 @@ export default {
       table: {
         type: { summary: "boolean" },
         defaultValue: { summary: "false" },
-        category: "Content",
+        category: "Content Props",
       },
     },
     onCloseAutoFocus: {

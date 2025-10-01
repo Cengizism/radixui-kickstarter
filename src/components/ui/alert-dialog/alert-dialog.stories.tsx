@@ -3,7 +3,6 @@ import { useState } from 'react';
 import {
   AlertTriangle,
   Trash2,
-  LogOut,
   Download,
   Save,
   AlertCircle,
@@ -137,89 +136,6 @@ export const Default = () => (
   </AlertDialog>
 );
 
-// Size variations
-export const SizeVariations = () => (
-  <div className="flex flex-wrap gap-4">
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button variant="outline" size="sm">
-          Small
-        </Button>
-      </AlertDialogTrigger>
-      <AlertDialogContent size="sm">
-        <AlertDialogHeader>
-          <AlertDialogTitle>Small Dialog</AlertDialogTitle>
-          <AlertDialogDescription>
-            This is a small alert dialog with limited content.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>OK</AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
-
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button variant="outline">Default</Button>
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Default Dialog</AlertDialogTitle>
-          <AlertDialogDescription>
-            This is the default size alert dialog with standard content length.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>OK</AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
-
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button variant="outline">Large</Button>
-      </AlertDialogTrigger>
-      <AlertDialogContent size="lg">
-        <AlertDialogHeader>
-          <AlertDialogTitle>Large Dialog</AlertDialogTitle>
-          <AlertDialogDescription>
-            This is a large alert dialog that can accommodate more content and
-            longer descriptions. It's perfect for complex confirmations or
-            detailed information that needs user attention.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>OK</AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
-
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button variant="outline">Full Width</Button>
-      </AlertDialogTrigger>
-      <AlertDialogContent size="full">
-        <AlertDialogHeader>
-          <AlertDialogTitle>Full Width Dialog</AlertDialogTitle>
-          <AlertDialogDescription>
-            This dialog takes up most of the viewport width, making it suitable
-            for complex forms or detailed content that requires more horizontal
-            space.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>OK</AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
-  </div>
-);
-
 // Delete confirmation
 export const DeleteConfirmation = () => (
   <AlertDialog>
@@ -246,31 +162,6 @@ export const DeleteConfirmation = () => (
         <AlertDialogAction className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
           Yes, delete account
         </AlertDialogAction>
-      </AlertDialogFooter>
-    </AlertDialogContent>
-  </AlertDialog>
-);
-
-// Sign out confirmation
-export const SignOutConfirmation = () => (
-  <AlertDialog>
-    <AlertDialogTrigger asChild>
-      <Button variant="ghost">
-        <LogOut className="mr-2 h-4 w-4" />
-        Sign Out
-      </Button>
-    </AlertDialogTrigger>
-    <AlertDialogContent>
-      <AlertDialogHeader>
-        <AlertDialogTitle>Sign Out</AlertDialogTitle>
-        <AlertDialogDescription>
-          Are you sure you want to sign out? You'll need to sign in again to
-          access your account.
-        </AlertDialogDescription>
-      </AlertDialogHeader>
-      <AlertDialogFooter>
-        <AlertDialogCancel>Stay signed in</AlertDialogCancel>
-        <AlertDialogAction>Sign out</AlertDialogAction>
       </AlertDialogFooter>
     </AlertDialogContent>
   </AlertDialog>

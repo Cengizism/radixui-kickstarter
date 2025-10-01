@@ -1,5 +1,6 @@
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import {
   Accordion,
   AccordionContent,
@@ -7,7 +8,15 @@ import {
   AccordionTrigger,
 } from "./accordion";
 
-export default {
+// Define custom args type for playground story
+type PlaygroundArgs = React.ComponentProps<typeof Accordion> & {
+  itemCount?: number;
+  showBadges?: boolean;
+  richContent?: boolean;
+  contentLength?: "short" | "medium" | "long";
+};
+
+const meta = {
   title: "UI/Accordion",
   component: Accordion,
   parameters: {
@@ -115,91 +124,251 @@ export default {
         defaultValue: { summary: "false" },
       },
     },
+  },
+} satisfies Meta<typeof Accordion>;
 
-    // Item Props
-    itemValue: {
-      control: "text",
-      description: "A unique value for the accordion item.",
+export default meta;
+
+// Interactive playground for testing different accordion configurations
+export const Playground = {
+  args: {
+    type: "single",
+    collapsible: true,
+  },
+  argTypes: {
+    itemCount: {
+      control: { type: "range", min: 2, max: 6, step: 1 },
+      description: "Number of accordion items to display",
       table: {
-        category: "Item Props",
-        type: { summary: "string" },
-        defaultValue: { summary: "undefined" },
+        category: "Playground",
+        defaultValue: { summary: "3" },
       },
     },
-    itemDisabled: {
+    showBadges: {
       control: "boolean",
-      description: "When true, prevents interaction with the accordion item.",
+      description: "Show status badges in triggers",
       table: {
-        category: "Item Props",
-        type: { summary: "boolean" },
+        category: "Playground",
         defaultValue: { summary: "false" },
       },
     },
-    itemAsChild: {
+    richContent: {
       control: "boolean",
-      description: "Change the default rendered element for the item.",
+      description: "Use rich content with lists and formatting",
       table: {
-        category: "Item Props",
-        type: { summary: "boolean" },
+        category: "Playground",
         defaultValue: { summary: "false" },
       },
     },
-
-    // Trigger Props
-    triggerAsChild: {
-      control: "boolean",
-      description: "Change the default rendered element for the trigger.",
+    contentLength: {
+      control: "select",
+      options: ["short", "medium", "long"],
+      description: "Length of content in accordion items",
       table: {
-        category: "Trigger Props",
-        type: { summary: "boolean" },
-        defaultValue: { summary: "false" },
-      },
-    },
-
-    // Content Props
-    contentAsChild: {
-      control: "boolean",
-      description: "Change the default rendered element for the content.",
-      table: {
-        category: "Content Props",
-        type: { summary: "boolean" },
-        defaultValue: { summary: "false" },
-      },
-    },
-    forceMount: {
-      control: "boolean",
-      description:
-        "Used to force mounting when more control is needed. Useful for controlling animation with React animation libraries.",
-      table: {
-        category: "Content Props",
-        type: { summary: "boolean" },
-        defaultValue: { summary: "false" },
-      },
-    },
-
-    // Animation Props
-    className: {
-      control: "text",
-      description: "Additional CSS classes to apply to the accordion.",
-      table: {
-        category: "Styling Props",
-        type: { summary: "string" },
-        defaultValue: { summary: "undefined" },
-      },
-    },
-
-    // Event Handlers
-    onItemToggle: {
-      action: "onItemToggle",
-      description: "Event handler called when an accordion item is toggled.",
-      table: {
-        category: "Event Handlers",
-        type: { summary: "(value: string, isOpen: boolean) => void" },
-        defaultValue: { summary: "undefined" },
+        category: "Playground",
+        defaultValue: { summary: "medium" },
       },
     },
   },
-};
+  render: ({
+    itemCount = 3,
+    showBadges = false,
+    richContent = false,
+    contentLength = "medium",
+    ...args
+  }: PlaygroundArgs) => {
+    const items = [
+      {
+        title: "Is it accessible?",
+        badge: "New",
+        short: "Yes. It adheres to the WAI-ARIA design pattern.",
+        medium:
+          "Yes. It adheres to the WAI-ARIA design pattern and includes full keyboard navigation support.",
+        long: "Yes. It adheres to the WAI-ARIA design pattern and includes full keyboard navigation support. The component provides proper ARIA attributes, screen reader compatibility, and follows accessibility best practices for interactive disclosure widgets.",
+        richContent: (
+          <div className="space-y-2">
+            <p>Yes. It adheres to the WAI-ARIA design pattern with:</p>
+            <ul className="list-disc list-inside space-y-1 text-sm">
+              <li>Proper ARIA roles and properties</li>
+              <li>Keyboard navigation support</li>
+              <li>Screen reader compatibility</li>
+              <li>Focus management</li>
+            </ul>
+          </div>
+        ),
+      },
+      {
+        title: "Is it styled?",
+        badge: "Updated",
+        short: "No. It comes unstyled by default.",
+        medium:
+          "No. It comes completely unstyled by default, giving you freedom over the look and feel.",
+        long: "No. It comes completely unstyled by default, giving you freedom over the look and feel. You can style it with CSS, CSS-in-JS libraries, or any styling solution of your choice. The component provides the behavior and accessibility features while leaving the visual design entirely up to you.",
+        richContent: (
+          <div className="space-y-3">
+            <p>No. It comes completely unstyled by default, providing:</p>
+            <div className="grid gap-2">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <span className="text-sm">Complete styling freedom</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                <span className="text-sm">CSS-in-JS compatibility</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                <span className="text-sm">Theme integration support</span>
+              </div>
+            </div>
+          </div>
+        ),
+      },
+      {
+        title: "Can it be animated?",
+        badge: "Popular",
+        short: "Yes! You can animate the Accordion with CSS or JavaScript.",
+        medium:
+          "Yes! You can animate the Accordion with CSS or JavaScript animation libraries for smooth transitions.",
+        long: "Yes! You can animate the Accordion with CSS or JavaScript animation libraries for smooth transitions. The component provides CSS variables for height and width that make it easy to create custom animations. It works great with Framer Motion, React Spring, and other animation libraries.",
+        richContent: (
+          <div className="space-y-3">
+            <p>Yes! Multiple animation options available:</p>
+            <div className="bg-muted/50 p-3 rounded-lg space-y-2">
+              <div className="text-sm font-medium">CSS Variables</div>
+              <div className="text-xs font-mono space-y-1">
+                <div>--radix-accordion-content-height</div>
+                <div>--radix-accordion-content-width</div>
+              </div>
+            </div>
+            <div className="text-sm">
+              <strong>Compatible with:</strong> Framer Motion, React Spring, CSS
+              transitions
+            </div>
+          </div>
+        ),
+      },
+      {
+        title: "What about performance?",
+        badge: "Fast",
+        short: "Optimized for performance with minimal overhead.",
+        medium:
+          "Highly optimized for performance with minimal bundle size and runtime overhead.",
+        long: "Highly optimized for performance with minimal bundle size and runtime overhead. Uses efficient rendering techniques and only re-renders when necessary. The animations are hardware-accelerated and the component is designed to handle large numbers of items without performance degradation.",
+        richContent: (
+          <div className="space-y-3">
+            <p>Highly optimized with:</p>
+            <div className="grid gap-2 text-sm">
+              <div className="flex justify-between">
+                <span>Bundle Size</span>
+                <span className="text-green-600 font-medium">Small</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Runtime Overhead</span>
+                <span className="text-green-600 font-medium">Minimal</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Animations</span>
+                <span className="text-green-600 font-medium">
+                  Hardware Accelerated
+                </span>
+              </div>
+            </div>
+          </div>
+        ),
+      },
+      {
+        title: "How about customization?",
+        badge: "Flexible",
+        short: "Fully customizable with complete control over styling.",
+        medium:
+          "Fully customizable component with complete control over styling, behavior, and structure.",
+        long: "Fully customizable component with complete control over styling, behavior, and structure. You can customize every aspect from the trigger appearance to content animations. Supports custom icons, complex layouts, and advanced interaction patterns while maintaining accessibility.",
+        richContent: (
+          <div className="space-y-3">
+            <p>Extensive customization options:</p>
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">
+                  Styling
+                </span>
+                <span className="text-sm">Complete visual control</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">
+                  Behavior
+                </span>
+                <span className="text-sm">Flexible interaction patterns</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded">
+                  Structure
+                </span>
+                <span className="text-sm">Custom layouts and content</span>
+              </div>
+            </div>
+          </div>
+        ),
+      },
+      {
+        title: "What about browser support?",
+        badge: "Compatible",
+        short: "Works in all modern browsers.",
+        medium:
+          "Excellent browser support covering all modern browsers and assistive technologies.",
+        long: "Excellent browser support covering all modern browsers and assistive technologies. Thoroughly tested across different platforms and devices. Includes fallbacks and polyfills for older browsers when needed, ensuring consistent behavior across your user base.",
+        richContent: (
+          <div className="space-y-3">
+            <p>Comprehensive browser support:</p>
+            <div className="grid grid-cols-2 gap-2 text-sm">
+              <div>✅ Chrome 80+</div>
+              <div>✅ Firefox 75+</div>
+              <div>✅ Safari 13+</div>
+              <div>✅ Edge 80+</div>
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Includes assistive technology compatibility and mobile support.
+            </p>
+          </div>
+        ),
+      },
+    ];
+
+    const selectedItems = items.slice(0, itemCount);
+
+    return (
+      <div className="w-full max-w-lg">
+        <Accordion {...args}>
+          {selectedItems.map((item, index) => (
+            <AccordionItem key={`item-${index}`} value={`item-${index}`}>
+              <AccordionTrigger>
+                <div className="flex items-center justify-between w-full">
+                  <span>{item.title}</span>
+                  {showBadges && (
+                    <Badge variant="secondary" className="mr-6 text-xs">
+                      {item.badge}
+                    </Badge>
+                  )}
+                </div>
+              </AccordionTrigger>
+              <AccordionContent>
+                {richContent ? item.richContent : item[contentLength]}
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Interactive playground to experiment with different accordion configurations, content types, and display options.",
+      },
+    },
+  },
+} satisfies StoryObj<PlaygroundArgs>;
 
 // Basic example from docs
 export const Default = () => (
@@ -323,53 +492,6 @@ export const MultipleItemsOpen = () => (
                 Manage notifications on your devices.
               </p>
             </div>
-          </div>
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
-  </div>
-);
-
-// Without collapsible
-export const WithoutCollapsible = () => (
-  <div className="w-full max-w-lg">
-    <Accordion type="single" defaultValue="item-1">
-      <AccordionItem value="item-1">
-        <AccordionTrigger>Step 1: Create Account</AccordionTrigger>
-        <AccordionContent>
-          <div className="space-y-2">
-            <p>Sign up for a new account with your email address.</p>
-            <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
-              <li>Enter your email address</li>
-              <li>Choose a secure password</li>
-              <li>Verify your email</li>
-            </ul>
-          </div>
-        </AccordionContent>
-      </AccordionItem>
-      <AccordionItem value="item-2">
-        <AccordionTrigger>Step 2: Set Up Profile</AccordionTrigger>
-        <AccordionContent>
-          <div className="space-y-2">
-            <p>Complete your profile to personalize your experience.</p>
-            <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
-              <li>Add profile picture</li>
-              <li>Fill in basic information</li>
-              <li>Set preferences</li>
-            </ul>
-          </div>
-        </AccordionContent>
-      </AccordionItem>
-      <AccordionItem value="item-3">
-        <AccordionTrigger>Step 3: Get Started</AccordionTrigger>
-        <AccordionContent>
-          <div className="space-y-2">
-            <p>You're all set! Start exploring the platform.</p>
-            <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
-              <li>Take the guided tour</li>
-              <li>Invite team members</li>
-              <li>Create your first project</li>
-            </ul>
           </div>
         </AccordionContent>
       </AccordionItem>

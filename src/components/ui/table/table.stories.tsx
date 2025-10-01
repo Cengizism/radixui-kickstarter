@@ -174,6 +174,53 @@ const products = [
   },
 ];
 
+// Interactive playground for testing different table configurations
+export const Playground: Story = {
+  render: (args) => (
+    <Table {...args}>
+      <TableCaption>A list of users and their information.</TableCaption>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Name</TableHead>
+          <TableHead>Email</TableHead>
+          <TableHead>Role</TableHead>
+          <TableHead>Status</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {users.slice(0, 4).map((user) => (
+          <TableRow key={user.id}>
+            <TableCell>{user.name}</TableCell>
+            <TableCell>{user.email}</TableCell>
+            <TableCell>{user.role}</TableCell>
+            <TableCell>
+              <Badge
+                variant={user.status === "Active" ? "default" : "secondary"}
+              >
+                {user.status}
+              </Badge>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+      <TableFooter>
+        <TableRow>
+          <TableCell colSpan={3}>Total Users</TableCell>
+          <TableCell>{users.length}</TableCell>
+        </TableRow>
+      </TableFooter>
+    </Table>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Interactive playground showing a complete table with caption, header, body, and footer.",
+      },
+    },
+  },
+};
+
 // Default table from docs
 export const Default: Story = {
   render: () => (

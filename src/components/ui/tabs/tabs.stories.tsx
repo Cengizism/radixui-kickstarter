@@ -217,6 +217,55 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+// Interactive playground for testing different tabs configurations
+export const Playground: Story = {
+  args: {
+    defaultValue: "account",
+    orientation: "horizontal",
+  },
+  render: (args) => (
+    <Tabs className="w-full max-w-md" {...args}>
+      <TabsList>
+        <TabsTrigger value="account">Account</TabsTrigger>
+        <TabsTrigger value="password">Password</TabsTrigger>
+        <TabsTrigger value="notifications">Notifications</TabsTrigger>
+      </TabsList>
+      <TabsContent value="account" className="mt-4">
+        <div className="space-y-2">
+          <h3 className="text-lg font-medium">Account</h3>
+          <p className="text-sm text-muted-foreground">
+            Account settings and profile information.
+          </p>
+        </div>
+      </TabsContent>
+      <TabsContent value="password" className="mt-4">
+        <div className="space-y-2">
+          <h3 className="text-lg font-medium">Password</h3>
+          <p className="text-sm text-muted-foreground">
+            Change your password and security settings.
+          </p>
+        </div>
+      </TabsContent>
+      <TabsContent value="notifications" className="mt-4">
+        <div className="space-y-2">
+          <h3 className="text-lg font-medium">Notifications</h3>
+          <p className="text-sm text-muted-foreground">
+            Manage your notification preferences.
+          </p>
+        </div>
+      </TabsContent>
+    </Tabs>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Interactive playground to experiment with different tabs configurations and orientations.",
+      },
+    },
+  },
+};
+
 // Basic usage from docs
 export const Default: Story = {
   render: (args) => (
@@ -373,80 +422,6 @@ export const ListVariants: Story = {
     docs: {
       description: {
         story: "Different visual styles for tab lists.",
-      },
-    },
-  },
-};
-
-// Size variants
-export const SizeVariants: Story = {
-  render: () => (
-    <div className="space-y-6 w-full max-w-lg">
-      <div className="space-y-3">
-        <h4 className="text-sm font-medium">Small</h4>
-        <Tabs defaultValue="tab1">
-          <TabsList size="sm">
-            <TabsTrigger size="sm" value="tab1">
-              Small
-            </TabsTrigger>
-            <TabsTrigger size="sm" value="tab2">
-              Tabs
-            </TabsTrigger>
-            <TabsTrigger size="sm" value="tab3">
-              Here
-            </TabsTrigger>
-          </TabsList>
-          <TabsContent value="tab1">Compact tab content</TabsContent>
-          <TabsContent value="tab2">Perfect for tight spaces</TabsContent>
-          <TabsContent value="tab3">Mobile-friendly sizing</TabsContent>
-        </Tabs>
-      </div>
-
-      <div className="space-y-3">
-        <h4 className="text-sm font-medium">Default</h4>
-        <Tabs defaultValue="tab1">
-          <TabsList size="default">
-            <TabsTrigger size="default" value="tab1">
-              Standard
-            </TabsTrigger>
-            <TabsTrigger size="default" value="tab2">
-              Regular
-            </TabsTrigger>
-            <TabsTrigger size="default" value="tab3">
-              Normal
-            </TabsTrigger>
-          </TabsList>
-          <TabsContent value="tab1">Standard size content</TabsContent>
-          <TabsContent value="tab2">Regular tab sizing</TabsContent>
-          <TabsContent value="tab3">Normal dimensions</TabsContent>
-        </Tabs>
-      </div>
-
-      <div className="space-y-3">
-        <h4 className="text-sm font-medium">Large</h4>
-        <Tabs defaultValue="tab1">
-          <TabsList size="lg">
-            <TabsTrigger size="lg" value="tab1">
-              Large
-            </TabsTrigger>
-            <TabsTrigger size="lg" value="tab2">
-              Prominent
-            </TabsTrigger>
-            <TabsTrigger size="lg" value="tab3">
-              Bold
-            </TabsTrigger>
-          </TabsList>
-          <TabsContent value="tab1">Large tab content</TabsContent>
-          <TabsContent value="tab2">More prominent display</TabsContent>
-          <TabsContent value="tab3">Bold visual hierarchy</TabsContent>
-        </Tabs>
-      </div>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Different sizes for various UI contexts.",
       },
     },
   },
@@ -1031,68 +1006,6 @@ export const DisabledTabs: Story = {
     docs: {
       description: {
         story: "Tabs with disabled states for unavailable options.",
-      },
-    },
-  },
-};
-
-// Tab spacing variants
-export const SpacingVariants: Story = {
-  render: () => (
-    <div className="space-y-8 w-full max-w-lg">
-      <div className="space-y-3">
-        <h4 className="text-sm font-medium">No Spacing</h4>
-        <Tabs defaultValue="tab1" spacing="none">
-          <TabsList>
-            <TabsTrigger value="tab1">Tab 1</TabsTrigger>
-            <TabsTrigger value="tab2">Tab 2</TabsTrigger>
-          </TabsList>
-          <TabsContent value="tab1">Content with no spacing</TabsContent>
-          <TabsContent value="tab2">Tight layout</TabsContent>
-        </Tabs>
-      </div>
-
-      <div className="space-y-3">
-        <h4 className="text-sm font-medium">Small Spacing</h4>
-        <Tabs defaultValue="tab1" spacing="sm">
-          <TabsList>
-            <TabsTrigger value="tab1">Tab 1</TabsTrigger>
-            <TabsTrigger value="tab2">Tab 2</TabsTrigger>
-          </TabsList>
-          <TabsContent value="tab1">Content with small spacing</TabsContent>
-          <TabsContent value="tab2">Compact layout</TabsContent>
-        </Tabs>
-      </div>
-
-      <div className="space-y-3">
-        <h4 className="text-sm font-medium">Default Spacing</h4>
-        <Tabs defaultValue="tab1" spacing="default">
-          <TabsList>
-            <TabsTrigger value="tab1">Tab 1</TabsTrigger>
-            <TabsTrigger value="tab2">Tab 2</TabsTrigger>
-          </TabsList>
-          <TabsContent value="tab1">Content with default spacing</TabsContent>
-          <TabsContent value="tab2">Standard layout</TabsContent>
-        </Tabs>
-      </div>
-
-      <div className="space-y-3">
-        <h4 className="text-sm font-medium">Large Spacing</h4>
-        <Tabs defaultValue="tab1" spacing="lg">
-          <TabsList>
-            <TabsTrigger value="tab1">Tab 1</TabsTrigger>
-            <TabsTrigger value="tab2">Tab 2</TabsTrigger>
-          </TabsList>
-          <TabsContent value="tab1">Content with large spacing</TabsContent>
-          <TabsContent value="tab2">Spacious layout</TabsContent>
-        </Tabs>
-      </div>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Different spacing options between tab list and content.",
       },
     },
   },

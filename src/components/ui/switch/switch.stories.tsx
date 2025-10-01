@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Label } from '../label/label';
-import { Switch, SwitchRoot, SwitchThumb } from '@/components/ui/switch';
+import { Switch } from '@/components/ui/switch';
 
 export default {
   title: "UI/Switch",
@@ -161,31 +161,6 @@ export const Default = () => (
   <div className="flex items-center space-x-2">
     <Switch id="default-switch" />
     <Label htmlFor="default-switch">Default Switch</Label>
-  </div>
-);
-
-// Size variations
-export const SizeVariations = () => (
-  <div className="space-y-4">
-    <div className="flex items-center space-x-2">
-      <Switch id="sm-switch" size="sm" />
-      <Label htmlFor="sm-switch">Small</Label>
-    </div>
-
-    <div className="flex items-center space-x-2">
-      <Switch id="default-size-switch" size="default" />
-      <Label htmlFor="default-size-switch">Default</Label>
-    </div>
-
-    <div className="flex items-center space-x-2">
-      <Switch id="lg-switch" size="lg" />
-      <Label htmlFor="lg-switch">Large</Label>
-    </div>
-
-    <div className="flex items-center space-x-2">
-      <Switch id="xl-switch" size="xl" />
-      <Label htmlFor="xl-switch">Extra Large</Label>
-    </div>
   </div>
 );
 
@@ -563,40 +538,6 @@ export const AsyncStates = () => {
     </div>
   );
 };
-
-// Custom styled switches
-export const CustomStyles = () => (
-  <div className="space-y-4">
-    <div className="flex items-center space-x-2">
-      <Switch
-        id="custom-1"
-        className="data-[state=checked]:bg-gradient-to-r data-[state=checked]:from-blue-500 data-[state=checked]:to-purple-600"
-        defaultChecked
-      />
-      <Label htmlFor="custom-1">Gradient Switch</Label>
-    </div>
-
-    <div className="flex items-center space-x-2">
-      <Switch
-        id="custom-2"
-        className="data-[state=checked]:bg-pink-500 data-[state=unchecked]:bg-gray-200"
-        size="lg"
-      />
-      <Label htmlFor="custom-2">Pink Theme</Label>
-    </div>
-
-    <div className="flex items-center space-x-2">
-      <SwitchRoot
-        id="custom-components"
-        className="data-[state=checked]:bg-emerald-500 data-[state=unchecked]:bg-slate-300"
-        size="xl"
-      >
-        <SwitchThumb className="bg-white shadow-lg" size="xl" />
-      </SwitchRoot>
-      <Label htmlFor="custom-components">Custom Components</Label>
-    </div>
-  </div>
-);
 
 // Switch with icons
 export const WithIcons = () => (

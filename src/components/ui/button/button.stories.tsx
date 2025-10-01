@@ -192,102 +192,31 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+// Interactive playground for testing different button configurations
+export const Playground: Story = {
+  args: {
+    children: "Button",
+    variant: "default",
+    size: "default",
+    disabled: false,
+    asChild: false,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Interactive playground to experiment with different button configurations, variants, sizes, and states.",
+      },
+    },
+  },
+};
+
 // Default story
 export const Default: Story = {
   args: {
     children: "Button",
     variant: "default",
     size: "default",
-  },
-};
-
-// All variants
-export const Variants: Story = {
-  render: () => (
-    <div className="flex flex-wrap gap-4">
-      <Button variant="default">Default</Button>
-      <Button variant="destructive">Destructive</Button>
-      <Button variant="outline">Outline</Button>
-      <Button variant="secondary">Secondary</Button>
-      <Button variant="ghost">Ghost</Button>
-      <Button variant="link">Link</Button>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "All available button variants.",
-      },
-    },
-  },
-};
-
-// All sizes
-export const Sizes: Story = {
-  render: () => (
-    <div className="flex flex-wrap items-center gap-4">
-      <Button size="sm">Small</Button>
-      <Button size="default">Default</Button>
-      <Button size="lg">Large</Button>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Button size variants.",
-      },
-    },
-  },
-};
-
-// Individual variant stories
-export const Destructive: Story = {
-  args: {
-    children: "Delete",
-    variant: "destructive",
-  },
-};
-
-export const Outline: Story = {
-  args: {
-    children: "Outline",
-    variant: "outline",
-  },
-};
-
-export const Secondary: Story = {
-  args: {
-    children: "Secondary",
-    variant: "secondary",
-  },
-};
-
-export const Ghost: Story = {
-  args: {
-    children: "Ghost",
-    variant: "ghost",
-  },
-};
-
-export const Link: Story = {
-  args: {
-    children: "Link",
-    variant: "link",
-  },
-};
-
-// Size variants
-export const Small: Story = {
-  args: {
-    children: "Small Button",
-    size: "sm",
-  },
-};
-
-export const Large: Story = {
-  args: {
-    children: "Large Button",
-    size: "lg",
   },
 };
 
@@ -379,37 +308,6 @@ export const WithIcon: Story = {
       description: {
         story:
           "Buttons with icons. Icons can be placed before or after the text.",
-      },
-    },
-  },
-};
-
-// Disabled states
-export const Disabled: Story = {
-  render: () => (
-    <div className="flex flex-wrap gap-4">
-      <Button disabled>Default</Button>
-      <Button variant="destructive" disabled>
-        Destructive
-      </Button>
-      <Button variant="outline" disabled>
-        Outline
-      </Button>
-      <Button variant="secondary" disabled>
-        Secondary
-      </Button>
-      <Button variant="ghost" disabled>
-        Ghost
-      </Button>
-      <Button variant="link" disabled>
-        Link
-      </Button>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Disabled states for all button variants.",
       },
     },
   },

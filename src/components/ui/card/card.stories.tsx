@@ -47,31 +47,160 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// Default story
+// Define custom args type for playground story
+type PlaygroundArgs = React.ComponentProps<typeof Card> & {
+  showHeader?: boolean;
+  showDescription?: boolean;
+  showAction?: boolean;
+  showFooter?: boolean;
+  title?: string;
+  description?: string;
+  content?: string;
+  interactive?: boolean;
+};
+
+// Interactive playground for testing different card configurations
+export const Playground = {
+  args: {
+    className: "w-80",
+  },
+  argTypes: {
+    showHeader: {
+      control: "boolean",
+      description: "Show card header section",
+      table: {
+        category: "Layout",
+        defaultValue: { summary: "true" },
+      },
+    },
+    showDescription: {
+      control: "boolean",
+      description: "Show card description in header",
+      table: {
+        category: "Layout",
+        defaultValue: { summary: "true" },
+      },
+    },
+    showAction: {
+      control: "boolean",
+      description: "Show action button in header",
+      table: {
+        category: "Layout",
+        defaultValue: { summary: "false" },
+      },
+    },
+    showFooter: {
+      control: "boolean",
+      description: "Show card footer section",
+      table: {
+        category: "Layout",
+        defaultValue: { summary: "true" },
+      },
+    },
+    title: {
+      control: "text",
+      description: "Card title text",
+      table: {
+        category: "Content",
+        defaultValue: { summary: "Card Title" },
+      },
+    },
+    description: {
+      control: "text",
+      description: "Card description text",
+      table: {
+        category: "Content",
+        defaultValue: { summary: "Card description text" },
+      },
+    },
+    content: {
+      control: "text",
+      description: "Main card content",
+      table: {
+        category: "Content",
+        defaultValue: { summary: "Card content goes here" },
+      },
+    },
+    interactive: {
+      control: "boolean",
+      description: "Make card interactive with hover effects",
+      table: {
+        category: "Behavior",
+        defaultValue: { summary: "false" },
+      },
+    },
+  },
+  render: ({
+    className,
+    showHeader = true,
+    showDescription = true,
+    showAction = false,
+    showFooter = true,
+    title = "Card Title",
+    description = "Card description text",
+    content = "This is the main content of the card. You can customize all sections using the controls.",
+    interactive = false,
+    ...args
+  }: PlaygroundArgs) => (
+    <Card
+      className={`${className} ${interactive ? "cursor-pointer transition-colors hover:bg-accent" : ""}`}
+      {...args}
+    >
+      {showHeader && (
+        <CardHeader>
+          <CardTitle>{title}</CardTitle>
+          {showDescription && <CardDescription>{description}</CardDescription>}
+          {showAction && (
+            <CardAction>
+              <Button variant="ghost" size="icon">
+                <svg
+                  className="h-4 w-4"
+                  viewBox="0 0 15 15"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3.625 7.5C3.625 8.12132 3.12132 8.625 2.5 8.625C1.87868 8.625 1.375 8.12132 1.375 7.5C1.375 6.87868 1.87868 6.375 2.5 6.375C3.12132 6.375 3.625 6.87868 3.625 7.5ZM8.625 7.5C8.625 8.12132 8.12132 8.625 7.5 8.625C6.87868 8.625 6.375 8.12132 6.375 7.5C6.375 6.87868 6.87868 6.375 7.5 6.375C8.12132 6.375 8.625 6.87868 8.625 7.5ZM13.625 7.5C13.625 8.12132 13.1213 8.625 12.5 8.625C11.8787 8.625 11.375 8.12132 11.375 7.5C11.375 6.87868 11.8787 6.375 12.5 6.375C13.1213 6.375 13.625 6.87868 13.625 7.5Z"
+                    fill="currentColor"
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
+              </Button>
+            </CardAction>
+          )}
+        </CardHeader>
+      )}
+      <CardContent>
+        <p>{content}</p>
+      </CardContent>
+      {showFooter && (
+        <CardFooter>
+          <Button>Primary Action</Button>
+          <Button variant="outline">Secondary</Button>
+        </CardFooter>
+      )}
+    </Card>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Interactive playground to experiment with different card configurations and content.",
+      },
+    },
+  },
+} satisfies StoryObj<PlaygroundArgs>;
+
+// Default story - shows all card components
 export const Default: Story = {
   render: () => (
     <Card className="w-80">
       <CardHeader>
         <CardTitle>Card Title</CardTitle>
         <CardDescription>
-          This is a card description that provides additional context.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <p>This is the main content of the card.</p>
-      </CardContent>
-    </Card>
-  ),
-};
-
-// With all parts
-export const Complete: Story = {
-  render: () => (
-    <Card className="w-80">
-      <CardHeader>
-        <CardTitle>Complete Card</CardTitle>
-        <CardDescription>
-          A card with all available parts: header, content, and footer.
+          A flexible container for grouping related content with header, body,
+          and footer sections.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -82,56 +211,16 @@ export const Complete: Story = {
         </p>
       </CardContent>
       <CardFooter>
-        <Button>Action</Button>
-        <Button variant="outline">Cancel</Button>
+        <Button>Primary Action</Button>
+        <Button variant="outline">Secondary</Button>
       </CardFooter>
     </Card>
   ),
   parameters: {
     docs: {
       description: {
-        story: "A complete card with header, content, and footer sections.",
-      },
-    },
-  },
-};
-
-// With action button
-export const WithAction: Story = {
-  render: () => (
-    <Card className="w-80">
-      <CardHeader>
-        <CardTitle>Card with Action</CardTitle>
-        <CardDescription>
-          This card includes an action button in the header.
-        </CardDescription>
-        <CardAction>
-          <Button variant="ghost" size="icon">
-            <svg
-              className="h-4 w-4"
-              viewBox="0 0 15 15"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M3.625 7.5C3.625 8.12132 3.12132 8.625 2.5 8.625C1.87868 8.625 1.375 8.12132 1.375 7.5C1.375 6.87868 1.87868 6.375 2.5 6.375C3.12132 6.375 3.625 6.87868 3.625 7.5ZM8.625 7.5C8.625 8.12132 8.12132 8.625 7.5 8.625C6.87868 8.625 6.375 8.12132 6.375 7.5C6.375 6.87868 6.87868 6.375 7.5 6.375C8.12132 6.375 8.625 6.87868 8.625 7.5ZM13.625 7.5C13.625 8.12132 13.1213 8.625 12.5 8.625C11.8787 8.625 11.375 8.12132 11.375 7.5C11.375 6.87868 11.8787 6.375 12.5 6.375C13.1213 6.375 13.625 6.87868 13.625 7.5Z"
-                fill="currentColor"
-                fillRule="evenodd"
-                clipRule="evenodd"
-              ></path>
-            </svg>
-          </Button>
-        </CardAction>
-      </CardHeader>
-      <CardContent>
-        <p>This card has an action button positioned in the header area.</p>
-      </CardContent>
-    </Card>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Card with an action button in the header.",
+        story:
+          "A complete card showing header, content, and footer sections with typical usage patterns.",
       },
     },
   },
@@ -203,39 +292,6 @@ export const Grid: Story = {
     docs: {
       description: {
         story: "Multiple cards arranged in a responsive grid.",
-      },
-    },
-  },
-};
-
-// Interactive card
-export const Interactive: Story = {
-  render: () => (
-    <Card className="w-80 cursor-pointer transition-colors hover:bg-accent">
-      <CardHeader>
-        <CardTitle>Interactive Card</CardTitle>
-        <CardDescription>
-          Click anywhere on this card to interact with it.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-2">
-          <div className="flex items-center space-x-2">
-            <div className="h-2 w-2 bg-green-500 rounded-full"></div>
-            <span className="text-sm">Status: Active</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <div className="h-2 w-2 bg-blue-500 rounded-full"></div>
-            <span className="text-sm">Type: Interactive</span>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "An interactive card with hover effects and status indicators.",
       },
     },
   },

@@ -402,39 +402,6 @@ export const ControlledSlider = () => {
   );
 };
 
-// Price range slider
-export const PriceRangeSlider = () => {
-  const [priceRange, setPriceRange] = useState([100, 500]);
-  const formatPrice = (value: number) => `$${value}`;
-
-  return (
-    <div className="w-full max-w-md space-y-4">
-      <Label className="text-base font-medium">Price Range</Label>
-      <Slider
-        value={priceRange}
-        onValueChange={setPriceRange}
-        min={0}
-        max={1000}
-        step={10}
-      />
-      <div className="flex justify-between items-center">
-        <div className="text-sm">
-          <span className="text-muted-foreground">Min: </span>
-          <span className="font-medium">{formatPrice(priceRange[0])}</span>
-        </div>
-        <div className="text-sm">
-          <span className="text-muted-foreground">Max: </span>
-          <span className="font-medium">{formatPrice(priceRange[1])}</span>
-        </div>
-      </div>
-      <div className="text-center text-sm text-muted-foreground">
-        Showing products from {formatPrice(priceRange[0])} to{" "}
-        {formatPrice(priceRange[1])}
-      </div>
-    </div>
-  );
-};
-
 // Slider with input synchronization
 export const SliderWithInput = () => {
   const [value, setValue] = useState([50]);

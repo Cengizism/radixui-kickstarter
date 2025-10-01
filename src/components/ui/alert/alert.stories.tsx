@@ -78,6 +78,32 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+// Interactive playground for testing different alert configurations
+export const Playground: Story = {
+  args: {
+    variant: "default",
+  },
+  render: (args) => (
+    <Alert {...args} className="w-96">
+      <AlertCircle className="size-4" />
+      <AlertTitle>Alert Title</AlertTitle>
+      <AlertDescription>
+        Interactive playground to experiment with different alert variants and
+        configurations. Use the controls panel to change the variant and see
+        different alert styles.
+      </AlertDescription>
+    </Alert>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Interactive playground to experiment with different alert configurations and variants.",
+      },
+    },
+  },
+};
+
 // Default alert
 export const Default: Story = {
   render: (args) => (
@@ -125,51 +151,6 @@ export const Success: Story = {
     docs: {
       description: {
         story: "Success alert using CheckCircle icon with positive messaging.",
-      },
-    },
-  },
-};
-
-// All variants showcase
-export const AllVariants: Story = {
-  render: () => (
-    <div className="space-y-4 w-96">
-      <Alert>
-        <Info className="size-4" />
-        <AlertTitle>Information</AlertTitle>
-        <AlertDescription>
-          This is some helpful information for the user.
-        </AlertDescription>
-      </Alert>
-
-      <Alert>
-        <CheckCircle className="size-4" />
-        <AlertTitle>Success</AlertTitle>
-        <AlertDescription>Operation completed successfully.</AlertDescription>
-      </Alert>
-
-      <Alert>
-        <AlertTriangle className="size-4" />
-        <AlertTitle>Warning</AlertTitle>
-        <AlertDescription>
-          Please review your settings before continuing.
-        </AlertDescription>
-      </Alert>
-
-      <Alert variant="destructive">
-        <XCircle className="size-4" />
-        <AlertTitle>Error</AlertTitle>
-        <AlertDescription>
-          Something went wrong. Please try again.
-        </AlertDescription>
-      </Alert>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Different alert types using various icons and appropriate messaging.",
       },
     },
   },

@@ -205,80 +205,6 @@ export const Default = () => (
   </div>
 );
 
-// Different sizes (rows)
-export const DifferentSizes = () => (
-  <div className="space-y-4 w-full max-w-md">
-    <div className="grid gap-1.5">
-      <Label htmlFor="small-textarea">Small (2 rows)</Label>
-      <Textarea placeholder="Small textarea..." id="small-textarea" rows={2} />
-    </div>
-
-    <div className="grid gap-1.5">
-      <Label htmlFor="medium-textarea">Medium (4 rows)</Label>
-      <Textarea
-        placeholder="Medium textarea..."
-        id="medium-textarea"
-        rows={4}
-      />
-    </div>
-
-    <div className="grid gap-1.5">
-      <Label htmlFor="large-textarea">Large (6 rows)</Label>
-      <Textarea placeholder="Large textarea..." id="large-textarea" rows={6} />
-    </div>
-
-    <div className="grid gap-1.5">
-      <Label htmlFor="xl-textarea">Extra Large (8 rows)</Label>
-      <Textarea
-        placeholder="Extra large textarea..."
-        id="xl-textarea"
-        rows={8}
-      />
-    </div>
-  </div>
-);
-
-// Resizable variants
-export const ResizableVariants = () => (
-  <div className="space-y-4 w-full max-w-md">
-    <div className="grid gap-1.5">
-      <Label htmlFor="no-resize">No Resize (default)</Label>
-      <Textarea
-        placeholder="Cannot be resized..."
-        id="no-resize"
-        className="resize-none"
-      />
-    </div>
-
-    <div className="grid gap-1.5">
-      <Label htmlFor="resize-y">Vertical Resize</Label>
-      <Textarea
-        placeholder="Can be resized vertically..."
-        id="resize-y"
-        className="resize-y"
-      />
-    </div>
-
-    <div className="grid gap-1.5">
-      <Label htmlFor="resize-x">Horizontal Resize</Label>
-      <Textarea
-        placeholder="Can be resized horizontally..."
-        id="resize-x"
-        className="resize-x"
-      />
-    </div>
-
-    <div className="grid gap-1.5">
-      <Label htmlFor="resize-both">Both Directions</Label>
-      <Textarea
-        placeholder="Can be resized in both directions..."
-        id="resize-both"
-        className="resize"
-      />
-    </div>
-  </div>
-);
-
 // States and validation
 export const StatesAndValidation = () => (
   <div className="space-y-4 w-full max-w-md">
@@ -675,55 +601,6 @@ John"
   "language": "en",
   "autoSave": true
 }`}
-      />
-    </div>
-  </div>
-);
-
-// With custom styling
-export const CustomStyling = () => (
-  <div className="space-y-4 w-full max-w-md">
-    <div className="grid gap-1.5">
-      <Label htmlFor="rounded-textarea">Rounded Corners</Label>
-      <Textarea
-        placeholder="Rounded textarea..."
-        id="rounded-textarea"
-        className="rounded-xl"
-        rows={3}
-      />
-    </div>
-
-    <div className="grid gap-1.5">
-      <Label htmlFor="bordered-textarea">Custom Border</Label>
-      <Textarea
-        placeholder="Custom bordered textarea..."
-        id="bordered-textarea"
-        className="border-2 border-dashed border-primary"
-        rows={3}
-      />
-    </div>
-
-    <div className="grid gap-1.5">
-      <Label htmlFor="gradient-textarea">Gradient Border</Label>
-      <Textarea
-        placeholder="Gradient border textarea..."
-        id="gradient-textarea"
-        className="border-2 border-transparent bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-padding"
-        style={{
-          background:
-            "linear-gradient(white, white) padding-box, linear-gradient(45deg, #8b5cf6, #ec4899) border-box",
-        }}
-        rows={3}
-      />
-    </div>
-
-    <div className="grid gap-1.5">
-      <Label htmlFor="shadow-textarea">Custom Shadow</Label>
-      <Textarea
-        placeholder="Shadow textarea..."
-        id="shadow-textarea"
-        className="shadow-lg border-0 bg-white"
-        rows={3}
       />
     </div>
   </div>

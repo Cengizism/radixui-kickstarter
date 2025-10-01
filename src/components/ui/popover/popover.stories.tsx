@@ -39,7 +39,9 @@ export default {
       description:
         "The open state of the popover when it is initially rendered. Use when you do not need to control its open state.",
       table: {
-        category: "Root",
+        category: "Root Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
       },
     },
     open: {
@@ -47,7 +49,8 @@ export default {
       description:
         "The controlled open state of the popover. Must be used in conjunction with onOpenChange.",
       table: {
-        category: "Root",
+        category: "Root Props",
+        type: { summary: "boolean" },
       },
     },
     onOpenChange: {
@@ -55,7 +58,7 @@ export default {
       description:
         "Event handler called when the open state of the popover changes.",
       table: {
-        category: "Root",
+        category: "Event Handlers",
         type: { summary: "(open: boolean) => void" },
       },
     },
@@ -64,7 +67,9 @@ export default {
       description:
         "The modality of the popover. When set to true, interaction with outside elements will be disabled and only popover content will be visible to screen readers.",
       table: {
-        category: "Root",
+        category: "State Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
       },
     },
 
@@ -74,7 +79,9 @@ export default {
       description:
         "Change the default rendered element for the one passed as a child, merging their props and behavior.",
       table: {
-        category: "Trigger",
+        category: "Trigger Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
       },
     },
 
@@ -83,7 +90,9 @@ export default {
       control: "boolean",
       description: "Change the default rendered element for the anchor.",
       table: {
-        category: "Anchor",
+        category: "Anchor Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
       },
     },
 
@@ -93,14 +102,16 @@ export default {
       description:
         "Used to force mounting when more control is needed. Useful when controlling animation with React animation libraries.",
       table: {
-        category: "Portal",
+        category: "Portal Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
       },
     },
     container: {
       control: "object",
       description: "Specify a container element to portal the content into.",
       table: {
-        category: "Portal",
+        category: "Portal Props",
         type: { summary: "HTMLElement" },
       },
     },
@@ -110,7 +121,9 @@ export default {
       control: "boolean",
       description: "Change the default rendered element for the content.",
       table: {
-        category: "Content",
+        category: "Content Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
       },
     },
     side: {
@@ -119,14 +132,18 @@ export default {
       description:
         "The preferred side of the anchor to render against when open. Will be reversed when collisions occur and avoidCollisions is enabled.",
       table: {
-        category: "Content",
+        category: "Positioning Props",
+        type: { summary: '"top" | "right" | "bottom" | "left"' },
+        defaultValue: { summary: '"bottom"' },
       },
     },
     sideOffset: {
       control: "number",
       description: "The distance in pixels from the anchor.",
       table: {
-        category: "Content",
+        category: "Positioning Props",
+        type: { summary: "number" },
+        defaultValue: { summary: "0" },
       },
     },
     align: {
@@ -135,7 +152,9 @@ export default {
       description:
         "The preferred alignment against the anchor. May change when collisions occur.",
       table: {
-        category: "Content",
+        category: "Positioning Props",
+        type: { summary: '"start" | "center" | "end"' },
+        defaultValue: { summary: '"center"' },
       },
     },
     alignOffset: {
@@ -143,7 +162,9 @@ export default {
       description:
         "An offset in pixels from the start or end alignment options.",
       table: {
-        category: "Content",
+        category: "Positioning Props",
+        type: { summary: "number" },
+        defaultValue: { summary: "0" },
       },
     },
     avoidCollisions: {
@@ -159,7 +180,7 @@ export default {
       description:
         "The element used as the collision boundary. By default this is the viewport, though you can provide additional element(s) to be included in this check.",
       table: {
-        category: "Content",
+        category: "Positioning Props",
         type: { summary: "Element | null | Array<Element | null>" },
       },
     },
@@ -168,7 +189,9 @@ export default {
       description:
         "The distance in pixels from the boundary edges where collision detection should occur.",
       table: {
-        category: "Content",
+        category: "Positioning Props",
+        type: { summary: "number" },
+        defaultValue: { summary: "0" },
       },
     },
     arrowPadding: {
@@ -176,7 +199,9 @@ export default {
       description:
         "The padding between the arrow and the edges of the content. If your content has border-radius, this will prevent it from overflowing the corners.",
       table: {
-        category: "Content",
+        category: "Appearance Props",
+        type: { summary: "number" },
+        defaultValue: { summary: "0" },
       },
     },
     sticky: {
@@ -185,7 +210,9 @@ export default {
       description:
         "The sticky behavior on the align axis. 'partial' will keep the content in the boundary as long as the trigger is at least partially in the boundary whilst 'always' will keep the content in the boundary regardless.",
       table: {
-        category: "Content",
+        category: "Positioning Props",
+        type: { summary: '"partial" | "always"' },
+        defaultValue: { summary: '"partial"' },
       },
     },
     hideWhenDetached: {
@@ -193,7 +220,9 @@ export default {
       description:
         "Whether to hide the content when the trigger becomes fully occluded.",
       table: {
-        category: "Content",
+        category: "State Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
       },
     },
     onEscapeKeyDown: {
@@ -201,7 +230,7 @@ export default {
       description:
         "Event handler called when the escape key is down. It can be prevented by calling event.preventDefault.",
       table: {
-        category: "Content",
+        category: "Event Handlers",
         type: { summary: "(event: KeyboardEvent) => void" },
       },
     },
@@ -210,7 +239,7 @@ export default {
       description:
         "Event handler called when a pointer event occurs outside the bounds of the component. It can be prevented by calling event.preventDefault.",
       table: {
-        category: "Content",
+        category: "Event Handlers",
         type: { summary: "(event: PointerDownOutsideEvent) => void" },
       },
     },
@@ -219,7 +248,7 @@ export default {
       description:
         "Event handler called when focus moves outside the bounds of the component. It can be prevented by calling event.preventDefault.",
       table: {
-        category: "Content",
+        category: "Event Handlers",
         type: { summary: "(event: FocusOutsideEvent) => void" },
       },
     },
@@ -228,7 +257,7 @@ export default {
       description:
         "Event handler called when an interaction (pointer or focus event) happens outside the bounds of the component. It can be prevented by calling event.preventDefault.",
       table: {
-        category: "Content",
+        category: "Event Handlers",
         type: {
           summary:
             "(event: PointerDownOutsideEvent | FocusOutsideEvent) => void",
@@ -241,21 +270,27 @@ export default {
       control: "number",
       description: "The width of the arrow in pixels.",
       table: {
-        category: "Arrow",
+        category: "Arrow Props",
+        type: { summary: "number" },
+        defaultValue: { summary: "10" },
       },
     },
     height: {
       control: "number",
       description: "The height of the arrow in pixels.",
       table: {
-        category: "Arrow",
+        category: "Arrow Props",
+        type: { summary: "number" },
+        defaultValue: { summary: "5" },
       },
     },
     arrowAsChild: {
       control: "boolean",
       description: "Change the default rendered element for the arrow.",
       table: {
-        category: "Arrow",
+        category: "Arrow Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
       },
     },
 
@@ -264,7 +299,9 @@ export default {
       control: "boolean",
       description: "Change the default rendered element for the close button.",
       table: {
-        category: "Close",
+        category: "Close Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
       },
     },
   },

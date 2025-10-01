@@ -408,6 +408,47 @@ const countries = [
   { value: "cn", label: "China", flag: "🇨🇳" },
 ];
 
+// Interactive playground for testing different select configurations
+export const Playground: Story = {
+  args: {
+    disabled: false,
+  },
+  render: (args) => (
+    <Select {...args}>
+      <SelectTrigger className="w-48">
+        <SelectValue placeholder="Select a framework..." />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectLabel>Frontend Frameworks</SelectLabel>
+          {frameworks.slice(0, 4).map((framework) => (
+            <SelectItem key={framework.value} value={framework.value}>
+              {framework.label}
+            </SelectItem>
+          ))}
+        </SelectGroup>
+        <SelectSeparator />
+        <SelectGroup>
+          <SelectLabel>Other</SelectLabel>
+          {frameworks.slice(4, 8).map((framework) => (
+            <SelectItem key={framework.value} value={framework.value}>
+              {framework.label}
+            </SelectItem>
+          ))}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Interactive playground to experiment with different select configurations and disabled states.",
+      },
+    },
+  },
+};
+
 // Default story
 export const Default: Story = {
   render: () => (
@@ -424,138 +465,6 @@ export const Default: Story = {
       </SelectContent>
     </Select>
   ),
-};
-
-// Size variants
-export const Sizes: Story = {
-  render: () => (
-    <div className="space-y-6">
-      <div className="space-y-2">
-        <h4 className="text-sm font-medium">Small</h4>
-        <Select>
-          <SelectTrigger size="sm" className="w-40">
-            <SelectValue placeholder="Small select" />
-          </SelectTrigger>
-          <SelectContent size="sm">
-            {frameworks.slice(0, 3).map((framework) => (
-              <SelectItem
-                key={framework.value}
-                value={framework.value}
-                size="sm"
-              >
-                {framework.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="space-y-2">
-        <h4 className="text-sm font-medium">Default</h4>
-        <Select>
-          <SelectTrigger className="w-48">
-            <SelectValue placeholder="Default select" />
-          </SelectTrigger>
-          <SelectContent>
-            {frameworks.slice(0, 3).map((framework) => (
-              <SelectItem key={framework.value} value={framework.value}>
-                {framework.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="space-y-2">
-        <h4 className="text-sm font-medium">Large</h4>
-        <Select>
-          <SelectTrigger size="lg" className="w-56">
-            <SelectValue placeholder="Large select" />
-          </SelectTrigger>
-          <SelectContent size="lg">
-            {frameworks.slice(0, 3).map((framework) => (
-              <SelectItem
-                key={framework.value}
-                value={framework.value}
-                size="lg"
-              >
-                {framework.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Different trigger sizes for various contexts.",
-      },
-    },
-  },
-};
-
-// Trigger variants
-export const TriggerVariants: Story = {
-  render: () => (
-    <div className="grid grid-cols-1 gap-6">
-      <div className="space-y-2">
-        <h4 className="text-sm font-medium">Default</h4>
-        <Select>
-          <SelectTrigger variant="default" className="w-48">
-            <SelectValue placeholder="Default style" />
-          </SelectTrigger>
-          <SelectContent>
-            {frameworks.slice(0, 3).map((framework) => (
-              <SelectItem key={framework.value} value={framework.value}>
-                {framework.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="space-y-2">
-        <h4 className="text-sm font-medium">Outline</h4>
-        <Select>
-          <SelectTrigger variant="outline" className="w-48">
-            <SelectValue placeholder="Outline style" />
-          </SelectTrigger>
-          <SelectContent>
-            {frameworks.slice(0, 3).map((framework) => (
-              <SelectItem key={framework.value} value={framework.value}>
-                {framework.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="space-y-2">
-        <h4 className="text-sm font-medium">Ghost</h4>
-        <Select>
-          <SelectTrigger variant="ghost" className="w-48">
-            <SelectValue placeholder="Ghost style" />
-          </SelectTrigger>
-          <SelectContent>
-            {frameworks.slice(0, 3).map((framework) => (
-              <SelectItem key={framework.value} value={framework.value}>
-                {framework.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Different visual styles for the select trigger.",
-      },
-    },
-  },
 };
 
 // Content positioning
@@ -653,55 +562,6 @@ export const GroupedOptions: Story = {
   },
 };
 
-// Disabled states
-export const DisabledStates: Story = {
-  render: () => (
-    <div className="grid grid-cols-1 gap-6">
-      <div className="space-y-3">
-        <h4 className="text-sm font-medium">Disabled Select</h4>
-        <Select disabled>
-          <SelectTrigger className="w-48">
-            <SelectValue placeholder="This select is disabled" />
-          </SelectTrigger>
-          <SelectContent>
-            {frameworks.slice(0, 3).map((framework) => (
-              <SelectItem key={framework.value} value={framework.value}>
-                {framework.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="space-y-3">
-        <h4 className="text-sm font-medium">Disabled Options</h4>
-        <Select>
-          <SelectTrigger className="w-48">
-            <SelectValue placeholder="Some options disabled" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="react">React</SelectItem>
-            <SelectItem value="vue" disabled>
-              Vue (Coming Soon)
-            </SelectItem>
-            <SelectItem value="angular">Angular</SelectItem>
-            <SelectItem value="svelte" disabled>
-              Svelte (Coming Soon)
-            </SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Disabled triggers and individual disabled options.",
-      },
-    },
-  },
-};
-
 // Rich content
 export const RichContent: Story = {
   render: () => (
@@ -780,31 +640,6 @@ export const ControlledSelect: Story = {
   },
 };
 
-// Scroll behavior
-export const ScrollBehavior: Story = {
-  render: () => (
-    <Select>
-      <SelectTrigger className="w-64">
-        <SelectValue placeholder="Choose from many options..." />
-      </SelectTrigger>
-      <SelectContent className="max-h-60">
-        {Array.from({ length: 25 }, (_, i) => (
-          <SelectItem key={`option-${i}`} value={`option-${i}`}>
-            Option {i + 1}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Long lists with scroll buttons and keyboard navigation.",
-      },
-    },
-  },
-};
-
 // Form integration
 export const FormIntegration: Story = {
   render: () => (
@@ -839,60 +674,6 @@ export const FormIntegration: Story = {
     docs: {
       description: {
         story: "Using Select in forms with validation and labels.",
-      },
-    },
-  },
-};
-
-// Status indicators
-export const StatusIndicators: Story = {
-  render: () => (
-    <div className="space-y-6">
-      <div className="space-y-2">
-        <div className="flex items-center gap-2">
-          <Badge variant="default" className="text-xs">
-            Active
-          </Badge>
-          <span className="text-sm font-medium">Project Status</span>
-        </div>
-        <Select defaultValue="active">
-          <SelectTrigger className="w-48">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="active">
-              <div className="flex items-center gap-2">
-                <div className="h-2 w-2 bg-green-500 rounded-full"></div>
-                Active
-              </div>
-            </SelectItem>
-            <SelectItem value="pending">
-              <div className="flex items-center gap-2">
-                <div className="h-2 w-2 bg-yellow-500 rounded-full"></div>
-                Pending
-              </div>
-            </SelectItem>
-            <SelectItem value="completed">
-              <div className="flex items-center gap-2">
-                <div className="h-2 w-2 bg-blue-500 rounded-full"></div>
-                Completed
-              </div>
-            </SelectItem>
-            <SelectItem value="cancelled">
-              <div className="flex items-center gap-2">
-                <div className="h-2 w-2 bg-red-500 rounded-full"></div>
-                Cancelled
-              </div>
-            </SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Select with status indicators and colored dots.",
       },
     },
   },

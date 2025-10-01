@@ -1,8 +1,9 @@
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useState } from 'react';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-export default {
+const meta = {
   title: "UI/Checkbox",
   component: Checkbox,
   parameters: {
@@ -170,7 +171,10 @@ export default {
       },
     },
   },
-};
+} satisfies Meta<typeof Checkbox>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 // Default story
 export const Default = {
@@ -187,127 +191,24 @@ export const Default = {
   ),
 };
 
-// Sizes
-export const Sizes = {
-  render: () => (
-    <div className="space-y-4">
-      <div className="flex items-center space-x-2">
-        <Checkbox id="small" size="sm" defaultChecked />
-        <label htmlFor="small" className="text-sm font-medium">
-          Small checkbox
-        </label>
-      </div>
-      <div className="flex items-center space-x-2">
-        <Checkbox id="default-size" size="default" defaultChecked />
-        <label htmlFor="default-size" className="text-sm font-medium">
-          Default checkbox
-        </label>
-      </div>
-      <div className="flex items-center space-x-2">
-        <Checkbox id="large" size="lg" defaultChecked />
-        <label htmlFor="large" className="text-sm font-medium">
-          Large checkbox
-        </label>
-      </div>
+// Interactive playground
+export const Playground: Story = {
+  args: {
+    defaultChecked: false,
+    disabled: false,
+    required: false,
+  },
+  render: (args) => (
+    <div className="flex items-center space-x-2">
+      <Checkbox id="playground" {...args} />
+      <label
+        htmlFor="playground"
+        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+      >
+        Accept terms and conditions
+      </label>
     </div>
   ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Different checkbox sizes for various use cases.",
-      },
-    },
-  },
-};
-
-// Variants
-export const Variants = {
-  render: () => (
-    <div className="space-y-4">
-      <div className="flex items-center space-x-2">
-        <Checkbox id="default-variant" variant="default" defaultChecked />
-        <label htmlFor="default-variant" className="text-sm font-medium">
-          Default variant
-        </label>
-      </div>
-      <div className="flex items-center space-x-2">
-        <Checkbox
-          id="destructive-variant"
-          variant="destructive"
-          defaultChecked
-        />
-        <label htmlFor="destructive-variant" className="text-sm font-medium">
-          Destructive variant
-        </label>
-      </div>
-      <div className="flex items-center space-x-2">
-        <Checkbox id="outline-variant" variant="outline" defaultChecked />
-        <label htmlFor="outline-variant" className="text-sm font-medium">
-          Outline variant
-        </label>
-      </div>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Different visual styles for different contexts.",
-      },
-    },
-  },
-};
-
-// States
-export const States = {
-  render: () => (
-    <div className="grid grid-cols-2 gap-6">
-      <div className="space-y-3">
-        <h4 className="font-medium">Unchecked States</h4>
-        <div className="flex items-center space-x-2">
-          <Checkbox id="unchecked-enabled" />
-          <label htmlFor="unchecked-enabled" className="text-sm">
-            Unchecked enabled
-          </label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <Checkbox id="unchecked-disabled" disabled />
-          <label
-            htmlFor="unchecked-disabled"
-            className="text-sm text-muted-foreground"
-          >
-            Unchecked disabled
-          </label>
-        </div>
-      </div>
-
-      <div className="space-y-3">
-        <h4 className="font-medium">Checked States</h4>
-        <div className="flex items-center space-x-2">
-          <Checkbox id="checked-enabled" defaultChecked />
-          <label htmlFor="checked-enabled" className="text-sm">
-            Checked enabled
-          </label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <Checkbox id="checked-disabled" defaultChecked disabled />
-          <label
-            htmlFor="checked-disabled"
-            className="text-sm text-muted-foreground"
-          >
-            Checked disabled
-          </label>
-        </div>
-      </div>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Different checkbox states including disabled and various combinations.",
-      },
-    },
-  },
 };
 
 // Indeterminate state
@@ -587,262 +488,3 @@ export const ControlledCheckbox = {
 };
 
 // Indicator customization
-export const CustomIndicators = {
-  render: () => (
-    <div className="space-y-4 w-full max-w-md">
-      <div>
-        <h4 className="text-sm font-medium mb-3">Custom Indicators</h4>
-        <div className="space-y-3">
-          <div className="flex items-center space-x-2">
-            <Checkbox id="custom-check" defaultChecked />
-            <label htmlFor="custom-check" className="text-sm">
-              Default check icon
-            </label>
-          </div>
-
-          <div className="flex items-center space-x-2">
-            <Checkbox
-              id="custom-indeterminate"
-              checked="indeterminate"
-              className="data-[state=indeterminate]:bg-orange-500 data-[state=indeterminate]:border-orange-500"
-            />
-            <label htmlFor="custom-indeterminate" className="text-sm">
-              Custom indeterminate styling
-            </label>
-          </div>
-
-          <div className="flex items-center space-x-2">
-            <Checkbox
-              id="custom-colors"
-              defaultChecked
-              className="data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-            />
-            <label htmlFor="custom-colors" className="text-sm">
-              Custom checked colors
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Examples of customizing checkbox indicators and styling.",
-      },
-    },
-  },
-};
-
-// Advanced example with dynamic features
-export const AdvancedExample = {
-  render: function AdvancedCheckboxExample() {
-    const [groupState, setGroupState] = useState({
-      notifications: {
-        email: false,
-        push: true,
-        sms: false,
-      },
-      permissions: {
-        camera: true,
-        microphone: false,
-        location: true,
-        contacts: false,
-      },
-    });
-
-    const [showAdvanced, setShowAdvanced] = useState(false);
-
-    const getGroupStatus = (group: keyof typeof groupState) => {
-      const items = Object.values(groupState[group]);
-      const checkedCount = items.filter(Boolean).length;
-      const totalCount = items.length;
-
-      if (checkedCount === 0) return false;
-      if (checkedCount === totalCount) return true;
-      return "indeterminate";
-    };
-
-    const handleGroupToggle = (
-      group: keyof typeof groupState,
-      checked: boolean | "indeterminate"
-    ) => {
-      const newValue = checked === true;
-      setGroupState((prev) => ({
-        ...prev,
-        [group]: Object.keys(prev[group]).reduce(
-          (acc, key) => ({ ...acc, [key]: newValue }),
-          {} as Record<string, boolean>
-        ),
-      }));
-    };
-
-    const handleItemToggle = (group: keyof typeof groupState, item: string) => {
-      setGroupState((prev) => ({
-        ...prev,
-        [group]: {
-          ...prev[group],
-          [item]: !prev[group][item as keyof (typeof prev)[typeof group]],
-        },
-      }));
-    };
-
-    return (
-      <div className="space-y-6 w-full max-w-2xl">
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold">Settings Management</h3>
-          <Button
-            onClick={() => setShowAdvanced(!showAdvanced)}
-            variant="outline"
-            size="sm"
-          >
-            {showAdvanced ? "Hide" : "Show"} Advanced
-          </Button>
-        </div>
-
-        <div className="space-y-4">
-          {/* Notifications Group */}
-          <div className="space-y-3 p-4 border rounded-lg">
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="notifications-all"
-                checked={getGroupStatus("notifications")}
-                onCheckedChange={(checked) =>
-                  handleGroupToggle("notifications", checked)
-                }
-              />
-              <label
-                htmlFor="notifications-all"
-                className="text-sm font-semibold"
-              >
-                Notifications (
-                {Object.values(groupState.notifications).filter(Boolean).length}
-                /{Object.values(groupState.notifications).length})
-              </label>
-            </div>
-
-            <div className="ml-6 space-y-2">
-              {Object.entries(groupState.notifications).map(([key, value]) => (
-                <div key={key} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={`notification-${key}`}
-                    checked={value}
-                    onCheckedChange={() =>
-                      handleItemToggle("notifications", key)
-                    }
-                    size="sm"
-                  />
-                  <label
-                    htmlFor={`notification-${key}`}
-                    className="text-sm capitalize"
-                  >
-                    {key} notifications
-                  </label>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Permissions Group */}
-          <div className="space-y-3 p-4 border rounded-lg">
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="permissions-all"
-                checked={getGroupStatus("permissions")}
-                onCheckedChange={(checked) =>
-                  handleGroupToggle("permissions", checked)
-                }
-                variant="destructive"
-              />
-              <label
-                htmlFor="permissions-all"
-                className="text-sm font-semibold"
-              >
-                Permissions (
-                {Object.values(groupState.permissions).filter(Boolean).length}/
-                {Object.values(groupState.permissions).length})
-              </label>
-            </div>
-
-            <div className="ml-6 space-y-2">
-              {Object.entries(groupState.permissions).map(([key, value]) => (
-                <div key={key} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={`permission-${key}`}
-                    checked={value}
-                    onCheckedChange={() => handleItemToggle("permissions", key)}
-                    size="sm"
-                    variant="destructive"
-                  />
-                  <label
-                    htmlFor={`permission-${key}`}
-                    className="text-sm capitalize"
-                  >
-                    {key} access
-                  </label>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {showAdvanced && (
-            <div className="space-y-3 p-4 border-2 border-dashed rounded-lg bg-muted/20">
-              <h4 className="text-sm font-semibold">Advanced Options</h4>
-              <div className="space-y-2">
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="advanced-logging" size="sm" variant="outline" />
-                  <label htmlFor="advanced-logging" className="text-sm">
-                    Enable detailed logging
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="advanced-analytics"
-                    size="sm"
-                    variant="outline"
-                  />
-                  <label htmlFor="advanced-analytics" className="text-sm">
-                    Share usage analytics
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="advanced-beta"
-                    size="sm"
-                    variant="outline"
-                    defaultChecked
-                  />
-                  <label htmlFor="advanced-beta" className="text-sm">
-                    Beta features access
-                  </label>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-
-        <div className="flex justify-between items-center pt-4 border-t">
-          <div className="text-sm text-muted-foreground">
-            Total enabled:{" "}
-            {Object.values(groupState.notifications).filter(Boolean).length +
-              Object.values(groupState.permissions).filter(Boolean).length}
-          </div>
-          <div className="flex gap-2">
-            <Button variant="outline" size="sm">
-              Cancel
-            </Button>
-            <Button size="sm">Save Settings</Button>
-          </div>
-        </div>
-      </div>
-    );
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Advanced checkbox example with nested groups, indeterminate states, and dynamic controls.",
-      },
-    },
-  },
-};

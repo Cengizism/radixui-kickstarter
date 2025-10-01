@@ -277,58 +277,14 @@ export const Types: Story = {
   },
 };
 
-// Sizes
-export const Sizes: Story = {
-  render: () => (
-    <div className="space-y-4 w-80">
-      <Input className="h-8 px-2 text-xs" placeholder="Small input" />
-      <Input placeholder="Default input" />
-      <Input className="h-12 px-4" placeholder="Large input" />
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Input size variants.",
-      },
-    },
-  },
-};
-
-// Variants
-export const Variants: Story = {
-  render: () => (
-    <div className="space-y-4 w-80">
-      <Input variant="default" placeholder="Default variant" />
-      <Input variant="ghost" placeholder="Ghost variant" />
-      <Input variant="destructive" placeholder="Destructive variant" />
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Input variants.",
-      },
-    },
-  },
-};
-
-// States
-export const States: Story = {
-  render: () => (
-    <div className="space-y-4 w-80">
-      <Input placeholder="Normal state" />
-      <Input disabled placeholder="Disabled state" />
-      <Input required placeholder="Required field" />
-      <Input defaultValue="Read only" readOnly />
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Different input states.",
-      },
-    },
+// Interactive playground
+export const Playground: Story = {
+  args: {
+    placeholder: "Enter text...",
+    type: "text",
+    disabled: false,
+    readOnly: false,
+    required: false,
   },
 };
 

@@ -93,44 +93,11 @@ export const Default: Story = {
   },
 };
 
-// All variants story
-export const Variants: Story = {
-  render: () => (
-    <div className="flex flex-wrap gap-4">
-      <Badge variant="default">Default</Badge>
-      <Badge variant="secondary">Secondary</Badge>
-      <Badge variant="destructive">Destructive</Badge>
-      <Badge variant="outline">Outline</Badge>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "All available badge variants.",
-      },
-    },
-  },
-};
-
-// Individual variant stories
-export const Secondary: Story = {
+// Interactive playground
+export const Playground: Story = {
   args: {
-    children: "Secondary",
-    variant: "secondary",
-  },
-};
-
-export const Destructive: Story = {
-  args: {
-    children: "Destructive",
-    variant: "destructive",
-  },
-};
-
-export const Outline: Story = {
-  args: {
-    children: "Outline",
-    variant: "outline",
+    children: "Badge",
+    variant: "default",
   },
 };
 
@@ -238,44 +205,6 @@ export const AsLink: Story = {
     docs: {
       description: {
         story: "Badges can be rendered as links using the asChild prop.",
-      },
-    },
-  },
-};
-
-// Different content examples
-export const ContentVariations: Story = {
-  render: () => (
-    <div className="flex flex-wrap gap-4">
-      <Badge variant="default">v1.0.0</Badge>
-      <Badge variant="secondary">Beta</Badge>
-      <Badge variant="outline">Free</Badge>
-      <Badge variant="destructive">Deprecated</Badge>
-      <Badge variant="default">99+</Badge>
-      <Badge variant="secondary">New</Badge>
-      <Badge variant="outline">Coming Soon</Badge>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Examples of different types of content that work well in badges.",
-      },
-    },
-  },
-};
-
-// Long content
-export const LongContent: Story = {
-  args: {
-    children: "This is a very long badge content",
-    variant: "default",
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "Badge handles longer content gracefully with text wrapping.",
       },
     },
   },

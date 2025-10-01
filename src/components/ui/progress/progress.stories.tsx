@@ -147,6 +147,25 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+// Interactive playground for testing different progress configurations
+export const Playground: Story = {
+  args: {
+    value: 60,
+    max: 100,
+    size: "default",
+    variant: "default",
+    color: "default",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Interactive playground to experiment with different progress bar configurations, sizes, variants, and colors.",
+      },
+    },
+  },
+};
+
 // Default story
 export const Default: Story = {
   args: {
@@ -154,96 +173,7 @@ export const Default: Story = {
   },
 };
 
-// Basic usage
-export const BasicUsage: Story = {
-  render: () => (
-    <div className="w-80 space-y-6">
-      <div className="space-y-2">
-        <div className="text-sm font-medium">25% Complete</div>
-        <Progress value={25} />
-      </div>
-      <div className="space-y-2">
-        <div className="text-sm font-medium">50% Complete</div>
-        <Progress value={50} />
-      </div>
-      <div className="space-y-2">
-        <div className="text-sm font-medium">75% Complete</div>
-        <Progress value={75} />
-      </div>
-      <div className="space-y-2">
-        <div className="text-sm font-medium">100% Complete</div>
-        <Progress value={100} />
-      </div>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Simple progress bars showing different completion levels.",
-      },
-    },
-  },
-};
-
-// Size variants
-export const Sizes: Story = {
-  render: () => (
-    <div className="w-80 space-y-6">
-      <div className="space-y-2">
-        <div className="text-sm font-medium">Small Progress (1px)</div>
-        <Progress value={60} size="sm" />
-      </div>
-      <div className="space-y-2">
-        <div className="text-sm font-medium">Default Progress (2px)</div>
-        <Progress value={60} size="default" />
-      </div>
-      <div className="space-y-2">
-        <div className="text-sm font-medium">Large Progress (3px)</div>
-        <Progress value={60} size="lg" />
-      </div>
-      <div className="space-y-2">
-        <div className="text-sm font-medium">Extra Large Progress (4px)</div>
-        <Progress value={60} size="xl" />
-      </div>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Different progress bar heights for various use cases.",
-      },
-    },
-  },
-};
-
-// Shape variants
-export const ShapeVariants: Story = {
-  render: () => (
-    <div className="w-80 space-y-6">
-      <div className="space-y-2">
-        <div className="text-sm font-medium">Rounded (Default)</div>
-        <Progress value={45} variant="default" size="lg" />
-      </div>
-      <div className="space-y-2">
-        <div className="text-sm font-medium">Square Corners</div>
-        <Progress value={45} variant="square" size="lg" />
-      </div>
-      <div className="space-y-2">
-        <div className="text-sm font-medium">Rounded Corners</div>
-        <Progress value={45} variant="rounded" size="lg" />
-      </div>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Different corner radius options for progress bars.",
-      },
-    },
-  },
-};
-
-// Color variants
+// With labels
 export const ColorVariants: Story = {
   render: () => (
     <div className="w-80 space-y-6">
