@@ -17,13 +17,25 @@ export default {
     layout: "centered",
   },
   argTypes: {
+    // HTML Props
     className: {
       control: "text",
-      description: "Additional CSS class names to apply to the skeleton",
+      description:
+        "Additional CSS class names to apply to the skeleton for custom styling",
+      table: {
+        category: "HTML Props",
+        type: { summary: "string" },
+      },
     },
+    // Content Props
     children: {
       control: "text",
-      description: "Content to render inside the skeleton (optional)",
+      description:
+        "Content to render inside the skeleton (optional, typically not used)",
+      table: {
+        category: "Content Props",
+        type: { summary: "ReactNode" },
+      },
     },
   },
 };

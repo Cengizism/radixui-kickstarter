@@ -30,11 +30,13 @@ export default {
   },
   tags: ["autodocs"],
   argTypes: {
+    // Root Props
     open: {
       control: "boolean",
       description:
         "The controlled open state of the dialog. Must be used in conjunction with onOpenChange.",
       table: {
+        category: "Root Props",
         type: { summary: "boolean" },
         defaultValue: { summary: "undefined" },
       },
@@ -44,6 +46,7 @@ export default {
       description:
         "The open state of the dialog when it is initially rendered. Use when you do not need to control its open state.",
       table: {
+        category: "Root Props",
         type: { summary: "boolean" },
         defaultValue: { summary: "false" },
       },
@@ -53,6 +56,7 @@ export default {
       description:
         "Event handler called when the open state of the dialog changes.",
       table: {
+        category: "Root Props",
         type: { summary: "(open: boolean) => void" },
         defaultValue: { summary: "undefined" },
       },
@@ -62,54 +66,59 @@ export default {
       description:
         "The modality of the dialog. When set to true, interaction with outside elements will be disabled and only dialog content will be visible to screen readers.",
       table: {
+        category: "Root Props",
         type: { summary: "boolean" },
         defaultValue: { summary: "true" },
       },
     },
-    // Content props
+
+    // Trigger Props
+    triggerAsChild: {
+      control: "boolean",
+      description: "Change the default rendered element for the trigger.",
+      table: {
+        category: "Trigger Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+
+    // Content Props
+    contentAsChild: {
+      control: "boolean",
+      description: "Change the default rendered element for the content.",
+      table: {
+        category: "Content Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
     size: {
       control: "select",
       options: ["sm", "default", "lg", "xl", "full"],
       description: "The size variant of the dialog content.",
       table: {
-        type: { summary: "enum" },
-        defaultValue: { summary: "default" },
+        category: "Content Props",
+        type: { summary: '"sm" | "default" | "lg" | "xl" | "full"' },
+        defaultValue: { summary: '"default"' },
       },
     },
-    // Overlay props
     forceMount: {
       control: "boolean",
       description:
         "Used to force mounting when more control is needed. Useful when controlling animation with React animation libraries.",
       table: {
+        category: "Content Props",
         type: { summary: "boolean" },
         defaultValue: { summary: "false" },
       },
     },
-    // Portal props
-    container: {
-      description: "Specify a container element to portal the content into.",
-      table: {
-        type: { summary: "HTMLElement" },
-        defaultValue: { summary: "document.body" },
-      },
-    },
-    // Trigger props
-    asChild: {
-      control: "boolean",
-      description:
-        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
-      table: {
-        type: { summary: "boolean" },
-        defaultValue: { summary: "false" },
-      },
-    },
-    // Content interaction props
     onPointerDownOutside: {
       action: "onPointerDownOutside",
       description:
         "Event handler called when a pointer event occurs outside the bounds of the component.",
       table: {
+        category: "Content Props",
         type: { summary: "(event: PointerDownOutsideEvent) => void" },
         defaultValue: { summary: "undefined" },
       },
@@ -118,6 +127,7 @@ export default {
       action: "onEscapeKeyDown",
       description: "Event handler called when the escape key is down.",
       table: {
+        category: "Content Props",
         type: { summary: "(event: KeyboardEvent) => void" },
         defaultValue: { summary: "undefined" },
       },
@@ -127,10 +137,81 @@ export default {
       description:
         "Event handler called when an interaction happens outside the component.",
       table: {
+        category: "Content Props",
         type: {
           summary:
             "(event: FocusOutsideEvent | PointerDownOutsideEvent) => void",
         },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    onCloseAutoFocus: {
+      action: "onCloseAutoFocus",
+      description: "Event handler called when auto-focusing on close.",
+      table: {
+        category: "Content Props",
+        type: { summary: "(event: Event) => void" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    onOpenAutoFocus: {
+      action: "onOpenAutoFocus",
+      description: "Event handler called when auto-focusing on open.",
+      table: {
+        category: "Content Props",
+        type: { summary: "(event: Event) => void" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+
+    // Portal Props
+    container: {
+      description: "Specify a container element to portal the content into.",
+      table: {
+        category: "Portal Props",
+        type: { summary: "HTMLElement | (() => HTMLElement)" },
+        defaultValue: { summary: "document.body" },
+      },
+    },
+
+    // Overlay Props
+    overlayClassName: {
+      control: "text",
+      description: "Additional CSS classes to apply to the overlay.",
+      table: {
+        category: "Overlay Props",
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+
+    // Header Props
+    title: {
+      control: "text",
+      description: "The title of the dialog.",
+      table: {
+        category: "Header Props",
+        type: { summary: "React.ReactNode" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    description: {
+      control: "text",
+      description: "The description of the dialog.",
+      table: {
+        category: "Header Props",
+        type: { summary: "React.ReactNode" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+
+    // Styling Props
+    className: {
+      control: "text",
+      description: "Additional CSS classes to apply to the dialog content.",
+      table: {
+        category: "Styling Props",
+        type: { summary: "string" },
         defaultValue: { summary: "undefined" },
       },
     },
@@ -809,253 +890,6 @@ export const Playground = (args: {
 Playground.args = {
   size: "default",
 };
-
-// API Reference
-export const APIReference = () => (
-  <div className="space-y-6 max-w-4xl">
-    <div>
-      <h3 className="text-lg font-semibold mb-3">Dialog API Reference</h3>
-      <p className="text-sm text-muted-foreground mb-4">
-        Complete API reference for the Dialog component. Based on Radix UI
-        primitives.
-      </p>
-    </div>
-
-    <div className="space-y-4">
-      <div>
-        <h4 className="font-medium mb-2">Dialog.Root</h4>
-        <div className="text-sm text-muted-foreground mb-2">
-          Contains all the parts of a dialog.
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm border-collapse border border-border">
-            <thead>
-              <tr className="border-b border-border bg-muted/50">
-                <th className="border border-border px-3 py-2 text-left">
-                  Prop
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Type
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Default
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Description
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  open
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  boolean
-                </td>
-                <td className="border border-border px-3 py-2">-</td>
-                <td className="border border-border px-3 py-2">
-                  The controlled open state of the dialog. Must be used in
-                  conjunction with onOpenChange.
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  defaultOpen
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  boolean
-                </td>
-                <td className="border border-border px-3 py-2">false</td>
-                <td className="border border-border px-3 py-2">
-                  The open state when initially rendered. Use when you do not
-                  need to control its open state.
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  onOpenChange
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">{`(open: boolean) => void`}</td>
-                <td className="border border-border px-3 py-2">-</td>
-                <td className="border border-border px-3 py-2">
-                  Event handler called when the open state changes.
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  modal
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  boolean
-                </td>
-                <td className="border border-border px-3 py-2">true</td>
-                <td className="border border-border px-3 py-2">
-                  The modality of the dialog. When true, interaction with
-                  outside elements is disabled.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div>
-        <h4 className="font-medium mb-2">Dialog.Content</h4>
-        <div className="text-sm text-muted-foreground mb-2">
-          Contains content to be rendered in the open dialog.
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm border-collapse border border-border">
-            <thead>
-              <tr className="border-b border-border bg-muted/50">
-                <th className="border border-border px-3 py-2 text-left">
-                  Prop
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Type
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Default
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Description
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  forceMount
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  boolean
-                </td>
-                <td className="border border-border px-3 py-2">false</td>
-                <td className="border border-border px-3 py-2">
-                  Used to force mounting when more control is needed. Useful for
-                  animation libraries.
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  onPointerDownOutside
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">{`(event: PointerDownOutsideEvent) => void`}</td>
-                <td className="border border-border px-3 py-2">-</td>
-                <td className="border border-border px-3 py-2">
-                  Event handler called when a pointer event occurs outside the
-                  component bounds.
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  onEscapeKeyDown
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">{`(event: KeyboardEvent) => void`}</td>
-                <td className="border border-border px-3 py-2">-</td>
-                <td className="border border-border px-3 py-2">
-                  Event handler called when the escape key is down.
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  onInteractOutside
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">{`(event: FocusOutsideEvent | PointerDownOutsideEvent) => void`}</td>
-                <td className="border border-border px-3 py-2">-</td>
-                <td className="border border-border px-3 py-2">
-                  Event handler called when an interaction happens outside the
-                  component.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div>
-        <h4 className="font-medium mb-2">Dialog.Trigger</h4>
-        <div className="text-sm text-muted-foreground mb-2">
-          The button that opens the dialog.
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm border-collapse border border-border">
-            <thead>
-              <tr className="border-b border-border bg-muted/50">
-                <th className="border border-border px-3 py-2 text-left">
-                  Prop
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Type
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Default
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Description
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  asChild
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  boolean
-                </td>
-                <td className="border border-border px-3 py-2">false</td>
-                <td className="border border-border px-3 py-2">
-                  Change the default rendered element for the one passed as a
-                  child.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div>
-        <h4 className="font-medium mb-2">Data Attributes</h4>
-        <div className="text-sm text-muted-foreground mb-2">
-          Data attributes are automatically applied and can be used for styling.
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm border-collapse border border-border">
-            <thead>
-              <tr className="border-b border-border bg-muted/50">
-                <th className="border border-border px-3 py-2 text-left">
-                  Attribute
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Values
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Description
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  [data-state]
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  "open" | "closed"
-                </td>
-                <td className="border border-border px-3 py-2">
-                  Present on Trigger, Overlay, and Content. The open state of
-                  the dialog.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-);
 
 // Advanced Example
 export const AdvancedExample = () => {

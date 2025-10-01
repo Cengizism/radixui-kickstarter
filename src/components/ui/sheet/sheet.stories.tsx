@@ -29,18 +29,48 @@ export default {
     layout: "centered",
   },
   argTypes: {
+    // Root Props
     open: {
       control: "boolean",
       description: "The controlled open state of the sheet",
+      table: { category: "Root Props" },
     },
     defaultOpen: {
       control: "boolean",
-      description: "The open state of the sheet when it is initially rendered",
+      description:
+        "The open state of the sheet when it is initially rendered. Use when you do not need to control its open state",
+      table: { category: "Root Props" },
     },
     modal: {
       control: "boolean",
       description:
-        "The modality of the sheet. When set to true, interaction with outside elements will be disabled",
+        "The modality of the sheet. When set to true, interaction with outside elements will be disabled and only sheet content will be visible to screen readers",
+      table: { category: "Root Props" },
+    },
+    onOpenChange: {
+      action: "onOpenChange",
+      description:
+        "Event handler called when the open state of the sheet changes",
+      table: { category: "Event Handlers" },
+    },
+    // Content Props
+    side: {
+      control: { type: "select" },
+      options: ["top", "right", "bottom", "left"],
+      description: "The side of the screen where the sheet slides in from",
+      table: { category: "Content Props" },
+    },
+    className: {
+      control: "text",
+      description: "Additional CSS classes to apply to the sheet content",
+      table: { category: "Styling" },
+    },
+    // Trigger Props
+    asChild: {
+      control: "boolean",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior",
+      table: { category: "Trigger Props" },
     },
   },
 };

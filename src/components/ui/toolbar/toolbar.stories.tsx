@@ -79,17 +79,65 @@ export default {
     layout: "centered",
   },
   argTypes: {
+    // Root Props
+    orientation: {
+      control: "select",
+      options: ["horizontal", "vertical"],
+      description: "The orientation of the toolbar",
+      table: {
+        category: "Root Props",
+        type: { summary: '"horizontal" | "vertical"' },
+        defaultValue: { summary: '"horizontal"' },
+      },
+    },
+    dir: {
+      control: "select",
+      options: ["ltr", "rtl"],
+      description: "The reading direction of the toolbar when applicable",
+      table: {
+        category: "Root Props",
+        type: { summary: '"ltr" | "rtl"' },
+      },
+    },
+    loop: {
+      control: "boolean",
+      description:
+        "When true, keyboard navigation will loop from last item to first, and vice versa",
+      table: {
+        category: "Root Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "true" },
+      },
+    },
+    // Appearance Props
     variant: {
       control: "select",
       options: ["default", "secondary", "outline", "ghost"],
+      description: "The visual style variant of the toolbar",
+      table: {
+        category: "Appearance Props",
+        type: { summary: '"default" | "secondary" | "outline" | "ghost"' },
+        defaultValue: { summary: '"default"' },
+      },
     },
     size: {
       control: "select",
       options: ["sm", "default", "lg"],
+      description: "The size variant of the toolbar and its contained buttons",
+      table: {
+        category: "Appearance Props",
+        type: { summary: '"sm" | "default" | "lg"' },
+        defaultValue: { summary: '"default"' },
+      },
     },
-    orientation: {
-      control: "select",
-      options: ["horizontal", "vertical"],
+    // HTML Props
+    className: {
+      control: "text",
+      description: "Additional CSS classes to apply to the toolbar",
+      table: {
+        category: "HTML Props",
+        type: { summary: "string" },
+      },
     },
   },
 };

@@ -74,11 +74,6 @@ export default {
         'The value of the item to press when initially rendered when type is "single".',
       table: { category: "Root Props" },
     },
-    onValueChange: {
-      action: "onValueChange",
-      description: "Event handler called when the pressed state changes.",
-      table: { category: "Root Props" },
-    },
     multipleValue: {
       control: "object",
       description:
@@ -91,17 +86,24 @@ export default {
         'The values of the items to press when initially rendered when type is "multiple".',
       table: { category: "Root Props" },
     },
+    // Event Handlers
+    onValueChange: {
+      action: "onValueChange",
+      description: "Event handler called when the pressed state changes.",
+      table: { category: "Event Handlers" },
+    },
     onMultipleValueChange: {
       action: "onMultipleValueChange",
       description:
         'Event handler called when the pressed state changes when type is "multiple".',
-      table: { category: "Root Props" },
+      table: { category: "Event Handlers" },
     },
+    // State Props
     disabled: {
       control: "boolean",
       description:
         "When true, prevents the user from interacting with the toggle group.",
-      table: { category: "Root Props" },
+      table: { category: "State Props" },
     },
     rovingFocus: {
       control: "boolean",

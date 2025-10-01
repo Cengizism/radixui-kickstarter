@@ -27,10 +27,50 @@ const meta = {
   },
   tags: ["autodocs"],
   argTypes: {
+    // Appearance Props
     variant: {
       control: { type: "select" },
       options: ["default", "destructive"],
-      description: "The visual style of the alert",
+      description:
+        "The visual variant of the alert. Controls color scheme and styling.",
+      table: {
+        category: "Appearance Props",
+        type: { summary: '"default" | "destructive"' },
+        defaultValue: { summary: '"default"' },
+      },
+    },
+    className: {
+      control: "text",
+      description: "Additional CSS classes to apply to the alert.",
+      table: {
+        category: "Appearance Props",
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+
+    // Content Props
+    children: {
+      control: "text",
+      description:
+        "The content of the alert. Typically includes AlertTitle and AlertDescription.",
+      table: {
+        category: "Content Props",
+        type: { summary: "React.ReactNode" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+
+    // HTML Props
+    role: {
+      control: "text",
+      description:
+        "ARIA role attribute for accessibility. Defaults to 'alert'.",
+      table: {
+        category: "HTML Props",
+        type: { summary: "string" },
+        defaultValue: { summary: '"alert"' },
+      },
     },
   },
 } satisfies Meta<typeof Alert>;

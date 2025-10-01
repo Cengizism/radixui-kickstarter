@@ -45,7 +45,7 @@ export default [{
     "@typescript-eslint/no-explicit-any": "warn",
     
     // General
-    "no-console": "warn",
+    // "no-console": "warn",
     "prefer-const": "error",
     "no-var": "error",
     "no-undef": "off" // TypeScript handles this

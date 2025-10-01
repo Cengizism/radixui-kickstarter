@@ -75,7 +75,7 @@ export default {
       table: { category: "Root Props" },
     },
 
-    // Custom Style Props
+    // Appearance Props
     variant: {
       control: "select",
       options: [
@@ -86,13 +86,32 @@ export default {
         "solid",
         "destructive",
       ],
+      description: "The visual style variant of the toggle",
+      table: { category: "Appearance Props" },
     },
     size: {
       control: "select",
       options: ["sm", "default", "lg", "xl"],
+      description: "The size of the toggle button",
+      table: { category: "Appearance Props" },
     },
+    // State Props
     disabled: {
       control: "boolean",
+      description:
+        "When true, prevents the user from interacting with the toggle",
+      table: { category: "State Props" },
+    },
+    // HTML Props
+    className: {
+      control: "text",
+      description: "Additional CSS classes to apply to the toggle",
+      table: { category: "HTML Props" },
+    },
+    id: {
+      control: "text",
+      description: "The id attribute for the toggle element",
+      table: { category: "HTML Props" },
     },
   },
 };
@@ -994,7 +1013,7 @@ export const AdvancedToggleGroups = {
               <div className="flex gap-2">
                 <span>Format:</span>
                 {Object.entries(textFormatting)
-                  .filter(([_, active]) => active)
+                  .filter(([active]) => active)
                   .map(([format]) => (
                     <Badge
                       key={format}

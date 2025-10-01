@@ -52,7 +52,7 @@ export default {
       },
     },
 
-    // Custom Style Props
+    // Appearance Props
     variant: {
       control: "select",
       options: [
@@ -65,7 +65,7 @@ export default {
       ],
       description: "The visual style variant of the separator.",
       table: {
-        category: "Custom Style Props",
+        category: "Appearance Props",
         type: {
           summary:
             '"default" | "subtle" | "strong" | "accent" | "primary" | "destructive"',
@@ -78,7 +78,7 @@ export default {
       options: ["sm", "default", "md", "lg"],
       description: "The thickness/size of the separator line.",
       table: {
-        category: "Custom Style Props",
+        category: "Appearance Props",
         type: { summary: '"sm" | "default" | "md" | "lg"' },
         defaultValue: { summary: '"default"' },
       },

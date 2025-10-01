@@ -40,6 +40,7 @@ export default {
   },
   tags: ["autodocs"],
   argTypes: {
+    // Root Props
     open: {
       control: "boolean",
       description:
@@ -47,6 +48,7 @@ export default {
       table: {
         type: { summary: "boolean" },
         defaultValue: { summary: "undefined" },
+        category: "Root Props",
       },
     },
     defaultOpen: {
@@ -56,17 +58,10 @@ export default {
       table: {
         type: { summary: "boolean" },
         defaultValue: { summary: "false" },
+        category: "Root Props",
       },
     },
-    onOpenChange: {
-      action: "onOpenChange",
-      description:
-        "Event handler called when the open state of the collapsible changes.",
-      table: {
-        type: { summary: "(open: boolean) => void" },
-        defaultValue: { summary: "undefined" },
-      },
-    },
+    // State Props
     disabled: {
       control: "boolean",
       description:
@@ -74,6 +69,18 @@ export default {
       table: {
         type: { summary: "boolean" },
         defaultValue: { summary: "false" },
+        category: "State Props",
+      },
+    },
+    // Event Handlers
+    onOpenChange: {
+      action: "onOpenChange",
+      description:
+        "Event handler called when the open state of the collapsible changes.",
+      table: {
+        type: { summary: "(open: boolean) => void" },
+        defaultValue: { summary: "undefined" },
+        category: "Event Handlers",
       },
     },
     asChild: {
@@ -1016,348 +1023,6 @@ export const AsChildExample = () => (
           </div>
         </CollapsibleContent>
       </Collapsible>
-    </div>
-  </div>
-);
-
-// API Reference
-export const APIReference = () => (
-  <div className="space-y-6 max-w-4xl">
-    <div>
-      <h3 className="text-lg font-semibold mb-3">Collapsible API Reference</h3>
-      <p className="text-sm text-muted-foreground mb-4">
-        Complete API reference for all Collapsible components with their props,
-        types, and default values.
-      </p>
-    </div>
-
-    <div className="space-y-4">
-      <div>
-        <h4 className="font-medium mb-2">Collapsible.Root</h4>
-        <div className="text-sm text-muted-foreground mb-2">
-          Contains all the parts of a collapsible.
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm border-collapse border border-border">
-            <thead>
-              <tr className="border-b border-border bg-muted/50">
-                <th className="border border-border px-3 py-2 text-left">
-                  Prop
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Type
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Default
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Description
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  open
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  boolean
-                </td>
-                <td className="border border-border px-3 py-2">-</td>
-                <td className="border border-border px-3 py-2">
-                  The controlled open state of the collapsible.
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  defaultOpen
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  boolean
-                </td>
-                <td className="border border-border px-3 py-2">false</td>
-                <td className="border border-border px-3 py-2">
-                  The open state when initially rendered.
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  onOpenChange
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">{`(open: boolean) => void`}</td>
-                <td className="border border-border px-3 py-2">-</td>
-                <td className="border border-border px-3 py-2">
-                  Event handler called when the open state changes.
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  disabled
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  boolean
-                </td>
-                <td className="border border-border px-3 py-2">false</td>
-                <td className="border border-border px-3 py-2">
-                  When true, prevents the user from interacting with the
-                  collapsible.
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  asChild
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  boolean
-                </td>
-                <td className="border border-border px-3 py-2">false</td>
-                <td className="border border-border px-3 py-2">
-                  Change the default rendered element.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div>
-        <h4 className="font-medium mb-2">Collapsible.Trigger</h4>
-        <div className="text-sm text-muted-foreground mb-2">
-          The button that toggles the collapsible.
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm border-collapse border border-border">
-            <thead>
-              <tr className="border-b border-border bg-muted/50">
-                <th className="border border-border px-3 py-2 text-left">
-                  Prop
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Type
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Default
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Description
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  asChild
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  boolean
-                </td>
-                <td className="border border-border px-3 py-2">false</td>
-                <td className="border border-border px-3 py-2">
-                  Change the default rendered element.
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  variant
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  enum
-                </td>
-                <td className="border border-border px-3 py-2">default</td>
-                <td className="border border-border px-3 py-2">
-                  Visual variant: "default" | "ghost" | "outline" | "link"
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  size
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  enum
-                </td>
-                <td className="border border-border px-3 py-2">default</td>
-                <td className="border border-border px-3 py-2">
-                  Size variant: "sm" | "default" | "lg"
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  showChevron
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  boolean
-                </td>
-                <td className="border border-border px-3 py-2">true</td>
-                <td className="border border-border px-3 py-2">
-                  Whether to show the chevron indicator.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div>
-        <h4 className="font-medium mb-2">Collapsible.Content</h4>
-        <div className="text-sm text-muted-foreground mb-2">
-          The component that contains the collapsible content.
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm border-collapse border border-border">
-            <thead>
-              <tr className="border-b border-border bg-muted/50">
-                <th className="border border-border px-3 py-2 text-left">
-                  Prop
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Type
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Default
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Description
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  asChild
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  boolean
-                </td>
-                <td className="border border-border px-3 py-2">false</td>
-                <td className="border border-border px-3 py-2">
-                  Change the default rendered element.
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  forceMount
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  boolean
-                </td>
-                <td className="border border-border px-3 py-2">false</td>
-                <td className="border border-border px-3 py-2">
-                  Used to force mounting when more control is needed.
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  variant
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  enum
-                </td>
-                <td className="border border-border px-3 py-2">default</td>
-                <td className="border border-border px-3 py-2">
-                  Content variant: "default" | "bordered" | "card" |
-                  "highlighted"
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div>
-        <h4 className="font-medium mb-2">CSS Variables & Animation</h4>
-        <div className="text-sm text-muted-foreground mb-2">
-          Available CSS custom properties for animating content size.
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm border-collapse border border-border">
-            <thead>
-              <tr className="border-b border-border bg-muted/50">
-                <th className="border border-border px-3 py-2 text-left">
-                  Variable
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Description
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Usage
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  --radix-collapsible-content-width
-                </td>
-                <td className="border border-border px-3 py-2">
-                  The width of the content when it opens/closes
-                </td>
-                <td className="border border-border px-3 py-2">
-                  Use for horizontal animations
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  --radix-collapsible-content-height
-                </td>
-                <td className="border border-border px-3 py-2">
-                  The height of the content when it opens/closes
-                </td>
-                <td className="border border-border px-3 py-2">
-                  Use for vertical animations (most common)
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div>
-        <h4 className="font-medium mb-2">Data Attributes</h4>
-        <div className="text-sm text-muted-foreground mb-2">
-          Available data attributes for styling different states.
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm border-collapse border border-border">
-            <thead>
-              <tr className="border-b border-border bg-muted/50">
-                <th className="border border-border px-3 py-2 text-left">
-                  Attribute
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Values
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Description
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  data-state
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  "open" | "closed"
-                </td>
-                <td className="border border-border px-3 py-2">
-                  The current open state of the collapsible.
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  data-disabled
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  Present when disabled
-                </td>
-                <td className="border border-border px-3 py-2">
-                  Present when the collapsible is disabled.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
     </div>
   </div>
 );

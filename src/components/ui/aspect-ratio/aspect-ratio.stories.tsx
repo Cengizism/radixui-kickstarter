@@ -16,6 +16,7 @@ export default {
   },
   tags: ["autodocs"],
   argTypes: {
+    // Root Props
     ratio: {
       control: "select",
       options: ["1:1", "4:3", "16:9", "3:2", "21:9", "9:16", 1.5, 2, 0.75],
@@ -24,15 +25,7 @@ export default {
       table: {
         type: { summary: "number | string" },
         defaultValue: { summary: "16:9" },
-      },
-    },
-    rounded: {
-      control: "select",
-      options: ["none", "sm", "default", "lg", "xl", "full"],
-      description: "The border radius variant applied to the container.",
-      table: {
-        type: { summary: "enum" },
-        defaultValue: { summary: "default" },
+        category: "Root Props",
       },
     },
     asChild: {
@@ -42,8 +35,21 @@ export default {
       table: {
         type: { summary: "boolean" },
         defaultValue: { summary: "false" },
+        category: "Root Props",
       },
     },
+    // Appearance Props
+    rounded: {
+      control: "select",
+      options: ["none", "sm", "default", "lg", "xl", "full"],
+      description: "The border radius variant applied to the container.",
+      table: {
+        type: { summary: "enum" },
+        defaultValue: { summary: "default" },
+        category: "Appearance Props",
+      },
+    },
+    // HTML Props
     className: {
       control: "text",
       description:
@@ -51,6 +57,7 @@ export default {
       table: {
         type: { summary: "string" },
         defaultValue: { summary: "undefined" },
+        category: "HTML Props",
       },
     },
   },
@@ -532,193 +539,6 @@ export const AsChildExample = () => (
           />
         </figure>
       </AspectRatio>
-    </div>
-  </div>
-);
-
-// API Reference
-export const APIReference = () => (
-  <div className="space-y-6 max-w-4xl">
-    <div>
-      <h3 className="text-lg font-semibold mb-3">Aspect Ratio API Reference</h3>
-      <p className="text-sm text-muted-foreground mb-4">
-        Complete API reference for the Aspect Ratio component with props, types,
-        and default values.
-      </p>
-    </div>
-
-    <div className="space-y-4">
-      <div>
-        <h4 className="font-medium mb-2">AspectRatio.Root</h4>
-        <div className="text-sm text-muted-foreground mb-2">
-          Contains the content you want to constrain to a given ratio.
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm border-collapse border border-border">
-            <thead>
-              <tr className="border-b border-border bg-muted/50">
-                <th className="border border-border px-3 py-2 text-left">
-                  Prop
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Type
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Default
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Description
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  ratio
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  number | string
-                </td>
-                <td className="border border-border px-3 py-2">
-                  1 (or "16:9" for variant)
-                </td>
-                <td className="border border-border px-3 py-2">
-                  The desired aspect ratio. Number represents width/height
-                  ratio.
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  asChild
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  boolean
-                </td>
-                <td className="border border-border px-3 py-2">false</td>
-                <td className="border border-border px-3 py-2">
-                  Change the default rendered element for the one passed as a
-                  child.
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  className
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  string
-                </td>
-                <td className="border border-border px-3 py-2">-</td>
-                <td className="border border-border px-3 py-2">
-                  Additional CSS classes to apply to the container.
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  rounded
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  enum
-                </td>
-                <td className="border border-border px-3 py-2">"default"</td>
-                <td className="border border-border px-3 py-2">
-                  Border radius variant: "none" | "sm" | "default" | "lg" | "xl"
-                  | "full"
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div>
-        <h4 className="font-medium mb-2">Common Ratio Values</h4>
-        <div className="text-sm text-muted-foreground mb-2">
-          Preset ratio values and their numeric equivalents.
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm border-collapse border border-border">
-            <thead>
-              <tr className="border-b border-border bg-muted/50">
-                <th className="border border-border px-3 py-2 text-left">
-                  Preset
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Numeric Value
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Use Case
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  "1:1"
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">1</td>
-                <td className="border border-border px-3 py-2">
-                  Square images, avatars, social media posts
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  "4:3"
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  1.333
-                </td>
-                <td className="border border-border px-3 py-2">
-                  Traditional TV, computer monitors
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  "16:9"
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  1.778
-                </td>
-                <td className="border border-border px-3 py-2">
-                  Widescreen, HD video, modern displays
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  "3:2"
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  1.5
-                </td>
-                <td className="border border-border px-3 py-2">
-                  Photography, print media
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  "21:9"
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  2.333
-                </td>
-                <td className="border border-border px-3 py-2">
-                  Ultrawide monitors, cinematic content
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  "9:16"
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  0.563
-                </td>
-                <td className="border border-border px-3 py-2">
-                  Mobile/portrait video, stories
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
     </div>
   </div>
 );

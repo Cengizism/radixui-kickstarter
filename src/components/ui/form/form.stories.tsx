@@ -65,13 +65,24 @@ export default {
   },
   argTypes: {
     // Root Props
+    asChild: {
+      control: "boolean",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+        category: "Root Props",
+      },
+    },
+    // Event Handlers
     onSubmit: {
       action: "onSubmit",
       description:
         "Event handler called when the form is submitted. Only triggered if it passes client-side validation. Receives FormEvent as parameter.",
       table: {
         type: { summary: "(event: FormEvent<HTMLFormElement>) => void" },
-        category: "Root",
+        category: "Event Handlers",
       },
     },
     onInvalidSubmit: {
@@ -80,7 +91,7 @@ export default {
         "Event handler called when the form is submitted with invalid data. Useful for handling validation errors.",
       table: {
         type: { summary: "(event: FormEvent<HTMLFormElement>) => void" },
-        category: "Root",
+        category: "Event Handlers",
       },
     },
     onClearServerErrors: {
@@ -89,10 +100,9 @@ export default {
         "Event handler called to clear server errors. Called before form re-submission and when form is reset.",
       table: {
         type: { summary: "() => void" },
-        category: "Root",
+        category: "Event Handlers",
       },
     },
-
     // Field Props
     name: {
       control: "text",
@@ -100,7 +110,7 @@ export default {
         "The name of the field. Used to associate labels, controls, and validation messages automatically.",
       table: {
         type: { summary: "string" },
-        category: "Field",
+        category: "Field Props",
       },
     },
     serverInvalid: {
@@ -109,19 +119,7 @@ export default {
         "Whether the field is invalid according to server-side validation. Marks the field as invalid regardless of client-side validation.",
       table: {
         type: { summary: "boolean" },
-        category: "Field",
-      },
-    },
-
-    // Control Props
-    asChild: {
-      control: "boolean",
-      description:
-        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
-      table: {
-        type: { summary: "boolean" },
-        defaultValue: { summary: "false" },
-        category: "Control",
+        category: "Field Props",
       },
     },
     variant: {
@@ -1128,447 +1126,6 @@ Playground.args = {
   size: "default",
   layout: "default",
 };
-
-// API Reference
-export const APIReference = () => (
-  <div className="max-w-4xl space-y-6">
-    <div>
-      <h2 className="text-2xl font-bold mb-4">Form API Reference</h2>
-      <p className="text-muted-foreground mb-6">
-        Complete API documentation for all Form components based on Radix UI
-        primitives with built-in browser validation.
-      </p>
-    </div>
-
-    {/* Root Component */}
-    <Card>
-      <CardHeader>
-        <h3 className="text-lg font-semibold">Form.Root</h3>
-        <p className="text-sm text-muted-foreground">
-          Contains all the parts of a form. Built on top of the native browser
-          constraint validation API.
-        </p>
-      </CardHeader>
-      <CardContent>
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse border border-border">
-            <thead>
-              <tr className="border-b border-border bg-muted/50">
-                <th className="p-2 text-left">Prop</th>
-                <th className="p-2 text-left">Type</th>
-                <th className="p-2 text-left">Default</th>
-                <th className="p-2 text-left">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b border-border">
-                <td className="p-2 font-mono text-sm">asChild</td>
-                <td className="p-2 font-mono text-sm text-blue-600">boolean</td>
-                <td className="p-2 font-mono text-sm">false</td>
-                <td className="p-2 text-sm">
-                  Change the default rendered element for the one passed as a
-                  child.
-                </td>
-              </tr>
-              <tr className="border-b border-border">
-                <td className="p-2 font-mono text-sm">onSubmit</td>
-                <td className="p-2 font-mono text-sm text-blue-600">{`(event: FormEvent) => void`}</td>
-                <td className="p-2 font-mono text-sm">-</td>
-                <td className="p-2 text-sm">
-                  Event handler called when form is submitted. Only triggered if
-                  it passes client-side validation.
-                </td>
-              </tr>
-              <tr className="border-b border-border">
-                <td className="p-2 font-mono text-sm">onInvalidSubmit</td>
-                <td className="p-2 font-mono text-sm text-blue-600">{`(event: FormEvent) => void`}</td>
-                <td className="p-2 font-mono text-sm">-</td>
-                <td className="p-2 text-sm">
-                  Event handler called when form is submitted with invalid data.
-                </td>
-              </tr>
-              <tr className="border-b border-border">
-                <td className="p-2 font-mono text-sm">onClearServerErrors</td>
-                <td className="p-2 font-mono text-sm text-blue-600">{`() => void`}</td>
-                <td className="p-2 font-mono text-sm">-</td>
-                <td className="p-2 text-sm">
-                  Event handler to clear server errors. Called before
-                  re-submission and on form reset.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </CardContent>
-    </Card>
-
-    {/* Field Component */}
-    <Card>
-      <CardHeader>
-        <h3 className="text-lg font-semibold">Form.Field</h3>
-        <p className="text-sm text-muted-foreground">
-          The wrapper for a field. Handles id/name and label accessibility
-          automatically.
-        </p>
-      </CardHeader>
-      <CardContent>
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse border border-border">
-            <thead>
-              <tr className="border-b border-border bg-muted/50">
-                <th className="p-2 text-left">Prop</th>
-                <th className="p-2 text-left">Type</th>
-                <th className="p-2 text-left">Default</th>
-                <th className="p-2 text-left">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b border-border">
-                <td className="p-2 font-mono text-sm">asChild</td>
-                <td className="p-2 font-mono text-sm text-blue-600">boolean</td>
-                <td className="p-2 font-mono text-sm">false</td>
-                <td className="p-2 text-sm">
-                  Change the default rendered element for the one passed as a
-                  child.
-                </td>
-              </tr>
-              <tr className="border-b border-border">
-                <td className="p-2 font-mono text-sm">name</td>
-                <td className="p-2 font-mono text-sm text-blue-600">string</td>
-                <td className="p-2 font-mono text-sm">-</td>
-                <td className="p-2 text-sm">
-                  The name of the field. Required for proper form functionality.
-                </td>
-              </tr>
-              <tr className="border-b border-border">
-                <td className="p-2 font-mono text-sm">serverInvalid</td>
-                <td className="p-2 font-mono text-sm text-blue-600">boolean</td>
-                <td className="p-2 font-mono text-sm">-</td>
-                <td className="p-2 text-sm">
-                  Whether the field is invalid according to server-side
-                  validation.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </CardContent>
-    </Card>
-
-    {/* Label Component */}
-    <Card>
-      <CardHeader>
-        <h3 className="text-lg font-semibold">Form.Label</h3>
-        <p className="text-sm text-muted-foreground">
-          A label element which is automatically wired when nested inside a
-          Field part.
-        </p>
-      </CardHeader>
-      <CardContent>
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse border border-border">
-            <thead>
-              <tr className="border-b border-border bg-muted/50">
-                <th className="p-2 text-left">Prop</th>
-                <th className="p-2 text-left">Type</th>
-                <th className="p-2 text-left">Default</th>
-                <th className="p-2 text-left">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b border-border">
-                <td className="p-2 font-mono text-sm">asChild</td>
-                <td className="p-2 font-mono text-sm text-blue-600">boolean</td>
-                <td className="p-2 font-mono text-sm">false</td>
-                <td className="p-2 text-sm">
-                  Change the default rendered element for the one passed as a
-                  child.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </CardContent>
-    </Card>
-
-    {/* Control Component */}
-    <Card>
-      <CardHeader>
-        <h3 className="text-lg font-semibold">Form.Control</h3>
-        <p className="text-sm text-muted-foreground">
-          A control element (by default an input) which is automatically wired
-          when nested inside a Field part.
-        </p>
-      </CardHeader>
-      <CardContent>
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse border border-border">
-            <thead>
-              <tr className="border-b border-border bg-muted/50">
-                <th className="p-2 text-left">Prop</th>
-                <th className="p-2 text-left">Type</th>
-                <th className="p-2 text-left">Default</th>
-                <th className="p-2 text-left">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b border-border">
-                <td className="p-2 font-mono text-sm">asChild</td>
-                <td className="p-2 font-mono text-sm text-blue-600">boolean</td>
-                <td className="p-2 font-mono text-sm">false</td>
-                <td className="p-2 text-sm">
-                  Change the default rendered element for the one passed as a
-                  child.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </CardContent>
-    </Card>
-
-    {/* Message Component */}
-    <Card>
-      <CardHeader>
-        <h3 className="text-lg font-semibold">Form.Message</h3>
-        <p className="text-sm text-muted-foreground">
-          A validation message automatically wired to a control. Shows based on
-          validation state matching.
-        </p>
-      </CardHeader>
-      <CardContent>
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse border border-border">
-            <thead>
-              <tr className="border-b border-border bg-muted/50">
-                <th className="p-2 text-left">Prop</th>
-                <th className="p-2 text-left">Type</th>
-                <th className="p-2 text-left">Default</th>
-                <th className="p-2 text-left">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b border-border">
-                <td className="p-2 font-mono text-sm">asChild</td>
-                <td className="p-2 font-mono text-sm text-blue-600">boolean</td>
-                <td className="p-2 font-mono text-sm">false</td>
-                <td className="p-2 text-sm">
-                  Change the default rendered element for the one passed as a
-                  child.
-                </td>
-              </tr>
-              <tr className="border-b border-border">
-                <td className="p-2 font-mono text-sm">match</td>
-                <td className="p-2 font-mono text-sm text-blue-600">{`ValidityState | Function`}</td>
-                <td className="p-2 font-mono text-sm">-</td>
-                <td className="p-2 text-sm">
-                  Determines when message should show. Can match ValidityState
-                  properties or custom function.
-                </td>
-              </tr>
-              <tr className="border-b border-border">
-                <td className="p-2 font-mono text-sm">forceMatch</td>
-                <td className="p-2 font-mono text-sm text-blue-600">boolean</td>
-                <td className="p-2 font-mono text-sm">false</td>
-                <td className="p-2 text-sm">
-                  Forces message to show regardless of client-side validation.
-                  Useful for server errors.
-                </td>
-              </tr>
-              <tr className="border-b border-border">
-                <td className="p-2 font-mono text-sm">name</td>
-                <td className="p-2 font-mono text-sm text-blue-600">string</td>
-                <td className="p-2 font-mono text-sm">-</td>
-                <td className="p-2 text-sm">
-                  Field name when used outside a Field component.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </CardContent>
-    </Card>
-
-    {/* ValidityState Component */}
-    <Card>
-      <CardHeader>
-        <h3 className="text-lg font-semibold">Form.ValidityState</h3>
-        <p className="text-sm text-muted-foreground">
-          Render-prop component to access a field's validity state. Provides
-          access to native browser ValidityState.
-        </p>
-      </CardHeader>
-      <CardContent>
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse border border-border">
-            <thead>
-              <tr className="border-b border-border bg-muted/50">
-                <th className="p-2 text-left">Prop</th>
-                <th className="p-2 text-left">Type</th>
-                <th className="p-2 text-left">Default</th>
-                <th className="p-2 text-left">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b border-border">
-                <td className="p-2 font-mono text-sm">children</td>
-                <td className="p-2 font-mono text-sm text-blue-600">{`(validity: ValidityState) => ReactNode`}</td>
-                <td className="p-2 font-mono text-sm">-</td>
-                <td className="p-2 text-sm">
-                  Render function that receives the current ValidityState of the
-                  field.
-                </td>
-              </tr>
-              <tr className="border-b border-border">
-                <td className="p-2 font-mono text-sm">name</td>
-                <td className="p-2 font-mono text-sm text-blue-600">string</td>
-                <td className="p-2 font-mono text-sm">-</td>
-                <td className="p-2 text-sm">
-                  Field name when used outside a Field component.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </CardContent>
-    </Card>
-
-    {/* Submit Component */}
-    <Card>
-      <CardHeader>
-        <h3 className="text-lg font-semibold">Form.Submit</h3>
-        <p className="text-sm text-muted-foreground">
-          The submit button. Automatically handles form submission and
-          validation.
-        </p>
-      </CardHeader>
-      <CardContent>
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse border border-border">
-            <thead>
-              <tr className="border-b border-border bg-muted/50">
-                <th className="p-2 text-left">Prop</th>
-                <th className="p-2 text-left">Type</th>
-                <th className="p-2 text-left">Default</th>
-                <th className="p-2 text-left">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b border-border">
-                <td className="p-2 font-mono text-sm">asChild</td>
-                <td className="p-2 font-mono text-sm text-blue-600">boolean</td>
-                <td className="p-2 font-mono text-sm">false</td>
-                <td className="p-2 text-sm">
-                  Change the default rendered element for the one passed as a
-                  child.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </CardContent>
-    </Card>
-
-    <div className="mt-6 space-y-4">
-      <Card>
-        <CardHeader>
-          <h4 className="font-semibold">Validation State Properties</h4>
-          <p className="text-sm text-muted-foreground">
-            Built-in ValidityState properties that can be used in Form.Message
-            match prop:
-          </p>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-            <div>
-              <ul className="space-y-2">
-                <li>
-                  <code className="bg-background px-1 rounded">
-                    valueMissing
-                  </code>{" "}
-                  - Required field is empty
-                </li>
-                <li>
-                  <code className="bg-background px-1 rounded">
-                    typeMismatch
-                  </code>{" "}
-                  - Input type doesn't match expected format
-                </li>
-                <li>
-                  <code className="bg-background px-1 rounded">
-                    patternMismatch
-                  </code>{" "}
-                  - Input doesn't match pattern attribute
-                </li>
-                <li>
-                  <code className="bg-background px-1 rounded">tooLong</code> -
-                  Input exceeds maxlength
-                </li>
-                <li>
-                  <code className="bg-background px-1 rounded">tooShort</code> -
-                  Input shorter than minlength
-                </li>
-              </ul>
-            </div>
-            <div>
-              <ul className="space-y-2">
-                <li>
-                  <code className="bg-background px-1 rounded">
-                    rangeUnderflow
-                  </code>{" "}
-                  - Numeric input less than min
-                </li>
-                <li>
-                  <code className="bg-background px-1 rounded">
-                    rangeOverflow
-                  </code>{" "}
-                  - Numeric input exceeds max
-                </li>
-                <li>
-                  <code className="bg-background px-1 rounded">
-                    stepMismatch
-                  </code>{" "}
-                  - Doesn't fit step constraints
-                </li>
-                <li>
-                  <code className="bg-background px-1 rounded">badInput</code> -
-                  Browser cannot convert input
-                </li>
-                <li>
-                  <code className="bg-background px-1 rounded">
-                    customError
-                  </code>{" "}
-                  - Custom validation failed
-                </li>
-              </ul>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <h4 className="font-semibold">Data Attributes</h4>
-          <p className="text-sm text-muted-foreground">
-            Automatically applied data attributes for styling:
-          </p>
-        </CardHeader>
-        <CardContent>
-          <ul className="text-sm space-y-1">
-            <li>
-              <code className="bg-background px-1 rounded">data-valid</code> -
-              Present when field is valid
-            </li>
-            <li>
-              <code className="bg-background px-1 rounded">data-invalid</code> -
-              Present when field is invalid
-            </li>
-          </ul>
-        </CardContent>
-      </Card>
-    </div>
-  </div>
-);
 
 // Advanced Interactive Example
 export const AdvancedInteractiveExample = () => {

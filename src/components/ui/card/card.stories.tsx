@@ -23,6 +23,25 @@ const meta = {
     },
   },
   tags: ["autodocs"],
+  argTypes: {
+    // HTML Props
+    className: {
+      control: "text",
+      description: "Additional CSS classes to apply to the card",
+      table: {
+        category: "HTML Props",
+        type: { summary: "string" },
+      },
+    },
+    children: {
+      control: false,
+      description: "The content to render inside the card",
+      table: {
+        category: "Content Props",
+        type: { summary: "ReactNode" },
+      },
+    },
+  },
 } satisfies Meta<typeof Card>;
 
 export default meta;

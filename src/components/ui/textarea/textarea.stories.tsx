@@ -10,14 +10,189 @@ export default {
     layout: "centered",
   },
   argTypes: {
-    placeholder: {
-      control: "text",
-    },
-    disabled: {
-      control: "boolean",
-    },
+    // Appearance Props
     rows: {
       control: { type: "range", min: 2, max: 10, step: 1 },
+      description: "The number of visible text lines for the control.",
+      table: {
+        category: "Appearance Props",
+        type: { summary: "number" },
+        defaultValue: { summary: "4" },
+      },
+    },
+    cols: {
+      control: { type: "range", min: 10, max: 100, step: 1 },
+      description:
+        "The visible width of the text control, in average character widths.",
+      table: {
+        category: "Appearance Props",
+        type: { summary: "number" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    resize: {
+      control: "select",
+      options: ["none", "both", "horizontal", "vertical"],
+      description: "Whether the textarea can be resized by the user.",
+      table: {
+        category: "Appearance Props",
+        type: { summary: '"none" | "both" | "horizontal" | "vertical"' },
+        defaultValue: { summary: '"none"' },
+      },
+    },
+    className: {
+      control: "text",
+      description: "Additional CSS classes to apply to the textarea.",
+      table: {
+        category: "Appearance Props",
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+
+    // Input Props
+    placeholder: {
+      control: "text",
+      description: "Placeholder text to show when the textarea is empty.",
+      table: {
+        category: "Input Props",
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    value: {
+      control: "text",
+      description: "The controlled value of the textarea.",
+      table: {
+        category: "Input Props",
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    defaultValue: {
+      control: "text",
+      description: "The default value of the textarea when uncontrolled.",
+      table: {
+        category: "Input Props",
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    name: {
+      control: "text",
+      description: "The name attribute of the textarea for form submission.",
+      table: {
+        category: "Input Props",
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    id: {
+      control: "text",
+      description:
+        "The id attribute of the textarea for labeling and accessibility.",
+      table: {
+        category: "Input Props",
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+
+    // State Props
+    disabled: {
+      control: "boolean",
+      description:
+        "Whether the textarea is disabled. Prevents user interaction.",
+      table: {
+        category: "State Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    readOnly: {
+      control: "boolean",
+      description:
+        "Whether the textarea is read-only. Prevents editing but allows focus.",
+      table: {
+        category: "State Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    required: {
+      control: "boolean",
+      description: "Whether the textarea is required for form submission.",
+      table: {
+        category: "State Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+
+    // Validation Props
+    maxLength: {
+      control: "number",
+      description: "Maximum number of characters allowed.",
+      table: {
+        category: "Validation Props",
+        type: { summary: "number" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    minLength: {
+      control: "number",
+      description: "Minimum number of characters required.",
+      table: {
+        category: "Validation Props",
+        type: { summary: "number" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+
+    // Event Handlers
+    onChange: {
+      action: "onChange",
+      description: "Event handler called when the textarea value changes.",
+      table: {
+        category: "Event Handlers",
+        type: {
+          summary: "(event: React.ChangeEvent<HTMLTextAreaElement>) => void",
+        },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    onFocus: {
+      action: "onFocus",
+      description: "Event handler called when the textarea receives focus.",
+      table: {
+        category: "Event Handlers",
+        type: {
+          summary: "(event: React.FocusEvent<HTMLTextAreaElement>) => void",
+        },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    onBlur: {
+      action: "onBlur",
+      description: "Event handler called when the textarea loses focus.",
+      table: {
+        category: "Event Handlers",
+        type: {
+          summary: "(event: React.FocusEvent<HTMLTextAreaElement>) => void",
+        },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    onKeyDown: {
+      action: "onKeyDown",
+      description: "Event handler called when a key is pressed down.",
+      table: {
+        category: "Event Handlers",
+        type: {
+          summary: "(event: React.KeyboardEvent<HTMLTextAreaElement>) => void",
+        },
+        defaultValue: { summary: "undefined" },
+      },
     },
   },
 };

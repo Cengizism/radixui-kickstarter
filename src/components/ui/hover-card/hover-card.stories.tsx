@@ -35,96 +35,6 @@ import {
   Database,
 } from "lucide-react";
 
-/**
- * ## API Reference
- *
- * The HoverCard component is built using multiple Radix UI primitives. Below are the available props for each component:
- *
- * ### HoverCard.Root
- * Contains all the parts of a hover card.
- *
- * | Prop | Type | Default | Description |
- * |------|------|---------|-------------|
- * | `defaultOpen` | `boolean` | `false` | The open state of the hover card when initially rendered. Use when you do not need to control its open state. |
- * | `open` | `boolean` | - | The controlled open state of the hover card. Must be used in conjunction with `onOpenChange`. |
- * | `onOpenChange` | `(open: boolean) => void` | - | Event handler called when the open state of the hover card changes. |
- * | `openDelay` | `number` | `700` | The duration from when the mouse enters the trigger until the hover card opens. |
- * | `closeDelay` | `number` | `300` | The duration from when the mouse leaves the trigger until the hover card closes. |
- *
- * ### HoverCard.Trigger
- * The link that opens the hover card when hovered.
- *
- * | Prop | Type | Default | Description |
- * |------|------|---------|-------------|
- * | `asChild` | `boolean` | `false` | Change the default rendered element for the one passed as a child, merging their props and behavior. |
- *
- * ### HoverCard.Portal
- * When used, portals the content part into the body.
- *
- * | Prop | Type | Default | Description |
- * |------|------|---------|-------------|
- * | `forceMount` | `boolean` | - | Used to force mounting when more control is needed. Useful when controlling animation with React animation libraries. |
- * | `container` | `HTMLElement` | `document.body` | Specify a container element to portal the content into. |
- *
- * ### HoverCard.Content
- * The component that pops out when the hover card is open.
- *
- * | Prop | Type | Default | Description |
- * |------|------|---------|-------------|
- * | `asChild` | `boolean` | `false` | Change the default rendered element for the one passed as a child, merging their props and behavior. |
- * | `forceMount` | `boolean` | - | Used to force mounting when more control is needed. Useful when controlling animation with React animation libraries. |
- * | `side` | `"top" \| "right" \| "bottom" \| "left"` | `"bottom"` | The preferred side of the trigger to render against when open. Will be reversed when collisions occur. |
- * | `sideOffset` | `number` | `0` | The distance in pixels from the trigger. |
- * | `align` | `"start" \| "center" \| "end"` | `"center"` | The preferred alignment against the trigger. May change when collisions occur. |
- * | `alignOffset` | `number` | `0` | An offset in pixels from the "start" or "end" alignment options. |
- * | `avoidCollisions` | `boolean` | `true` | When true, overrides the side and align preferences to prevent collisions with boundary edges. |
- * | `collisionBoundary` | `Element \| null \| Array<Element \| null>` | `[]` | The element used as the collision boundary. By default this is the viewport, though you can provide additional element(s) to be included in this check. |
- * | `collisionPadding` | `number \| Partial<Record<Side, number>>` | `0` | The distance in pixels from the boundary edges where collision detection should occur. Can be either a number for uniform padding or an object to set padding for individual sides. |
- * | `arrowPadding` | `number` | `0` | The padding between the arrow and the edges of the content. If your content has border-radius, this will prevent it from overflowing the corners. |
- * | `sticky` | `"partial" \| "always"` | `"partial"` | The sticky behavior on the align axis. "partial" will keep the content in the boundary as long as the trigger is at least partially in the boundary whilst "always" will keep the content in the boundary regardless. |
- * | `hideWhenDetached` | `boolean` | `false` | Whether to hide the content when the trigger becomes fully occluded. |
- *
- * ### HoverCard.Arrow
- * An optional arrow element to render alongside the hover card. This can be omitted when you want to customize the arrow or don't want an arrow at all.
- *
- * | Prop | Type | Default | Description |
- * |------|------|---------|-------------|
- * | `asChild` | `boolean` | `false` | Change the default rendered element for the one passed as a child, merging their props and behavior. |
- * | `width` | `number` | `10` | The width of the arrow in pixels. |
- * | `height` | `number` | `5` | The height of the arrow in pixels. |
- *
- * ### Data Attributes
- * Data attributes are automatically applied and can be used to style different states:
- *
- * - `[data-state]`: "open" | "closed" - Present on `HoverCard.Content`
- * - `[data-side]`: "left" | "right" | "bottom" | "top" - Present on `HoverCard.Content`
- * - `[data-align]`: "start" | "end" | "center" - Present on `HoverCard.Content`
- *
- * ### CSS Variables
- * CSS variables are automatically set and can be used to create dynamic layouts:
- *
- * - `--radix-hover-card-content-transform-origin`: The transform-origin computed from the content and arrow positions/offsets. Only present when an arrow is rendered. Use it to animate the content from its computed origin.
- * - `--radix-hover-card-content-available-width`: The remaining width between the trigger and the boundary edge. Use it to constrain the content width.
- * - `--radix-hover-card-content-available-height`: The remaining height between the trigger and the boundary edge. Use it to constrain the content height.
- * - `--radix-hover-card-trigger-width`: The width of the trigger. Use it to size the content to match the trigger width.
- * - `--radix-hover-card-trigger-height`: The height of the trigger. Use it to size the content to match the trigger height.
- *
- * ### Keyboard Interactions
- *
- * | Key | Description |
- * |-----|-------------|
- * | `Tab` | Opens/closes the hover card when the trigger is focused. |
- * | `Space` | Opens/closes the hover card when the trigger is focused. |
- * | `Enter` | Opens/closes the hover card when the trigger is focused. |
- * | `Escape` | Closes the hover card and moves focus to trigger. |
- *
- * ### Accessibility
- *
- * Hover cards are intended primarily for sighted users to preview content available behind a link or action. They provide contextual information on hover but have limited keyboard accessibility. For better accessibility, consider providing the same information through other means for keyboard and screen reader users.
- *
- * ### Examples
- */
-
 export default {
   title: "UI/HoverCard",
   component: HoverCard,
@@ -146,7 +56,7 @@ export default {
         "The open state of the hover card when initially rendered. Use when you do not need to control its open state.",
       table: {
         type: { summary: "boolean" },
-        category: "Root",
+        category: "Root Props",
       },
     },
     open: {
@@ -155,16 +65,7 @@ export default {
         "The controlled open state of the hover card. Must be used in conjunction with onOpenChange.",
       table: {
         type: { summary: "boolean" },
-        category: "Root",
-      },
-    },
-    onOpenChange: {
-      action: "onOpenChange",
-      description:
-        "Event handler called when the open state of the hover card changes.",
-      table: {
-        type: { summary: "(open: boolean) => void" },
-        category: "Root",
+        category: "Root Props",
       },
     },
     openDelay: {
@@ -174,7 +75,7 @@ export default {
       table: {
         type: { summary: "number" },
         defaultValue: { summary: "700" },
-        category: "Root",
+        category: "Root Props",
       },
     },
     closeDelay: {
@@ -184,10 +85,19 @@ export default {
       table: {
         type: { summary: "number" },
         defaultValue: { summary: "300" },
-        category: "Root",
+        category: "Root Props",
       },
     },
-
+    // Event Handlers
+    onOpenChange: {
+      action: "onOpenChange",
+      description:
+        "Event handler called when the open state of the hover card changes.",
+      table: {
+        type: { summary: "(open: boolean) => void" },
+        category: "Event Handlers",
+      },
+    },
     // Trigger Props
     asChild: {
       control: "boolean",
@@ -196,10 +106,9 @@ export default {
       table: {
         type: { summary: "boolean" },
         defaultValue: { summary: "false" },
-        category: "Trigger",
+        category: "Trigger Props",
       },
     },
-
     // Content Props
     side: {
       control: "select",
@@ -209,7 +118,7 @@ export default {
       table: {
         type: { summary: '"top" | "right" | "bottom" | "left"' },
         defaultValue: { summary: '"bottom"' },
-        category: "Content",
+        category: "Content Props",
       },
     },
     sideOffset: {

@@ -15,37 +15,35 @@ export default {
   },
   tags: ["autodocs"],
   argTypes: {
+    // Appearance Props
     size: {
       control: "select",
       options: ["sm", "default", "lg", "xl"],
-      description: "The size variant of the avatar container.",
-      table: {
-        type: { summary: "enum" },
-        defaultValue: { summary: "default" },
-      },
-    },
-    asChild: {
-      control: "boolean",
       description:
-        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
+        "The size variant of the avatar container. Controls dimensions and spacing.",
       table: {
-        type: { summary: "boolean" },
-        defaultValue: { summary: "false" },
+        category: "Appearance Props",
+        type: { summary: '"sm" | "default" | "lg" | "xl"' },
+        defaultValue: { summary: '"default"' },
       },
     },
     className: {
       control: "text",
       description: "Additional CSS classes to apply to the avatar container.",
       table: {
+        category: "Appearance Props",
         type: { summary: "string" },
         defaultValue: { summary: "undefined" },
       },
     },
+
+    // Image Props
     src: {
       control: "text",
       description:
         "The source URL of the image. When provided, renders AvatarImage component.",
       table: {
+        category: "Image Props",
         type: { summary: "string" },
         defaultValue: { summary: "undefined" },
       },
@@ -54,16 +52,32 @@ export default {
       control: "text",
       description: "Alternative text for the image for accessibility.",
       table: {
+        category: "Image Props",
         type: { summary: "string" },
         defaultValue: { summary: "undefined" },
       },
     },
+    onLoadingStatusChange: {
+      action: "onLoadingStatusChange",
+      description:
+        "Event handler called when the loading status of the image changes.",
+      table: {
+        category: "Image Props",
+        type: {
+          summary: '(status: "idle" | "loading" | "loaded" | "error") => void',
+        },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+
+    // Fallback Props
     fallback: {
       control: "text",
       description:
         "The content to display when image fails to load or is not provided.",
       table: {
-        type: { summary: "ReactNode" },
+        category: "Fallback Props",
+        type: { summary: "React.ReactNode" },
         defaultValue: { summary: "undefined" },
       },
     },
@@ -72,19 +86,21 @@ export default {
       description:
         "Useful for delaying rendering so it only appears for those with slower connections. In milliseconds.",
       table: {
+        category: "Fallback Props",
         type: { summary: "number" },
         defaultValue: { summary: "undefined" },
       },
     },
-    onLoadingStatusChange: {
-      action: "onLoadingStatusChange",
+
+    // Content Props
+    asChild: {
+      control: "boolean",
       description:
-        "A callback providing information about the loading status of the image.",
+        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
       table: {
-        type: {
-          summary: "(status: 'idle' | 'loading' | 'loaded' | 'error') => void",
-        },
-        defaultValue: { summary: "undefined" },
+        category: "Content Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
       },
     },
   },
@@ -715,249 +731,6 @@ export const AsChildWithTooltip = () => (
           <AvatarFallback>CA</AvatarFallback>
         </button>
       </Avatar>
-    </div>
-  </div>
-);
-
-// API Reference
-export const APIReference = () => (
-  <div className="space-y-6 max-w-4xl">
-    <div>
-      <h3 className="text-lg font-semibold mb-3">Avatar API Reference</h3>
-      <p className="text-sm text-muted-foreground mb-4">
-        Complete API reference for all Avatar components with their props,
-        types, and default values.
-      </p>
-    </div>
-
-    <div className="space-y-4">
-      <div>
-        <h4 className="font-medium mb-2">Avatar.Root</h4>
-        <div className="text-sm text-muted-foreground mb-2">
-          Contains all the parts of an avatar.
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm border-collapse border border-border">
-            <thead>
-              <tr className="border-b border-border bg-muted/50">
-                <th className="border border-border px-3 py-2 text-left">
-                  Prop
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Type
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Default
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Description
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  asChild
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  boolean
-                </td>
-                <td className="border border-border px-3 py-2">false</td>
-                <td className="border border-border px-3 py-2">
-                  Change the default rendered element for the one passed as a
-                  child.
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  size
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  enum
-                </td>
-                <td className="border border-border px-3 py-2">default</td>
-                <td className="border border-border px-3 py-2">
-                  Size variant: "sm" | "default" | "lg" | "xl"
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div>
-        <h4 className="font-medium mb-2">Avatar.Image</h4>
-        <div className="text-sm text-muted-foreground mb-2">
-          The image to render. By default it will only render when it has
-          loaded.
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm border-collapse border border-border">
-            <thead>
-              <tr className="border-b border-border bg-muted/50">
-                <th className="border border-border px-3 py-2 text-left">
-                  Prop
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Type
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Default
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Description
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  asChild
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  boolean
-                </td>
-                <td className="border border-border px-3 py-2">false</td>
-                <td className="border border-border px-3 py-2">
-                  Change the default rendered element for the one passed as a
-                  child.
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  onLoadingStatusChange
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">{`(status) => void`}</td>
-                <td className="border border-border px-3 py-2">-</td>
-                <td className="border border-border px-3 py-2">
-                  Callback providing information about the loading status.
-                  Status: "idle" | "loading" | "loaded" | "error"
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div>
-        <h4 className="font-medium mb-2">Avatar.Fallback</h4>
-        <div className="text-sm text-muted-foreground mb-2">
-          An element that renders when the image hasn't loaded. This means
-          whilst it's loading, or if there was an error.
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm border-collapse border border-border">
-            <thead>
-              <tr className="border-b border-border bg-muted/50">
-                <th className="border border-border px-3 py-2 text-left">
-                  Prop
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Type
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Default
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Description
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  asChild
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  boolean
-                </td>
-                <td className="border border-border px-3 py-2">false</td>
-                <td className="border border-border px-3 py-2">
-                  Change the default rendered element for the one passed as a
-                  child.
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  delayMs
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  number
-                </td>
-                <td className="border border-border px-3 py-2">-</td>
-                <td className="border border-border px-3 py-2">
-                  Useful for delaying rendering so it only appears for those
-                  with slower connections.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div>
-        <h4 className="font-medium mb-2">Size Variants</h4>
-        <div className="text-sm text-muted-foreground mb-2">
-          Available size options and their dimensions.
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm border-collapse border border-border">
-            <thead>
-              <tr className="border-b border-border bg-muted/50">
-                <th className="border border-border px-3 py-2 text-left">
-                  Size
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Dimensions
-                </th>
-                <th className="border border-border px-3 py-2 text-left">
-                  Use Case
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">sm</td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  32px × 32px
-                </td>
-                <td className="border border-border px-3 py-2">
-                  List items, compact layouts, chat messages
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">
-                  default
-                </td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  40px × 40px
-                </td>
-                <td className="border border-border px-3 py-2">
-                  Standard UI elements, navigation bars
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">lg</td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  48px × 48px
-                </td>
-                <td className="border border-border px-3 py-2">
-                  Profile cards, user details, settings
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-border px-3 py-2 font-mono">xl</td>
-                <td className="border border-border px-3 py-2 font-mono">
-                  64px × 64px
-                </td>
-                <td className="border border-border px-3 py-2">
-                  Profile headers, large displays, featured content
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
     </div>
   </div>
 );

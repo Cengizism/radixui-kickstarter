@@ -14,19 +14,70 @@ const meta = {
   },
   tags: ["autodocs"],
   argTypes: {
+    // Appearance Props
     variant: {
       control: "select",
       options: ["default", "secondary", "destructive", "outline"],
-      description: "The visual variant of the badge",
+      description:
+        "The visual variant of the badge. Controls color scheme and styling.",
+      table: {
+        category: "Appearance Props",
+        type: {
+          summary: '"default" | "secondary" | "destructive" | "outline"',
+        },
+        defaultValue: { summary: '"default"' },
+      },
+    },
+    className: {
+      control: "text",
+      description: "Additional CSS classes to apply to the badge.",
+      table: {
+        category: "Appearance Props",
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+
+    // Content Props
+    children: {
+      control: "text",
+      description:
+        "The content of the badge. Can be text, numbers, or other React elements.",
+      table: {
+        category: "Content Props",
+        type: { summary: "React.ReactNode" },
+        defaultValue: { summary: "undefined" },
+      },
     },
     asChild: {
       control: "boolean",
       description:
-        "Change the default rendered element for the one passed as a child",
+        "Change the default rendered element for the one passed as a child. Merges props and behavior.",
+      table: {
+        category: "Content Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
     },
-    children: {
+
+    // HTML Props
+    role: {
       control: "text",
-      description: "The content of the badge",
+      description: "ARIA role attribute for accessibility.",
+      table: {
+        category: "HTML Props",
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    title: {
+      control: "text",
+      description: "Tooltip text to display on hover.",
+      table: {
+        category: "HTML Props",
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
     },
   },
 } satisfies Meta<typeof Badge>;

@@ -29,16 +29,64 @@ import {
 export default {
   title: "UI/PasswordToggleField",
   component: PasswordToggleFieldRoot,
+  docs: {
+    description: {
+      component:
+        "A password input field with a toggle button to show/hide the password text. Provides secure password entry with visibility control.",
+    },
+  },
+  tags: ["autodocs"],
   parameters: {
     layout: "centered",
   },
   argTypes: {
+    // Appearance Props
     size: {
       control: "select",
       options: ["sm", "default", "lg"],
+      description: "The size variant of the password field",
+      table: {
+        category: "Appearance Props",
+        type: { summary: '"sm" | "default" | "lg"' },
+        defaultValue: { summary: '"default"' },
+      },
     },
+    // Root Props
     defaultVisible: {
       control: "boolean",
+      description: "The initial visibility state of the password when rendered",
+      table: {
+        category: "Root Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    visible: {
+      control: "boolean",
+      description: "The controlled visibility state of the password",
+      table: {
+        category: "Root Props",
+        type: { summary: "boolean" },
+      },
+    },
+    // Event Handlers
+    onVisibilityChange: {
+      action: "onVisibilityChange",
+      description: "Event handler called when the password visibility changes",
+      table: {
+        category: "Event Handlers",
+        type: { summary: "(visible: boolean) => void" },
+      },
+    },
+    // HTML Props
+    className: {
+      control: "text",
+      description:
+        "Additional CSS classes to apply to the password field container",
+      table: {
+        category: "HTML Props",
+        type: { summary: "string" },
+      },
     },
   },
 };

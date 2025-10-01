@@ -14,32 +14,233 @@ const meta = {
   },
   tags: ["autodocs"],
   argTypes: {
-    type: {
-      control: "select",
-      options: ["text", "email", "password", "number", "tel", "url", "search"],
-      description: "The type of input",
-    },
+    // Appearance Props
     size: {
       control: "select",
       options: ["sm", "default", "lg"],
-      description: "The size of the input",
+      description:
+        "The size variant of the input. Controls padding and text size.",
+      table: {
+        category: "Appearance Props",
+        type: { summary: '"sm" | "default" | "lg"' },
+        defaultValue: { summary: '"default"' },
+      },
     },
     variant: {
       control: "select",
       options: ["default", "ghost", "destructive"],
-      description: "The visual variant of the input",
+      description:
+        "The visual variant of the input. Controls border and background styling.",
+      table: {
+        category: "Appearance Props",
+        type: { summary: '"default" | "ghost" | "destructive"' },
+        defaultValue: { summary: '"default"' },
+      },
+    },
+    className: {
+      control: "text",
+      description: "Additional CSS classes to apply to the input.",
+      table: {
+        category: "Appearance Props",
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+
+    // Input Props
+    type: {
+      control: "select",
+      options: [
+        "text",
+        "email",
+        "password",
+        "number",
+        "tel",
+        "url",
+        "search",
+        "date",
+        "time",
+        "datetime-local",
+      ],
+      description:
+        "The type of input field. Determines input behavior and validation.",
+      table: {
+        category: "Input Props",
+        type: {
+          summary:
+            '"text" | "email" | "password" | "number" | "tel" | "url" | "search" | ...',
+        },
+        defaultValue: { summary: '"text"' },
+      },
     },
     placeholder: {
       control: "text",
-      description: "Placeholder text",
+      description: "Placeholder text to show when the input is empty.",
+      table: {
+        category: "Input Props",
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
     },
+    value: {
+      control: "text",
+      description: "The controlled value of the input.",
+      table: {
+        category: "Input Props",
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    defaultValue: {
+      control: "text",
+      description: "The default value of the input when uncontrolled.",
+      table: {
+        category: "Input Props",
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    name: {
+      control: "text",
+      description: "The name attribute of the input for form submission.",
+      table: {
+        category: "Input Props",
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    id: {
+      control: "text",
+      description:
+        "The id attribute of the input for labeling and accessibility.",
+      table: {
+        category: "Input Props",
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+
+    // State Props
     disabled: {
       control: "boolean",
-      description: "Whether the input is disabled",
+      description: "Whether the input is disabled. Prevents user interaction.",
+      table: {
+        category: "State Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    readOnly: {
+      control: "boolean",
+      description:
+        "Whether the input is read-only. Prevents editing but allows focus.",
+      table: {
+        category: "State Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
     },
     required: {
       control: "boolean",
-      description: "Whether the input is required",
+      description: "Whether the input is required for form submission.",
+      table: {
+        category: "State Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+
+    // Validation Props
+    pattern: {
+      control: "text",
+      description: "Regular expression pattern for input validation.",
+      table: {
+        category: "Validation Props",
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    min: {
+      control: "text",
+      description: "Minimum value for number/date inputs.",
+      table: {
+        category: "Validation Props",
+        type: { summary: "string | number" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    max: {
+      control: "text",
+      description: "Maximum value for number/date inputs.",
+      table: {
+        category: "Validation Props",
+        type: { summary: "string | number" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    maxLength: {
+      control: "number",
+      description: "Maximum number of characters allowed.",
+      table: {
+        category: "Validation Props",
+        type: { summary: "number" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    minLength: {
+      control: "number",
+      description: "Minimum number of characters required.",
+      table: {
+        category: "Validation Props",
+        type: { summary: "number" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+
+    // Event Handlers
+    onChange: {
+      action: "onChange",
+      description: "Event handler called when the input value changes.",
+      table: {
+        category: "Event Handlers",
+        type: {
+          summary: "(event: React.ChangeEvent<HTMLInputElement>) => void",
+        },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    onFocus: {
+      action: "onFocus",
+      description: "Event handler called when the input receives focus.",
+      table: {
+        category: "Event Handlers",
+        type: {
+          summary: "(event: React.FocusEvent<HTMLInputElement>) => void",
+        },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    onBlur: {
+      action: "onBlur",
+      description: "Event handler called when the input loses focus.",
+      table: {
+        category: "Event Handlers",
+        type: {
+          summary: "(event: React.FocusEvent<HTMLInputElement>) => void",
+        },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    onKeyDown: {
+      action: "onKeyDown",
+      description: "Event handler called when a key is pressed down.",
+      table: {
+        category: "Event Handlers",
+        type: {
+          summary: "(event: React.KeyboardEvent<HTMLInputElement>) => void",
+        },
+        defaultValue: { summary: "undefined" },
+      },
     },
   },
 } satisfies Meta<typeof Input>;

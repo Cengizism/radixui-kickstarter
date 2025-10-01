@@ -14,6 +14,7 @@ const meta = {
   },
   tags: ["autodocs"],
   argTypes: {
+    // Appearance Props
     variant: {
       control: "select",
       options: [
@@ -24,29 +25,166 @@ const meta = {
         "ghost",
         "link",
       ],
-      description: "The visual variant of the button",
+      description:
+        "The visual variant of the button. Controls color scheme and styling.",
+      table: {
+        category: "Appearance Props",
+        type: {
+          summary:
+            '"default" | "destructive" | "outline" | "secondary" | "ghost" | "link"',
+        },
+        defaultValue: { summary: '"default"' },
+      },
     },
     size: {
       control: "select",
       options: ["default", "sm", "lg", "icon"],
-      description: "The size of the button",
+      description:
+        "The size variant of the button. Controls padding and text size.",
+      table: {
+        category: "Appearance Props",
+        type: { summary: '"default" | "sm" | "lg" | "icon"' },
+        defaultValue: { summary: '"default"' },
+      },
+    },
+    className: {
+      control: "text",
+      description: "Additional CSS classes to apply to the button.",
+      table: {
+        category: "Appearance Props",
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+
+    // Content Props
+    children: {
+      control: "text",
+      description:
+        "The content of the button. Can be text, icons, or other React elements.",
+      table: {
+        category: "Content Props",
+        type: { summary: "React.ReactNode" },
+        defaultValue: { summary: "undefined" },
+      },
     },
     asChild: {
       control: "boolean",
       description:
-        "Change the default rendered element for the one passed as a child",
+        "Change the default rendered element for the one passed as a child. Merges props and behavior.",
+      table: {
+        category: "Content Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
     },
+
+    // State Props
     disabled: {
       control: "boolean",
-      description: "Whether the button is disabled",
+      description:
+        "Whether the button is disabled. Prevents interaction and applies disabled styling.",
+      table: {
+        category: "State Props",
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
     },
-    children: {
-      control: "text",
-      description: "The content of the button",
-    },
+
+    // Event Handlers
     onClick: {
       action: "clicked",
-      description: "Function to call when button is clicked",
+      description: "Function to call when button is clicked.",
+      table: {
+        category: "Event Handlers",
+        type: {
+          summary: "(event: React.MouseEvent<HTMLButtonElement>) => void",
+        },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    onMouseEnter: {
+      action: "mouseEnter",
+      description: "Function to call when mouse enters the button.",
+      table: {
+        category: "Event Handlers",
+        type: {
+          summary: "(event: React.MouseEvent<HTMLButtonElement>) => void",
+        },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    onMouseLeave: {
+      action: "mouseLeave",
+      description: "Function to call when mouse leaves the button.",
+      table: {
+        category: "Event Handlers",
+        type: {
+          summary: "(event: React.MouseEvent<HTMLButtonElement>) => void",
+        },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    onFocus: {
+      action: "focus",
+      description: "Function to call when button receives focus.",
+      table: {
+        category: "Event Handlers",
+        type: {
+          summary: "(event: React.FocusEvent<HTMLButtonElement>) => void",
+        },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    onBlur: {
+      action: "blur",
+      description: "Function to call when button loses focus.",
+      table: {
+        category: "Event Handlers",
+        type: {
+          summary: "(event: React.FocusEvent<HTMLButtonElement>) => void",
+        },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+
+    // HTML Props
+    type: {
+      control: "select",
+      options: ["button", "submit", "reset"],
+      description: "The type of the button element.",
+      table: {
+        category: "HTML Props",
+        type: { summary: '"button" | "submit" | "reset"' },
+        defaultValue: { summary: '"button"' },
+      },
+    },
+    form: {
+      control: "text",
+      description: "Associates the button with a form element by id.",
+      table: {
+        category: "HTML Props",
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    title: {
+      control: "text",
+      description: "Tooltip text to display on hover.",
+      table: {
+        category: "HTML Props",
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    tabIndex: {
+      control: "number",
+      description: "The tab order of the button for keyboard navigation.",
+      table: {
+        category: "HTML Props",
+        type: { summary: "number" },
+        defaultValue: { summary: "undefined" },
+      },
     },
   },
 } satisfies Meta<typeof Button>;

@@ -5,26 +5,6 @@ import { Checkbox } from '../checkbox/checkbox';
 import { Input } from '../input/input';
 import { Label } from '@/components/ui/label';
 
-/**
- * ## API Reference
- *
- * ### Label.Root
- * Contains the content for the label.
- *
- * | Prop | Type | Default | Description |
- * |------|------|---------|-------------|
- * | `asChild` | `boolean` | `false` | Change the default rendered element for the one passed as a child, merging their props and behavior. |
- * | `htmlFor` | `string` | - | The id of the element the label is associated with. When provided, clicking the label will focus the associated control. |
- *
- * ### Styling Variants
- *
- * | Prop | Type | Default | Description |
- * |------|------|---------|-------------|
- * | `variant` | `"default" \| "destructive" \| "muted" \| "accent"` | `"default"` | The visual style variant of the label. |
- * | `size` | `"sm" \| "default" \| "lg"` | `"default"` | The size variant affecting text size and spacing. |
- * | `weight` | `"normal" \| "medium" \| "semibold" \| "bold"` | `"medium"` | The font weight of the label text. |
- */
-
 export default {
   title: "UI/Label",
   component: Label,
@@ -39,6 +19,7 @@ export default {
     layout: "centered",
   },
   argTypes: {
+    // Root Props
     asChild: {
       control: "boolean",
       description:
@@ -46,7 +27,7 @@ export default {
       table: {
         type: { summary: "boolean" },
         defaultValue: { summary: "false" },
-        category: "Root",
+        category: "Root Props",
       },
     },
     htmlFor: {
@@ -55,9 +36,10 @@ export default {
         "The id of the element the label is associated with. When provided, clicking the label will focus the associated control.",
       table: {
         type: { summary: "string" },
-        category: "Root",
+        category: "Root Props",
       },
     },
+    // Appearance Props
     variant: {
       control: "select",
       options: ["default", "destructive", "muted", "accent"],
@@ -65,7 +47,7 @@ export default {
       table: {
         type: { summary: '"default" | "destructive" | "muted" | "accent"' },
         defaultValue: { summary: '"default"' },
-        category: "Styling",
+        category: "Appearance Props",
       },
     },
     size: {
@@ -75,7 +57,7 @@ export default {
       table: {
         type: { summary: '"sm" | "default" | "lg"' },
         defaultValue: { summary: '"default"' },
-        category: "Styling",
+        category: "Appearance Props",
       },
     },
     weight: {
@@ -85,23 +67,25 @@ export default {
       table: {
         type: { summary: '"normal" | "medium" | "semibold" | "bold"' },
         defaultValue: { summary: '"medium"' },
-        category: "Styling",
+        category: "Appearance Props",
       },
     },
+    // HTML Props
     className: {
       control: "text",
       description: "Additional CSS classes to apply to the label.",
       table: {
         type: { summary: "string" },
-        category: "HTML",
+        category: "HTML Props",
       },
     },
+    // Event Handlers
     onClick: {
       action: "onClick",
       description: "Event handler called when the label is clicked.",
       table: {
         type: { summary: "MouseEventHandler<HTMLLabelElement>" },
-        category: "Events",
+        category: "Event Handlers",
       },
     },
   },

@@ -28,11 +28,56 @@ const meta = {
     docs: {
       description: {
         component:
-          "A component for displaying tabular data with rows and columns.",
+          "A component for displaying tabular data with rows and columns. Provides semantic HTML table elements with accessible markup.",
       },
     },
   },
   tags: ["autodocs"],
+  argTypes: {
+    // Appearance Props
+    className: {
+      control: "text",
+      description: "Additional CSS classes to apply to the table.",
+      table: {
+        category: "Appearance Props",
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+
+    // Content Props
+    children: {
+      control: false,
+      description:
+        "The table content including TableHeader, TableBody, and TableFooter.",
+      table: {
+        category: "Content Props",
+        type: { summary: "React.ReactNode" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+
+    // HTML Props
+    role: {
+      control: "text",
+      description: "ARIA role attribute for accessibility.",
+      table: {
+        category: "HTML Props",
+        type: { summary: "string" },
+        defaultValue: { summary: '"table"' },
+      },
+    },
+    id: {
+      control: "text",
+      description:
+        "The id attribute of the table for accessibility and labeling.",
+      table: {
+        category: "HTML Props",
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+  },
 } satisfies Meta<typeof Table>;
 
 export default meta;

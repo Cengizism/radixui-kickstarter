@@ -823,7 +823,7 @@ export const AdvancedTooltipSystem = {
           const maxCount = Math.max(...Object.values(newStats.tooltipCounts));
           newStats.mostUsedTooltip =
             Object.entries(newStats.tooltipCounts).find(
-              ([_, count]) => count === maxCount
+              ([, count]) => count === maxCount
             )?.[0] || "";
         } else {
           newStats.currentlyOpen = Math.max(0, newStats.currentlyOpen - 1);
@@ -848,7 +848,7 @@ export const AdvancedTooltipSystem = {
       tooltipId: string;
       variant?: string;
       side?: "top" | "bottom" | "left" | "right";
-      [key: string]: any;
+      [key: string]: unknown;
     }> = ({ children, content, tooltipId, ...props }) => {
       if (tooltipSettings.globalDisabled) {
         return <>{children}</>;
@@ -860,7 +860,25 @@ export const AdvancedTooltipSystem = {
           {...props}
         >
           <TooltipTrigger asChild>{children}</TooltipTrigger>
-          <TooltipContent {...props}>{content}</TooltipContent>
+          <TooltipContent
+            {...props}
+            variant={
+              props.variant as
+                | "default"
+                | "secondary"
+                | "accent"
+                | "destructive"
+                | "success"
+                | "warning"
+                | "info"
+                | "dark"
+                | "light"
+                | null
+                | undefined
+            }
+          >
+            {content}
+          </TooltipContent>
         </Tooltip>
       );
     };

@@ -90,40 +90,41 @@ export default {
     open: {
       control: "boolean",
       description:
-        "The open state of the dialog when it is initially rendered.",
+        "The controlled open state of the toast when it is initially rendered.",
       table: { category: "Root Props" },
     },
     defaultOpen: {
       control: "boolean",
       description:
-        "The open state of the dialog when it is initially rendered.",
+        "The open state of the toast when it is initially rendered. Use when you do not need to control its open state.",
       table: { category: "Root Props" },
     },
+    // Event Handlers
     onOpenChange: {
       action: "onOpenChange",
       description:
-        "Event handler called when the open state of the dialog changes.",
-      table: { category: "Root Props" },
+        "Event handler called when the open state of the toast changes.",
+      table: { category: "Event Handlers" },
     },
     onEscapeKeyDown: {
       action: "onEscapeKeyDown",
       description: "Event handler called when the escape key is down.",
-      table: { category: "Root Props" },
+      table: { category: "Event Handlers" },
     },
     onPause: {
       action: "onPause",
       description: "Event handler called when the dismiss timer is paused.",
-      table: { category: "Root Props" },
+      table: { category: "Event Handlers" },
     },
     onResume: {
       action: "onResume",
       description: "Event handler called when the dismiss timer is resumed.",
-      table: { category: "Root Props" },
+      table: { category: "Event Handlers" },
     },
     onSwipeStart: {
       action: "onSwipeStart",
       description: "Event handler called when starting a swipe interaction.",
-      table: { category: "Root Props" },
+      table: { category: "Event Handlers" },
     },
     onSwipeMove: {
       action: "onSwipeMove",
@@ -818,7 +819,7 @@ export const AdvancedToastQueue = {
         category: string;
         timestamp: Date;
         progress?: number;
-        metadata?: any;
+        metadata?: unknown;
       }>
     >([]);
 
@@ -1066,7 +1067,11 @@ export const AdvancedToastQueue = {
                   onChange={(e) =>
                     setQueueSettings((prev) => ({
                       ...prev,
-                      position: e.target.value as any,
+                      position: e.target.value as
+                        | "top-left"
+                        | "top-right"
+                        | "bottom-left"
+                        | "bottom-right",
                     }))
                   }
                   className="w-full px-3 py-2 text-sm border rounded-md"
@@ -1085,7 +1090,11 @@ export const AdvancedToastQueue = {
                   onChange={(e) =>
                     setQueueSettings((prev) => ({
                       ...prev,
-                      swipeDirection: e.target.value as any,
+                      swipeDirection: e.target.value as
+                        | "left"
+                        | "right"
+                        | "up"
+                        | "down",
                     }))
                   }
                   className="w-full px-3 py-2 text-sm border rounded-md"

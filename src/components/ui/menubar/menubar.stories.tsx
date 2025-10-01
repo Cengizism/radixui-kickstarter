@@ -67,7 +67,7 @@ export default {
       description:
         "The controlled value of the menu that is currently open. Use when controlling the open state of a menu.",
       table: {
-        category: "Root",
+        category: "Root Props",
       },
     },
     defaultValue: {
@@ -75,15 +75,7 @@ export default {
       description:
         "The value of the menu that should be open by default when initially rendered. Use when not controlling the open state.",
       table: {
-        category: "Root",
-      },
-    },
-    onValueChange: {
-      control: false,
-      description: "Event handler called when the value changes.",
-      table: {
-        category: "Root",
-        type: { summary: "(value: string) => void" },
+        category: "Root Props",
       },
     },
     dir: {
@@ -92,7 +84,7 @@ export default {
       description:
         "The reading direction. Can be set when it differs from the default direction.",
       table: {
-        category: "Root",
+        category: "Root Props",
       },
     },
     loop: {
@@ -100,7 +92,16 @@ export default {
       description:
         "When true, keyboard navigation will loop around when reaching the end.",
       table: {
-        category: "Root",
+        category: "Root Props",
+      },
+    },
+    // Event Handlers
+    onValueChange: {
+      control: false,
+      description: "Event handler called when the value changes.",
+      table: {
+        category: "Event Handlers",
+        type: { summary: "(value: string) => void" },
       },
     },
 

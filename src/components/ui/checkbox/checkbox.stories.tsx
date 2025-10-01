@@ -16,12 +16,14 @@ export default {
   },
   tags: ["autodocs"],
   argTypes: {
+    // State Props
     checked: {
       control: "select",
       options: [true, false, "indeterminate"],
       description:
         "The controlled checked state of the checkbox. Must be used in conjunction with onCheckedChange.",
       table: {
+        category: "State Props",
         type: { summary: "boolean | 'indeterminate'" },
         defaultValue: { summary: "undefined" },
       },
@@ -32,17 +34,9 @@ export default {
       description:
         "The checked state of the checkbox when it is initially rendered. Use when you do not need to control its checked state.",
       table: {
+        category: "State Props",
         type: { summary: "boolean | 'indeterminate'" },
         defaultValue: { summary: "false" },
-      },
-    },
-    onCheckedChange: {
-      action: "onCheckedChange",
-      description:
-        "Event handler called when the checked state of the checkbox changes.",
-      table: {
-        type: { summary: "(checked: boolean | 'indeterminate') => void" },
-        defaultValue: { summary: "undefined" },
       },
     },
     disabled: {
@@ -50,6 +44,7 @@ export default {
       description:
         "When true, prevents the user from interacting with the checkbox.",
       table: {
+        category: "State Props",
         type: { summary: "boolean" },
         defaultValue: { summary: "false" },
       },
@@ -59,15 +54,19 @@ export default {
       description:
         "When true, indicates that the user must check the checkbox before the owning form can be submitted.",
       table: {
+        category: "State Props",
         type: { summary: "boolean" },
         defaultValue: { summary: "false" },
       },
     },
+
+    // Form Props
     name: {
       control: "text",
       description:
         "The name of the checkbox. Submitted with its owning form as part of a name/value pair.",
       table: {
+        category: "Form Props",
         type: { summary: "string" },
         defaultValue: { summary: "undefined" },
       },
@@ -76,35 +75,98 @@ export default {
       control: "text",
       description: "The value given as data when submitted with a name.",
       table: {
+        category: "Form Props",
         type: { summary: "string" },
         defaultValue: { summary: "on" },
       },
     },
+    id: {
+      control: "text",
+      description:
+        "The id attribute of the checkbox for labeling and accessibility.",
+      table: {
+        category: "Form Props",
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+
+    // Appearance Props
     size: {
       control: "select",
       options: ["sm", "default", "lg"],
-      description: "The size variant of the checkbox.",
+      description:
+        "The size variant of the checkbox. Controls dimensions and spacing.",
       table: {
-        type: { summary: "enum" },
-        defaultValue: { summary: "default" },
+        category: "Appearance Props",
+        type: { summary: '"sm" | "default" | "lg"' },
+        defaultValue: { summary: '"default"' },
       },
     },
     variant: {
       control: "select",
       options: ["default", "destructive", "outline"],
-      description: "The visual variant of the checkbox.",
+      description:
+        "The visual variant of the checkbox. Controls color scheme and styling.",
       table: {
-        type: { summary: "enum" },
-        defaultValue: { summary: "default" },
+        category: "Appearance Props",
+        type: { summary: '"default" | "destructive" | "outline"' },
+        defaultValue: { summary: '"default"' },
       },
     },
+    className: {
+      control: "text",
+      description: "Additional CSS classes to apply to the checkbox.",
+      table: {
+        category: "Appearance Props",
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+
+    // Content Props
     asChild: {
       control: "boolean",
       description:
         "Change the default rendered element for the one passed as a child, merging their props and behavior.",
       table: {
+        category: "Content Props",
         type: { summary: "boolean" },
         defaultValue: { summary: "false" },
+      },
+    },
+
+    // Event Handlers
+    onCheckedChange: {
+      action: "onCheckedChange",
+      description:
+        "Event handler called when the checked state of the checkbox changes.",
+      table: {
+        category: "Event Handlers",
+        type: { summary: "(checked: boolean | 'indeterminate') => void" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    onFocus: {
+      action: "onFocus",
+      description: "Event handler called when the checkbox receives focus.",
+      table: {
+        category: "Event Handlers",
+        type: {
+          summary: "(event: React.FocusEvent<HTMLButtonElement>) => void",
+        },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    onBlur: {
+      action: "onBlur",
+      description: "Event handler called when the checkbox loses focus.",
+      table: {
+        category: "Event Handlers",
+        type: {
+          summary: "(event: React.FocusEvent<HTMLButtonElement>) => void",
+        },
+        defaultValue: { summary: "undefined" },
       },
     },
   },
@@ -567,259 +629,6 @@ export const CustomIndicators = {
     docs: {
       description: {
         story: "Examples of customizing checkbox indicators and styling.",
-      },
-    },
-  },
-};
-
-// API Reference
-export const APIReference = {
-  render: () => (
-    <div className="space-y-6 max-w-4xl">
-      <div>
-        <h3 className="text-lg font-semibold mb-3">Checkbox API Reference</h3>
-        <p className="text-sm text-muted-foreground mb-4">
-          Complete API reference for all Checkbox components with their props,
-          types, and default values.
-        </p>
-      </div>
-
-      <div className="space-y-4">
-        <div>
-          <h4 className="font-medium mb-2">Checkbox.Root</h4>
-          <div className="text-sm text-muted-foreground mb-2">
-            Contains all the parts of a checkbox. An input will also render when
-            used within a form to ensure events propagate correctly.
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm border-collapse border border-border">
-              <thead>
-                <tr className="border-b border-border bg-muted/50">
-                  <th className="border border-border px-3 py-2 text-left">
-                    Prop
-                  </th>
-                  <th className="border border-border px-3 py-2 text-left">
-                    Type
-                  </th>
-                  <th className="border border-border px-3 py-2 text-left">
-                    Default
-                  </th>
-                  <th className="border border-border px-3 py-2 text-left">
-                    Description
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="border border-border px-3 py-2 font-mono">
-                    checked
-                  </td>
-                  <td className="border border-border px-3 py-2 font-mono">
-                    boolean | "indeterminate"
-                  </td>
-                  <td className="border border-border px-3 py-2">-</td>
-                  <td className="border border-border px-3 py-2">
-                    The controlled checked state of the checkbox.
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-border px-3 py-2 font-mono">
-                    defaultChecked
-                  </td>
-                  <td className="border border-border px-3 py-2 font-mono">
-                    boolean | "indeterminate"
-                  </td>
-                  <td className="border border-border px-3 py-2">false</td>
-                  <td className="border border-border px-3 py-2">
-                    The checked state when initially rendered.
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-border px-3 py-2 font-mono">
-                    onCheckedChange
-                  </td>
-                  <td className="border border-border px-3 py-2 font-mono">{`(checked: boolean | "indeterminate") => void`}</td>
-                  <td className="border border-border px-3 py-2">-</td>
-                  <td className="border border-border px-3 py-2">
-                    Event handler called when the checked state changes.
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-border px-3 py-2 font-mono">
-                    disabled
-                  </td>
-                  <td className="border border-border px-3 py-2 font-mono">
-                    boolean
-                  </td>
-                  <td className="border border-border px-3 py-2">false</td>
-                  <td className="border border-border px-3 py-2">
-                    When true, prevents the user from interacting with the
-                    checkbox.
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-border px-3 py-2 font-mono">
-                    required
-                  </td>
-                  <td className="border border-border px-3 py-2 font-mono">
-                    boolean
-                  </td>
-                  <td className="border border-border px-3 py-2">false</td>
-                  <td className="border border-border px-3 py-2">
-                    When true, indicates that the user must check the checkbox
-                    before submitting.
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-border px-3 py-2 font-mono">
-                    name
-                  </td>
-                  <td className="border border-border px-3 py-2 font-mono">
-                    string
-                  </td>
-                  <td className="border border-border px-3 py-2">-</td>
-                  <td className="border border-border px-3 py-2">
-                    The name of the checkbox for form submission.
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-border px-3 py-2 font-mono">
-                    value
-                  </td>
-                  <td className="border border-border px-3 py-2 font-mono">
-                    string
-                  </td>
-                  <td className="border border-border px-3 py-2">"on"</td>
-                  <td className="border border-border px-3 py-2">
-                    The value given as data when submitted with a name.
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-border px-3 py-2 font-mono">
-                    asChild
-                  </td>
-                  <td className="border border-border px-3 py-2 font-mono">
-                    boolean
-                  </td>
-                  <td className="border border-border px-3 py-2">false</td>
-                  <td className="border border-border px-3 py-2">
-                    Change the default rendered element.
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div>
-          <h4 className="font-medium mb-2">Checkbox.Indicator</h4>
-          <div className="text-sm text-muted-foreground mb-2">
-            Renders when the checkbox is in a checked or indeterminate state.
-            You can style this element directly, or you can use it as a wrapper
-            to put an icon into, or both.
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm border-collapse border border-border">
-              <thead>
-                <tr className="border-b border-border bg-muted/50">
-                  <th className="border border-border px-3 py-2 text-left">
-                    Prop
-                  </th>
-                  <th className="border border-border px-3 py-2 text-left">
-                    Type
-                  </th>
-                  <th className="border border-border px-3 py-2 text-left">
-                    Default
-                  </th>
-                  <th className="border border-border px-3 py-2 text-left">
-                    Description
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="border border-border px-3 py-2 font-mono">
-                    asChild
-                  </td>
-                  <td className="border border-border px-3 py-2 font-mono">
-                    boolean
-                  </td>
-                  <td className="border border-border px-3 py-2">false</td>
-                  <td className="border border-border px-3 py-2">
-                    Change the default rendered element.
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-border px-3 py-2 font-mono">
-                    forceMount
-                  </td>
-                  <td className="border border-border px-3 py-2 font-mono">
-                    boolean
-                  </td>
-                  <td className="border border-border px-3 py-2">false</td>
-                  <td className="border border-border px-3 py-2">
-                    Used to force mounting when more control is needed.
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div>
-          <h4 className="font-medium mb-2">Data Attributes</h4>
-          <div className="text-sm text-muted-foreground mb-2">
-            Available data attributes for styling different states.
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm border-collapse border border-border">
-              <thead>
-                <tr className="border-b border-border bg-muted/50">
-                  <th className="border border-border px-3 py-2 text-left">
-                    Attribute
-                  </th>
-                  <th className="border border-border px-3 py-2 text-left">
-                    Values
-                  </th>
-                  <th className="border border-border px-3 py-2 text-left">
-                    Description
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="border border-border px-3 py-2 font-mono">
-                    data-state
-                  </td>
-                  <td className="border border-border px-3 py-2 font-mono">
-                    "checked" | "unchecked" | "indeterminate"
-                  </td>
-                  <td className="border border-border px-3 py-2">
-                    The current checked state of the checkbox.
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-border px-3 py-2 font-mono">
-                    data-disabled
-                  </td>
-                  <td className="border border-border px-3 py-2 font-mono">
-                    Present when disabled
-                  </td>
-                  <td className="border border-border px-3 py-2">
-                    Present when the checkbox is disabled.
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Complete API reference with all props and data attributes.",
       },
     },
   },
