@@ -1,4 +1,4 @@
-import { AppHeader } from '@/components/AppHeader';
+import { AppTopbar } from '@/components/layout/app-topbar';
 import { Badge } from '@/components/ui/badge/badge';
 import { createFileRoute } from '@tanstack/react-router';
 import { ExternalLink } from 'lucide-react';
@@ -17,7 +17,7 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   return (
     <>
-      <AppHeader />
+      <AppTopbar />
       <main className="flex-1 overflow-auto p-6">
         <div className="space-y-6">
           <div>
