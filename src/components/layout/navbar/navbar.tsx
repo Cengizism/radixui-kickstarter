@@ -43,8 +43,10 @@ const NAVBAR_KEYBOARD_SHORTCUT = "b";
 type NavbarContextProps = {
   state: "expanded" | "collapsed";
   open: boolean;
+  // eslint-disable-next-line no-unused-vars
   setOpen: (value: boolean | ((prev: boolean) => boolean)) => void;
   openMobile: boolean;
+  // eslint-disable-next-line no-unused-vars
   setOpenMobile: (open: boolean) => void;
   isMobile: boolean;
   toggleNavbar: () => void;
@@ -71,6 +73,7 @@ function NavbarProvider({
 }: React.ComponentProps<"div"> & {
   defaultOpen?: boolean;
   open?: boolean;
+  // eslint-disable-next-line no-unused-vars
   onOpenChange?: (openState: boolean) => void;
 }) {
   const isMobile = useIsMobile();
@@ -79,6 +82,7 @@ function NavbarProvider({
   const [_open, _setOpen] = React.useState(defaultOpen);
   const open = openProp ?? _open;
   const setOpen = React.useCallback(
+    // eslint-disable-next-line no-unused-vars
     (value: boolean | ((prev: boolean) => boolean)) => {
       const finalState = typeof value === "function" ? value(open) : value;
 
