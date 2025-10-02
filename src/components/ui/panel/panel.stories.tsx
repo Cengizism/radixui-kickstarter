@@ -48,16 +48,6 @@ const meta = {
   },
   tags: ["autodocs"],
   argTypes: {
-    side: {
-      control: "select",
-      options: ["left", "right"],
-      description: "The side placement of the panel",
-      table: {
-        category: "Layout Props",
-        type: { summary: '"left" | "right"' },
-        defaultValue: { summary: '"left"' },
-      },
-    },
     className: {
       control: "text",
       description: "Additional CSS classes to apply to the panel",
@@ -73,21 +63,20 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {
-    side: "left",
-  },
   render: (args) => (
     <div className="h-[600px] w-[300px] border rounded-lg overflow-hidden">
       <Panel {...args}>
         <PanelHeader>
           <div className="flex items-center gap-2 p-2">
             <div className="size-6 rounded bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-xs">P</span>
+              <span className="text-primary-foreground font-bold text-xs">
+                P
+              </span>
             </div>
             <span className="font-semibold">Panel Demo</span>
           </div>
         </PanelHeader>
-        
+
         <PanelContent>
           <PanelGroup>
             <PanelGroupLabel>Navigation</PanelGroupLabel>
@@ -130,7 +119,7 @@ export const WithSearch: Story = {
             <PanelInput placeholder="Search..." />
           </div>
         </PanelHeader>
-        
+
         <PanelContent>
           <PanelMenu>
             <PanelMenuItem>
@@ -297,7 +286,9 @@ export const CompleteExample: Story = {
         <PanelHeader>
           <div className="flex items-center gap-2 p-2">
             <div className="size-8 rounded bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">A</span>
+              <span className="text-primary-foreground font-bold text-sm">
+                A
+              </span>
             </div>
             <div className="flex-1">
               <h1 className="font-semibold text-sm">My App</h1>
@@ -308,9 +299,9 @@ export const CompleteExample: Story = {
             <PanelInput placeholder="Search files..." />
           </div>
         </PanelHeader>
-        
+
         <PanelSeparator />
-        
+
         <PanelContent>
           <PanelGroup>
             <PanelGroupLabel>
@@ -383,9 +374,9 @@ export const CompleteExample: Story = {
             </PanelGroupContent>
           </PanelGroup>
         </PanelContent>
-        
+
         <PanelSeparator />
-        
+
         <PanelFooter>
           <div className="flex items-center gap-2 p-2">
             <div className="size-6 rounded-full bg-muted flex items-center justify-center">
@@ -393,7 +384,9 @@ export const CompleteExample: Story = {
             </div>
             <div className="flex-1 min-w-0">
               <p className="font-medium text-xs truncate">John Doe</p>
-              <p className="text-muted-foreground text-xs truncate">john@example.com</p>
+              <p className="text-muted-foreground text-xs truncate">
+                john@example.com
+              </p>
             </div>
             <PanelMenuAction>
               <Settings className="size-4" />

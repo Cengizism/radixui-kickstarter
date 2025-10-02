@@ -183,7 +183,7 @@ function Navbar({
         style={{ width: "var(--navbar-width)" }}
         {...props}
       >
-        <Panel side={side}>{children}</Panel>
+        <Panel>{children}</Panel>
       </div>
     );
   }
@@ -209,7 +209,7 @@ function Navbar({
             <SheetDescription>Displays the mobile navigation.</SheetDescription>
           </SheetHeader>
           <div className="flex h-full w-full flex-col">
-            <Panel side={side}>{children}</Panel>
+            <Panel>{children}</Panel>
           </div>
         </SheetContent>
       </Sheet>
@@ -275,7 +275,7 @@ function Navbar({
           data-slot="navbar-inner"
           className="bg-sidebar border-r border-sidebar-border flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:shadow-sm"
         >
-          <Panel side={side}>{children}</Panel>
+          <Panel>{children}</Panel>
         </div>
       </div>
     </div>

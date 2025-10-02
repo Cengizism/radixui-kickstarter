@@ -7,18 +7,10 @@ import { Slot } from 'radix-ui';
 import { cva, type VariantProps } from "class-variance-authority";
 
 // Basic Panel Component (simplified sidebar without advanced features)
-function Panel({
-  side = "left",
-  className,
-  children,
-  ...props
-}: React.ComponentProps<"div"> & {
-  side?: "left" | "right";
-}) {
+function Panel({ className, children, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="panel"
-      data-side={side}
       className={cn(
         "bg-sidebar text-sidebar-foreground flex h-full w-full flex-col",
         className
