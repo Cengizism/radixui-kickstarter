@@ -1,0 +1,391 @@
+import * as React from 'react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { PanelLeft } from 'lucide-react';
+import { TooltipProvider } from '@/components/ui/tooltip';
+import { useIsMobile } from '@/components/ui/use-mobile';
+import {
+  Panel,
+  PanelContent,
+  PanelFooter,
+  PanelGroup,
+  PanelGroupAction,
+  PanelGroupContent,
+  PanelGroupLabel,
+  PanelHeader,
+  PanelInput,
+  PanelMenu,
+  PanelMenuAction,
+  PanelMenuBadge,
+  PanelMenuButton,
+  PanelMenuItem,
+  PanelMenuSkeleton,
+  PanelMenuSub,
+  PanelMenuSubButton,
+  PanelMenuSubItem,
+  PanelSeparator,
+} from "@/components/ui/panel";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+
+const NAVBAR_COOKIE_NAME = "navbar_state";
+const NAVBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
+const NAVBAR_WIDTH = "16rem";
+const NAVBAR_WIDTH_MOBILE = "18rem";
+const NAVBAR_WIDTH_ICON = "3rem";
+const NAVBAR_KEYBOARD_SHORTCUT = "b";
+
+type NavbarContextProps = {
+  state: "expanded" | "collapsed";
+  open: boolean;
+  setOpen: (value: boolean | ((prev: boolean) => boolean)) => void;
+  openMobile: boolean;
+  setOpenMobile: (open: boolean) => void;
+  isMobile: boolean;
+  toggleNavbar: () => void;
+};
+
+const NavbarContext = React.createContext<NavbarContextProps | null>(null);
+
+function useNavbar() {
+  const context = React.useContext(NavbarContext);
+  if (!context) {
+    throw new Error("useNavbar must be used within a NavbarProvider.");
+  }
+  return context;
+}
+
+function NavbarProvider({
+  defaultOpen = true,
+  open: openProp,
+  onOpenChange: setOpenProp,
+  className,
+  style,
+  children,
+  ...props
+}: React.ComponentProps<"div"> & {
+  defaultOpen?: boolean;
+  open?: boolean;
+  onOpenChange?: (openState: boolean) => void;
+}) {
+  const isMobile = useIsMobile();
+  const [openMobile, setOpenMobile] = React.useState(false);
+
+  const [_open, _setOpen] = React.useState(defaultOpen);
+  const open = openProp ?? _open;
+  const setOpen = React.useCallback(
+    (value: boolean | ((prev: boolean) => boolean)) => {
+      const finalState = typeof value === "function" ? value(open) : value;
+
+      if (setOpenProp) {
+        setOpenProp(finalState);
+      } else {
+        _setOpen(finalState);
+      }
+
+      // Set cookie to keep navbar state
+      document.cookie = `${NAVBAR_COOKIE_NAME}=${finalState}; path=/; max-age=${NAVBAR_COOKIE_MAX_AGE}`;
+    },
+    [setOpenProp, open]
+  );
+
+  const toggleNavbar = React.useCallback(() => {
+    return isMobile ? setOpenMobile((open) => !open) : setOpen((open) => !open);
+  }, [isMobile, setOpen, setOpenMobile]);
+
+  // Keyboard shortcut to toggle navbar
+  React.useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (
+        event.key === NAVBAR_KEYBOARD_SHORTCUT &&
+        (event.metaKey || event.ctrlKey)
+      ) {
+        event.preventDefault();
+        toggleNavbar();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [toggleNavbar]);
+
+  const state = open ? "expanded" : "collapsed";
+
+  const contextValue = React.useMemo<NavbarContextProps>(
+    () => ({
+      state,
+      open,
+      setOpen,
+      isMobile,
+      openMobile,
+      setOpenMobile,
+      toggleNavbar,
+    }),
+    [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleNavbar]
+  );
+
+  return (
+    <NavbarContext.Provider value={contextValue}>
+      <TooltipProvider delayDuration={0}>
+        <div
+          data-slot="navbar-wrapper"
+          style={
+            {
+              "--navbar-width": NAVBAR_WIDTH,
+              "--navbar-width-icon": NAVBAR_WIDTH_ICON,
+              ...style,
+            } as React.CSSProperties
+          }
+          className={cn(
+            "group/navbar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-screen w-full",
+            className
+          )}
+          {...props}
+        >
+          {children}
+        </div>
+      </TooltipProvider>
+    </NavbarContext.Provider>
+  );
+}
+
+function Navbar({
+  side = "left",
+  variant = "navbar",
+  collapsible = "offcanvas",
+  className,
+  children,
+  ...props
+}: React.ComponentProps<"div"> & {
+  side?: "left" | "right";
+  variant?: "navbar" | "floating" | "inset";
+  collapsible?: "offcanvas" | "icon" | "none";
+}) {
+  const { isMobile, state, openMobile, setOpenMobile } = useNavbar();
+
+  if (collapsible === "none") {
+    return (
+      <div
+        data-slot="navbar"
+        className={cn(
+          "bg-sidebar text-sidebar-foreground flex h-full flex-col",
+          className
+        )}
+        style={{ width: "var(--navbar-width)" }}
+        {...props}
+      >
+        <Panel side={side}>{children}</Panel>
+      </div>
+    );
+  }
+
+  if (isMobile) {
+    return (
+      <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
+        <SheetContent
+          data-navbar="navbar"
+          data-slot="navbar"
+          data-mobile="true"
+          className="bg-sidebar text-sidebar-foreground p-0 [&>button]:hidden"
+          style={
+            {
+              width: "var(--navbar-width)",
+              "--navbar-width": NAVBAR_WIDTH_MOBILE,
+            } as React.CSSProperties
+          }
+          side={side}
+        >
+          <SheetHeader className="sr-only">
+            <SheetTitle>Navigation</SheetTitle>
+            <SheetDescription>Displays the mobile navigation.</SheetDescription>
+          </SheetHeader>
+          <div className="flex h-full w-full flex-col">
+            <Panel side={side}>{children}</Panel>
+          </div>
+        </SheetContent>
+      </Sheet>
+    );
+  }
+
+  return (
+    <div
+      className="group peer text-sidebar-foreground block"
+      data-state={state}
+      data-collapsible={state === "collapsed" ? collapsible : ""}
+      data-variant={variant}
+      data-side={side}
+      data-slot="navbar"
+    >
+      {/* Navbar gap on desktop */}
+      <div
+        data-slot="navbar-gap"
+        className={cn(
+          "relative bg-transparent transition-[width] duration-200 ease-linear",
+          state === "collapsed" && collapsible === "offcanvas" ? "w-0" : "",
+          "group-data-[side=right]:rotate-180"
+        )}
+        style={{
+          width:
+            state === "collapsed"
+              ? collapsible === "offcanvas"
+                ? "0"
+                : "var(--navbar-width-icon)"
+              : "var(--navbar-width)",
+        }}
+      />
+      <div
+        data-slot="navbar-container"
+        className={cn(
+          "fixed inset-y-0 z-10 flex h-full transition-[left,right,width] duration-200 ease-linear",
+          side === "left"
+            ? state === "collapsed" && collapsible === "offcanvas"
+              ? "left-[calc(var(--navbar-width)*-1)]"
+              : "left-0"
+            : state === "collapsed" && collapsible === "offcanvas"
+              ? "right-[calc(var(--navbar-width)*-1)]"
+              : "right-0",
+          variant === "floating" || variant === "inset"
+            ? "p-2"
+            : "group-data-[side=left]:border-r group-data-[side=right]:border-l",
+          className
+        )}
+        style={{
+          width:
+            variant === "floating" || variant === "inset"
+              ? state === "collapsed"
+                ? "calc(var(--navbar-width-icon) + 1rem + 2px)"
+                : "var(--navbar-width)"
+              : state === "collapsed"
+                ? "var(--navbar-width-icon)"
+                : "var(--navbar-width)",
+        }}
+        {...props}
+      >
+        <div
+          data-navbar="navbar"
+          data-slot="navbar-inner"
+          className="bg-sidebar border-r border-sidebar-border flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:shadow-sm"
+        >
+          <Panel side={side}>{children}</Panel>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function NavbarTrigger({
+  className,
+  onClick,
+  ...props
+}: React.ComponentProps<typeof Button>) {
+  const { toggleNavbar } = useNavbar();
+
+  return (
+    <Button
+      data-navbar="trigger"
+      data-slot="navbar-trigger"
+      variant="ghost"
+      size="icon"
+      className={cn("size-7", className)}
+      onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+        onClick?.(event);
+        toggleNavbar();
+      }}
+      {...props}
+    >
+      <PanelLeft />
+      <span className="sr-only">Toggle Navigation</span>
+    </Button>
+  );
+}
+
+function NavbarRail({ className, ...props }: React.ComponentProps<"button">) {
+  const { toggleNavbar } = useNavbar();
+
+  return (
+    <button
+      data-navbar="rail"
+      data-slot="navbar-rail"
+      aria-label="Toggle Navigation"
+      tabIndex={-1}
+      onClick={toggleNavbar}
+      title="Toggle Navigation"
+      className={cn(
+        "hover:after:bg-sidebar-border absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear group-data-[side=left]:-right-4 group-data-[side=right]:left-0 after:absolute after:inset-y-0 after:left-1/2 after:w-[2px] sm:flex",
+        "in-data-[side=left]:cursor-w-resize in-data-[side=right]:cursor-e-resize",
+        "[[data-side=left][data-state=collapsed]_&]:cursor-e-resize [[data-side=right][data-state=collapsed]_&]:cursor-w-resize",
+        "hover:group-data-[collapsible=offcanvas]:bg-sidebar group-data-[collapsible=offcanvas]:translate-x-0 group-data-[collapsible=offcanvas]:after:left-full",
+        "[[data-side=left][data-collapsible=offcanvas]_&]:-right-2",
+        "[[data-side=right][data-collapsible=offcanvas]_&]:-left-2",
+        className
+      )}
+      {...props}
+    />
+  );
+}
+
+function NavbarInset({ className, ...props }: React.ComponentProps<"main">) {
+  return (
+    <main
+      data-slot="navbar-inset"
+      className={cn(
+        "bg-background relative flex w-full flex-1 flex-col",
+        "md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow-sm md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2",
+        className
+      )}
+      {...props}
+    />
+  );
+}
+
+// Navbar-specific wrappers for Panel components
+const NavbarContent = PanelContent;
+const NavbarHeader = PanelHeader;
+const NavbarFooter = PanelFooter;
+const NavbarSeparator = PanelSeparator;
+const NavbarGroup = PanelGroup;
+const NavbarGroupLabel = PanelGroupLabel;
+const NavbarGroupContent = PanelGroupContent;
+const NavbarGroupAction = PanelGroupAction;
+const NavbarMenu = PanelMenu;
+const NavbarMenuItem = PanelMenuItem;
+const NavbarMenuButton = PanelMenuButton;
+const NavbarMenuAction = PanelMenuAction;
+const NavbarMenuBadge = PanelMenuBadge;
+const NavbarMenuSkeleton = PanelMenuSkeleton;
+const NavbarMenuSub = PanelMenuSub;
+const NavbarMenuSubItem = PanelMenuSubItem;
+const NavbarMenuSubButton = PanelMenuSubButton;
+const NavbarInput = PanelInput;
+
+export {
+  Navbar,
+  NavbarContent,
+  NavbarFooter,
+  NavbarGroup,
+  NavbarGroupAction,
+  NavbarGroupContent,
+  NavbarGroupLabel,
+  NavbarHeader,
+  NavbarInput,
+  NavbarInset,
+  NavbarMenu,
+  NavbarMenuAction,
+  NavbarMenuBadge,
+  NavbarMenuButton,
+  NavbarMenuItem,
+  NavbarMenuSkeleton,
+  NavbarMenuSub,
+  NavbarMenuSubButton,
+  NavbarMenuSubItem,
+  NavbarProvider,
+  NavbarRail,
+  NavbarSeparator,
+  NavbarTrigger,
+  useNavbar,
+};
