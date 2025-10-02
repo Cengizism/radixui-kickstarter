@@ -282,15 +282,15 @@ function Navbar({
   );
 }
 
-function NavbarTrigger({
-  className,
-  onClick,
-  ...props
-}: React.ComponentProps<typeof Button>) {
+const NavbarTrigger = React.forwardRef<
+  React.ElementRef<typeof Button>,
+  React.ComponentProps<typeof Button>
+>(({ className, onClick, ...props }, ref) => {
   const { toggleNavbar } = useNavbar();
 
   return (
     <Button
+      ref={ref}
       data-navbar="trigger"
       data-slot="navbar-trigger"
       variant="ghost"
@@ -306,7 +306,9 @@ function NavbarTrigger({
       <span className="sr-only">Toggle Navigation</span>
     </Button>
   );
-}
+});
+
+NavbarTrigger.displayName = "NavbarTrigger";
 
 function NavbarRail({ className, ...props }: React.ComponentProps<"button">) {
   const { toggleNavbar } = useNavbar();
