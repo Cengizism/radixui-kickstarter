@@ -149,10 +149,7 @@ export const WithSubmenus: Story = {
       <Panel>
         <PanelContent>
           <PanelGroup>
-            <PanelGroupLabel>
-              <Folder className="size-4" />
-              Projects
-            </PanelGroupLabel>
+            <PanelGroupLabel>Projects</PanelGroupLabel>
             <PanelGroupContent>
               <PanelMenu>
                 <PanelMenuItem>
@@ -305,7 +302,6 @@ export const CompleteExample: Story = {
         <PanelContent>
           <PanelGroup>
             <PanelGroupLabel>
-              <Home className="size-4" />
               Main
               <PanelGroupAction>
                 <Plus className="size-4" />
@@ -340,10 +336,7 @@ export const CompleteExample: Story = {
           <PanelSeparator />
 
           <PanelGroup>
-            <PanelGroupLabel>
-              <Folder className="size-4" />
-              Projects
-            </PanelGroupLabel>
+            <PanelGroupLabel>Projects</PanelGroupLabel>
             <PanelGroupContent>
               <PanelMenu>
                 <PanelMenuItem>
