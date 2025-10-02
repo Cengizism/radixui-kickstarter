@@ -159,14 +159,12 @@ function NavbarProvider({
 }
 
 function Navbar({
-  side = "left",
   variant = "navbar",
   collapsible = "offcanvas",
   className,
   children,
   ...props
 }: React.ComponentProps<"div"> & {
-  side?: "left" | "right";
   variant?: "navbar" | "floating" | "inset";
   collapsible?: "offcanvas" | "icon" | "none";
 }) {
@@ -202,7 +200,7 @@ function Navbar({
               "--navbar-width": NAVBAR_WIDTH_MOBILE,
             } as React.CSSProperties
           }
-          side={side}
+          side="left"
         >
           <SheetHeader className="sr-only">
             <SheetTitle>Navigation</SheetTitle>
@@ -222,7 +220,7 @@ function Navbar({
       data-state={state}
       data-collapsible={state === "collapsed" ? collapsible : ""}
       data-variant={variant}
-      data-side={side}
+      data-side="left"
       data-slot="navbar"
     >
       {/* Navbar gap on desktop */}
@@ -230,8 +228,7 @@ function Navbar({
         data-slot="navbar-gap"
         className={cn(
           "relative bg-transparent transition-[width] duration-200 ease-linear",
-          state === "collapsed" && collapsible === "offcanvas" ? "w-0" : "",
-          "group-data-[side=right]:rotate-180"
+          state === "collapsed" && collapsible === "offcanvas" ? "w-0" : ""
         )}
         style={{
           width:
@@ -246,16 +243,10 @@ function Navbar({
         data-slot="navbar-container"
         className={cn(
           "fixed inset-y-0 z-10 flex h-full transition-[left,right,width] duration-200 ease-linear",
-          side === "left"
-            ? state === "collapsed" && collapsible === "offcanvas"
-              ? "left-[calc(var(--navbar-width)*-1)]"
-              : "left-0"
-            : state === "collapsed" && collapsible === "offcanvas"
-              ? "right-[calc(var(--navbar-width)*-1)]"
-              : "right-0",
-          variant === "floating" || variant === "inset"
-            ? "p-2"
-            : "group-data-[side=left]:border-r group-data-[side=right]:border-l",
+          state === "collapsed" && collapsible === "offcanvas"
+            ? "left-[calc(var(--navbar-width)*-1)]"
+            : "left-0",
+          variant === "floating" || variant === "inset" ? "p-2" : "border-r",
           className
         )}
         style={{
@@ -322,12 +313,11 @@ function NavbarRail({ className, ...props }: React.ComponentProps<"button">) {
       onClick={toggleNavbar}
       title="Toggle Navigation"
       className={cn(
-        "hover:after:bg-sidebar-border absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear group-data-[side=left]:-right-4 group-data-[side=right]:left-0 after:absolute after:inset-y-0 after:left-1/2 after:w-[2px] sm:flex",
-        "in-data-[side=left]:cursor-w-resize in-data-[side=right]:cursor-e-resize",
-        "[[data-side=left][data-state=collapsed]_&]:cursor-e-resize [[data-side=right][data-state=collapsed]_&]:cursor-w-resize",
+        "hover:after:bg-sidebar-border absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear -right-4 after:absolute after:inset-y-0 after:left-1/2 after:w-[2px] sm:flex",
+        "cursor-w-resize",
+        "[data-state=collapsed]_&:cursor-e-resize",
         "hover:group-data-[collapsible=offcanvas]:bg-sidebar group-data-[collapsible=offcanvas]:translate-x-0 group-data-[collapsible=offcanvas]:after:left-full",
-        "[[data-side=left][data-collapsible=offcanvas]_&]:-right-2",
-        "[[data-side=right][data-collapsible=offcanvas]_&]:-left-2",
+        "[data-collapsible=offcanvas]_&:-right-2",
         className
       )}
       {...props}

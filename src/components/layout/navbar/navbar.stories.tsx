@@ -36,10 +36,6 @@ const meta = {
     layout: "fullscreen",
   },
   argTypes: {
-    side: {
-      control: "select",
-      options: ["left", "right"],
-    },
     variant: {
       control: "select",
       options: ["navbar", "floating", "inset"],
@@ -224,7 +220,6 @@ export const Default: Story = {
     </NavbarProvider>
   ),
   args: {
-    side: "left",
     variant: "navbar",
     collapsible: "offcanvas",
   },
@@ -243,14 +238,6 @@ export const Inset: Story = {
   args: {
     ...Default.args,
     variant: "inset",
-  },
-};
-
-export const RightSide: Story = {
-  ...Default,
-  args: {
-    ...Default.args,
-    side: "right",
   },
 };
 
