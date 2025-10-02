@@ -1,7 +1,7 @@
-import { AppTopbar } from '@/components/layout/app-topbar';
 import { Button } from '@/components/ui/button';
 import { createFileRoute } from '@tanstack/react-router';
 import { Link } from '@tanstack/react-router';
+import { Topbar } from '@/components/layout/topbar';
 import {
   Card,
   CardContent,
@@ -17,7 +17,7 @@ export const Route = createFileRoute("/$")({
 function NotFoundPage() {
   return (
     <>
-      <AppTopbar />
+      <Topbar />
       <main className="flex-1 overflow-auto p-6">
         <div className="flex items-center justify-center min-h-[400px]">
           <Card className="w-full max-w-md">

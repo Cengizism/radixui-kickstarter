@@ -1,5 +1,4 @@
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { AppTopbar } from '@/components/layout/app-topbar';
 import { Badge } from '@/components/ui/badge/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox/checkbox';
@@ -7,6 +6,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Input } from '@/components/ui/input/input';
 import { Label } from '@/components/ui/label/label';
 import { Textarea } from '@/components/ui/textarea/textarea';
+import { Topbar } from '@/components/layout/topbar';
 import { useState } from 'react';
 import {
   Card,
@@ -68,7 +68,7 @@ function AdvancedRoute() {
 
   return (
     <>
-      <AppTopbar />
+      <Topbar />
       <main className="flex-1 overflow-auto p-6">
         <div className="space-y-6">
           <div className="flex items-center justify-between">

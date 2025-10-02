@@ -1,8 +1,8 @@
-import { AppTopbar } from '@/components/layout/app-topbar';
 import { Badge } from '@/components/ui/badge/badge';
 import { Button } from '@/components/ui/button';
 import { createFileRoute } from '@tanstack/react-router';
 import { Progress } from '@/components/ui/progress/progress';
+import { Topbar } from '@/components/layout/topbar';
 import {
   Tabs,
   TabsContent,
@@ -34,7 +34,7 @@ export const Route = createFileRoute("/templates/dashboard")({
 function DashboardRoute() {
   return (
     <>
-      <AppTopbar />
+      <Topbar />
       <main className="flex-1 overflow-auto p-6">
         <div className="space-y-6">
           {/* Status Cards */}
