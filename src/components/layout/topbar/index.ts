@@ -1,1 +1,1 @@
-export { Topbar } from "./topbar";
+export { Topbar, TopbarActions, TopbarTitle } from "./topbar";

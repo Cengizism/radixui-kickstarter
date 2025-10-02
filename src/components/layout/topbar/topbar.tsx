@@ -1,12 +1,46 @@
-import { NavbarTrigger } from '@/components/layout/navbar';
+import React from 'react';
+import { cn } from '@/lib/utils';
 
-export function Topbar() {
+// Root Topbar Container
+function Topbar({ className, ...props }: React.ComponentProps<"header">) {
   return (
-    <header className="flex h-14 items-center gap-2 border-b bg-background px-4">
-      <NavbarTrigger />
-      <div className="flex flex-1 items-center gap-4">
-        <h1 className="text-lg font-semibold">RadixUI React Kickstarter</h1>
-      </div>
-    </header>
+    <header
+      className={cn(
+        "flex h-14 items-center gap-2 border-b bg-background pl-4 pr-2",
+        className
+      )}
+      data-slot="topbar"
+      {...props}
+    />
   );
 }
+
+// Topbar Title
+function TopbarTitle({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      className={cn("flex flex-1 items-center gap-4", className)}
+      data-slot="topbar-title"
+      {...props}
+    >
+      <h1 className="text-lg font-semibold">{children}</h1>
+    </div>
+  );
+}
+
+// Topbar Actions (button container)
+function TopbarActions({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      className={cn("flex items-center gap-0", className)}
+      data-slot="topbar-actions"
+      {...props}
+    />
+  );
+}
+
+export { Topbar, TopbarActions, TopbarTitle };

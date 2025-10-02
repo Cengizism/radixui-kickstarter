@@ -1,7 +1,7 @@
 import { Badge } from '@/components/ui/badge/badge';
 import { createFileRoute } from '@tanstack/react-router';
 import { ExternalLink } from 'lucide-react';
-import { Topbar } from '@/components/layout/topbar';
+import { Topbar, TopbarTitle } from '@/components/layout/topbar';
 import {
   Card,
   CardContent,
@@ -17,7 +17,9 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   return (
     <>
-      <Topbar />
+      <Topbar>
+        <TopbarTitle>Radix UI Components</TopbarTitle>
+      </Topbar>
       <main className="flex-1 overflow-auto p-6">
         <div className="space-y-6">
           <div>

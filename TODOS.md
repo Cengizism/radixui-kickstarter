@@ -1,6 +1,5 @@
 # TODOs
 
-- AppHeader
 - AppFooter
 - Dark mode support
 - Popover
@@ -9,4 +8,3 @@
 - Form library
 - Next themes
 - Card variations
-- useMobile
