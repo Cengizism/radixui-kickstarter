@@ -19,7 +19,6 @@ export {
   NavbarMenuSubButton,
   NavbarMenuSubItem,
   NavbarProvider,
-  NavbarRail,
   NavbarSeparator,
   NavbarTrigger,
   useNavbar,

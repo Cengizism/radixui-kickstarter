@@ -146,7 +146,7 @@ function NavbarProvider({
             } as React.CSSProperties
           }
           className={cn(
-            "group/navbar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-screen w-full",
+            "group/navbar-wrapper flex min-h-screen w-full",
             className
           )}
           {...props}
@@ -159,13 +159,11 @@ function NavbarProvider({
 }
 
 function Navbar({
-  variant = "navbar",
   collapsible = "offcanvas",
   className,
   children,
   ...props
 }: React.ComponentProps<"div"> & {
-  variant?: "navbar" | "floating" | "inset";
   collapsible?: "offcanvas" | "icon" | "none";
 }) {
   const { isMobile, state, openMobile, setOpenMobile } = useNavbar();
@@ -219,7 +217,6 @@ function Navbar({
       className="group peer text-sidebar-foreground block"
       data-state={state}
       data-collapsible={state === "collapsed" ? collapsible : ""}
-      data-variant={variant}
       data-side="left"
       data-slot="navbar"
     >
@@ -246,25 +243,20 @@ function Navbar({
           state === "collapsed" && collapsible === "offcanvas"
             ? "left-[calc(var(--navbar-width)*-1)]"
             : "left-0",
-          variant === "floating" || variant === "inset" ? "p-2" : "border-r",
           className
         )}
         style={{
           width:
-            variant === "floating" || variant === "inset"
-              ? state === "collapsed"
-                ? "calc(var(--navbar-width-icon) + 1rem + 2px)"
-                : "var(--navbar-width)"
-              : state === "collapsed"
-                ? "var(--navbar-width-icon)"
-                : "var(--navbar-width)",
+            state === "collapsed"
+              ? "var(--navbar-width-icon)"
+              : "var(--navbar-width)",
         }}
         {...props}
       >
         <div
           data-navbar="navbar"
           data-slot="navbar-inner"
-          className="bg-sidebar border-r border-sidebar-border flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:shadow-sm"
+          className="bg-sidebar border-r border-sidebar-border flex h-full w-full flex-col"
         >
           <Panel>{children}</Panel>
         </div>
@@ -301,37 +293,12 @@ const NavbarTrigger = React.forwardRef<
 
 NavbarTrigger.displayName = "NavbarTrigger";
 
-function NavbarRail({ className, ...props }: React.ComponentProps<"button">) {
-  const { toggleNavbar } = useNavbar();
-
-  return (
-    <button
-      data-navbar="rail"
-      data-slot="navbar-rail"
-      aria-label="Toggle Navigation"
-      tabIndex={-1}
-      onClick={toggleNavbar}
-      title="Toggle Navigation"
-      className={cn(
-        "hover:after:bg-sidebar-border absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear -right-4 after:absolute after:inset-y-0 after:left-1/2 after:w-[2px] sm:flex",
-        "cursor-w-resize",
-        "[data-state=collapsed]_&:cursor-e-resize",
-        "hover:group-data-[collapsible=offcanvas]:bg-sidebar group-data-[collapsible=offcanvas]:translate-x-0 group-data-[collapsible=offcanvas]:after:left-full",
-        "[data-collapsible=offcanvas]_&:-right-2",
-        className
-      )}
-      {...props}
-    />
-  );
-}
-
 function NavbarInset({ className, ...props }: React.ComponentProps<"main">) {
   return (
     <main
       data-slot="navbar-inset"
       className={cn(
         "bg-background relative flex w-full flex-1 flex-col",
-        "md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow-sm md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2",
         className
       )}
       {...props}
@@ -380,7 +347,6 @@ export {
   NavbarMenuSubButton,
   NavbarMenuSubItem,
   NavbarProvider,
-  NavbarRail,
   NavbarSeparator,
   NavbarTrigger,
   useNavbar,
