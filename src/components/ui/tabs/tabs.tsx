@@ -49,7 +49,7 @@ Tabs.displayName = TabsPrimitive.Root.displayName;
 const tabsListVariants = cva("inline-flex items-center justify-center", {
   variants: {
     variant: {
-      default: "rounded-lg bg-muted p-1 text-muted-foreground",
+      default: "rounded-lg bg-muted p-0.5 text-muted-foreground",
       outline: "border border-border bg-background",
       underline: "border-b border-border bg-transparent",
       pills: "gap-2 bg-transparent",
