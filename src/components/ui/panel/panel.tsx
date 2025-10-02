@@ -6,19 +6,44 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Slot } from 'radix-ui';
 import { cva, type VariantProps } from "class-variance-authority";
 
+type PanelContextProps = {
+  isCollapsed: boolean;
+};
+
+const PanelContext = React.createContext<PanelContextProps | null>(null);
+
+function usePanel() {
+  const context = React.useContext(PanelContext);
+  return context || { isCollapsed: false };
+}
+
 // Basic Panel Component (simplified sidebar without advanced features)
-function Panel({ className, children, ...props }: React.ComponentProps<"div">) {
+function Panel({
+  className,
+  children,
+  isCollapsed = false,
+  ...props
+}: React.ComponentProps<"div"> & {
+  isCollapsed?: boolean;
+}) {
+  const contextValue = React.useMemo<PanelContextProps>(
+    () => ({ isCollapsed }),
+    [isCollapsed]
+  );
+
   return (
-    <div
-      data-slot="panel"
-      className={cn(
-        "bg-sidebar text-sidebar-foreground flex h-full w-full flex-col",
-        className
-      )}
-      {...props}
-    >
-      {children}
-    </div>
+    <PanelContext.Provider value={contextValue}>
+      <div
+        data-slot="panel"
+        className={cn(
+          "bg-sidebar text-sidebar-foreground flex h-full w-full flex-col",
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </div>
+    </PanelContext.Provider>
   );
 }
 
@@ -97,6 +122,11 @@ function PanelGroupLabel({
   ...props
 }: React.ComponentProps<"div"> & { asChild?: boolean }) {
   const Comp = asChild ? Slot.Slot : "div";
+  const { isCollapsed } = usePanel();
+
+  if (isCollapsed) {
+    return null;
+  }
 
   return (
     <Comp
@@ -191,21 +221,38 @@ function PanelMenuButton({
   variant = "default",
   size = "default",
   className,
+  children,
   ...props
 }: React.ComponentProps<"button"> & {
   asChild?: boolean;
   isActive?: boolean;
 } & VariantProps<typeof panelMenuButtonVariants>) {
   const Comp = asChild ? Slot.Slot : "button";
+  const { isCollapsed } = usePanel();
+
+  // When collapsed, only show the first child (icon) and hide text
+  const processedChildren = React.useMemo(() => {
+    if (!isCollapsed || !children) return children;
+
+    const childArray = React.Children.toArray(children);
+    // Return only the first child (typically the icon)
+    return childArray[0];
+  }, [isCollapsed, children]);
 
   return (
     <Comp
       data-slot="panel-menu-button"
       data-size={size}
       data-active={isActive}
-      className={cn(panelMenuButtonVariants({ variant, size }), className)}
+      className={cn(
+        panelMenuButtonVariants({ variant, size }),
+        isCollapsed && "justify-center px-2",
+        className
+      )}
       {...props}
-    />
+    >
+      {processedChildren}
+    </Comp>
   );
 }
 
@@ -359,4 +406,5 @@ export {
   PanelMenuSubItem,
   PanelSeparator,
   panelMenuButtonVariants,
+  usePanel,
 };

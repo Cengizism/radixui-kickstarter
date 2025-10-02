@@ -37,7 +37,7 @@ const NAVBAR_COOKIE_NAME = "navbar_state";
 const NAVBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
 const NAVBAR_WIDTH = "16rem";
 const NAVBAR_WIDTH_MOBILE = "18rem";
-const NAVBAR_WIDTH_ICON = "3rem";
+const NAVBAR_WIDTH_ICON = "4rem";
 const NAVBAR_KEYBOARD_SHORTCUT = "b";
 
 type NavbarContextProps = {
@@ -50,6 +50,7 @@ type NavbarContextProps = {
   setOpenMobile: (open: boolean) => void;
   isMobile: boolean;
   toggleNavbar: () => void;
+  isCollapsed: boolean;
 };
 
 const NavbarContext = React.createContext<NavbarContextProps | null>(null);
@@ -129,6 +130,7 @@ function NavbarProvider({
       openMobile,
       setOpenMobile,
       toggleNavbar,
+      isCollapsed: state === "collapsed",
     }),
     [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleNavbar]
   );
@@ -166,7 +168,8 @@ function Navbar({
 }: React.ComponentProps<"div"> & {
   collapsible?: "offcanvas" | "icon" | "none";
 }) {
-  const { isMobile, state, openMobile, setOpenMobile } = useNavbar();
+  const { isMobile, state, openMobile, setOpenMobile, isCollapsed } =
+    useNavbar();
 
   if (collapsible === "none") {
     return (
@@ -258,7 +261,9 @@ function Navbar({
           data-slot="navbar-inner"
           className="bg-sidebar border-r border-sidebar-border flex h-full w-full flex-col"
         >
-          <Panel>{children}</Panel>
+          <Panel isCollapsed={isCollapsed && collapsible === "icon"}>
+            {children}
+          </Panel>
         </div>
       </div>
     </div>
