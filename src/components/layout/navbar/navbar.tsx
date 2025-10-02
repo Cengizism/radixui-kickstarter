@@ -24,6 +24,7 @@ import {
   PanelMenuSubButton,
   PanelMenuSubItem,
   PanelSeparator,
+  usePanel,
 } from "@/components/ui/panel";
 import {
   Sheet,
@@ -313,8 +314,45 @@ function NavbarInset({ className, ...props }: React.ComponentProps<"main">) {
 
 // Navbar-specific wrappers for Panel components
 const NavbarContent = PanelContent;
-const NavbarHeader = PanelHeader;
-const NavbarFooter = PanelFooter;
+
+// Flexible components that support both plain children and render props
+const NavbarHeader = React.forwardRef<
+  React.ElementRef<typeof PanelHeader>,
+  React.ComponentPropsWithoutRef<typeof PanelHeader> & {
+    children?:
+      | React.ReactNode
+      // eslint-disable-next-line no-unused-vars
+      | ((props: { isCollapsed: boolean }) => React.ReactNode);
+  }
+>(({ children, ...props }, ref) => {
+  const { isCollapsed } = usePanel();
+
+  return (
+    <PanelHeader ref={ref} {...props}>
+      {typeof children === "function" ? children({ isCollapsed }) : children}
+    </PanelHeader>
+  );
+});
+NavbarHeader.displayName = "NavbarHeader";
+
+const NavbarFooter = React.forwardRef<
+  React.ElementRef<typeof PanelFooter>,
+  React.ComponentPropsWithoutRef<typeof PanelFooter> & {
+    children?:
+      | React.ReactNode
+      // eslint-disable-next-line no-unused-vars
+      | ((props: { isCollapsed: boolean }) => React.ReactNode);
+  }
+>(({ children, ...props }, ref) => {
+  const { isCollapsed } = usePanel();
+
+  return (
+    <PanelFooter ref={ref} {...props}>
+      {typeof children === "function" ? children({ isCollapsed }) : children}
+    </PanelFooter>
+  );
+});
+NavbarFooter.displayName = "NavbarFooter";
 const NavbarSeparator = PanelSeparator;
 const NavbarGroup = PanelGroup;
 const NavbarGroupLabel = PanelGroupLabel;

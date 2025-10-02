@@ -1,6 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { usePanel } from '@/components/ui/panel';
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import {
   Navbar,
@@ -30,67 +29,6 @@ import {
   HelpCircle,
   Moon,
 } from "lucide-react";
-
-// Collapsed-aware components for the IconCollapsible story
-function CollapsedAwareHeaderContent() {
-  const { isCollapsed } = usePanel();
-
-  return (
-    <div
-      className={`flex items-center gap-2 ${isCollapsed ? "p-2 justify-center" : "p-4"}`}
-    >
-      <div className="size-8 rounded bg-primary flex items-center justify-center">
-        <span className="text-primary-foreground font-bold text-sm">A</span>
-      </div>
-      {!isCollapsed && (
-        <div className="flex-1">
-          <h1 className="font-semibold">My Application</h1>
-          <p className="text-muted-foreground text-sm">Dashboard v2.1</p>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function CollapsedAwareFooterContent() {
-  const { isCollapsed } = usePanel();
-
-  return (
-    <div
-      className={`flex gap-2 p-4 ${isCollapsed ? "flex-col items-center" : "items-center"}`}
-    >
-      <Avatar className="size-8">
-        <AvatarImage src="https://github.com/shadcn.png" />
-        <AvatarFallback>JD</AvatarFallback>
-      </Avatar>
-      {isCollapsed ? (
-        <>
-          <Button size="sm" variant="ghost" className="size-8 p-0">
-            <Settings className="size-4" />
-          </Button>
-          <Button size="sm" variant="ghost" className="size-8 p-0">
-            <Moon className="size-4" />
-          </Button>
-        </>
-      ) : (
-        <>
-          <div className="flex-1 min-w-0">
-            <p className="font-medium text-sm truncate">John Doe</p>
-            <p className="text-muted-foreground text-xs truncate">
-              john@example.com
-            </p>
-          </div>
-          <Button size="sm" variant="ghost">
-            <Settings className="size-4" />
-          </Button>
-          <Button size="sm" variant="ghost">
-            <Moon className="size-4" />
-          </Button>
-        </>
-      )}
-    </div>
-  );
-}
 
 const meta = {
   title: "Layout/Navbar",
@@ -315,7 +253,27 @@ export const IconCollapsible: Story = {
       <div className="flex h-screen w-full">
         <Navbar {...args}>
           <NavbarHeader>
-            <CollapsedAwareHeaderContent />
+            {
+              (({ isCollapsed }: { isCollapsed: boolean }) => (
+                <div
+                  className={`flex items-center gap-2 ${isCollapsed ? "p-2 justify-center" : "p-4"}`}
+                >
+                  <div className="size-8 rounded bg-primary flex items-center justify-center">
+                    <span className="text-primary-foreground font-bold text-sm">
+                      A
+                    </span>
+                  </div>
+                  {!isCollapsed && (
+                    <div className="flex-1">
+                      <h1 className="font-semibold">My Application</h1>
+                      <p className="text-muted-foreground text-sm">
+                        Dashboard v2.1
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )) as unknown as React.ReactElement
+            }
           </NavbarHeader>
 
           <NavbarContent className="flex-1 p-2">
@@ -391,7 +349,43 @@ export const IconCollapsible: Story = {
           </NavbarContent>
 
           <NavbarFooter>
-            <CollapsedAwareFooterContent />
+            {
+              (({ isCollapsed }: { isCollapsed: boolean }) => (
+                <div
+                  className={`flex gap-2 p-4 ${isCollapsed ? "flex-col items-center" : "items-center"}`}
+                >
+                  <Avatar className="size-8">
+                    <AvatarImage src="https://github.com/shadcn.png" />
+                    <AvatarFallback>JD</AvatarFallback>
+                  </Avatar>
+                  {isCollapsed ? (
+                    <>
+                      <Button size="sm" variant="ghost" className="size-8 p-0">
+                        <Settings className="size-4" />
+                      </Button>
+                      <Button size="sm" variant="ghost" className="size-8 p-0">
+                        <Moon className="size-4" />
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-sm truncate">John Doe</p>
+                        <p className="text-muted-foreground text-xs truncate">
+                          john@example.com
+                        </p>
+                      </div>
+                      <Button size="sm" variant="ghost">
+                        <Settings className="size-4" />
+                      </Button>
+                      <Button size="sm" variant="ghost">
+                        <Moon className="size-4" />
+                      </Button>
+                    </>
+                  )}
+                </div>
+              )) as unknown as React.ReactElement
+            }
           </NavbarFooter>
         </Navbar>
 
