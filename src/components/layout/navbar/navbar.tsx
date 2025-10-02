@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { PanelLeft } from 'lucide-react';
 import { TooltipProvider } from '@/components/ui/tooltip';
-import { useIsMobile } from '@/components/ui/use-mobile';
+import { useIsMobile } from '@/hooks/use-mobile';
 import {
   Panel,
   PanelContent,
