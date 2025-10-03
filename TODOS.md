@@ -2,7 +2,6 @@
 
 - AppFooter
 - Dark mode support
-- Popover
 - AppSearch
 - Toast library
 - Form library
