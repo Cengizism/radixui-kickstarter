@@ -1,6 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Header } from "../header/header";
 import { Topbar, TopbarActions, TopbarTitle } from "../topbar/topbar";
 import {
   Tooltip,
@@ -211,12 +212,10 @@ export const Default: Story = {
           </Topbar>
 
           <main className="flex-1 p-6 space-y-6">
-            <div>
-              <h1 className="text-3xl font-bold">Welcome back!</h1>
-              <p className="text-muted-foreground mt-2">
-                Here's what's happening with your projects today.
-              </p>
-            </div>
+            <Header
+              title="Welcome back!"
+              description="Here's what's happening with your projects today."
+            />
 
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
               {Array.from({ length: 4 }).map((_, i) => (
@@ -456,12 +455,10 @@ export const IconCollapsible: Story = {
             </Topbar>
 
             <main className="flex-1 p-6 space-y-6">
-              <div>
-                <h1 className="text-3xl font-bold">Welcome back!</h1>
-                <p className="text-muted-foreground mt-2">
-                  Here's what's happening with your projects today.
-                </p>
-              </div>
+              <Header
+                title="Welcome back!"
+                description="Here's what's happening with your projects today."
+              />
 
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 {Array.from({ length: 4 }).map((_, i) => (
@@ -484,7 +481,7 @@ export const IconCollapsible: Story = {
                     <div key={i} className="flex items-center gap-3 text-sm">
                       <div className="size-2 rounded-full bg-primary" />
                       <span>Activity item {i + 1} occurred recently</span>
-                      <span className="text-muted-foreground ml-auto">
+                      <span className="text-muted-foregroup ml-auto">
                         {i + 1}h ago
                       </span>
                     </div>
@@ -633,12 +630,10 @@ export const NonCollapsible: Story = {
           </Topbar>
 
           <main className="flex-1 p-6 space-y-6">
-            <div>
-              <h1 className="text-3xl font-bold">Welcome back!</h1>
-              <p className="text-muted-foreground mt-2">
-                Here's what's happening with your projects today.
-              </p>
-            </div>
+            <Header
+              title="Welcome back!"
+              description="Here's what's happening with your projects today."
+            />
 
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
               {Array.from({ length: 4 }).map((_, i) => (
