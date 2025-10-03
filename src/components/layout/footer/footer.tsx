@@ -1,19 +1,13 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-interface FooterProps extends React.HTMLAttributes<HTMLElement> {
-  variant?: "sticky" | "content";
-}
+interface FooterProps extends React.HTMLAttributes<HTMLElement> {}
 
 const Footer = React.forwardRef<HTMLElement, FooterProps>(
-  ({ className, variant = "content", children, ...props }, ref) => (
+  ({ className, children, ...props }, ref) => (
     <footer
       ref={ref}
-      className={cn(
-        "border-t bg-background p-6",
-        variant === "sticky" && "mt-auto",
-        className
-      )}
+      className={cn("border-t bg-background p-6", className)}
       {...props}
     >
       {children || (
