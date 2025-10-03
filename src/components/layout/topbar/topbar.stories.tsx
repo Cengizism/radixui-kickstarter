@@ -1,15 +1,9 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import {
-  Bell,
-  ChevronDown,
-  Search,
-  Settings,
-  User
-  } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { NavbarProvider, NavbarTrigger } from '../navbar';
-import { Topbar, TopbarActions, TopbarTitle } from './topbar';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Bell, ChevronDown, Search, Settings, User } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { NavbarProvider, NavbarTrigger } from "../navbar";
+import { Topbar, TopbarActions, TopbarTitle } from "./topbar";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import {
   DropdownMenu,

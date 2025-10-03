@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Button } from '../button/button';
-import { Label } from '../label/label';
-import { Switch } from '@/components/ui/switch';
+import React, { useState } from "react";
+import { Button } from "../button/button";
+import { Label } from "../label/label";
+import { Switch } from "@/components/ui/switch";
 import {
   Smartphone,
   Monitor,

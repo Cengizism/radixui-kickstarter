@@ -1,6 +1,6 @@
-import { Button } from '@/components/ui/button';
-import { EyeOff, Mail, Search } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { Button } from "@/components/ui/button";
+import { EyeOff, Mail, Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta = {

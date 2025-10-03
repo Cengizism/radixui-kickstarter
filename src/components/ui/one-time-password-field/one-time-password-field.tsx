@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { cn } from '@/lib/utils';
-import { OTPInput, OTPInputContext } from 'input-otp';
+import * as React from "react";
+import { cn } from "@/lib/utils";
+import { OTPInput, OTPInputContext } from "input-otp";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const oneTimePasswordFieldRootStyle = cva("flex items-center", {

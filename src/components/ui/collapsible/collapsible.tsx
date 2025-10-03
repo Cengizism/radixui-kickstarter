@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { ChevronDown } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Collapsible as CollapsiblePrimitive } from 'radix-ui';
+import * as React from "react";
+import { ChevronDown } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Collapsible as CollapsiblePrimitive } from "radix-ui";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const Collapsible = CollapsiblePrimitive.Root;

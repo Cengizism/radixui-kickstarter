@@ -1,5 +1,5 @@
-import { Label } from '../label/label';
-import { useState } from 'react';
+import { Label } from "../label/label";
+import { useState } from "react";
 import {
   OneTimePasswordField,
   OneTimePasswordFieldSlot,

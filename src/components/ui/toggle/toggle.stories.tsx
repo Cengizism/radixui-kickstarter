@@ -1,9 +1,9 @@
-import React from 'react';
-import { Badge } from '../badge/badge';
-import { Button } from '@/components/ui/button';
-import { Separator } from '../separator/separator';
-import { Toggle } from '@/components/ui/toggle';
-import { useState } from 'react';
+import React from "react";
+import { Badge } from "../badge/badge";
+import { Button } from "@/components/ui/button";
+import { Separator } from "../separator/separator";
+import { Toggle } from "@/components/ui/toggle";
+import { useState } from "react";
 import {
   Card,
   CardContent,

@@ -1,8 +1,8 @@
-import * as React from 'react';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import { PanelLeft } from 'lucide-react';
-import { useIsMobile } from '@/hooks/use-mobile';
+import * as React from "react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { PanelLeft } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
   Tooltip,
   TooltipContent,

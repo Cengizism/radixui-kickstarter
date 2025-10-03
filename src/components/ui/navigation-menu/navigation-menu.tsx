@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { ChevronDown } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { NavigationMenu as NavigationMenuPrimitive } from 'radix-ui';
+import * as React from "react";
+import { ChevronDown } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { NavigationMenu as NavigationMenuPrimitive } from "radix-ui";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const NavigationMenu = React.forwardRef<

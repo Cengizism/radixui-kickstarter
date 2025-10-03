@@ -1,13 +1,8 @@
-import { Badge } from '../badge/badge';
-import { Button } from '@/components/ui/button';
-import {
-  CheckCircle,
-  Pause,
-  Play,
-  RotateCcw
-  } from 'lucide-react';
-import { Progress } from '@/components/ui/progress';
-import { useEffect, useMemo, useState } from 'react';
+import { Badge } from "../badge/badge";
+import { Button } from "@/components/ui/button";
+import { CheckCircle, Pause, Play, RotateCcw } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { useEffect, useMemo, useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta = {

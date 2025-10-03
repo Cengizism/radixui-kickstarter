@@ -1,7 +1,7 @@
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Form } from '@/components/ui/form';
-import { useState } from 'react';
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Form } from "@/components/ui/form";
+import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta = {

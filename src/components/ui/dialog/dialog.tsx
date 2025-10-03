@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { cn } from '@/lib/utils';
-import { Dialog as DialogPrimitive } from 'radix-ui';
-import { X } from 'lucide-react';
+import * as React from "react";
+import { cn } from "@/lib/utils";
+import { Dialog as DialogPrimitive } from "radix-ui";
+import { X } from "lucide-react";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const Dialog = DialogPrimitive.Root;

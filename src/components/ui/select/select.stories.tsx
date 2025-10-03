@@ -1,10 +1,10 @@
-import { Badge } from '../badge/badge';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Flag } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { Slider } from '@/components/ui/slider';
-import { useState } from 'react';
+import { Badge } from "../badge/badge";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Flag } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Slider } from "@/components/ui/slider";
+import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import {
   Select,

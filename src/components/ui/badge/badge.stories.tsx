@@ -1,10 +1,5 @@
-import { Badge } from '@/components/ui/badge';
-import {
-  CheckCircle,
-  Info,
-  PlusCircle,
-  X
-  } from 'lucide-react';
+import { Badge } from "@/components/ui/badge";
+import { CheckCircle, Info, PlusCircle, X } from "lucide-react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta = {

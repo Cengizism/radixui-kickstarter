@@ -1,12 +1,12 @@
-import React from 'react';
-import { Avatar, AvatarFallback } from '../avatar/avatar';
-import { Badge } from '../badge/badge';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Separator } from '../separator/separator';
-import { Slider } from '@/components/ui/slider';
+import React from "react";
+import { Avatar, AvatarFallback } from "../avatar/avatar";
+import { Badge } from "../badge/badge";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "../separator/separator";
+import { Slider } from "@/components/ui/slider";
 import {
   Card,
   CardContent,

@@ -1,8 +1,7 @@
-import * as React from 'react';
-import { cn } from '@/lib/utils';
-import { ScrollArea as ScrollAreaPrimitive } from 'radix-ui';
+import * as React from "react";
+import { cn } from "@/lib/utils";
+import { ScrollArea as ScrollAreaPrimitive } from "radix-ui";
 import { cva, type VariantProps } from "class-variance-authority";
-
 
 const ScrollAreaRoot = ScrollAreaPrimitive.Root;
 

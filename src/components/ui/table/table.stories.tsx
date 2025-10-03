@@ -1,7 +1,7 @@
-import { Badge } from '../badge/badge';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '../checkbox/checkbox';
-import { useState } from 'react';
+import { Badge } from "../badge/badge";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "../checkbox/checkbox";
+import { useState } from "react";
 import {
   ArrowDown,
   ArrowUp,

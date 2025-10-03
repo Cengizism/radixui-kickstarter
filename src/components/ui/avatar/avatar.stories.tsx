@@ -1,7 +1,7 @@
-import React from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { Check, Star } from 'lucide-react';
+import React from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Check, Star } from "lucide-react";
 
 export default {
   title: "UI/Avatar",

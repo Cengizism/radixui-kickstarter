@@ -1,5 +1,5 @@
-import { Card, CardContent, CardHeader } from '../card/card';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Card, CardContent, CardHeader } from "../card/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default {
   title: "UI/Skeleton",

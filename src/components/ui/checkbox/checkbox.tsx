@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { Check } from 'lucide-react';
-import { Checkbox as CheckboxPrimitive } from 'radix-ui';
-import { cn } from '@/lib/utils';
+import * as React from "react";
+import { Check } from "lucide-react";
+import { Checkbox as CheckboxPrimitive } from "radix-ui";
+import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const checkboxVariants = cva(

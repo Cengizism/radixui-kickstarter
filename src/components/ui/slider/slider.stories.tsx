@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '../input/input';
-import { Label } from '../label/label';
-import { Slider } from '@/components/ui/slider';
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "../input/input";
+import { Label } from "../label/label";
+import { Slider } from "@/components/ui/slider";
 import {
   VolumeX,
   Volume2,

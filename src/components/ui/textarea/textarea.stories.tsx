@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Label } from '../label/label';
-import { Textarea } from '@/components/ui/textarea';
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Label } from "../label/label";
+import { Textarea } from "@/components/ui/textarea";
 
 export default {
   title: "UI/Textarea",

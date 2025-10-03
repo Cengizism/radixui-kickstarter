@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Select as SelectPrimitive } from 'radix-ui';
+import * as React from "react";
+import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Select as SelectPrimitive } from "radix-ui";
 import { cva, type VariantProps } from "class-variance-authority";
 
 // Select Root (alias for easier usage)

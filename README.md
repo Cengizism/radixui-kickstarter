@@ -42,7 +42,7 @@ pnpm dev
 # npm
 npm run build
 
-# pnpm  
+# pnpm
 pnpm build
 ```
 

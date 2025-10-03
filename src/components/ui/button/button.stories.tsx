@@ -1,11 +1,5 @@
-import { Button } from '@/components/ui/button';
-import {
-  CheckCircle,
-  Download,
-  Info,
-  Loader2,
-  X
-  } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { CheckCircle, Download, Info, Loader2, X } from "lucide-react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta = {

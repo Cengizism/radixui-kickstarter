@@ -1,9 +1,8 @@
-import * as React from 'react';
-import { Circle, Dot } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { RadioGroup as RadioGroupPrimitive } from 'radix-ui';
+import * as React from "react";
+import { Circle, Dot } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { RadioGroup as RadioGroupPrimitive } from "radix-ui";
 import { cva, type VariantProps } from "class-variance-authority";
-
 
 const RadioGroupRoot = RadioGroupPrimitive.Root;
 

@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { cn } from '@/lib/utils';
-import { Toolbar as ToolbarPrimitive } from 'radix-ui';
+import * as React from "react";
+import { cn } from "@/lib/utils";
+import { Toolbar as ToolbarPrimitive } from "radix-ui";
 import { cva, type VariantProps } from "class-variance-authority";
 
 // Toolbar Root

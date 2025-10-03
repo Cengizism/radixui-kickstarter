@@ -1,10 +1,10 @@
-import { Badge } from '@/components/ui/badge/badge';
-import { Button } from '@/components/ui/button/button';
-import { Checkbox } from '@/components/ui/checkbox/checkbox';
-import { Input } from '@/components/ui/input/input';
-import { Label } from '@/components/ui/label/label';
-import { Switch } from '@/components/ui/switch/switch';
-import { useState } from 'react';
+import { Badge } from "@/components/ui/badge/badge";
+import { Button } from "@/components/ui/button/button";
+import { Checkbox } from "@/components/ui/checkbox/checkbox";
+import { Input } from "@/components/ui/input/input";
+import { Label } from "@/components/ui/label/label";
+import { Switch } from "@/components/ui/switch/switch";
+import { useState } from "react";
 import {
   AlertCircle,
   CreditCard,

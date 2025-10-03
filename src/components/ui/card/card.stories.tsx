@@ -1,6 +1,6 @@
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { CheckCircle, MoreHorizontal } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { CheckCircle, MoreHorizontal } from "lucide-react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import {
   Card,

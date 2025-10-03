@@ -1,14 +1,9 @@
-import React, { useState } from 'react';
-import {
-  Apple,
-  CircleDollarSign,
-  CreditCard,
-  Search
-  } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Label } from '../label/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import React, { useState } from "react";
+import { Apple, CircleDollarSign, CreditCard, Search } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "../label/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 type Story = {
   render: () => JSX.Element;

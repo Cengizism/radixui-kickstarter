@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { AspectRatio as AspectRatioPrimitive } from 'radix-ui';
-import { cn } from '@/lib/utils';
+import * as React from "react";
+import { AspectRatio as AspectRatioPrimitive } from "radix-ui";
+import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const aspectRatioVariants = cva("overflow-hidden", {

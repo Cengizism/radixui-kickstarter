@@ -1,17 +1,12 @@
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '../checkbox/checkbox';
-import { Input } from '../input/input';
-import { Label } from '../label/label';
-import { Switch } from '../switch/switch';
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger
-  } from '@/components/ui/tabs';
-import { Textarea } from '../textarea/textarea';
-import { useState } from 'react';
+import React from "react";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "../checkbox/checkbox";
+import { Input } from "../input/input";
+import { Label } from "../label/label";
+import { Switch } from "../switch/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "../textarea/textarea";
+import { useState } from "react";
 import {
   BarChart3,
   TrendingUp,

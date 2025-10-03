@@ -1,9 +1,9 @@
-import { Badge } from '../badge/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader } from '../card/card';
-import { Checkbox } from '../checkbox/checkbox';
-import { Separator } from '../separator/separator';
-import { useState } from 'react';
+import { Badge } from "../badge/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader } from "../card/card";
+import { Checkbox } from "../checkbox/checkbox";
+import { Separator } from "../separator/separator";
+import { useState } from "react";
 import {
   Collapsible,
   CollapsibleContent,

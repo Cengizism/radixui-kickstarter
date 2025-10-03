@@ -1,5 +1,5 @@
-import React from 'react';
-import { cn } from '@/lib/utils';
+import React from "react";
+import { cn } from "@/lib/utils";
 
 // Root Topbar Container
 function Topbar({ className, ...props }: React.ComponentProps<"header">) {

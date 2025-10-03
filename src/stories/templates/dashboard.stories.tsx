@@ -1,8 +1,8 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Footer } from '@/components/layout/footer/footer';
-import { Header } from '@/components/layout/header/header';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Footer } from "@/components/layout/footer/footer";
+import { Header } from "@/components/layout/header/header";
 import {
   Topbar,
   TopbarActions,

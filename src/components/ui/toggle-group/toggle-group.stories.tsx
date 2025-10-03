@@ -1,10 +1,10 @@
-import React from 'react';
-import { Badge } from '../badge/badge';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '../checkbox/checkbox';
-import { Separator } from '../separator/separator';
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { useState } from 'react';
+import React from "react";
+import { Badge } from "../badge/badge";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "../checkbox/checkbox";
+import { Separator } from "../separator/separator";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { useState } from "react";
 import {
   Card,
   CardContent,

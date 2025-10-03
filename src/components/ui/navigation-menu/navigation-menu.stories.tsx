@@ -1,6 +1,6 @@
-import React from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from '../avatar/avatar';
-import { Badge } from '../badge/badge';
+import React from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "../avatar/avatar";
+import { Badge } from "../badge/badge";
 import {
   NavigationMenu,
   NavigationMenuList,

@@ -1,11 +1,11 @@
-import * as React from 'react';
-import { Badge } from '../badge/badge';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '../checkbox/checkbox';
-import { Input } from '../input/input';
-import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Textarea } from '@/components/ui/textarea';
+import * as React from "react";
+import { Badge } from "../badge/badge";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "../checkbox/checkbox";
+import { Input } from "../input/input";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Textarea } from "@/components/ui/textarea";
 
 export default {
   title: "UI/Label",
