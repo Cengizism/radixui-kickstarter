@@ -182,7 +182,7 @@ function Navbar({
       <div
         data-slot="navbar"
         className={cn(
-          "bg-sidebar text-sidebar-foreground flex h-full flex-col",
+          "bg-sidebar text-sidebar-foreground flex h-full flex-col border-r border-sidebar-border",
           className
         )}
         style={{ width: "var(--navbar-width)" }}
