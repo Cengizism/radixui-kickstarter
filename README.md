@@ -1,24 +1,79 @@
-# Frontend Design System & Component Library
+# Radix UI Kickstarter
 
-A comprehensive React component library and design system built with **Radix UI** and **TailwindCSS**, serving as a foundation for modern web applications.
+A modern React component library and design system built with Radix UI primitives and TailwindCSS.
 
-Interactive documentation for all UI components including:
+## Tech Stack
 
-- Radix UI primitives (dialogs, dropdowns, accordions, etc.)
-- Custom compositions and patterns
-- Code examples and usage guidelines
-- Live playground for testing components
+- **React** 18 + **TypeScript**
+- **Radix UI** - Accessible component primitives
+- **TailwindCSS** - Utility-first CSS framework
+- **Vite** - Fast build tool and dev server
+- **Storybook** - Component documentation and playground
+- **React Router** (TanStack) - Type-safe routing
+- **Vitest** - Unit testing framework
 
-Ready-to-use page layouts covering common patterns:
+## Installation
 
-- Dashboard layouts with charts and metrics
-- Settings and configuration pages
-- Data tables with filtering and pagination
-- Authentication and onboarding flows
+### Using npm
 
-Comprehensive design tokens and utilities:
+```bash
+npm install
+```
 
-- TailwindCSS integration
-- Custom component variants
-- Responsive design patterns
-- Dark/light mode support
+### Using pnpm
+
+```bash
+pnpm install
+```
+
+## Scripts
+
+### Development
+
+```bash
+# npm
+npm run dev
+
+# pnpm
+pnpm dev
+```
+
+### Build
+
+```bash
+# npm
+npm run build
+
+# pnpm  
+pnpm build
+```
+
+### Linting & Formatting
+
+```bash
+# npm
+npm run lint
+npm run lint:fix
+npm run format
+npm run format:check
+npm run type:check
+
+# pnpm
+pnpm lint
+pnpm lint:fix
+pnpm format
+pnpm format:check
+pnpm type:check
+```
+
+### Storybook
+
+```bash
+# npm
+npm run storybook
+npm run build-storybook
+
+# pnpm
+pnpm storybook
+pnpm build-storybook
+```
