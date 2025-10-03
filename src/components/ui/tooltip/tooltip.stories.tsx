@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   Tooltip,
   TooltipContent,
@@ -182,9 +183,9 @@ export const DebugTooltip = () => (
   <TooltipProvider delayDuration={0}>
     <Tooltip>
       <TooltipTrigger asChild>
-        <button className="flex h-10 w-10 items-center justify-center rounded-full border bg-white text-lg cursor-pointer">
+        <Button size="icon" className="rounded-full">
           +
-        </button>
+        </Button>
       </TooltipTrigger>
       <TooltipContent variant="default" showArrow={true}>
         Add to library
