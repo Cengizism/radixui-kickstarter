@@ -292,19 +292,19 @@ export const IconCollapsible: Story = {
                 <NavbarGroupContent>
                   <NavbarMenu>
                     <NavbarMenuItem>
-                      <NavbarMenuButtonWithTooltip tooltip="Dashboard">
+                      <NavbarMenuButtonWithTooltip>
                         <Home className="size-4" />
                         Dashboard
                       </NavbarMenuButtonWithTooltip>
                     </NavbarMenuItem>
                     <NavbarMenuItem>
-                      <NavbarMenuButtonWithTooltip tooltip="Calendar">
+                      <NavbarMenuButtonWithTooltip>
                         <Calendar className="size-4" />
                         Calendar
                       </NavbarMenuButtonWithTooltip>
                     </NavbarMenuItem>
                     <NavbarMenuItem>
-                      <NavbarMenuButtonWithTooltip tooltip="Documents">
+                      <NavbarMenuButtonWithTooltip>
                         <FileText className="size-4" />
                         Documents
                       </NavbarMenuButtonWithTooltip>
@@ -320,13 +320,13 @@ export const IconCollapsible: Story = {
                 <NavbarGroupContent>
                   <NavbarMenu>
                     <NavbarMenuItem>
-                      <NavbarMenuButtonWithTooltip tooltip="Search">
+                      <NavbarMenuButtonWithTooltip>
                         <Search className="size-4" />
                         Search
                       </NavbarMenuButtonWithTooltip>
                     </NavbarMenuItem>
                     <NavbarMenuItem>
-                      <NavbarMenuButtonWithTooltip tooltip="New Item">
+                      <NavbarMenuButtonWithTooltip>
                         <Plus className="size-4" />
                         New Item
                       </NavbarMenuButtonWithTooltip>
@@ -342,13 +342,13 @@ export const IconCollapsible: Story = {
                 <NavbarGroupContent>
                   <NavbarMenu>
                     <NavbarMenuItem>
-                      <NavbarMenuButtonWithTooltip tooltip="Archived Items">
+                      <NavbarMenuButtonWithTooltip>
                         <Archive className="size-4" />
                         Archived Items
                       </NavbarMenuButtonWithTooltip>
                     </NavbarMenuItem>
                     <NavbarMenuItem>
-                      <NavbarMenuButtonWithTooltip tooltip="Trash">
+                      <NavbarMenuButtonWithTooltip>
                         <Trash2 className="size-4" />
                         Trash
                       </NavbarMenuButtonWithTooltip>
@@ -372,7 +372,9 @@ export const IconCollapsible: Story = {
                             <AvatarFallback>JD</AvatarFallback>
                           </Avatar>
                         </TooltipTrigger>
-                        <TooltipContent side="right">John Doe</TooltipContent>
+                        <TooltipContent size="sm" side="right">
+                          John Doe
+                        </TooltipContent>
                       </Tooltip>
                     ) : (
                       <Avatar className="size-8">
@@ -392,7 +394,9 @@ export const IconCollapsible: Story = {
                               <Settings className="size-4" />
                             </Button>
                           </TooltipTrigger>
-                          <TooltipContent side="right">Settings</TooltipContent>
+                          <TooltipContent size="sm" side="right">
+                            Settings
+                          </TooltipContent>
                         </Tooltip>
                         <Tooltip>
                           <TooltipTrigger asChild>
@@ -404,7 +408,9 @@ export const IconCollapsible: Story = {
                               <Moon className="size-4" />
                             </Button>
                           </TooltipTrigger>
-                          <TooltipContent side="right">Theme</TooltipContent>
+                          <TooltipContent size="sm" side="right">
+                            Theme
+                          </TooltipContent>
                         </Tooltip>
                       </>
                     ) : (

@@ -359,6 +359,27 @@ const NavbarFooter = React.forwardRef<
 });
 NavbarFooter.displayName = "NavbarFooter";
 
+// Helper function to extract text content from React children
+function extractTextFromChildren(children: React.ReactNode): string {
+  if (typeof children === "string") {
+    return children;
+  }
+
+  if (typeof children === "number") {
+    return String(children);
+  }
+
+  if (React.isValidElement(children)) {
+    return extractTextFromChildren(children.props.children);
+  }
+
+  if (Array.isArray(children)) {
+    return children.map(extractTextFromChildren).filter(Boolean).join(" ");
+  }
+
+  return "";
+}
+
 // NavbarMenuButton with conditional tooltip
 const NavbarMenuButtonWithTooltip = React.forwardRef<
   React.ElementRef<typeof PanelMenuButton>,
@@ -369,8 +390,10 @@ const NavbarMenuButtonWithTooltip = React.forwardRef<
 >(({ tooltip, showTooltipWhenCollapsed = true, children, ...props }, ref) => {
   const { isCollapsed } = usePanel();
 
-  // Show tooltip only when collapsed and tooltip is provided
-  if (isCollapsed && showTooltipWhenCollapsed && tooltip) {
+  const tooltipContent = tooltip || extractTextFromChildren(children);
+
+  // Show tooltip only when collapsed and tooltip content is available
+  if (isCollapsed && showTooltipWhenCollapsed && tooltipContent) {
     return (
       <Tooltip>
         <TooltipTrigger asChild>
@@ -379,7 +402,7 @@ const NavbarMenuButtonWithTooltip = React.forwardRef<
           </PanelMenuButton>
         </TooltipTrigger>
         <TooltipContent size="sm" side="right">
-          {tooltip}
+          {tooltipContent}
         </TooltipContent>
       </Tooltip>
     );
