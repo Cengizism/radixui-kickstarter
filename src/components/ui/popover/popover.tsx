@@ -12,7 +12,7 @@ const PopoverAnchor = PopoverPrimitive.Anchor;
 const PopoverPortal = PopoverPrimitive.Portal;
 
 const popoverContentVariants = cva(
-  "z-50 rounded-md bg-popover p-4 text-popover-foreground outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+  "z-50 rounded-md border shadow-md bg-popover p-4 text-popover-foreground outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
   {
     variants: {
       variant: {
@@ -45,9 +45,7 @@ const popoverContentVariants = cva(
 const PopoverContent = React.forwardRef<
   React.ElementRef<typeof PopoverPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Content> &
-    VariantProps<typeof popoverContentVariants> & {
-      showArrow?: boolean;
-    }
+    VariantProps<typeof popoverContentVariants>
 >(
   (
     {
@@ -56,8 +54,6 @@ const PopoverContent = React.forwardRef<
       size,
       align = "center",
       sideOffset = 4,
-      children,
-      showArrow = true,
       ...props
     },
     ref
@@ -72,14 +68,7 @@ const PopoverContent = React.forwardRef<
           transformOrigin: "var(--radix-popover-content-transform-origin)",
         }}
         {...props}
-      >
-        {children}
-        {showArrow && (
-          <PopoverPrimitive.Arrow
-            className={cn(popoverArrowVariants({ variant, size }))}
-          />
-        )}
-      </PopoverPrimitive.Content>
+      />
     </PopoverPortal>
   )
 );
@@ -100,46 +89,6 @@ const PopoverClose = React.forwardRef<
 ));
 PopoverClose.displayName = PopoverPrimitive.Close.displayName;
 
-const popoverArrowVariants = cva("", {
-  variants: {
-    variant: {
-      default: "fill-popover",
-      secondary: "fill-secondary",
-      accent: "fill-accent",
-      destructive: "fill-destructive",
-      success: "fill-green-600",
-      warning: "fill-orange-600",
-      info: "fill-blue-600",
-      dark: "fill-gray-900",
-      light: "fill-background",
-    },
-    size: {
-      sm: "w-1.5 h-1.5",
-      default: "w-2 h-2",
-      lg: "w-2.5 h-2.5",
-      xl: "w-3 h-3",
-      full: "w-2 h-2", // Same as default for full size
-    },
-  },
-  defaultVariants: {
-    variant: "default",
-    size: "default",
-  },
-});
-
-const PopoverArrow = React.forwardRef<
-  React.ElementRef<typeof PopoverPrimitive.Arrow>,
-  React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Arrow> &
-    VariantProps<typeof popoverArrowVariants>
->(({ className, variant = "default", size = "default", ...props }, ref) => (
-  <PopoverPrimitive.Arrow
-    ref={ref}
-    className={cn(popoverArrowVariants({ variant, size }), className)}
-    {...props}
-  />
-));
-PopoverArrow.displayName = PopoverPrimitive.Arrow.displayName;
-
 export {
   Popover,
   PopoverTrigger,
@@ -147,7 +96,5 @@ export {
   PopoverAnchor,
   PopoverPortal,
   PopoverClose,
-  PopoverArrow,
   popoverContentVariants,
-  popoverArrowVariants,
 };

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '../input/input';
-import { Label } from '../label/label';
-import { Separator } from '../separator/separator';
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "../input/input";
+import { Label } from "../label/label";
+import { Separator } from "../separator/separator";
 import {
   Calendar,
   HelpCircle,
@@ -28,7 +28,6 @@ import {
   PopoverContent,
   PopoverTrigger,
   PopoverClose,
-  PopoverArrow,
 } from "./popover";
 
 export default {
@@ -363,36 +362,6 @@ export const SizeVariations = () => (
         </div>
       </PopoverContent>
     </Popover>
-
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button variant="outline">Large</Button>
-      </PopoverTrigger>
-      <PopoverContent size="lg">
-        <div className="space-y-3">
-          <h4 className="font-medium text-lg">Large Popover</h4>
-          <p className="text-muted-foreground">
-            This is a larger popover with more space for content and better
-            readability.
-          </p>
-        </div>
-      </PopoverContent>
-    </Popover>
-
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button variant="outline">Extra Large</Button>
-      </PopoverTrigger>
-      <PopoverContent size="xl">
-        <div className="space-y-4">
-          <h4 className="font-medium text-xl">Extra Large Popover</h4>
-          <p className="text-lg text-muted-foreground">
-            This is an extra large popover with even more space for extensive
-            content.
-          </p>
-        </div>
-      </PopoverContent>
-    </Popover>
   </div>
 );
 
@@ -475,41 +444,6 @@ export const PositioningAndAlignment = () => (
       </PopoverTrigger>
       <PopoverContent side="bottom" align="end">
         <p className="text-sm">Bottom, aligned to end</p>
-      </PopoverContent>
-    </Popover>
-  </div>
-);
-
-// With arrow
-export const WithArrow = () => (
-  <div className="flex gap-4">
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button variant="outline">With Arrow</Button>
-      </PopoverTrigger>
-      <PopoverContent>
-        <PopoverArrow />
-        <div className="space-y-2">
-          <h4 className="font-medium">Popover with Arrow</h4>
-          <p className="text-sm text-muted-foreground">
-            This popover includes an arrow pointing to the trigger.
-          </p>
-        </div>
-      </PopoverContent>
-    </Popover>
-
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button variant="outline">Large Arrow</Button>
-      </PopoverTrigger>
-      <PopoverContent size="lg">
-        <PopoverArrow size="lg" />
-        <div className="space-y-2">
-          <h4 className="font-medium text-lg">Large Arrow</h4>
-          <p className="text-muted-foreground">
-            This popover has a larger arrow for better visual connection.
-          </p>
-        </div>
       </PopoverContent>
     </Popover>
   </div>
@@ -820,7 +754,7 @@ export const ActionMenuPopover = () => (
       <Button variant="outline">Actions</Button>
     </PopoverTrigger>
     <PopoverContent align="start">
-      <div className="space-y-1">
+      <div className="w-300 space-y-1">
         <Button variant="ghost" size="sm" className="w-full justify-start">
           <FileText className="mr-2 h-4 w-4" />
           New Document
@@ -955,132 +889,6 @@ Playground.args = {
   size: "default",
 };
 
-// Advanced collision handling and positioning
-export const AdvancedPositioning = () => (
-  <div className="space-y-8 p-8">
-    <div className="text-sm text-gray-600 p-4 bg-blue-50 rounded-lg">
-      <div className="font-semibold mb-2">Advanced Positioning Features:</div>
-      <ul className="space-y-1 text-xs">
-        <li>• Custom collision boundaries</li>
-        <li>• Side and align offset adjustments</li>
-        <li>• Collision padding to prevent edge overlapping</li>
-        <li>• Sticky behavior on align axis</li>
-        <li>• Hide when trigger becomes detached</li>
-      </ul>
-    </div>
-
-    <div className="grid grid-cols-2 gap-8">
-      <div>
-        <h3 className="text-sm font-semibold mb-4">
-          Custom Collision Boundary
-        </h3>
-        <div className="border-2 border-dashed border-gray-300 p-4 h-32 relative overflow-hidden">
-          <span className="text-xs text-gray-500 absolute top-1 left-1">
-            Boundary Container
-          </span>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button variant="outline" className="absolute bottom-2 right-2">
-                Boundary Test
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent
-              side="top"
-              align="end"
-              collisionBoundary={null}
-              collisionPadding={10}
-            >
-              <div className="space-y-2">
-                <h4 className="font-medium text-sm">Collision Aware</h4>
-                <p className="text-xs text-muted-foreground">
-                  This popover respects collision boundaries and has 10px
-                  padding from edges.
-                </p>
-              </div>
-            </PopoverContent>
-          </Popover>
-        </div>
-      </div>
-
-      <div>
-        <h3 className="text-sm font-semibold mb-4">Offset Adjustments</h3>
-        <div className="space-y-2">
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button variant="outline" size="sm">
-                Side Offset
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent side="right" sideOffset={20}>
-              <p className="text-sm">20px side offset</p>
-            </PopoverContent>
-          </Popover>
-
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button variant="outline" size="sm">
-                Align Offset
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent align="start" alignOffset={-10}>
-              <p className="text-sm">-10px align offset</p>
-            </PopoverContent>
-          </Popover>
-
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button variant="outline" size="sm">
-                Combined Offsets
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent
-              side="top"
-              sideOffset={15}
-              align="end"
-              alignOffset={5}
-            >
-              <p className="text-sm">Combined side & align offsets</p>
-            </PopoverContent>
-          </Popover>
-        </div>
-      </div>
-    </div>
-
-    <div>
-      <h3 className="text-sm font-semibold mb-4">Sticky Behavior</h3>
-      <div className="flex gap-4">
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button variant="outline">Partial Sticky</Button>
-          </PopoverTrigger>
-          <PopoverContent sticky="partial">
-            <div className="space-y-2">
-              <h4 className="font-medium text-sm">Partial Sticky</h4>
-              <p className="text-xs text-muted-foreground">
-                Stays in boundary while trigger is partially visible
-              </p>
-            </div>
-          </PopoverContent>
-        </Popover>
-
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button variant="outline">Always Sticky</Button>
-          </PopoverTrigger>
-          <PopoverContent sticky="always">
-            <div className="space-y-2">
-              <h4 className="font-medium text-sm">Always Sticky</h4>
-              <p className="text-xs text-muted-foreground">
-                Always stays in boundary regardless of trigger
-              </p>
-            </div>
-          </PopoverContent>
-        </Popover>
-      </div>
-    </div>
-  </div>
-);
-
 // Modal vs non-modal behavior
 export const ModalBehavior = () => (
   <div className="space-y-6">
@@ -1145,107 +953,6 @@ export const ModalBehavior = () => (
     </div>
   </div>
 );
-
-// Interactive examples with event handling
-export const InteractiveExamples = () => {
-  const [interactions, setInteractions] = React.useState<string[]>([]);
-  const [isOpen, setIsOpen] = React.useState(false);
-
-  const addInteraction = (type: string) => {
-    setInteractions((prev) => [
-      ...prev.slice(-4),
-      `${new Date().toLocaleTimeString()}: ${type}`,
-    ]);
-  };
-
-  return (
-    <div className="space-y-6">
-      <div className="space-y-2">
-        <h3 className="text-sm font-semibold">Event Handling</h3>
-        <div className="text-xs text-gray-600 min-h-[80px] p-3 bg-gray-50 rounded border">
-          <div className="font-medium mb-1">Recent Interactions:</div>
-          {interactions.length === 0 ? (
-            <div className="text-gray-400">No interactions yet...</div>
-          ) : (
-            interactions.map((interaction, i) => (
-              <div key={i} className="font-mono">
-                {interaction}
-              </div>
-            ))
-          )}
-        </div>
-      </div>
-
-      <Popover
-        open={isOpen}
-        onOpenChange={(open) => {
-          setIsOpen(open);
-          addInteraction(open ? "Opened" : "Closed");
-        }}
-      >
-        <PopoverTrigger asChild>
-          <Button variant="outline">
-            Interactive Popover ({isOpen ? "Open" : "Closed"})
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent
-          onEscapeKeyDown={() => addInteraction("Escape key pressed")}
-          onPointerDownOutside={() => addInteraction("Clicked outside")}
-          onFocusOutside={() => addInteraction("Focus moved outside")}
-          onInteractOutside={() => addInteraction("Interaction outside")}
-        >
-          <div className="space-y-3">
-            <h4 className="font-medium">Event Monitoring</h4>
-            <p className="text-sm text-muted-foreground">
-              This popover logs all interaction events.
-            </p>
-
-            <div className="space-y-2">
-              <Button
-                size="sm"
-                variant="secondary"
-                onClick={() => addInteraction("Internal button clicked")}
-                className="w-full"
-              >
-                Click Me (Internal)
-              </Button>
-
-              <PopoverClose asChild>
-                <Button
-                  size="sm"
-                  onClick={() => addInteraction("Close button clicked")}
-                  className="w-full"
-                >
-                  Close Popover
-                </Button>
-              </PopoverClose>
-            </div>
-
-            <p className="text-xs text-muted-foreground">
-              Try: clicking outside, pressing Escape, or using Tab to move
-              focus.
-            </p>
-          </div>
-        </PopoverContent>
-      </Popover>
-
-      <div className="space-y-2">
-        <Button
-          size="sm"
-          variant="outline"
-          onClick={() => addInteraction("External button clicked")}
-        >
-          External Button
-        </Button>
-        <Input
-          placeholder="External input field"
-          onFocus={() => addInteraction("External input focused")}
-          className="text-sm"
-        />
-      </div>
-    </div>
-  );
-};
 
 // Complex form with multiple popovers
 export const ComplexFormExample = () => {
