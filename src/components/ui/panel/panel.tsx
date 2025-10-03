@@ -1,9 +1,9 @@
-import * as React from 'react';
-import { cn } from '@/lib/utils';
-import { Input } from '@/components/ui/input';
-import { Separator } from '@/components/ui/separator';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Slot } from 'radix-ui';
+import * as React from "react";
+import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Slot } from "radix-ui";
 import { cva, type VariantProps } from "class-variance-authority";
 
 type PanelContextProps = {
@@ -215,46 +215,56 @@ const panelMenuButtonVariants = cva(
   }
 );
 
-function PanelMenuButton({
-  asChild = false,
-  isActive = false,
-  variant = "default",
-  size = "default",
-  className,
-  children,
-  ...props
-}: React.ComponentProps<"button"> & {
-  asChild?: boolean;
-  isActive?: boolean;
-} & VariantProps<typeof panelMenuButtonVariants>) {
-  const Comp = asChild ? Slot.Slot : "button";
-  const { isCollapsed } = usePanel();
+const PanelMenuButton = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<"button"> & {
+    asChild?: boolean;
+    isActive?: boolean;
+  } & VariantProps<typeof panelMenuButtonVariants>
+>(
+  (
+    {
+      asChild = false,
+      isActive = false,
+      variant = "default",
+      size = "default",
+      className,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    const Comp = asChild ? Slot.Slot : "button";
+    const { isCollapsed } = usePanel();
 
-  // When collapsed, only show the first child (icon) and hide text
-  const processedChildren = React.useMemo(() => {
-    if (!isCollapsed || !children) return children;
+    // When collapsed, only show the first child (icon) and hide text
+    const processedChildren = React.useMemo(() => {
+      if (!isCollapsed || !children) return children;
 
-    const childArray = React.Children.toArray(children);
-    // Return only the first child (typically the icon)
-    return childArray[0];
-  }, [isCollapsed, children]);
+      const childArray = React.Children.toArray(children);
+      // Return only the first child (typically the icon)
+      return childArray[0];
+    }, [isCollapsed, children]);
 
-  return (
-    <Comp
-      data-slot="panel-menu-button"
-      data-size={size}
-      data-active={isActive}
-      className={cn(
-        panelMenuButtonVariants({ variant, size }),
-        isCollapsed && "justify-center px-2",
-        className
-      )}
-      {...props}
-    >
-      {processedChildren}
-    </Comp>
-  );
-}
+    return (
+      <Comp
+        ref={ref}
+        data-slot="panel-menu-button"
+        data-size={size}
+        data-active={isActive}
+        className={cn(
+          panelMenuButtonVariants({ variant, size }),
+          isCollapsed && "justify-center px-2",
+          className
+        )}
+        {...props}
+      >
+        {processedChildren}
+      </Comp>
+    );
+  }
+);
+PanelMenuButton.displayName = "PanelMenuButton";
 
 function PanelMenuAction({
   className,

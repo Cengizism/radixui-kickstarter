@@ -1,9 +1,14 @@
-import * as React from 'react';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import { PanelLeft } from 'lucide-react';
-import { TooltipProvider } from '@/components/ui/tooltip';
-import { useIsMobile } from '@/hooks/use-mobile';
+import * as React from "react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { PanelLeft } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import {
   Panel,
   PanelContent,
@@ -353,6 +358,41 @@ const NavbarFooter = React.forwardRef<
   );
 });
 NavbarFooter.displayName = "NavbarFooter";
+
+// NavbarMenuButton with conditional tooltip
+const NavbarMenuButtonWithTooltip = React.forwardRef<
+  React.ElementRef<typeof PanelMenuButton>,
+  React.ComponentPropsWithoutRef<typeof PanelMenuButton> & {
+    tooltip?: string;
+    showTooltipWhenCollapsed?: boolean;
+  }
+>(({ tooltip, showTooltipWhenCollapsed = true, children, ...props }, ref) => {
+  const { isCollapsed } = usePanel();
+
+  // Show tooltip only when collapsed and tooltip is provided
+  if (isCollapsed && showTooltipWhenCollapsed && tooltip) {
+    return (
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <PanelMenuButton ref={ref} {...props}>
+            {children}
+          </PanelMenuButton>
+        </TooltipTrigger>
+        <TooltipContent size="sm" side="right">
+          {tooltip}
+        </TooltipContent>
+      </Tooltip>
+    );
+  }
+
+  return (
+    <PanelMenuButton ref={ref} {...props}>
+      {children}
+    </PanelMenuButton>
+  );
+});
+NavbarMenuButtonWithTooltip.displayName = "NavbarMenuButtonWithTooltip";
+
 const NavbarSeparator = PanelSeparator;
 const NavbarGroup = PanelGroup;
 const NavbarGroupLabel = PanelGroupLabel;
@@ -384,6 +424,7 @@ export {
   NavbarMenuAction,
   NavbarMenuBadge,
   NavbarMenuButton,
+  NavbarMenuButtonWithTooltip,
   NavbarMenuItem,
   NavbarMenuSkeleton,
   NavbarMenuSub,
