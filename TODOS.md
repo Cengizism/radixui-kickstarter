@@ -8,3 +8,4 @@
 - Form library
 - Next themes
 - Card variations
+- Buttons with custom styling
