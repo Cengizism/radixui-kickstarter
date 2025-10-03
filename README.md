@@ -17,12 +17,10 @@ A modern React component library and design system built with Radix UI primitive
 ### Using npm
 
 ```bash
+# npm
 npm install
-```
 
-### Using pnpm
-
-```bash
+# pnpm
 pnpm install
 ```
 
