@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { cn } from '@/lib/utils';
-import { Tooltip as TooltipPrimitive } from 'radix-ui';
+import * as React from "react";
+import { cn } from "@/lib/utils";
+import { Tooltip as TooltipPrimitive } from "radix-ui";
 import { cva, type VariantProps } from "class-variance-authority";
 ("use client");
 
@@ -20,11 +20,7 @@ function TooltipProvider({
 function Tooltip({
   ...props
 }: React.ComponentProps<typeof TooltipPrimitive.Root>) {
-  return (
-    <TooltipProvider>
-      <TooltipPrimitive.Root data-slot="tooltip" {...props} />
-    </TooltipProvider>
-  );
+  return <TooltipPrimitive.Root data-slot="tooltip" {...props} />;
 }
 
 function TooltipTrigger({
@@ -34,7 +30,7 @@ function TooltipTrigger({
 }
 
 const tooltipContentVariants = cva(
-  "z-50 w-fit overflow-hidden rounded-md border px-3 py-1.5 text-sm shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+  "z-50 w-fit overflow-hidden rounded-md px-3 py-1.5 text-sm animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
   {
     variants: {
       variant: {
@@ -62,7 +58,7 @@ const tooltipContentVariants = cva(
   }
 );
 
-const tooltipArrowVariants = cva("fill-current", {
+const tooltipArrowVariants = cva("", {
   variants: {
     variant: {
       default: "fill-popover",
@@ -122,8 +118,6 @@ interface SimpleTooltipProps {
   align?: "start" | "center" | "end";
   sideOffset?: number;
   alignOffset?: number;
-  delayDuration?: number;
-  skipDelayDuration?: number;
   disableHoverableContent?: boolean;
   open?: boolean;
   defaultOpen?: boolean;
@@ -140,8 +134,6 @@ function SimpleTooltip({
   align = "center",
   sideOffset = 4,
   alignOffset = 0,
-  delayDuration,
-  skipDelayDuration,
   disableHoverableContent,
   open,
   defaultOpen,
@@ -150,31 +142,26 @@ function SimpleTooltip({
   ...props
 }: SimpleTooltipProps) {
   return (
-    <TooltipProvider
-      delayDuration={delayDuration}
-      skipDelayDuration={skipDelayDuration}
+    <Tooltip
+      open={open}
+      defaultOpen={defaultOpen}
+      onOpenChange={onOpenChange}
+      disableHoverableContent={disableHoverableContent}
     >
-      <Tooltip
-        open={open}
-        defaultOpen={defaultOpen}
-        onOpenChange={onOpenChange}
-        disableHoverableContent={disableHoverableContent}
+      <TooltipTrigger asChild>{children}</TooltipTrigger>
+      <TooltipContent
+        variant={variant}
+        size={size}
+        side={side}
+        align={align}
+        sideOffset={sideOffset}
+        alignOffset={alignOffset}
+        showArrow={showArrow}
+        {...props}
       >
-        <TooltipTrigger asChild>{children}</TooltipTrigger>
-        <TooltipContent
-          variant={variant}
-          size={size}
-          side={side}
-          align={align}
-          sideOffset={sideOffset}
-          alignOffset={alignOffset}
-          showArrow={showArrow}
-          {...props}
-        >
-          {content}
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+        {content}
+      </TooltipContent>
+    </Tooltip>
   );
 }
 
