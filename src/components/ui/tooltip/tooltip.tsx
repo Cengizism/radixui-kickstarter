@@ -34,16 +34,15 @@ const tooltipContentVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-popover text-popover-foreground border-border",
-        secondary: "bg-secondary text-secondary-foreground border-secondary",
-        accent: "bg-accent text-accent-foreground border-accent",
-        destructive:
-          "bg-destructive text-destructive-foreground border-destructive",
-        success: "bg-green-600 text-white border-green-600",
-        warning: "bg-orange-600 text-white border-orange-600",
-        info: "bg-blue-600 text-white border-blue-600",
-        dark: "bg-gray-900 text-white border-gray-800",
-        light: "bg-white text-gray-900 border-gray-200",
+        default: "bg-primary text-primary-foreground",
+        secondary: "bg-secondary text-secondary-foreground",
+        accent: "bg-accent text-accent-foreground",
+        destructive: "bg-destructive text-destructive-foreground",
+        success: "bg-green-600 text-white",
+        warning: "bg-orange-600 text-white",
+        info: "bg-blue-600 text-white",
+        dark: "bg-gray-900 text-white",
+        light: "bg-background text-foreground",
       },
       size: {
         sm: "px-2 py-1 text-xs rounded",
@@ -61,7 +60,7 @@ const tooltipContentVariants = cva(
 const tooltipArrowVariants = cva("", {
   variants: {
     variant: {
-      default: "fill-popover",
+      default: "fill-primary",
       secondary: "fill-secondary",
       accent: "fill-accent",
       destructive: "fill-destructive",
@@ -69,7 +68,7 @@ const tooltipArrowVariants = cva("", {
       warning: "fill-orange-600",
       info: "fill-blue-600",
       dark: "fill-gray-900",
-      light: "fill-white",
+      light: "fill-background",
     },
   },
   defaultVariants: {
