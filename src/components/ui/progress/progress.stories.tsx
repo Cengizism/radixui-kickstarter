@@ -1,8 +1,13 @@
-import { Badge } from "../badge/badge";
-import { Button } from "@/components/ui/button";
-import { CheckCircle, Pause, Play, RotateCcw } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
-import { useEffect, useMemo, useState } from "react";
+import { Badge } from '../badge/badge';
+import { Button } from '@/components/ui/button';
+import {
+  CheckCircle,
+  Pause,
+  Play,
+  RotateCcw
+  } from 'lucide-react';
+import { Progress } from '@/components/ui/progress';
+import { useEffect, useMemo, useState } from 'react';
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta = {
@@ -156,6 +161,11 @@ export const Playground: Story = {
     variant: "default",
     color: "default",
   },
+  render: (args) => (
+    <div className="w-80">
+      <Progress {...args} />
+    </div>
+  ),
   parameters: {
     docs: {
       description: {
@@ -170,6 +180,18 @@ export const Playground: Story = {
 export const Default: Story = {
   args: {
     value: 60,
+  },
+  render: (args) => (
+    <div className="w-80">
+      <Progress {...args} />
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: "Basic progress bar showing 60% completion.",
+      },
+    },
   },
 };
 
