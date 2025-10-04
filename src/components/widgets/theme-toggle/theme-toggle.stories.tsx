@@ -1,3 +1,5 @@
+import { SimpleThemeToggle, ThemeToggle } from "./theme-toggle";
+import { ThemeProvider } from "./theme-provider";
 import {
   Card,
   CardContent,
@@ -5,12 +7,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card/card";
-import { SimpleThemeToggle, ThemeToggle } from "@/components/theme-toggle";
-import { ThemeProvider } from "@/components/theme-provider";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta = {
-  title: "Components/ThemeToggle",
+  title: "Widgets/ThemeToggle",
   component: ThemeToggle,
   parameters: {
     layout: "centered",

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { ThemeToggle } from "@/components/widgets/theme-toggle";
 
 export const Route = createFileRoute("/")({
   component: HomePage,

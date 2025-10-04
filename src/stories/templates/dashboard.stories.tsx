@@ -3,8 +3,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Footer } from "@/components/layout/footer/footer";
 import { Header } from "@/components/layout/header/header";
-import { SimpleThemeToggle, ThemeToggle } from "@/components/theme-toggle";
-import { ThemeProvider } from "@/components/theme-provider";
+import {
+  SimpleThemeToggle,
+  ThemeToggle,
+} from "@/components/widgets/theme-toggle";
+import { ThemeProvider } from "@/components/widgets/theme-toggle";
 import {
   Topbar,
   TopbarActions,
