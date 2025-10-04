@@ -1,6 +1,6 @@
-import * as React from "react";
-import { cn } from "@/lib/utils";
-import { Tabs as TabsPrimitive } from "radix-ui";
+import * as React from 'react';
+import { cn } from '@/lib/utils';
+import { Tabs as TabsPrimitive } from 'radix-ui';
 import { cva, type VariantProps } from "class-variance-authority";
 
 // Tabs Root
@@ -150,7 +150,7 @@ const tabsContentVariants = cva(
       variant: {
         default: "rounded-lg border border-border bg-background p-4",
         minimal: "bg-transparent",
-        card: "rounded-lg border border-border bg-card p-6 shadow-sm",
+        card: "rounded-lg border border-border bg-background p-6 shadow-sm",
       },
       orientation: {
         horizontal: "w-full",

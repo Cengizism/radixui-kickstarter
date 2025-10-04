@@ -1,13 +1,13 @@
-import { Badge } from "@/components/ui/badge/badge";
-import { Button } from "@/components/ui/button/button";
-import { Input } from "@/components/ui/input/input";
+import { Badge } from '@/components/ui/badge/badge';
+import { Button } from '@/components/ui/button/button';
+import { Input } from '@/components/ui/input/input';
+import { SimpleThemeToggle, ThemeSelect, ThemeToggle } from './theme-toggle';
+import { ThemeProvider } from './theme-provider';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover/popover";
-import { SimpleThemeToggle, ThemeSelect, ThemeToggle } from "./theme-toggle";
-import { ThemeProvider } from "./theme-provider";
 import {
   Tooltip,
   TooltipContent,
@@ -287,7 +287,7 @@ export const ThemeDisplay: Story = {
           <div className="space-y-4">
             <div className="bg-background border p-4 rounded">
               Background Surface
-              <div className="bg-card border p-3 rounded mt-2">
+              <div className="bg-background border p-3 rounded mt-2">
                 Card Surface
                 <div className="bg-muted p-2 rounded mt-2">
                   Muted Surface

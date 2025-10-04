@@ -1,7 +1,7 @@
-import * as React from "react";
-import { ChevronDown } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Collapsible as CollapsiblePrimitive } from "radix-ui";
+import * as React from 'react';
+import { ChevronDown } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Collapsible as CollapsiblePrimitive } from 'radix-ui';
 import { cva, type VariantProps } from "class-variance-authority";
 
 const Collapsible = CollapsiblePrimitive.Root;
@@ -66,7 +66,7 @@ const collapsibleContentVariants = cva(
       variant: {
         default: "",
         bordered: "border-l-2 border-muted ml-2 pl-4",
-        card: "border rounded-md bg-card",
+        card: "border rounded-md bg-background",
         highlighted: "bg-muted/30 rounded-md",
       },
     },
