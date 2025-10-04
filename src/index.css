@@ -5,54 +5,68 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222.2 84% 4.9%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 222.2 84% 4.9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --input-background: 210 40% 98%;
-    --ring: 222.2 84% 4.9%;
+    /* Base colors */
+    --background: #ffffff;
+    --foreground: #020817;
+    --border: #e2e8f0;
+    --ring: #020817;
     --radius: 0.5rem;
-    --success: 142.1 76.2% 36.3%;
-    --success-foreground: 355.7 100% 97.3%;
-    --warning: 32.2 95% 44.1%;
-    --warning-foreground: 355.7 100% 97.3%;
-    --info: 221.2 83.2% 53.3%;
-    --info-foreground: 210 40% 98%;
+
+    /* Input colors */
+    --input: #e2e8f0;
+    --input-background: #f8fafc;
+
+    /* Semantic color pairs */
+    --primary: #0f172a;
+    --primary-foreground: #f8fafc;
+    --secondary: #f1f5f9;
+    --secondary-foreground: #020817;
+    --muted: #f1f5f9;
+    --muted-foreground: #64748b;
+    --accent: #f1f5f9;
+    --accent-foreground: #020817;
+
+    /* Status colors */
+    --destructive: #ef4444;
+    --destructive-foreground: #f8fafc;
+    --success: #22c55e;
+    --success-foreground: #fef7f7;
+    --warning: #f59e0b;
+    --warning-foreground: #fef7f7;
+    --info: #3b82f6;
+    --info-foreground: #f8fafc;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --input-background: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --success: 142.1 70.6% 45.3%;
-    --success-foreground: 137.4 41.2% 4.9%;
-    --warning: 32.2 95% 44.1%;
-    --warning-foreground: 20.5 90.2% 4.3%;
-    --info: 217.2 91.2% 59.8%;
-    --info-foreground: 222.2 84% 4.9%;
+    /* Base colors */
+    --background: #020817;
+    --foreground: #f8fafc;
+    --border: #27272a;
+    --ring: #d4d4d8;
+
+    /* Input colors */
+    --input: #27272a;
+    --input-background: #27272a;
+
+    /* Semantic color pairs */
+    --primary: #f8fafc;
+    --primary-foreground: #0f172a;
+    --secondary: #27272a;
+    --secondary-foreground: #f8fafc;
+    --muted: #27272a;
+    --muted-foreground: #a1a1aa;
+    --accent: #27272a;
+    --accent-foreground: #f8fafc;
+
+    /* Status colors */
+    --destructive: #dc2626;
+    --destructive-foreground: #f8fafc;
+    --success: #16a34a;
+    --success-foreground: #0a0a0a;
+    --warning: #f59e0b;
+    --warning-foreground: #0c0a09;
+    --info: #60a5fa;
+    --info-foreground: #020817;
   }
 }
 
