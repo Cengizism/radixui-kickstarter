@@ -15,7 +15,6 @@ import {
   Users,
   TrendingUp,
   Package,
-  Zap,
   Shield,
   Globe,
 } from "lucide-react";
@@ -31,7 +30,6 @@ import {
   CardCover,
   CardMeta,
   CardTags,
-  CardIcon,
 } from "./card";
 
 const meta = {
@@ -542,146 +540,84 @@ export const ArticleCards: Story = {
   },
 };
 
-// Stats and Feature Cards
-export const StatsAndFeatureCards: Story = {
+// Statistics Cards
+export const StatisticsCards: Story = {
   render: () => (
-    <div className="space-y-6">
-      <div className="space-y-2">
-        <h3 className="text-lg font-semibold">Statistics Cards</h3>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <Card className="max-w-xs">
-            <CardHeader className="pb-2">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Total Revenue
-                </CardTitle>
-                <TrendingUp className="h-4 w-4 text-muted-foreground" />
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">$45,231.89</div>
-              <p className="text-xs text-muted-foreground">
-                +20.1% from last month
-              </p>
-            </CardContent>
-          </Card>
+    <div className="space-y-2">
+      <h3 className="text-lg font-semibold">Statistics Cards</h3>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <Card className="max-w-xs">
+          <CardHeader className="pb-2">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-sm font-medium text-muted-foreground">
+                Total Revenue
+              </CardTitle>
+              <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">$45,231.89</div>
+            <p className="text-xs text-muted-foreground">
+              +20.1% from last month
+            </p>
+          </CardContent>
+        </Card>
 
-          <Card className="max-w-xs">
-            <CardHeader className="pb-2">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Active Users
-                </CardTitle>
-                <Users className="h-4 w-4 text-muted-foreground" />
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">2,350</div>
-              <p className="text-xs text-muted-foreground">
-                +180 from last week
-              </p>
-            </CardContent>
-          </Card>
+        <Card className="max-w-xs">
+          <CardHeader className="pb-2">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-sm font-medium text-muted-foreground">
+                Active Users
+              </CardTitle>
+              <Users className="h-4 w-4 text-muted-foreground" />
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">2,350</div>
+            <p className="text-xs text-muted-foreground">+180 from last week</p>
+          </CardContent>
+        </Card>
 
-          <Card className="max-w-xs">
-            <CardHeader className="pb-2">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Orders
-                </CardTitle>
-                <Package className="h-4 w-4 text-muted-foreground" />
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">12,234</div>
-              <p className="text-xs text-muted-foreground">
-                +19% from last month
-              </p>
-            </CardContent>
-          </Card>
+        <Card className="max-w-xs">
+          <CardHeader className="pb-2">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-sm font-medium text-muted-foreground">
+                Orders
+              </CardTitle>
+              <Package className="h-4 w-4 text-muted-foreground" />
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">12,234</div>
+            <p className="text-xs text-muted-foreground">
+              +19% from last month
+            </p>
+          </CardContent>
+        </Card>
 
-          <Card className="max-w-xs">
-            <CardHeader className="pb-2">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Growth Rate
-                </CardTitle>
-                <Star className="h-4 w-4 text-muted-foreground" />
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">24.5%</div>
-              <p className="text-xs text-muted-foreground">
-                +2.5% from last quarter
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-
-      <div className="space-y-2">
-        <h3 className="text-lg font-semibold">Feature Cards</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="max-w-sm text-center">
-            <CardHeader>
-              <CardIcon className="mx-auto mb-4">
-                <Zap className="h-6 w-6" />
-              </CardIcon>
-              <CardTitle>Lightning Fast</CardTitle>
-              <CardDescription>
-                Optimized for speed and performance
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                Built with modern technologies to ensure your application runs
-                at peak performance.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="max-w-sm text-center">
-            <CardHeader>
-              <CardIcon className="mx-auto mb-4">
-                <Shield className="h-6 w-6" />
-              </CardIcon>
-              <CardTitle>Secure by Default</CardTitle>
-              <CardDescription>
-                Enterprise-grade security features
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                Advanced security measures to protect your data and ensure
-                compliance.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="max-w-sm text-center">
-            <CardHeader>
-              <CardIcon className="mx-auto mb-4">
-                <Globe className="h-6 w-6" />
-              </CardIcon>
-              <CardTitle>Global Scale</CardTitle>
-              <CardDescription>Deploy anywhere in the world</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                Worldwide infrastructure to ensure your application is always
-                available.
-              </p>
-            </CardContent>
-          </Card>
-        </div>
+        <Card className="max-w-xs">
+          <CardHeader className="pb-2">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-sm font-medium text-muted-foreground">
+                Growth Rate
+              </CardTitle>
+              <Star className="h-4 w-4 text-muted-foreground" />
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">24.5%</div>
+            <p className="text-xs text-muted-foreground">
+              +2.5% from last quarter
+            </p>
+          </CardContent>
+        </Card>
       </div>
     </div>
   ),
   parameters: {
     docs: {
       description: {
-        story:
-          "Statistics cards for dashboards and feature cards for marketing pages.",
+        story: "Statistics cards for dashboards and analytics.",
       },
     },
   },

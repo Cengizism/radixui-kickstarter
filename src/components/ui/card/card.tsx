@@ -119,19 +119,6 @@ function CardTags({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-function CardIcon({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card-icon"
-      className={cn(
-        "flex h-12 w-12 items-center justify-center rounded-lg bg-muted",
-        className
-      )}
-      {...props}
-    />
-  );
-}
-
 export {
   Card,
   CardHeader,
@@ -143,5 +130,4 @@ export {
   CardCover,
   CardMeta,
   CardTags,
-  CardIcon,
 };
