@@ -34,12 +34,16 @@ const tooltipContentVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-background text-foreground border",
-        light: "bg-background text-foreground border",
-        dark: "bg-foreground text-background",
+        default: "bg-foreground text-background",
+        light: "bg-foreground text-background",
+        dark: "bg-background text-foreground",
+        secondary: "bg-secondary text-secondary-foreground",
+        destructive: "bg-destructive text-destructive-foreground",
+        success: "bg-success text-success-foreground",
+        warning: "bg-warning text-warning-foreground",
       },
       size: {
-        sm: "px-2 py-1 text-xs",
+        sm: "px-2 pt-1 pb-1.5 text-xs",
         default: "px-3 py-1.5 text-sm",
         lg: "px-4 py-2 text-base",
       },
@@ -54,9 +58,13 @@ const tooltipContentVariants = cva(
 const tooltipArrowVariants = cva("", {
   variants: {
     variant: {
-      default: "fill-primary",
-      light: "fill-background stroke-border",
-      dark: "fill-popover stroke-border",
+      default: "fill-foreground",
+      light: "fill-foreground",
+      dark: "fill-background",
+      secondary: "fill-secondary",
+      destructive: "fill-destructive",
+      success: "fill-success",
+      warning: "fill-warning",
     },
   },
   defaultVariants: {
