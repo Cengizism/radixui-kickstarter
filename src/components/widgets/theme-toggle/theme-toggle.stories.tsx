@@ -52,7 +52,7 @@ export const SimpleToggle: Story = {
 
 export const InContext: Story = {
   render: () => (
-    <div className="space-y-6 w-full max-w-2xl">
+    <div className="space-y-6 w-full max-w-4xl">
       {/* Header with theme toggle */}
       <div className="flex items-center justify-between p-4 border rounded-lg">
         <div>
@@ -62,6 +62,43 @@ export const InContext: Story = {
           </p>
         </div>
         <ThemeToggle />
+      </div>
+
+      {/* Theme showcase section */}
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold">Light Theme Elements</h3>
+          <div className="p-4 bg-background border rounded-lg space-y-2">
+            <div className="h-4 bg-primary rounded"></div>
+            <div className="h-4 bg-muted rounded"></div>
+            <div className="h-4 bg-accent rounded"></div>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold">Interactive Elements</h3>
+          <div className="space-y-2">
+            <button className="w-full px-4 py-2 bg-primary text-primary-foreground rounded">
+              Primary Button
+            </button>
+            <button className="w-full px-4 py-2 border border-input bg-background rounded">
+              Secondary Button
+            </button>
+            <button className="w-full px-4 py-2 hover:bg-accent hover:text-accent-foreground rounded">
+              Ghost Button
+            </button>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold">Color Variations</h3>
+          <div className="grid grid-cols-2 gap-2">
+            <div className="h-8 bg-destructive rounded"></div>
+            <div className="h-8 bg-primary rounded"></div>
+            <div className="h-8 bg-muted rounded"></div>
+            <div className="h-8 bg-accent rounded"></div>
+          </div>
+        </div>
       </div>
 
       {/* Sample content to show theme effect */}
@@ -92,7 +129,7 @@ export const InContext: Story = {
     docs: {
       description: {
         story:
-          "Example of theme toggle used in context with other UI elements showing the theme effects.",
+          "Comprehensive example showing theme toggle in context with various UI elements demonstrating how different components and colors adapt to theme changes.",
       },
     },
   },
