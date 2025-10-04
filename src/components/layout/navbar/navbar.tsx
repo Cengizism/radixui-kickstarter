@@ -1,8 +1,8 @@
-import * as React from "react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { PanelLeft } from "lucide-react";
-import { useIsMobile } from "@/hooks/use-mobile";
+import * as React from 'react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { PanelLeft } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 import {
   Tooltip,
   TooltipContent,
@@ -182,7 +182,7 @@ function Navbar({
       <div
         data-slot="navbar"
         className={cn(
-          "bg-sidebar text-sidebar-foreground flex h-full flex-col border-r border-sidebar-border",
+          "bg-background text-foreground flex h-full flex-col border-r border-border",
           className
         )}
         style={{ width: "var(--navbar-width)" }}
@@ -200,7 +200,7 @@ function Navbar({
           data-navbar="navbar"
           data-slot="navbar"
           data-mobile="true"
-          className="bg-sidebar text-sidebar-foreground p-0 [&>button]:hidden"
+          className="bg-background text-foreground p-0 [&>button]:hidden"
           style={
             {
               width: "var(--navbar-width)",
@@ -223,7 +223,7 @@ function Navbar({
 
   return (
     <div
-      className="group peer text-sidebar-foreground block"
+      className="group peer text-foreground block"
       data-state={state}
       data-collapsible={state === "collapsed" ? collapsible : ""}
       data-side="left"
@@ -265,7 +265,7 @@ function Navbar({
         <div
           data-navbar="navbar"
           data-slot="navbar-inner"
-          className="bg-sidebar border-r border-sidebar-border flex h-full w-full flex-col"
+          className="bg-background border-r border-border flex h-full w-full flex-col"
         >
           <Panel isCollapsed={isCollapsed && collapsible === "icon"}>
             {children}
