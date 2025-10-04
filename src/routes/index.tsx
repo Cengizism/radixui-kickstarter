@@ -8,11 +8,9 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   return (
     <main className="flex-1 overflow-auto p-6">
-      {/* Theme toggle in top right corner */}
       <div className="absolute top-6 right-6">
         <ThemeToggle />
       </div>
-
       <div className="flex flex-col items-center justify-center min-h-[50vh] text-center space-y-4">
         <h1 className="text-4xl font-bold tracking-tight">
           Welcome to Radix UI Kickstarter
