@@ -1,13 +1,55 @@
 import { useEffect, useState } from "react";
 import { useTheme as useNextThemes } from "next-themes";
 
-export function useTheme() {
-  const { theme, setTheme, resolvedTheme } = useNextThemes();
+export interface ThemeConfig {
+  themes?: string[];
+  defaultTheme?: string;
+}
+
+export function useTheme(config?: ThemeConfig) {
+  const { theme, setTheme, resolvedTheme, themes } = useNextThemes();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const availableThemes = config?.themes ||
+    themes || ["light", "dark", "system"];
+
+  const cycleTheme = () => {
+    const currentIndex = availableThemes.indexOf(theme || "system");
+    const nextIndex = (currentIndex + 1) % availableThemes.length;
+    setTheme(availableThemes[nextIndex]);
+  };
+
+  const getThemeIcon = () => {
+    if (!mounted) return "system";
+
+    switch (resolvedTheme) {
+      case "dark":
+        return "dark";
+      case "light":
+        return "light";
+      default:
+        return "system";
+    }
+  };
+
+  const getThemeLabel = () => {
+    if (!mounted) return "System";
+
+    switch (theme) {
+      case "dark":
+        return "Dark";
+      case "light":
+        return "Light";
+      case "system":
+        return "System";
+      default:
+        return "System";
+    }
+  };
 
   // Prevent hydration mismatch
   if (!mounted) {
@@ -16,6 +58,10 @@ export function useTheme() {
       setTheme,
       resolvedTheme: undefined,
       mounted: false,
+      cycleTheme,
+      getThemeIcon,
+      getThemeLabel,
+      availableThemes,
     };
   }
 
@@ -24,6 +70,10 @@ export function useTheme() {
     setTheme,
     resolvedTheme,
     mounted: true,
+    cycleTheme,
+    getThemeIcon,
+    getThemeLabel,
+    availableThemes,
   };
 }
 
