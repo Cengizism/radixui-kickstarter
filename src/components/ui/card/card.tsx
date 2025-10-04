@@ -83,6 +83,55 @@ function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
+function CardCover({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card-cover"
+      className={cn(
+        "aspect-video bg-muted flex items-center justify-center relative overflow-hidden",
+        className
+      )}
+      {...props}
+    />
+  );
+}
+
+function CardMeta({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card-meta"
+      className={cn(
+        "flex items-center gap-2 text-sm text-muted-foreground",
+        className
+      )}
+      {...props}
+    />
+  );
+}
+
+function CardTags({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card-tags"
+      className={cn("flex flex-wrap gap-1", className)}
+      {...props}
+    />
+  );
+}
+
+function CardIcon({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card-icon"
+      className={cn(
+        "flex h-12 w-12 items-center justify-center rounded-lg bg-muted",
+        className
+      )}
+      {...props}
+    />
+  );
+}
+
 export {
   Card,
   CardHeader,
@@ -91,4 +140,8 @@ export {
   CardAction,
   CardDescription,
   CardContent,
+  CardCover,
+  CardMeta,
+  CardTags,
+  CardIcon,
 };

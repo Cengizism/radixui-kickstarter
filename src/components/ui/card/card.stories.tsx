@@ -1,8 +1,24 @@
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import { CheckCircle, MoreVertical } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
+import {
+  CheckCircle,
+  MoreVertical,
+  Heart,
+  Star,
+  MessageCircle,
+  Share,
+  Calendar,
+  MapPin,
+  Users,
+  TrendingUp,
+  Package,
+  Zap,
+  Shield,
+  Globe,
+} from "lucide-react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import {
   Card,
@@ -12,6 +28,10 @@ import {
   CardHeader,
   CardTitle,
   CardAction,
+  CardCover,
+  CardMeta,
+  CardTags,
+  CardIcon,
 } from "./card";
 
 const meta = {
@@ -224,87 +244,6 @@ export const Default: Story = {
   },
 };
 
-// Multiple cards
-export const Grid: Story = {
-  render: () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <Card>
-        <CardHeader>
-          <CardTitle>First Card</CardTitle>
-          <CardDescription>This is the first card in the grid.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            <p>Content for the first card.</p>
-            <Badge variant="default">Active</Badge>
-          </div>
-        </CardContent>
-        <CardFooter>
-          <Button size="sm">Learn More</Button>
-        </CardFooter>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Second Card</CardTitle>
-          <CardDescription>
-            This is the second card in the grid.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            <p>Content for the second card.</p>
-            <Badge variant="secondary">Draft</Badge>
-          </div>
-        </CardContent>
-        <CardFooter>
-          <Button size="sm" variant="outline">
-            View Details
-          </Button>
-        </CardFooter>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Third Card</CardTitle>
-          <CardDescription>This is the third card in the grid.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p>
-            Content for the third card with more text to demonstrate how cards
-            handle varying content lengths.
-          </p>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Fourth Card</CardTitle>
-          <CardDescription>
-            This is the fourth card in the grid.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p>Simple content for the fourth card.</p>
-        </CardContent>
-        <CardFooter>
-          <Button size="sm">Primary Action</Button>
-          <Button size="sm" variant="outline">
-            Secondary
-          </Button>
-        </CardFooter>
-      </Card>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Multiple cards arranged in a responsive grid.",
-      },
-    },
-  },
-};
-
 // Content variations
 export const ContentVariations: Story = {
   render: () => (
@@ -378,6 +317,371 @@ export const ContentVariations: Story = {
     docs: {
       description: {
         story: "Different types of content that can be displayed in cards.",
+      },
+    },
+  },
+};
+
+// User Profile Cards
+export const UserCards: Story = {
+  render: () => (
+    <div className="space-y-6">
+      <div className="space-y-2">
+        <h3 className="text-lg font-semibold">User Profile Cards</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <Card className="max-w-md">
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <Avatar>
+                  <AvatarFallback>JD</AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col gap-0.5">
+                  <div className="font-medium text-sm">John Doe</div>
+                  <div className="text-muted-foreground text-xs">@johndoe</div>
+                </div>
+              </div>
+              <CardAction>
+                <Button variant="outline" size="sm">
+                  Follow
+                </Button>
+              </CardAction>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm">
+                Frontend developer passionate about creating amazing user
+                experiences.
+              </p>
+              <CardMeta className="mt-3">
+                <MapPin className="h-4 w-4" />
+                <span>San Francisco, CA</span>
+              </CardMeta>
+            </CardContent>
+          </Card>
+
+          <Card className="max-w-md">
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <Avatar>
+                  <AvatarFallback>SA</AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col gap-0.5">
+                  <div className="font-medium text-sm">Sarah Anderson</div>
+                  <div className="text-muted-foreground text-xs">
+                    @sarah_codes
+                  </div>
+                </div>
+              </div>
+              <CardAction>
+                <Button variant="default" size="sm">
+                  Following
+                </Button>
+              </CardAction>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm">
+                Full-stack engineer building scalable web applications.
+              </p>
+              <CardMeta className="mt-3">
+                <Users className="h-4 w-4" />
+                <span>1.2k followers</span>
+              </CardMeta>
+            </CardContent>
+          </Card>
+
+          <Card className="text-center">
+            <CardHeader className="text-center">
+              <Avatar className="mx-auto mb-2 h-16 w-16">
+                <AvatarFallback className="text-lg">MJ</AvatarFallback>
+              </Avatar>
+              <CardTitle>Michael Johnson</CardTitle>
+              <CardDescription>Senior Product Manager</CardDescription>
+            </CardHeader>
+            <CardContent className="text-center space-y-4">
+              <div className="flex justify-center gap-4 text-sm">
+                <div className="text-center">
+                  <div className="font-semibold">128</div>
+                  <div className="text-muted-foreground">Projects</div>
+                </div>
+                <div className="text-center">
+                  <div className="font-semibold">2.4k</div>
+                  <div className="text-muted-foreground">Followers</div>
+                </div>
+                <div className="text-center">
+                  <div className="font-semibold">890</div>
+                  <div className="text-muted-foreground">Following</div>
+                </div>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button className="w-full">View Profile</Button>
+            </CardFooter>
+          </Card>
+        </div>
+      </div>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Various user profile card layouts with avatars and user information.",
+      },
+    },
+  },
+};
+
+// Article Cards
+export const ArticleCards: Story = {
+  render: () => (
+    <div className="space-y-6">
+      <div className="space-y-2">
+        <h3 className="text-lg font-semibold">Article Cards</h3>
+        <div className="space-y-4">
+          {/* Vertical Article Card */}
+          <Card className="max-w-lg">
+            <CardCover className="bg-gradient-to-br from-indigo-400 to-purple-600">
+              <div className="text-center text-white">
+                <Globe className="h-12 w-12 mx-auto mb-2" />
+                <div className="text-sm">Article Cover</div>
+              </div>
+            </CardCover>
+            <CardHeader>
+              <CardTags>
+                <Badge variant="outline">Technology</Badge>
+                <Badge variant="outline">Web Development</Badge>
+              </CardTags>
+              <CardTitle>The Future of Web Development</CardTitle>
+              <CardDescription>
+                Exploring emerging technologies and trends that will shape the
+                future of web development.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <CardMeta>
+                <Calendar className="h-4 w-4" />
+                <time>March 15, 2024</time>
+                <span>•</span>
+                <span>5 min read</span>
+              </CardMeta>
+            </CardContent>
+            <CardFooter>
+              <div className="flex items-center gap-3">
+                <Avatar size="sm">
+                  <AvatarFallback className="text-xs">AD</AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col gap-0.5">
+                  <div className="font-medium text-sm">Alex Developer</div>
+                </div>
+              </div>
+              <div className="ml-auto flex gap-2">
+                <Button variant="ghost" size="icon">
+                  <Heart className="h-4 w-4" />
+                </Button>
+                <Button variant="ghost" size="icon">
+                  <MessageCircle className="h-4 w-4" />
+                </Button>
+                <Button variant="ghost" size="icon">
+                  <Share className="h-4 w-4" />
+                </Button>
+              </div>
+            </CardFooter>
+          </Card>
+
+          {/* Horizontal Article Card */}
+          <Card className="max-w-2xl flex-row gap-4 items-start">
+            <CardCover className="w-48 flex-shrink-0 aspect-[4/3] bg-gradient-to-br from-emerald-400 to-teal-600 rounded-sm">
+              <div className="text-center text-white">
+                <Shield className="h-8 w-8 mx-auto mb-1" />
+                <div className="text-xs">Article Cover</div>
+              </div>
+            </CardCover>
+            <div className="flex flex-col flex-1">
+              <CardHeader className="pb-2">
+                <CardTags>
+                  <Badge variant="outline">Design</Badge>
+                </CardTags>
+                <CardTitle className="text-lg">
+                  Building Better User Interfaces
+                </CardTitle>
+                <CardDescription className="text-sm">
+                  A comprehensive guide to modern UI/UX principles and best
+                  practices.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="pt-0 flex-1">
+                <CardMeta>
+                  <Calendar className="h-4 w-4" />
+                  <time>March 12, 2024</time>
+                  <span>•</span>
+                  <span>8 min read</span>
+                </CardMeta>
+              </CardContent>
+              <CardFooter className="pt-2">
+                <div className="flex items-center gap-3">
+                  <Avatar size="sm">
+                    <AvatarFallback className="text-xs">UD</AvatarFallback>
+                  </Avatar>
+                  <div className="flex flex-col gap-0.5">
+                    <div className="font-medium text-sm">UI Designer</div>
+                  </div>
+                </div>
+              </CardFooter>
+            </div>
+          </Card>
+        </div>
+      </div>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Article cards in both vertical and horizontal orientations with rich metadata.",
+      },
+    },
+  },
+};
+
+// Stats and Feature Cards
+export const StatsAndFeatureCards: Story = {
+  render: () => (
+    <div className="space-y-6">
+      <div className="space-y-2">
+        <h3 className="text-lg font-semibold">Statistics Cards</h3>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <Card className="max-w-xs">
+            <CardHeader className="pb-2">
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-sm font-medium text-muted-foreground">
+                  Total Revenue
+                </CardTitle>
+                <TrendingUp className="h-4 w-4 text-muted-foreground" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">$45,231.89</div>
+              <p className="text-xs text-muted-foreground">
+                +20.1% from last month
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="max-w-xs">
+            <CardHeader className="pb-2">
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-sm font-medium text-muted-foreground">
+                  Active Users
+                </CardTitle>
+                <Users className="h-4 w-4 text-muted-foreground" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">2,350</div>
+              <p className="text-xs text-muted-foreground">
+                +180 from last week
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="max-w-xs">
+            <CardHeader className="pb-2">
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-sm font-medium text-muted-foreground">
+                  Orders
+                </CardTitle>
+                <Package className="h-4 w-4 text-muted-foreground" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">12,234</div>
+              <p className="text-xs text-muted-foreground">
+                +19% from last month
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="max-w-xs">
+            <CardHeader className="pb-2">
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-sm font-medium text-muted-foreground">
+                  Growth Rate
+                </CardTitle>
+                <Star className="h-4 w-4 text-muted-foreground" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">24.5%</div>
+              <p className="text-xs text-muted-foreground">
+                +2.5% from last quarter
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <h3 className="text-lg font-semibold">Feature Cards</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Card className="max-w-sm text-center">
+            <CardHeader>
+              <CardIcon className="mx-auto mb-4">
+                <Zap className="h-6 w-6" />
+              </CardIcon>
+              <CardTitle>Lightning Fast</CardTitle>
+              <CardDescription>
+                Optimized for speed and performance
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                Built with modern technologies to ensure your application runs
+                at peak performance.
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="max-w-sm text-center">
+            <CardHeader>
+              <CardIcon className="mx-auto mb-4">
+                <Shield className="h-6 w-6" />
+              </CardIcon>
+              <CardTitle>Secure by Default</CardTitle>
+              <CardDescription>
+                Enterprise-grade security features
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                Advanced security measures to protect your data and ensure
+                compliance.
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="max-w-sm text-center">
+            <CardHeader>
+              <CardIcon className="mx-auto mb-4">
+                <Globe className="h-6 w-6" />
+              </CardIcon>
+              <CardTitle>Global Scale</CardTitle>
+              <CardDescription>Deploy anywhere in the world</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                Worldwide infrastructure to ensure your application is always
+                available.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Statistics cards for dashboards and feature cards for marketing pages.",
       },
     },
   },
