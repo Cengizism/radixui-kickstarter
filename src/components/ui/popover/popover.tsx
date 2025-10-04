@@ -21,10 +21,10 @@ const popoverContentVariants = cva(
         accent: "bg-accent text-accent-foreground border-border",
         destructive:
           "bg-destructive text-destructive-foreground border-destructive",
-        success: "bg-green-600 text-white border-green-600",
-        warning: "bg-orange-600 text-white border-orange-600",
-        info: "bg-blue-600 text-white border-blue-600",
-        dark: "bg-gray-900 text-white border-gray-800",
+        success: "bg-success text-success-foreground border-success",
+        warning: "bg-warning text-warning-foreground border-warning",
+        info: "bg-info text-info-foreground border-info",
+        dark: "bg-popover text-popover-foreground border-border",
         light: "bg-background text-foreground border-border",
       },
       size: {

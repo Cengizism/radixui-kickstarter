@@ -30,24 +30,18 @@ function TooltipTrigger({
 }
 
 const tooltipContentVariants = cva(
-  "z-50 w-fit overflow-hidden rounded-md px-3 py-1.5 text-sm animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+  "z-50 overflow-hidden rounded-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground",
-        secondary: "bg-secondary text-secondary-foreground",
-        accent: "bg-accent text-accent-foreground",
-        destructive: "bg-destructive text-destructive-foreground",
-        success: "bg-green-600 text-white",
-        warning: "bg-orange-600 text-white",
-        info: "bg-blue-600 text-white",
-        dark: "bg-gray-900 text-white",
-        light: "bg-background text-foreground",
+        default: "bg-popover text-popover-foreground border",
+        light: "bg-background text-foreground border",
+        dark: "bg-foreground text-background",
       },
       size: {
-        sm: "px-2 py-1 text-xs rounded",
-        default: "px-3 py-1.5 text-sm rounded-md",
-        lg: "px-4 py-2 text-base rounded-lg",
+        sm: "px-2 py-1 text-xs",
+        default: "px-3 py-1.5 text-sm",
+        lg: "px-4 py-2 text-base",
       },
     },
     defaultVariants: {
@@ -61,14 +55,8 @@ const tooltipArrowVariants = cva("", {
   variants: {
     variant: {
       default: "fill-primary",
-      secondary: "fill-secondary",
-      accent: "fill-accent",
-      destructive: "fill-destructive",
-      success: "fill-green-600",
-      warning: "fill-orange-600",
-      info: "fill-blue-600",
-      dark: "fill-gray-900",
-      light: "fill-background",
+      light: "fill-background stroke-border",
+      dark: "fill-popover stroke-border",
     },
   },
   defaultVariants: {

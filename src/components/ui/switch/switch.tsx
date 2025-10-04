@@ -23,9 +23,9 @@ const switchRootVariants = cva(
         destructive:
           "data-[state=checked]:bg-destructive data-[state=unchecked]:bg-input",
         success:
-          "data-[state=checked]:bg-green-600 data-[state=unchecked]:bg-input",
+          "data-[state=checked]:bg-success data-[state=unchecked]:bg-input",
         warning:
-          "data-[state=checked]:bg-yellow-600 data-[state=unchecked]:bg-input",
+          "data-[state=checked]:bg-warning data-[state=unchecked]:bg-input",
       },
     },
     defaultVariants: {

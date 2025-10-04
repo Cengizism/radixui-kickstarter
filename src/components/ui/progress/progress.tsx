@@ -32,10 +32,10 @@ const progressIndicatorVariants = cva(
       color: {
         default: "bg-primary",
         secondary: "bg-secondary-foreground",
-        success: "bg-green-500",
-        warning: "bg-yellow-500",
-        danger: "bg-red-500",
-        info: "bg-blue-500",
+        success: "bg-success",
+        warning: "bg-warning",
+        danger: "bg-destructive",
+        info: "bg-info",
       },
       animated: {
         true: "transition-transform duration-300",
@@ -59,6 +59,7 @@ interface ProgressProps
   animated?: boolean;
   showLabel?: boolean;
   label?: string;
+  // eslint-disable-next-line no-unused-vars
   formatLabel?: (value: number, max: number) => string;
 }
 

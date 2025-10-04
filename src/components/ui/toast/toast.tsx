@@ -40,11 +40,9 @@ const toastVariants = cva(
         default: "border bg-background text-foreground",
         destructive:
           "destructive border-destructive bg-destructive text-destructive-foreground",
-        success:
-          "border-green-200 bg-green-50 text-green-900 dark:border-green-800 dark:bg-green-900/20 dark:text-green-100",
-        warning:
-          "border-yellow-200 bg-yellow-50 text-yellow-900 dark:border-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-100",
-        info: "border-blue-200 bg-blue-50 text-blue-900 dark:border-blue-800 dark:bg-blue-900/20 dark:text-blue-100",
+        success: "border-success/20 bg-success/10 text-success-foreground",
+        warning: "border-warning/20 bg-warning/10 text-warning-foreground",
+        info: "border-info/20 bg-info/10 text-info-foreground",
         loading: "border-muted bg-muted/50 text-muted-foreground",
       },
       size: {
@@ -68,12 +66,12 @@ const toastActionVariants = cva(
       variant: {
         default: "border-muted hover:bg-secondary text-foreground",
         destructive:
-          "border-red-200 bg-red-50 text-red-700 hover:bg-red-100 dark:border-red-800 dark:bg-red-900/20 dark:text-red-300 dark:hover:bg-red-900/50",
+          "border-destructive/20 bg-destructive/10 text-destructive hover:bg-destructive/20",
         success:
-          "border-green-300 bg-green-50 text-green-700 hover:bg-green-100 dark:border-green-600 dark:bg-green-900/20 dark:text-green-300 dark:hover:bg-green-900/50",
+          "border-success/20 bg-success/10 text-success hover:bg-success/20",
         warning:
-          "border-yellow-300 bg-yellow-50 text-yellow-700 hover:bg-yellow-100 dark:border-yellow-600 dark:bg-yellow-900/20 dark:text-yellow-300 dark:hover:bg-yellow-900/50",
-        info: "border-blue-300 bg-blue-50 text-blue-700 hover:bg-blue-100 dark:border-blue-600 dark:bg-blue-900/20 dark:text-blue-300 dark:hover:bg-blue-900/50",
+          "border-warning/20 bg-warning/10 text-warning hover:bg-warning/20",
+        info: "border-info/20 bg-info/10 text-info hover:bg-info/20",
         ghost: "border-transparent hover:bg-muted text-foreground",
       },
       size: {
