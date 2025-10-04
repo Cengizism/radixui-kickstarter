@@ -3,6 +3,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Footer } from "@/components/layout/footer/footer";
 import { Header } from "@/components/layout/header/header";
+import { SimpleThemeToggle, ThemeToggle } from "@/components/theme-toggle";
+import { ThemeProvider } from "@/components/theme-provider";
 import {
   Topbar,
   TopbarActions,
@@ -43,7 +45,6 @@ import {
   FileText,
   Search,
   Archive,
-  Moon,
   Users,
   BarChart3,
 } from "lucide-react";
@@ -187,12 +188,12 @@ const NavbarComponent = () => (
                 </Tooltip>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button size="sm" variant="ghost" className="size-8 p-0">
-                      <Moon className="size-4" />
-                    </Button>
+                    <div className="size-8">
+                      <SimpleThemeToggle />
+                    </div>
                   </TooltipTrigger>
                   <TooltipContent size="sm" side="right">
-                    Theme
+                    Toggle Theme
                   </TooltipContent>
                 </Tooltip>
               </>
@@ -207,9 +208,7 @@ const NavbarComponent = () => (
                 <Button size="sm" variant="ghost">
                   <Settings className="size-4" />
                 </Button>
-                <Button size="sm" variant="ghost">
-                  <Moon className="size-4" />
-                </Button>
+                <SimpleThemeToggle />
               </>
             )}
           </div>
@@ -233,6 +232,7 @@ const TopbarComponent = ({ title = "Dashboard" }: { title?: string }) => (
           3
         </Badge>
       </Button>
+      <ThemeToggle />
     </TopbarActions>
   </Topbar>
 );
@@ -256,28 +256,30 @@ type Story = StoryObj<typeof meta>;
 
 export const DashboardGrid: Story = {
   render: () => (
-    <TooltipProvider>
-      <NavbarProvider>
-        <div className="flex h-screen w-full">
-          <NavbarComponent />
+    <ThemeProvider>
+      <TooltipProvider>
+        <NavbarProvider>
+          <div className="flex h-screen w-full">
+            <NavbarComponent />
 
-          <div className="flex-1 flex flex-col min-h-0">
-            <TopbarComponent title="Dashboard" />
+            <div className="flex-1 flex flex-col min-h-0">
+              <TopbarComponent title="Dashboard" />
 
-            <div className="flex-1 flex flex-col overflow-auto">
-              <main className="flex-1 p-6 space-y-6">
-                <Header
-                  title="Welcome back!"
-                  description="Here's what's happening with your projects today."
-                />
-                <ContentGrid />
-              </main>
-              <Footer />
+              <div className="flex-1 flex flex-col overflow-auto">
+                <main className="flex-1 p-6 space-y-6">
+                  <Header
+                    title="Welcome back!"
+                    description="Here's what's happening with your projects today."
+                  />
+                  <ContentGrid />
+                </main>
+                <Footer />
+              </div>
             </div>
           </div>
-        </div>
-      </NavbarProvider>
-    </TooltipProvider>
+        </NavbarProvider>
+      </TooltipProvider>
+    </ThemeProvider>
   ),
   parameters: {
     docs: {
@@ -291,35 +293,116 @@ export const DashboardGrid: Story = {
 
 export const DashboardMinimal: Story = {
   render: () => (
-    <TooltipProvider>
-      <NavbarProvider>
-        <div className="flex h-screen w-full">
-          <NavbarComponent />
+    <ThemeProvider>
+      <TooltipProvider>
+        <NavbarProvider>
+          <div className="flex h-screen w-full">
+            <NavbarComponent />
 
-          <div className="flex-1 flex flex-col min-h-0">
-            <TopbarComponent title="Dashboard" />
+            <div className="flex-1 flex flex-col min-h-0">
+              <TopbarComponent title="Dashboard" />
 
-            <div className="flex-1 flex flex-col overflow-auto">
-              <main className="flex-1 p-6 space-y-6">
-                <Header
-                  title="Welcome back!"
-                  description="Here's what's happening with your projects today."
-                />
-                <StatsCardGrid />
-                <TwoColumnLayout />
-              </main>
-              <Footer />
+              <div className="flex-1 flex flex-col overflow-auto">
+                <main className="flex-1 p-6 space-y-6">
+                  <Header
+                    title="Welcome back!"
+                    description="Here's what's happening with your projects today."
+                  />
+                  <StatsCardGrid />
+                  <TwoColumnLayout />
+                </main>
+                <Footer />
+              </div>
             </div>
           </div>
-        </div>
-      </NavbarProvider>
-    </TooltipProvider>
+        </NavbarProvider>
+      </TooltipProvider>
+    </ThemeProvider>
   ),
   parameters: {
     docs: {
       description: {
         story:
           "Minimal dashboard with just stats cards and two-column layout. Footer sticks to viewport bottom.",
+      },
+    },
+  },
+};
+
+export const DashboardWithTheme: Story = {
+  render: () => (
+    <ThemeProvider>
+      <TooltipProvider>
+        <NavbarProvider>
+          <div className="flex h-screen w-full">
+            <NavbarComponent />
+
+            <div className="flex-1 flex flex-col min-h-0">
+              <TopbarComponent title="Dashboard with Theme Toggle" />
+
+              <div className="flex-1 flex flex-col overflow-auto">
+                <main className="flex-1 p-6 space-y-6">
+                  <Header
+                    title="Theme-Aware Dashboard"
+                    description="This dashboard demonstrates the theme toggle functionality. Try switching between light, dark, and system themes using the toggle in the topbar or sidebar."
+                  />
+
+                  {/* Theme showcase section */}
+                  <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-semibold">
+                        Light Theme Elements
+                      </h3>
+                      <div className="p-4 bg-background border rounded-lg space-y-2">
+                        <div className="h-4 bg-primary rounded"></div>
+                        <div className="h-4 bg-muted rounded"></div>
+                        <div className="h-4 bg-accent rounded"></div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-semibold">
+                        Interactive Elements
+                      </h3>
+                      <div className="space-y-2">
+                        <Button className="w-full">Primary Button</Button>
+                        <Button variant="outline" className="w-full">
+                          Secondary Button
+                        </Button>
+                        <Button variant="ghost" className="w-full">
+                          Ghost Button
+                        </Button>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-semibold">
+                        Color Variations
+                      </h3>
+                      <div className="grid grid-cols-2 gap-2">
+                        <div className="h-8 bg-destructive rounded"></div>
+                        <div className="h-8 bg-primary rounded"></div>
+                        <div className="h-8 bg-muted rounded"></div>
+                        <div className="h-8 bg-accent rounded"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <ContentGrid />
+                </main>
+                <Footer />
+              </div>
+            </div>
+          </div>
+        </NavbarProvider>
+      </TooltipProvider>
+    </ThemeProvider>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Dashboard specifically showcasing theme toggle functionality. Includes theme toggle buttons in both the topbar and sidebar, with visual elements that demonstrate the theme changes.",
       },
     },
   },
