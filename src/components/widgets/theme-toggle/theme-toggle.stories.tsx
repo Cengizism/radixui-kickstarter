@@ -1,4 +1,4 @@
-import { SimpleThemeToggle, ThemeToggle } from "./theme-toggle";
+import { SimpleThemeToggle, ThemeSelect, ThemeToggle } from "./theme-toggle";
 import { ThemeProvider } from "./theme-provider";
 import {
   Card,
@@ -44,7 +44,7 @@ export const SimpleToggle: Story = {
     docs: {
       description: {
         story:
-          "A simple theme toggle that cycles through light → dark → system themes.",
+          "A simple theme toggle that switches only between light and dark themes. Shows the opposite icon of the theme it will activate (moon when light is active, sun when dark is active).",
       },
     },
   },
@@ -135,23 +135,44 @@ export const InContext: Story = {
   },
 };
 
+export const FormSelect: Story = {
+  render: () => (
+    <div className="max-w-sm">
+      <ThemeSelect />
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Theme select component for forms and settings pages with proper label and select dropdown.",
+      },
+    },
+  },
+};
+
 export const AllVariants: Story = {
   render: () => (
-    <div className="space-y-4">
-      <div className="flex items-center gap-4">
-        <span className="text-sm font-medium">Dropdown style:</span>
+    <div className="space-y-6 max-w-md">
+      <div className="flex items-center justify-between">
+        <span className="text-sm font-medium">Icon with dropdown:</span>
         <ThemeToggle />
       </div>
-      <div className="flex items-center gap-4">
-        <span className="text-sm font-medium">Simple toggle:</span>
+      <div className="flex items-center justify-between">
+        <span className="text-sm font-medium">Simple toggle (light/dark):</span>
         <SimpleThemeToggle />
+      </div>
+      <div className="space-y-2">
+        <span className="text-sm font-medium">Form select:</span>
+        <ThemeSelect label="Choose Theme" />
       </div>
     </div>
   ),
   parameters: {
     docs: {
       description: {
-        story: "Both available theme toggle variants side by side.",
+        story:
+          "All three theme toggle variants: icon with dropdown menu, simple light/dark toggle, and form select component.",
       },
     },
   },

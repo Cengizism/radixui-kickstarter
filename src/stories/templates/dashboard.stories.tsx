@@ -3,11 +3,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Footer } from "@/components/layout/footer/footer";
 import { Header } from "@/components/layout/header/header";
+import { ThemeProvider } from "@/components/widgets/theme-toggle";
 import {
   SimpleThemeToggle,
   ThemeToggle,
 } from "@/components/widgets/theme-toggle";
-import { ThemeProvider } from "@/components/widgets/theme-toggle";
 import {
   Topbar,
   TopbarActions,
@@ -331,5 +331,3 @@ export const DashboardCompact: Story = {
     },
   },
 };
-
-
