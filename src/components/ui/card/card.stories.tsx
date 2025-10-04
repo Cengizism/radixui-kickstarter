@@ -1,6 +1,8 @@
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { CheckCircle, MoreHorizontal } from "lucide-react";
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { CheckCircle, MoreVertical } from 'lucide-react';
+import { Progress } from '@/components/ui/progress';
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import {
   Card,
@@ -155,7 +157,7 @@ export const Playground = {
           {showAction && (
             <CardAction>
               <Button variant="ghost" size="icon">
-                <MoreHorizontal className="h-4 w-4" />
+                <MoreVertical className="h-4 w-4" />
               </Button>
             </CardAction>
           )}
@@ -166,8 +168,10 @@ export const Playground = {
       </CardContent>
       {showFooter && (
         <CardFooter>
-          <Button>Primary Action</Button>
-          <Button variant="outline">Secondary</Button>
+          <Button size="sm">Primary Action</Button>
+          <Button size="sm" variant="outline">
+            Secondary
+          </Button>
         </CardFooter>
       )}
     </Card>
@@ -188,10 +192,12 @@ export const Default: Story = {
     <Card className="w-80">
       <CardHeader>
         <CardTitle>Card Title</CardTitle>
-        <CardDescription>
-          A flexible container for grouping related content with header, body,
-          and footer sections.
-        </CardDescription>
+        <CardDescription>A flexible container</CardDescription>
+        <CardAction>
+          <Button variant="ghost" size="icon">
+            <MoreVertical className="h-4 w-4" />
+          </Button>
+        </CardAction>
       </CardHeader>
       <CardContent>
         <p>
@@ -201,8 +207,10 @@ export const Default: Story = {
         </p>
       </CardContent>
       <CardFooter>
-        <Button>Primary Action</Button>
-        <Button variant="outline">Secondary</Button>
+        <Button size="sm">Primary Action</Button>
+        <Button size="sm" variant="outline">
+          Secondary
+        </Button>
       </CardFooter>
     </Card>
   ),
@@ -226,10 +234,13 @@ export const Grid: Story = {
           <CardDescription>This is the first card in the grid.</CardDescription>
         </CardHeader>
         <CardContent>
-          <p>Content for the first card.</p>
+          <div className="space-y-3">
+            <p>Content for the first card.</p>
+            <Badge variant="default">Active</Badge>
+          </div>
         </CardContent>
         <CardFooter>
-          <Button>Learn More</Button>
+          <Button size="sm">Learn More</Button>
         </CardFooter>
       </Card>
 
@@ -241,10 +252,15 @@ export const Grid: Story = {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <p>Content for the second card.</p>
+          <div className="space-y-3">
+            <p>Content for the second card.</p>
+            <Badge variant="secondary">Draft</Badge>
+          </div>
         </CardContent>
         <CardFooter>
-          <Button variant="outline">View Details</Button>
+          <Button size="sm" variant="outline">
+            View Details
+          </Button>
         </CardFooter>
       </Card>
 
@@ -272,8 +288,10 @@ export const Grid: Story = {
           <p>Simple content for the fourth card.</p>
         </CardContent>
         <CardFooter>
-          <Button variant="secondary">Action</Button>
-          <Button variant="ghost">Skip</Button>
+          <Button size="sm">Primary Action</Button>
+          <Button size="sm" variant="outline">
+            Secondary
+          </Button>
         </CardFooter>
       </Card>
     </div>
@@ -311,21 +329,12 @@ export const ContentVariations: Story = {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center space-x-2">
-            <CheckCircle className="h-5 w-5 text-green-500" />
-            <span className="text-sm font-medium">Completed</span>
+            <Badge className="bg-success text-success-foreground border-transparent">
+              <CheckCircle className="h-3 w-3" />
+              Completed
+            </Badge>
           </div>
-          <div className="space-y-2">
-            <div className="flex justify-between text-sm">
-              <span>Progress</span>
-              <span>75%</span>
-            </div>
-            <div className="w-full bg-secondary rounded-full h-2">
-              <div
-                className="bg-primary h-2 rounded-full"
-                style={{ width: "75%" }}
-              ></div>
-            </div>
-          </div>
+          <Progress value={75} showLabel label="Progress" />
         </CardContent>
         <CardFooter>
           <Button size="sm">Continue</Button>
