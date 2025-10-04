@@ -1,6 +1,6 @@
-import * as React from "react";
-import { cn } from "@/lib/utils";
-import { Popover as PopoverPrimitive } from "radix-ui";
+import * as React from 'react';
+import { cn } from '@/lib/utils';
+import { Popover as PopoverPrimitive } from 'radix-ui';
 import { cva, type VariantProps } from "class-variance-authority";
 
 const Popover = PopoverPrimitive.Root;
@@ -12,11 +12,11 @@ const PopoverAnchor = PopoverPrimitive.Anchor;
 const PopoverPortal = PopoverPrimitive.Portal;
 
 const popoverContentVariants = cva(
-  "z-50 rounded-md border shadow-md bg-popover p-4 text-popover-foreground outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+  "z-50 rounded-md border shadow-md bg-background p-4 text-foreground outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
   {
     variants: {
       variant: {
-        default: "bg-popover text-popover-foreground border-border",
+        default: "bg-background text-foreground border-border",
         secondary: "bg-secondary text-secondary-foreground border-border",
         accent: "bg-accent text-accent-foreground border-border",
         destructive:
@@ -24,7 +24,7 @@ const popoverContentVariants = cva(
         success: "bg-success text-success-foreground border-success",
         warning: "bg-warning text-warning-foreground border-warning",
         info: "bg-info text-info-foreground border-info",
-        dark: "bg-popover text-popover-foreground border-border",
+        dark: "bg-background text-foreground border-border",
         light: "bg-background text-foreground border-border",
       },
       size: {

@@ -1,6 +1,6 @@
-import * as React from "react";
-import { cn } from "@/lib/utils";
-import { Tooltip as TooltipPrimitive } from "radix-ui";
+import * as React from 'react';
+import { cn } from '@/lib/utils';
+import { Tooltip as TooltipPrimitive } from 'radix-ui';
 import { cva, type VariantProps } from "class-variance-authority";
 ("use client");
 
@@ -34,7 +34,7 @@ const tooltipContentVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-popover text-popover-foreground border",
+        default: "bg-background text-foreground border",
         light: "bg-background text-foreground border",
         dark: "bg-foreground text-background",
       },
